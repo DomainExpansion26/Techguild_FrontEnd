@@ -1,25 +1,16 @@
-import heroImg from "./assets/hero.png";
-import PrimaryButton from "../../Techguild_FrontEnd/src/Components/Button/Primarybutton";
+import PrimaryButton from "./Components/Button/Primarybutton";
+import SecondaryButton from "./Components/SecondaryButton/SecondaryButton";
 import "./App.css";
 
 function App() {
   return (
-    <div className="container">
-      <div className="left">
-        <h1>Welcome to React</h1>
-        <p>
-          Build modern and responsive web applications using React and reusable
-          components.
-        </p>
-
+    <div className="preview-wrapper">
+      <div className="button-group">
+        <SecondaryButton />
         <PrimaryButton
-          text="Get Started"
-          onClick={() => alert("Welcome!")}
+          text="Go to Gmail Inbox"
+          onClick={() => alert("Going to inbox!")}
         />
-      </div>
-
-      <div className="right">
-        <img src={heroImg} alt="Hero" />
       </div>
     </div>
   );
