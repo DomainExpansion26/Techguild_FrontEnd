@@ -1,6 +1,8 @@
 import PrimaryButton from "./Components/Button/Primarybutton";
 import SecondaryButton from "./Components/SecondaryButton/SecondaryButton";
 import "./App.css";
+import LoadingButton from "./Components/LoadingButton/Loadingbutton";
+import TextInput from "./Components/Textinput/Textinput";
 
 function App() {
   return (
@@ -11,6 +13,8 @@ function App() {
           text="Go to Gmail Inbox"
           onClick={() => alert("Going to inbox!")}
         />
+        <LoadingButton />
+        <TextInput />
       </div>
     </div>
   );
