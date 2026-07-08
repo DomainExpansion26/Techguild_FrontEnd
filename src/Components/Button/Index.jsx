@@ -1,4 +1,5 @@
-import "./Primarybutton.css";
+import React from "react";
+
 
 const PrimaryButton = ({
   text,
