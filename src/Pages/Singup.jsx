@@ -49,6 +49,7 @@ function GitHubIcon() {
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoginMode, setIsLoginMode] = useState(false);
 
   const [form, setForm] = useState({
     firstName: "",
@@ -77,11 +78,11 @@ export default function SignUp() {
         <div className="form-section">
 
           <h1 className="heading">
-            Sign Up
+            {isLoginMode ? "Login" : "Sign Up"}
           </h1>
 
           <p className="subheading">
-            Start your TechGuild Journey
+            {isLoginMode ? "Welcome back to TechGuild" : "Start your TechGuild Journey"}
           </p>
 
           <button className="oauth-btn">
@@ -100,23 +101,25 @@ export default function SignUp() {
 
           <form onSubmit={handleSubmit}>
 
-            <div className="name-row">
+            {!isLoginMode && (
+              <div className="name-row">
 
-              <TextInput
-                placeholder="First Name"
-                icon={<User size={16} />}
-                value={form.firstName}
-                onChange={handleChange("firstName")}
-              />
+                <TextInput
+                  placeholder="First Name"
+                  icon={<User size={16} />}
+                  value={form.firstName}
+                  onChange={handleChange("firstName")}
+                />
 
-              <TextInput
-                placeholder="Last Name"
-                icon={<User size={16} />}
-                value={form.lastName}
-                onChange={handleChange("lastName")}
-              />
+                <TextInput
+                  placeholder="Last Name"
+                  icon={<User size={16} />}
+                  value={form.lastName}
+                  onChange={handleChange("lastName")}
+                />
 
-            </div>
+              </div>
+            )}
 
             <TextInput
               placeholder="Enter your email"
@@ -164,14 +167,16 @@ export default function SignUp() {
             </label>
 
             <button className="submit-btn">
-              Join TechGuild
+              {isLoginMode ? "Login" : "Join TechGuild"}
             </button>
 
           </form>
 
           <p className="login-row">
-            Already have an account?
-            <a href="#"> Login</a>
+            {isLoginMode ? "Don't have an account?" : "Already have an account?"}
+            <a href="#" onClick={(e) => { e.preventDefault(); setIsLoginMode(!isLoginMode); }}>
+              {isLoginMode ? " Sign Up" : " Login"}
+            </a>
           </p>
 
         </div>
