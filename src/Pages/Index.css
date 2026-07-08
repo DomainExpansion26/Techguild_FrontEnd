@@ -274,18 +274,35 @@ body {
     margin-bottom:30px;
 }
 
-.company-logo{
-    width:170px;
-    margin-bottom:30px;
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
 }
 
-.level-image{
-    width:100%;
-    max-width:420px;
-    margin-top:auto;
-    align-self:center;
+.brand-logo img {
+    width: 50px;
+    height: auto;
+}
 
-    filter:drop-shadow(0 0 18px rgba(54,124,255,.45));
+.level-image {
+    width: 100%;
+    max-width: 420px;
+    margin-top: auto;
+    align-self: center;
+    filter: drop-shadow(0 0 18px rgba(54, 124, 255, .45));
+}
+
+.brand-white {
+    font-size: 38px;
+    font-weight: 800;
+    color: #fff;
+    margin: 0;
+}
+
+.brand-white span {
+    color: #60a5fa;
 }
 
 /* ===========================
@@ -338,6 +355,12 @@ font-size:30px;
 
 }
 
+.brand-white{
+
+font-size:28px;
+
+}
+
 .hero-title{
 
 font-size:32px;
@@ -352,16 +375,8 @@ gap:0;
 
 }
 
-.company-logo{
-
-width:150px;
-
-}
-
-.level-image{
-
-max-width:300px;
-
+.level-image {
+    max-width: 300px;
 }
 
 }

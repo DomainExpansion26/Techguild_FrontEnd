@@ -12,7 +12,6 @@ import TextInput from "../Components/Textinput/Textinput";
 
 
 import Logo from "../assets/Logo.png";
-import LevelImage from "../assets/hero.png";
 
 function GoogleIcon() {
   return (
@@ -76,24 +75,6 @@ export default function SignUp() {
         {/* Left Form */}
 
         <div className="form-section">
-
-          <div className="brand-logo">
-            <img src={Logo} alt="TechGuild Logo" />
-            <h2 className="brand">
-              Tech<span>Guild</span>
-            </h2>
-          </div>
-
-          <h1 className="hero-title">
-            Rise by your work.
-            <br />
-            Grow by trust.
-          </h1>
-
-          <p className="hero-text">
-            For agencies, freelancers and business owners
-            creating real impact.
-          </p>
 
           <h1 className="heading">
             Sign Up
@@ -197,7 +178,31 @@ export default function SignUp() {
 
         {/* Right Side */}
 
-       
+        <div className="logo-section">
+          <div className="overlay"></div>
+
+          <div className="content">
+            <div className="brand-logo">
+                
+              <h2 className="brand-white">
+                Tech<span>Guild</span>
+              </h2>
+            </div>
+
+            <h1 className="hero-title">
+              Rise by your work.
+              <br />
+              Grow by trust.
+            </h1>
+
+            <p className="hero-text">
+              For agencies, freelancers and business owners
+              creating real impact.
+            </p>
+
+            <img src={Logo} alt="TechGuild Logo" className="level-image" />
+          </div>
+        </div>
 
         </div>
 
