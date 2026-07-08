@@ -179,11 +179,12 @@ export default function SignUp() {
         {/* Right Side */}
 
         <div className="logo-section">
+          <img src={Logo} alt="TechGuild Logo" className="logo-bg" />
+
           <div className="overlay"></div>
 
           <div className="content">
             <div className="brand-logo">
-                
               <h2 className="brand-white">
                 Tech<span>Guild</span>
               </h2>
@@ -199,8 +200,6 @@ export default function SignUp() {
               For agencies, freelancers and business owners
               creating real impact.
             </p>
-
-            <img src={Logo} alt="TechGuild Logo" className="level-image" />
           </div>
         </div>
 

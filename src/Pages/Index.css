@@ -221,41 +221,33 @@ body {
   flex: 1;
   position: relative;
   overflow: hidden;
-  background:
-    linear-gradient(180deg,
-      #08132f 0%,
-      #0b1d48 45%,
-      #07112a 100%);
+}
+
+.logo-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .overlay {
   position: absolute;
   inset: 0;
   background:
-      radial-gradient(circle at 20% 30%, rgba(42,120,255,.15), transparent 35%),
-      radial-gradient(circle at 85% 15%, rgba(0,140,255,.20), transparent 35%);
+      radial-gradient(circle at 20% 30%, rgba(0, 0, 0, .3), transparent 50%),
+      radial-gradient(circle at 85% 15%, rgba(0, 0, 0, .4), transparent 50%);
+  z-index: 1;
 }
 
-.logo-section::before{
-    content:"";
-    position:absolute;
-    inset:0;
-
-    background-image:
-      radial-gradient(rgba(74,130,255,.25) 1px, transparent 1px);
-
-    background-size:18px 18px;
-
-    opacity:.35;
-}
-
-.content{
-    position:relative;
-    z-index:2;
-    padding:55px;
-    height:100%;
-    display:flex;
-    flex-direction:column;
+.content {
+  position: relative;
+  z-index: 2;
+  padding: 55px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .hero-title{
@@ -284,14 +276,6 @@ body {
 .brand-logo img {
     width: 50px;
     height: auto;
-}
-
-.level-image {
-    width: 100%;
-    max-width: 420px;
-    margin-top: auto;
-    align-self: center;
-    filter: drop-shadow(0 0 18px rgba(54, 124, 255, .45));
 }
 
 .brand-white {
@@ -373,10 +357,6 @@ flex-direction:column;
 
 gap:0;
 
-}
-
-.level-image {
-    max-width: 300px;
 }
 
 }
