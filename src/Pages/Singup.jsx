@@ -184,11 +184,7 @@ export default function SignUp() {
           <div className="overlay"></div>
 
           <div className="content">
-            <div className="brand-logo">
-              <h2 className="brand-white">
-                Tech<span>Guild</span>
-              </h2>
-            </div>
+            
 
             <h1 className="hero-title">
               Rise by your work.
@@ -200,6 +196,11 @@ export default function SignUp() {
               For agencies, freelancers and business owners
               creating real impact.
             </p>
+            <div className="brand-logo">
+              <h2 className="brand-white">
+                Tech<span>Guild</span>
+              </h2>
+            </div>
           </div>
         </div>
 
