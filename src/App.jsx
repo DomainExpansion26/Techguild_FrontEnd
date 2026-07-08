@@ -3,18 +3,13 @@ import SecondaryButton from "./Components/SecondaryButton/SecondaryButton";
 import "./App.css";
 import LoadingButton from "./Components/LoadingButton/Loadingbutton";
 import TextInput from "./Components/Textinput/Textinput";
+import SignUp from "./Pages/Singup";
 
 function App() {
   return (
     <div className="preview-wrapper">
       <div className="button-group">
-        <SecondaryButton />
-        <PrimaryButton
-          text="Go to Gmail Inbox"
-          onClick={() => alert("Going to inbox!")}
-        />
-        <LoadingButton />
-        <TextInput />
+       <SignUp />
       </div>
     </div>
   );
