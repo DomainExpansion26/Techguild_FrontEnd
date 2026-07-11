@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./loadingbutton.css";
 
 const LoadingButton = () => {
   const [loading, setLoading] = useState(false);
