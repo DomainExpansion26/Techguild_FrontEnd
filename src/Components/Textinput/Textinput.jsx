@@ -1,3 +1,5 @@
+import "./textinput.css";
+
 const TextInput = ({
   label,
   type = "text",
