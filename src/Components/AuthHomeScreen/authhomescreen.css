@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+.auth-home-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  position: relative;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.auth-home-text-block {
+  position: absolute;
+  top: 11.89vh;
+  left: 47.85vw;
+  width: 30vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 1.556vh;
+  align-items: flex-start;
+  text-align: left;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  z-index: 10;
+}
+
+.auth-home-title {
+  font-size: 3.556vh;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.25;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.auth-home-title .highlight-blue {
+  color: #103CA4;
+}
+
+.auth-home-subtitle {
+  font-size: 1.778vh;
+  font-weight: 400;
+  color: #000000;
+  line-height: 1.45;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.auth-home-logo {
+  font-size: 3.857vh;
+  font-weight: 600;
+  line-height: 1.0;
+  margin: 0;
+  letter-spacing: -0.03em;
+}
+
+.logo-tech {
+  color: #111827;
+  font-weight: 600;
+}
+
+.logo-guild {
+  color: #103CA4;
+  font-weight: 600;
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+  .auth-home-text-block {
+    top: 10vh;
+    left: 38vw;
+    width: 38vw;
+    gap: 1.5vh;
+  }
+
+  .auth-home-title {
+    font-size: 2.6vw;
+  }
+
+  .auth-home-subtitle {
+    font-size: 1.5vw;
+  }
+
+  .auth-home-logo {
+    font-size: 2.9vw;
+  }
+}
+
+@media (max-width: 767px) {
+  .auth-home-container {
+    background-size: cover;
+    background-position: 30% center;
+  }
+
+  .auth-home-text-block {
+    top: 10vh;
+    left: 5%;
+    width: 90%;
+    max-width: 400px;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  .auth-home-title {
+    font-size: 26px;
+    line-height: 1.25;
+  }
+
+  .auth-home-subtitle {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #1f2937;
+  }
+
+  .auth-home-logo {
+    font-size: 28px;
+    margin-top: 4px;
+  }
+}
