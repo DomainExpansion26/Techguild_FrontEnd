@@ -1,5 +1,5 @@
 import React from "react";
-import SecondaryButtonBase from "./Index";
+import "./secondary.css";
 
 const handleDefault = () => alert("Sending again!");
 
@@ -11,14 +11,14 @@ const SecondaryButton = ({
   children,
 }) => {
   return (
-    <SecondaryButtonBase
-      text={text}
-      onClick={onClick}
+    <button
+      className="secondary-btn"
       type={type}
+      onClick={onClick}
       disabled={disabled}
     >
-      {children}
-    </SecondaryButtonBase>
+      {text || children}
+    </button>
   );
 };
 
