@@ -7,11 +7,11 @@ import {
   User,
 } from "lucide-react";
 
-import "./Index.css";
-import TextInput from "../Components/Textinput/Textinput";
+import "./SignUp.css";
+import { TextInput } from "@/Components";
 
 
-import Logo from "../assets/Logo.png";
+import Logo from "../../assets/Logo.png";
 
 function GoogleIcon() {
   return (

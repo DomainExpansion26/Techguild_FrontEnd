@@ -1,4 +1,4 @@
-import "./Index.css";
+import "./basicmodal.css";
 
 const BasicModal = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
