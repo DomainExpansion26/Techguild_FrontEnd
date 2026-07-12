@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Mail, Lock, User } from "lucide-react";
-import "./signup.css";
+import { Mail, Lock } from "lucide-react";
+import "./login.css";
 import {
   AuthHomeScreen,
   BrandLogo,
@@ -9,7 +9,6 @@ import {
   Divider,
   TextInput,
   PasswordInput,
-  TermsCheckbox,
   PrimaryButton,
   SignupCard,
 } from "../../Components";
@@ -31,66 +30,44 @@ const GitHubIcon = () => (
   </svg>
 );
 
-export default function Signup() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
-  const handleSignup = () => {
-    console.log("Signup data:", {
-      firstName,
-      lastName,
+  const handleLogin = () => {
+    console.log("Login data:", {
       email,
       password,
-      termsAccepted,
     });
   };
 
-  const handleGoogleSignup = () => {
-    console.log("Google signup");
+  const handleGoogleLogin = () => {
+    console.log("Google login");
   };
 
-  const handleGithubSignup = () => {
-    console.log("GitHub signup");
+  const handleGithubLogin = () => {
+    console.log("GitHub login");
   };
 
   return (
-    <div className="signup-page">
+    <div className="login-page">
       <AuthHomeScreen />
 
       <SignupCard>
         <BrandLogo />
 
-        <h2>Sign Up</h2>
+        <h2>Login</h2>
 
-        <p className="subtitle">Start your TechGuild Journey</p>
+        <p className="subtitle">Continue your TechGuild Journey</p>
 
-        <SocialButton text="Continue with Google" onClick={handleGoogleSignup} icon={<GoogleIcon />} />
+        <SocialButton text="Continue with Google" onClick={handleGoogleLogin} icon={<GoogleIcon />} />
 
-        <SocialButton text="Continue with GitHub" onClick={handleGithubSignup} icon={<GitHubIcon />} />
+        <SocialButton text="Continue with GitHub" onClick={handleGithubLogin} icon={<GitHubIcon />} />
 
         <Divider />
 
-        <div className="name-row">
-          <TextInput
-            type="text"
-            placeholder="First Name"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            icon={<User size={18} />}
-          />
-
-          <TextInput
-            type="text"
-            placeholder="Last Name"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            icon={<User size={18} />}
-          />
-        </div>
-
+        <label className="input-label">Email Address</label>
         <TextInput
           type="email"
           placeholder="Enter your email"
@@ -99,6 +76,7 @@ export default function Signup() {
           icon={<Mail size={18} />}
         />
 
+        <label className="input-label">Password</label>
         <PasswordInput
           placeholder="Enter your password"
           value={password}
@@ -106,15 +84,22 @@ export default function Signup() {
           icon={<Lock size={18} />}
         />
 
-        <TermsCheckbox
-          checked={termsAccepted}
-          onChange={(e) => setTermsAccepted(e.target.checked)}
-        />
+        <div className="forgot-password-row">
+          <label className="remember-me">
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+            />
+            <span>Remember me</span>
+          </label>
+          <Link to="/forgot-password">Forgot Password?</Link>
+        </div>
 
-        <PrimaryButton text="Join TechGuild" onClick={handleSignup} />
+        <PrimaryButton text="Login" onClick={handleLogin} />
 
-        <p className="login">
-          Already have an account? <Link to="/login">Login</Link>
+        <p className="signup">
+          Don't have an account? <Link to="/signup">Sign Up</Link>
         </p>
       </SignupCard>
     </div>
