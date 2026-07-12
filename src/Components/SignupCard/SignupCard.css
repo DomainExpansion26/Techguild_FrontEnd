@@ -1,0 +1,37 @@
+.signup-card {
+  position: absolute;
+  left: 85px;
+  top: 65px;
+  width: 380px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 14px;
+  z-index: 100;
+}
+
+@media (max-width: 1024px) {
+  .signup-card {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .signup-card {
+    width: 92%;
+    max-width: 400px;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-card {
+    width: 95%;
+    padding: 18px;
+  }
+}

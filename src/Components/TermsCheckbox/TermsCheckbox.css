@@ -1,0 +1,29 @@
+.terms-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  margin: 12px 0 16px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.terms-checkbox-input {
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+.terms-text {
+  line-height: 1.4;
+  color: #555;
+}
+
+.terms-link {
+  color: #0D4DD7;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.terms-link:hover {
+  text-decoration: underline;
+}
