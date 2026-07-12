@@ -1,31 +1,29 @@
 .primary-btn {
   width: 100%;
-  height: 46px;
+  height: 42px;
   border: none;
-  background: #1D4ED8;
+  background: #1247D8;
   color: white;
   border-radius: 8px;
   font-size: 15px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  margin-top: 4px;
+  transition: background-color 0.2s ease;
 }
 
 .primary-btn:hover {
-  background: #1E40AF;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(29, 78, 216, 0.3);
+  background: #0f3bb8;
 }
 
 .primary-btn:active {
-  transform: translateY(0);
-  background: #1E3A8A;
+  transform: scale(0.98);
 }
 
 .primary-btn:disabled {
-  background: #93C5FD;
+  background: #6b8ace;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
+
