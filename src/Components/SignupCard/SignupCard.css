@@ -5,11 +5,21 @@
   transform: translateY(-50%);
   width: 360px;
   padding: 24px 24px 20px;
+<<<<<<< HEAD
   background: rgba(255, 255, 255, 0.28);
   
   
   border-radius: 18px;
   
+=======
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+>>>>>>> e33d441 (signup done;)
 }
 
 /* Tablet */

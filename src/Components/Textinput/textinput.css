@@ -1,6 +1,6 @@
 .input-container {
   width: 100%;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .input-label {
@@ -18,24 +18,25 @@
 .input-box {
   display: flex;
   align-items: center;
-  gap: 8px;
-  height: 40px;
-  border: 1px solid #d8d8d8;
+  gap: 10px;
+  height: 42px;
+  border: 1px solid #E5E7EB;
   border-radius: 8px;
   background: white;
-  padding: 0 10px;
-  transition: border-color 0.2s ease;
+  padding: 0 12px;
+  transition: all 0.2s ease;
 }
 
 .input-box:focus-within {
-  border-color: #1247D8;
+  border-color: #2563EB;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
 }
 
 .input-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #666;
+  color: #9CA3AF;
   flex-shrink: 0;
 }
 
@@ -45,9 +46,9 @@
   outline: none;
   background: none;
   font-size: 14px;
-  color: #222;
+  color: #111827;
 }
 
 .text-input::placeholder {
-  color: #999;
+  color: #9CA3AF;
 }
