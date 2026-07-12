@@ -3,7 +3,7 @@
   align-items: flex-start;
   gap: 8px;
   font-size: 12px;
-  margin: 12px 0 16px;
+  margin: 12px 0 14px;
   cursor: pointer;
   user-select: none;
 }
@@ -11,15 +11,18 @@
 .terms-checkbox-input {
   margin-top: 2px;
   cursor: pointer;
+  width: 14px;
+  height: 14px;
+  accent-color: #2563EB;
 }
 
 .terms-text {
   line-height: 1.4;
-  color: #555;
+  color: #6B7280;
 }
 
 .terms-link {
-  color: #0D4DD7;
+  color: #2563EB;
   text-decoration: none;
   font-weight: 500;
 }

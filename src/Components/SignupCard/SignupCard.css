@@ -1,30 +1,37 @@
 .signup-card {
   position: absolute;
-  left: 85px;
-  top: 65px;
-  width: 380px;
-  padding: 24px;
-  background: rgba(255, 255, 255, 0.25);
+  left: 80px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 360px;
+  padding: 24px 24px 20px;
+  background: rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   z-index: 100;
 }
 
-@media (max-width: 1024px) {
+/* Tablet */
+@media (max-width: 1024px) and (min-width: 768px) {
   .signup-card {
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;
+    left: 40px;
+    width: 340px;
   }
 }
 
-@media (max-width: 768px) {
+/* Mobile */
+@media (max-width: 767px) {
   .signup-card {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
     width: 92%;
     max-width: 400px;
+    margin: 20px auto;
     padding: 20px;
   }
 }

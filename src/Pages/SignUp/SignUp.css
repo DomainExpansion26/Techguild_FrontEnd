@@ -5,41 +5,49 @@
   overflow: hidden;
 }
 
+/* Card heading - Sign Up */
 .signup-card h2 {
-  font-size: 26px;
-  margin-bottom: 2px;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  margin-top: 12px;
   color: #111;
 }
 
-.subtitle {
-  color: #888;
+/* Subtitle */
+.signup-card .subtitle {
+  color: #6B7280;
   font-size: 13px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
-.name-row {
+/* Name row - two inputs side by side */
+.signup-card .name-row {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 12px;
 }
 
-.name-row > div {
+.signup-card .name-row > div {
+  flex: 1;
   width: 50%;
 }
 
-.login {
+/* Login text at bottom */
+.signup-card .login {
   text-align: center;
   margin-top: 16px;
+  margin-bottom: 4px;
   font-size: 13px;
-  color: #555;
+  color: #6B7280;
 }
 
-.login a {
-  color: #1247D8;
+.signup-card .login a {
+  color: #2563EB;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 500;
 }
 
-.login a:hover {
+.signup-card .login a:hover {
   text-decoration: underline;
 }

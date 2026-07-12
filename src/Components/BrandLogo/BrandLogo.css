@@ -1,13 +1,14 @@
 .brand {
-  font-size: 30px;
+  font-size: 24px;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
 }
 
 .tech {
-  color: #111;
+  color: #111827;
 }
 
 .guild {
-  color: #0D4DD7;
+  color: #2563EB;
 }
