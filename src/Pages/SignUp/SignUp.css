@@ -5,181 +5,41 @@
   overflow: hidden;
 }
 
-.signup-card {
-  position: absolute;
-  left: 85px;
-  top: 65px;
-
-  width: 320px;
-
-  padding: 28px;
-
-  background: rgba(255,255,255,.25);
-
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-
-  border: 1px solid rgba(255,255,255,.4);
-
-  border-radius: 14px;
-
-  z-index: 100;
+.signup-card h2 {
+  font-size: 26px;
+  margin-bottom: 2px;
+  color: #111;
 }
 
-.brand{
-  font-size:34px;
-  font-weight:700;
-  margin-bottom:12px;
+.subtitle {
+  color: #888;
+  font-size: 13px;
+  margin-bottom: 16px;
 }
 
-.tech{
-  color:#111;
+.name-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
-.guild{
-  color:#0D4DD7;
+.name-row > div {
+  width: 50%;
 }
 
-.signup-card h2{
-  font-size:30px;
-  margin-bottom:4px;
+.login {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 13px;
+  color: #555;
 }
 
-.subtitle{
-  color:#888;
-  font-size:14px;
-  margin-bottom:22px;
+.login a {
+  color: #1247D8;
+  text-decoration: none;
+  font-weight: 600;
 }
 
-.social-btn{
-  width:100%;
-  height:44px;
-
-  margin-bottom:12px;
-
-  border:1px solid #ddd;
-  background:white;
-
-  border-radius:8px;
-
-  cursor:pointer;
-
-  font-weight:600;
-}
-
-.divider{
-  text-align:center;
-  margin:20px 0;
-  font-size:13px;
-}
-
-.name-row{
-  display:flex;
-  gap:10px;
-}
-
-.input-box{
-
-  display:flex;
-  align-items:center;
-
-  gap:10px;
-
-  height:46px;
-
-  border:1px solid #d8d8d8;
-
-  border-radius:8px;
-
-  background:white;
-
-  padding:0 12px;
-
-  margin-bottom:14px;
-}
-
-.name-row .input-box{
-  width:50%;
-}
-
-.input-box input{
-  flex:1;
-  border:none;
-  outline:none;
-  background:none;
-}
-
-.eye-btn{
-  border:none;
-  background:none;
-  cursor:pointer;
-}
-
-.checkbox{
-  display:flex;
-  align-items:flex-start;
-
-  gap:8px;
-
-  font-size:12px;
-
-  margin:15px 0 22px;
-}
-
-.checkbox a{
-  color:#0D4DD7;
-  text-decoration:none;
-}
-
-.join-btn{
-
-  width:100%;
-
-  height:46px;
-
-  border:none;
-
-  background:#1247D8;
-
-  color:white;
-
-  border-radius:8px;
-
-  font-size:15px;
-
-  font-weight:600;
-
-  cursor:pointer;
-}
-
-.login{
-
-  text-align:center;
-
-  margin-top:22px;
-
-  font-size:14px;
-}
-
-.login a{
-  color:#1247D8;
-  text-decoration:none;
-  font-weight:600;
-}
-
-@media(max-width:768px){
-
-.signup-card{
-
-left:50%;
-
-top:50%;
-
-transform:translate(-50%,-50%);
-
-width:92%;
-
-max-width:380px;
-
-}
+.login a:hover {
+  text-decoration: underline;
 }
