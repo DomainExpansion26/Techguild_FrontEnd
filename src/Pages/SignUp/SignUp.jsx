@@ -10,7 +10,6 @@ import {
 import "./SignUp.css";
 import { TextInput } from "@/Components";
 
-
 import Logo from "../../assets/Logo.png";
 
 function GoogleIcon() {
@@ -72,8 +71,6 @@ export default function SignUp() {
   return (
     <div className="page-wrapper">
       <div className="signup-container">
-
-        {/* Left Form */}
 
         <div className="form-section">
 
@@ -181,15 +178,12 @@ export default function SignUp() {
 
         </div>
 
-        {/* Right Side */}
-
         <div className="logo-section">
           <img src={Logo} alt="TechGuild Logo" className="logo-bg" />
 
           <div className="overlay"></div>
 
           <div className="content">
-            
 
             <h1 className="hero-title">
               Rise by your work.
@@ -212,6 +206,6 @@ export default function SignUp() {
         </div>
 
       </div>
-    
+
   );
 }
