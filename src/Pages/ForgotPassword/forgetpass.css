@@ -1,0 +1,72 @@
+.forgetpass-page {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Card heading - Forgot Password */
+.signup-card h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  margin-top: 12px;
+  color: #111;
+}
+
+/* Subtitle */
+.signup-card .subtitle {
+  color: #6B7280;
+  font-size: 13px;
+  margin-bottom: 14px;
+  min-height: 18px;
+}
+
+/* Input labels */
+.signup-card .input-label {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  color: #000000;
+  margin-bottom: 6px;
+  margin-top: 4px;
+  margin-left: 4px;
+}
+
+/* Success icon */
+.signup-card .success-icon {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* Success message */
+.signup-card .success-message {
+  color: #6B7280;
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.5;
+  margin: 16px 0;
+  padding: 0 8px;
+}
+
+/* Back to login link */
+.signup-card .back-to-login {
+  text-align: center;
+  margin-top: 16px;
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+.signup-card .back-to-login a {
+  color: #6B7280;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.signup-card .back-to-login a:hover {
+  color:"#103CA4";
+}
