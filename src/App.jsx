@@ -10,7 +10,14 @@ import AccountType from "./Modules/auth/Accountype/Accounttype";
 
 function App() {
   return (
-   <Signup/>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot-password" element={<ForgetPass />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
