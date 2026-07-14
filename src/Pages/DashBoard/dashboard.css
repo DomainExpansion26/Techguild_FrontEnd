@@ -1,0 +1,146 @@
+.dashboard-layout {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 1.25rem;
+  gap: 30px;
+  overflow: hidden;
+  background-image: url('../../assets/img2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  box-sizing: border-box;
+}
+
+.main-workspace {
+  flex-grow: 1;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  position: relative;
+}
+
+/* header-card wraps the searchbar row */
+.header-card {
+  flex-shrink: 0;
+}
+
+.header {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.header-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  background-color: #F5F7FA;
+  border: none;
+  border-radius: 50rem;
+  padding: 0.5rem 1.125rem;
+  width: 23.75rem;
+  box-sizing: border-box;
+}
+
+.search-icon {
+  color: #9ca3af;
+  flex-shrink: 0;
+}
+
+.header-search-bar input,
+.search-input {
+  border: none;
+  outline: none;
+  font-size: 0.875rem;
+  color: #1a1a1a;
+  width: 100%;
+  background: transparent;
+}
+
+.header-search-bar input::placeholder,
+.search-input::placeholder {
+  color: #9ca3af;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.icon-btn,
+.header-action-btn {
+  background: none;
+  border: none;
+  color: #4b5563;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.icon-btn:hover,
+.header-action-btn:hover {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+.header-avatar,
+.header-user-avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: #103ca4;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.dashboard-content {
+  height: calc(100% - 4.375rem);
+  padding: 1rem 2rem 1.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .dashboard-layout {
+    flex-direction: column;
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+
+  .header {
+    padding: 0 1rem;
+    height: auto;
+    min-height: 3.5rem;
+  }
+
+  .header-search-bar {
+    width: 100%;
+    max-width: 18.75rem;
+  }
+
+  .dashboard-content {
+    padding: 1rem;
+  }
+}

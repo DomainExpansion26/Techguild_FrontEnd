@@ -1,0 +1,187 @@
+/* Sidebar Navigation Custom Styles */
+
+.sidebar {
+  width: 211px; /* Figma design width */
+  height: 100%; /* Flexible height that stretches to parent padded space */
+  max-height: 100%; /* Restrict height to parent height */
+  margin: 0; /* Margin handled by parent layout padding */
+  background-color: #ffffff;
+  border: 1.26px solid #e5e7eb; /* Full stroke around the card */
+  border-radius: 10px; /* 10px corner radius */
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0; /* No top padding, logo-container touches top edge */
+  z-index: 10;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  overflow: hidden; /* Clips the bottom corners of the footer to sidebar's border-radius */
+}
+
+.sidebar-logo-container {
+  width: 100%;
+  border-bottom: 1.26px solid #e5e7eb; /* Full-width border line below TechGuild */
+  padding: 12px 0 12px 18px; /* Compact padding */
+  box-sizing: border-box;
+}
+
+.sidebar-logo {
+  font-size: 21px; /* Shrunk from 25.18px */
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  padding-left: 0;
+}
+
+.logo-tech {
+  color: #111827;
+}
+
+.logo-guild {
+  color: #103ca4;
+}
+
+.sidebar-menu-container {
+  flex-grow: 1;
+  min-height: 0; /* Enable proper flexbox scrolling */
+  padding: 10px 8px; /* Tighter padding to save vertical space */
+  box-sizing: border-box;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.sidebar-menu-container::-webkit-scrollbar {
+  display: none;
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px; /* Reduced gap between items to prevent overflow */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Figma: Gap between icon and text */
+  padding: 4px 12px; /* Tighter vertical/horizontal spacing */
+  border-radius: 8px; /* Rounded corners */
+  color: #4b5563;
+  font-size: 12px; /* Shrunk font size for compactness */
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  height: 28px; /* Compact height */
+  box-sizing: border-box;
+}
+
+.sidebar-item svg {
+  width: 16px !important; /* Shrunk icons to match font size */
+  height: 16px !important;
+}
+
+.sidebar-item:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.sidebar-item.active {
+  background-color: #e9f0fe;
+  color: #103ca4;
+  font-weight: 600;
+}
+
+.sidebar-footer {
+  border-top: 1.26px solid #e5e7eb;
+  padding: 8px 16px; /* Tighter footer padding */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px; /* Shrunk height */
+  background-color: #ffffff;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.sidebar-avatar {
+  width: 28px; /* Shrunk avatar size */
+  height: 28px;
+  border-radius: 50%;
+  background-color: #103ca4;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.sidebar-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-username {
+  font-size: 13px; /* Shrunk font size */
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.2;
+}
+
+.sidebar-role {
+  font-size: 10.5px; /* Shrunk font size */
+  font-weight: 400;
+  color: #6b7280;
+  line-height: 1.2;
+}
+
+/* Responsive styles for mobile (<= 768px) */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 220px !important;
+    border-radius: 10px !important;
+    position: static !important;
+    box-shadow: none !important;
+  }
+  
+  .sidebar-logo-container {
+    padding: 12px 16px !important;
+  }
+  
+  .sidebar-menu-container {
+    padding: 12px 8px !important;
+    overflow-y: auto !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  
+  .sidebar-menu-container::-webkit-scrollbar {
+    display: none !important;
+  }
+  
+  .sidebar-menu {
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    gap: 2px !important;
+  }
+  
+  .sidebar-item {
+    height: 28px !important;
+    padding: 4px 12px !important;
+    font-size: 12px !important;
+    gap: 10px !important;
+  }
+  
+  .sidebar-footer {
+    display: flex !important;
+    padding: 8px 16px !important;
+    height: 48px !important;
+  }
+}
