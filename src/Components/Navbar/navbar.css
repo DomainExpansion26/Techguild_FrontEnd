@@ -43,6 +43,7 @@
 
 .sidebar-menu-container {
   flex-grow: 1;
+  min-height: 0; /* Enable proper flexbox scrolling */
   padding: 10px 8px; /* Tighter padding to save vertical space */
   box-sizing: border-box;
   overflow-y: auto;
@@ -143,8 +144,8 @@
 @media (max-width: 768px) {
   .sidebar {
     width: 100% !important;
-    height: 100% !important;
-    max-height: 100% !important;
+    height: auto !important;
+    max-height: 220px !important;
     border-radius: 10px !important;
     position: static !important;
     box-shadow: none !important;
