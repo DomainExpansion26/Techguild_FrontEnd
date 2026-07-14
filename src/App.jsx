@@ -18,7 +18,6 @@ import ReputationRank from "./Pages/ReputationRank/ReputationRank";
 import Notifications from "./Pages/Notifications/Notifications";
 
 import "./App.css";
-import SignUp from "@/Pages/SignUp/SignUp";
 
 function App() {
   return (
