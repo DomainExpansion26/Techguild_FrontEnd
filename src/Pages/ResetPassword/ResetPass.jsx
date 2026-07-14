@@ -1,51 +1,65 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Mail, ArrowLeft } from "lucide-react";
-import "./forgetpass.css";
+import { Lock, ArrowLeft } from "lucide-react";
+import "./resetpass.css";
 import {
   AuthHomeScreen,
   BrandLogo,
-  TextInput,
+  PasswordInput,
   PrimaryButton,
   SignupCard,
 } from "../../Components";
 
-export default function ForgetPass() {
-  const [email, setEmail] = useState("");
+export default function ResetPass() {
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = () => {
-    console.log("Password reset for:", email);
+    console.log("Password reset:", { newPassword, confirmPassword });
     setIsSubmitted(true);
   };
 
   return (
-    <div className="forgetpass-page">
+    <div className="resetpass-page">
       <AuthHomeScreen />
 
       <SignupCard>
         <BrandLogo />
 
-        <h2>Forgot Password?</h2>
+        <h2>Reset Password</h2>
 
         <p className="subtitle">
-          {isSubmitted
-            ? "Check your email for reset instructions"
-            : "Enter your email address and we’ll send you a link to reset your password."}
+  {isSubmitted ? (
+    "Password reset successful"
+  ) : (
+    <>
+      Enter your new password below.
+      <br />
+      Make sure it's strong and unique.
+    </>
+  )}
         </p>
 
         {!isSubmitted ? (
           <>
-            <label className="input-label">Email Address</label>
-            <TextInput
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              icon={<Mail size={18} />}
+            <label className="input-label">New Password</label>
+            <PasswordInput
+              placeholder="Enter new password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              icon={<Lock size={18} />}
             />
 
-            <PrimaryButton text="Send Reset Link" onClick={handleSubmit} />
+            <label className="input-label">Confirm Password</label>
+            <PasswordInput
+              placeholder="Confirm new password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              icon={<Lock size={18} />}
+            />
+
+            <PrimaryButton text="Reset Password" onClick={handleSubmit} />
 
             <p className="back-to-login">
               <Link to="/login">
@@ -65,11 +79,11 @@ export default function ForgetPass() {
             </div>
 
             <p className="success-message">
-              We've sent a password reset link to your email address. Please check your inbox and follow the instructions.
+              Your password has been successfully reset. You can now use your new password to login to your account.
             </p>
 
-            <Link to="/reset-password">
-              <PrimaryButton text="Go To Email box" onClick={() => {}} />
+            <Link to="/login">
+              <PrimaryButton text="Go to Login" onClick={() => {}} />
             </Link>
 
             <p className="back-to-login">
