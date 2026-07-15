@@ -1,0 +1,4 @@
+﻿
+.card.shadow-sm {
+  border: 1px solid var(--bs-border-color-translucent, rgba(0, 0, 0, 0.125));
+}

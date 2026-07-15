@@ -1,4 +1,4 @@
-* {
+﻿* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -26,10 +26,6 @@ body {
   overflow: hidden;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
 }
-
-/* ===========================
-        LEFT FORM
-=========================== */
 
 .form-section {
   flex: 1;
@@ -113,10 +109,6 @@ body {
   flex: 1;
 }
 
-/* ===========================
-        INPUTS
-=========================== */
-
 .input-container {
   margin-bottom: 18px;
 }
@@ -161,10 +153,6 @@ body {
   cursor: pointer;
   color: gray;
 }
-
-/* ===========================
-       AGREEMENT
-=========================== */
 
 .agree-row {
   display: flex;
@@ -212,10 +200,6 @@ body {
   font-weight: 600;
   text-decoration: none;
 }
-
-/* ===========================
-      RIGHT PANEL
-=========================== */
 
 .logo-section {
   flex: 1;
@@ -288,10 +272,6 @@ body {
 .brand-white span {
     color: #60a5fa;
 }
-
-/* ===========================
-      RESPONSIVE
-=========================== */
 
 @media(max-width:1000px){
 
