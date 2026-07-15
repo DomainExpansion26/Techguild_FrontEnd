@@ -13,7 +13,7 @@
 .overlay {
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.15);
+
 }
 
 .verify-content {
@@ -117,7 +117,7 @@
   transform: translate(-50%, -50%);
   width: 480px;
   padding: 32px 32px 28px;
-  background: #B3B3B3;
+
 }
 
 /* Tablet */
