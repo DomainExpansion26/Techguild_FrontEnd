@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import "./loadingbutton.css";
 
 const LoadingButton = () => {
@@ -7,7 +7,6 @@ const LoadingButton = () => {
   const handleClick = () => {
     setLoading(true);
 
-    // Simulate API call
     setTimeout(() => {
       setLoading(false);
       alert("Success!");
