@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+﻿import { Routes, Route } from "react-router-dom";
 import { AuthHomeScreen } from "@/Components";
 import DashBoard from "./Pages/DashBoard/DashBoard";
 import SignUp from "./Pages/SignUp/SignUp";
@@ -11,7 +11,6 @@ import SavedJobs from "./Pages/SavedJobs/SavedJobs";
 import Settings from "./Pages/Settings/Settings";
 import HelpSupport from "./Pages/HelpSupport/HelpSupport";
 
-// Newly created pages
 import ActiveQuests from "./Pages/ActiveQuests/ActiveQuests";
 import PartyManagement from "./Pages/PartyManagement/PartyManagement";
 import ReputationRank from "./Pages/ReputationRank/ReputationRank";
@@ -32,7 +31,7 @@ function App() {
       <Route path="/" element={<AuthHomeScreen />} />
       <Route path="/signup" element={<SignUp />} />
       
-      {/* Sidebar Pages */}
+      {}
       <Route path="/dashboard" element={<DashBoard />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/quest-board" element={<Projects />} />

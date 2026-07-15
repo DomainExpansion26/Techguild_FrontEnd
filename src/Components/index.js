@@ -15,3 +15,5 @@ export { default as SignupCard } from "./SignupCard/SignupCard";
 export { default as AuthHomeScreen } from "./AuthHomeScreen/AuthHomeScreen";
 export { default as Cards } from "./Cards/cards";
 export { default as Navbar } from "./Navbar/Navbar";
+export { default as WelcomeBanner } from "./WelcomeBanner/WelcomeBanner";
+
