@@ -43,10 +43,10 @@ export default function VerifyEmail() {
           <p className="email">{email}</p>
 
           <p className="verify-text">
-            Please check your email and click the link provided to
-            
+            Please check your email and click the link provided to ,
+             <br /> 
+            verify your email address.
           </p>
-            <p className="verify-text"> verify your email address.</p>
 
           <div className="verify-buttons">
             <button
