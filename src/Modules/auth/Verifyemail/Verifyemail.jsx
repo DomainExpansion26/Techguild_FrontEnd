@@ -1,14 +1,16 @@
 import { Mail, CheckCircle2 } from "lucide-react";
 import SignupCard from "../../../Components/SignupCard/SignupCard";
 import img2 from "../../../assets/img2.png"; // change extension if png/webp
+import { useNavigate } from "react-router-dom";
 
 import "./Verifyemail.css";
 
 export default function VerifyEmail() {
   const email = "enteremailaddress@gmail.com";
+  const navigate = useNavigate();
 
   const handleResend = () => {
-    console.log("Resend Email");
+    navigate("/emailverify");
   };
 
   const handleOpenGmail = () => {
