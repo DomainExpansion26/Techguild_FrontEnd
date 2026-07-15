@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 .signup-page {
   width: 100%;
   height: 100vh;
@@ -28,6 +29,8 @@
   font-size: 13px;
   margin-bottom: 14px;
 =======
+=======
+>>>>>>> de15fdb (image set:)
 * {
   margin: 0;
   padding: 0;
@@ -53,6 +56,19 @@ body {
   display: flex;
   background: #fff;
   border-radius: 12px;
+=======
+.signup-page {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: 100% 100% !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+>>>>>>> 4944114 (image set:)
   overflow: hidden;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
 }
