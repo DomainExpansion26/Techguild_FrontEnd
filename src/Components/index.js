@@ -1,4 +1,4 @@
-export { default as PrimaryButton } from "./Button/Primarybutton";
+﻿export { default as PrimaryButton } from "./Button/Primarybutton";
 export { default as SecondaryButton } from "./SecondaryButton/SecondaryButton";
 export { default as TextInput } from "./Textinput/Textinput";
 export { default as LoadingButton } from "./LoadingButton/Loadingbutton";
@@ -12,3 +12,5 @@ export { default as Divider } from "./Divider/Divider";
 export { default as SignupCard } from "./SignupCard/SignupCard";
 export { default as Cards } from "./Cards/cards";
 export { default as Navbar } from "./Navbar/Navbar";
+export { default as WelcomeBanner } from "./WelcomeBanner/WelcomeBanner";
+

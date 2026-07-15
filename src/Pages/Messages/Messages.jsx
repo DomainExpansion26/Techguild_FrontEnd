@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Search, Bell, Mail } from "lucide-react";
 import { Navbar, Cards } from "@/Components";
 import "../DashBoard/dashboard.css";
@@ -31,7 +31,6 @@ export default function Messages() {
             </div>
           </header>
         </Cards>
-
 
         <div className="dashboard-content" style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "calc(100% - 70px)" }}>
           <div className="dummy-page-card" style={{ padding: "40px", backgroundColor: "#ffffff", borderRadius: "10px", border: "1.26px solid #e5e7eb", textAlign: "center", maxWidth: "400px" }}>
