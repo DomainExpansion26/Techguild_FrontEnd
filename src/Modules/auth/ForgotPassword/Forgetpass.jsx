@@ -1,9 +1,12 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 ﻿import React from 'react';
 =======
 >>>>>>> 52f54a8 (import right place:)
+=======
+>>>>>>> 6aa0f4c (resolve:)
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, ArrowLeft } from "lucide-react";
@@ -25,9 +28,12 @@ export default function ForgetPass() {
     setIsSubmitted(true);
   };
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 4628298 (import right place:)
 >>>>>>> 52f54a8 (import right place:)
+=======
+>>>>>>> 6aa0f4c (resolve:)
 
   return (
     <div className="forgetpass-page">
