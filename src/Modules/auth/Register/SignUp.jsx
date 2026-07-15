@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock, User } from "lucide-react";
 import "./SignUp.css";
 import {
@@ -32,6 +32,7 @@ const GitHubIcon = () => (
 );
 
 export default function Signup() {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -46,6 +47,8 @@ export default function Signup() {
       password,
       termsAccepted,
     });
+    // Navigate to verify email page
+    navigate("/verify-email");
   };
 
   const handleGoogleSignup = () => {
