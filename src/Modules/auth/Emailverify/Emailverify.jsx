@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import SignupCard from "../../../Components/SignupCard/SignupCard";
 import {
   Mail,
@@ -9,6 +10,11 @@ import img2 from "../../../assets/img2.png";
 import "./Emailverify.css";
 
 export default function EmailVerified() {
+  const navigate = useNavigate();
+
+  const handleContinue = () => {
+    navigate("/account-type");
+  };
   return (
     <div
       className="verified-page"
@@ -86,7 +92,7 @@ export default function EmailVerified() {
 
           </div>
 
-          <button className="continueBtn">
+          <button className="continueBtn" onClick={handleContinue}>
             Continue to account type
           </button>
 
