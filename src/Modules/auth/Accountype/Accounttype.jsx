@@ -2,7 +2,7 @@ import { useState } from "react";
 import SignupCard from "../../../Components/SignupCard/SignupCard";
 import { User, Building2, Briefcase } from "lucide-react";
 import img2 from "../../../assets/img2.png";
-import "./AccountType.css";
+import "./Accounttype.css";
 
 export default function AccountType() {
   const [selected, setSelected] = useState("individual");
