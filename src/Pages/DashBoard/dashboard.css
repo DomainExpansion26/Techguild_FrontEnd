@@ -1,51 +1,56 @@
+﻿
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .dashboard-layout {
   display: flex;
   width: 100vw;
   height: 100vh;
-  padding: 1.25rem;
-  gap: 30px;
+  padding: 20px;
+  gap: 20px;
   overflow: hidden;
   background-image: url('../../assets/img2.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  box-sizing: border-box;
 }
 
 .main-workspace {
-  flex-grow: 1;
+  flex: 1;
+  min-width: 0;
   height: 100%;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  background: transparent;
-  position: relative;
+  gap: 20px;
 }
 
-/* header-card wraps the searchbar row */
 .header-card {
   flex-shrink: 0;
 }
 
 .header {
-  height: 56px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
+  padding: 0 20px;
 }
 
 .header-search-bar {
   display: flex;
   align-items: center;
-  gap: 0.625rem;
-  background-color: #F5F7FA;
-  border: none;
+  gap: 8px;
+  background: #F5F7FA;
   border-radius: 50rem;
-  padding: 0.5rem 1.125rem;
-  width: 23.75rem;
-  box-sizing: border-box;
+  padding: 7px 16px;
+  width: 340px;
+  max-width: 60%;
 }
 
 .search-icon {
@@ -53,17 +58,15 @@
   flex-shrink: 0;
 }
 
-.header-search-bar input,
 .search-input {
   border: none;
   outline: none;
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   color: #1a1a1a;
   width: 100%;
   background: transparent;
 }
 
-.header-search-bar input::placeholder,
 .search-input::placeholder {
   color: #9ca3af;
 }
@@ -71,76 +74,534 @@
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 8px;
 }
 
-.icon-btn,
-.header-action-btn {
+.icon-btn {
   background: none;
   border: none;
   color: #4b5563;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 6px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background 0.2s, color 0.2s;
 }
 
-.icon-btn:hover,
-.header-action-btn:hover {
-  background-color: #e5e7eb;
+.icon-btn:hover {
+  background: #e5e7eb;
   color: #111827;
 }
 
-.header-avatar,
-.header-user-avatar {
-  width: 2rem;
-  height: 2rem;
+.header-avatar {
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  background-color: #103ca4;
-  color: #ffffff;
+  background: #103ca4;
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  font-size: 0.8125rem;
+  font-size: 0.78rem;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .dashboard-content {
-  height: calc(100% - 4.375rem);
-  padding: 1rem 2rem 1.25rem 2rem;
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: 2.8fr 1.6fr 2.0fr auto;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.db-row-banner {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 20px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.db-row-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.db-row-activity {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.db-row-tip {
+  min-height: 0;
+}
+
+.db-card-fill {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.metric-card-element {
+  padding: 16px 20px !important;
+}
+
+.trust-card-element {
+  padding: 14px 18px !important;
+}
+
+.activity-card-element {
+  padding: 16px 20px !important;
+}
+
+.quests-card-element {
+  padding: 16px 20px !important;
+}
+
+.trust-card-inner {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-sizing: border-box;
-  gap: 1rem;
+  height: 100%;
 }
 
-@media (max-width: 768px) {
+.trust-card-top {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.trust-card-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.trust-card-value-container {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.trust-card-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1;
+}
+
+.trust-card-unit {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+.trust-card-rank {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+.trust-card-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.trust-badge-icon {
+  color: #10b981; 
+  flex-shrink: 0;
+}
+
+.trust-badge-text {
+  font-size: 0.74rem;
+  font-weight: 400;
+  color: #374151; 
+}
+
+.trust-card-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.trust-card-desc {
+  font-size: 0.7rem;
+  color: #6b7280;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.trust-card-link {
+  font-size: 0.72rem;
+  color: #103ca4;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  transition: color 0.15s ease;
+  width: fit-content;
+}
+
+.trust-card-link:hover {
+  color: #0c2b7a;
+}
+
+.trust-card-arrow {
+  font-weight: 700;
+  font-size: 0.66rem;
+}
+
+.metric-card-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
+  height: 100%;
+}
+
+.metric-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 12px; 
+}
+
+.metric-card-title {
+  font-size: 0.82rem;
+  font-weight: 600; 
+  color: #565353; 
+  margin: 0;
+  line-height: 1.2;
+}
+
+.metric-card-icon {
+  color: #4b5563; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.metric-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; 
+}
+
+.metric-card-value {
+  font-size: 1.75rem;
+  font-weight: 700; 
+  color: #111827; 
+  line-height: 1;
+  margin: 0;
+}
+
+.metric-card-desc {
+  font-size: 0.72rem;
+  color: #9ca3af; 
+  line-height: 1.35;
+  margin: 0;
+  max-width: 140px; 
+}
+
+.activity-card-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.activity-card-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.activity-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 4px;
+}
+
+.quests-card-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 4px;
+  padding-bottom: 4px;
+}
+
+.activity-card-icon-centered {
+  color: #6a717d !important; 
+  margin-bottom: 2px;
+  flex-shrink: 0;
+}
+
+.quests-card-icon-centered {
+  color: #c7c7cc !important; 
+  margin-top: 6px;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+.activity-card-text-main,
+.quests-card-text-main {
+  font-size: 12px;
+  font-weight: 400;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.activity-card-text-sub,
+.quests-card-text-sub {
+  font-size: 12px;
+  color: #c7c7cc;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.quests-card-text-sub {
+  max-width: 230px;
+  margin-bottom: 2px;
+}
+
+.quests-card-btn {
+  background-color: #103ca4;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 22px;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.quests-card-btn:hover {
+  background-color: #0c2b7a;
+}
+
+.tip-banner-card {
+  background-color: #FFFBEB !important;
+  border: 1px solid #FDE68A !important;
+  border-color: #FDE68A !important;
+}
+
+.tip-banner-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 18px;
+  flex-wrap: wrap;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.35s ease both;
+}
+
+@media (min-width: 768px) and (max-height: 800px) {
   .dashboard-layout {
-    flex-direction: column;
-    height: 100vh;
-    max-height: 100vh;
-    overflow: hidden;
-    padding: 0.75rem;
-    gap: 0.75rem;
+    padding: 12px;
+    gap: 12px;
   }
 
-  .header {
-    padding: 0 1rem;
-    height: auto;
-    min-height: 3.5rem;
-  }
-
-  .header-search-bar {
-    width: 100%;
-    max-width: 18.75rem;
+  .main-workspace {
+    gap: 12px;
   }
 
   .dashboard-content {
-    padding: 1rem;
+    grid-template-rows: 2.5fr 1.8fr 1.9fr auto;
+    gap: 12px;
+  }
+
+  .db-row-banner,
+  .db-row-metrics,
+  .db-row-activity {
+    gap: 12px;
+  }
+
+  
+  .metric-card-element {
+    padding: 10px 14px !important;
+  }
+
+  .trust-card-element {
+    padding: 10px 14px !important;
+  }
+
+  .activity-card-element {
+    padding: 12px 14px !important;
+  }
+
+  .quests-card-element {
+    padding: 12px 14px !important;
+  }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+  .dashboard-layout {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .main-workspace {
+    gap: 12px;
+  }
+
+  .dashboard-content {
+    gap: 16px;
+  }
+
+  .db-row-banner {
+    grid-template-columns: 1.6fr 1fr;
+    gap: 16px;
+  }
+
+  .db-row-metrics {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .db-row-activity {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+
+  .dashboard-layout {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .main-workspace {
+    height: auto;
+    overflow: visible;
+    gap: 12px;
+  }
+
+  .dashboard-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: visible;
+    height: auto;
+  }
+
+  
+  .db-row-banner {
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    gap: 16px;
+  }
+
+  
+  .db-row-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    overflow: visible;
+    gap: 16px;
+  }
+
+  
+  .db-row-activity {
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    gap: 16px;
+  }
+
+  
+  .db-card-fill {
+    height: auto;
+    min-height: auto;
+  }
+
+  .trust-card-element {
+    padding: 16px !important;
+  }
+
+  
+  .db-row-banner .db-card-fill:first-child {
+    min-height: 190px;
+  }
+
+  
+  .db-row-banner .db-card-fill:last-child {
+    min-height: 180px;
+  }
+
+  
+  .db-row-metrics .db-card-fill {
+    min-height: 110px;
+  }
+
+  
+  .db-row-activity .db-card-fill {
+    min-height: 180px;
+  }
+
+  
+  .metric-card-inner {
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .header {
+    height: 46px;
+    padding: 0 12px;
+  }
+
+  .header-search-bar {
+    width: auto;
+    flex: 1;
+    max-width: none;
+  }
+}
+
+@media (max-width: 479px) {
+  .db-row-metrics {
+    grid-template-columns: 1fr;
   }
 }

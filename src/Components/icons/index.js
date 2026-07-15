@@ -1,5 +1,4 @@
-// Dashboard Navigation Icons
-// vite-plugin-svgr v5+ syntax: import SVG files with `?react` suffix
+﻿
 
 import LayoutDashboard  from "../../assets/icons/layout-dashboard.svg?react";
 import User2            from "../../assets/icons/user2.svg?react";

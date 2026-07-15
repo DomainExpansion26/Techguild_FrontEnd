@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import "./authhomescreen.css";
 import img1 from "../../assets/img1.png";
 

@@ -1,4 +1,4 @@
-* {
+﻿* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -12,7 +12,6 @@
   align-items: center;
 }
 
-/* Open Button */
 .open-btn {
   background: #2563eb;
   color: white;
@@ -27,7 +26,6 @@
   background: #1d4ed8;
 }
 
-/* Modal Overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -40,7 +38,6 @@
   align-items: center;
 }
 
-/* Modal Box */
 .modal {
   width: 400px;
   background: white;
@@ -58,7 +55,6 @@
   color: #555;
 }
 
-/* Close Button */
 .close-btn {
   background: #ef4444;
   color: white;
