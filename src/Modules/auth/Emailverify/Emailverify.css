@@ -1,0 +1,227 @@
+.verified-page{
+    width:100%;
+    height:100vh;
+    position:relative;
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(255,255,255,.08);
+}
+
+.verified-container{
+    position:relative;
+    text-align:center;
+}
+
+.mailBox{
+    width:75px;
+    height:75px;
+    margin:auto;
+    background:white;
+    border-radius:16px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    color:#666;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.tick{
+    position:absolute;
+    right:-6px;
+    top:-6px;
+
+    width:32px;
+    height:32px;
+
+    background:#2563eb;
+    color:white;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border:3px solid white;
+}
+
+.verified-container h2{
+    margin:22px 0;
+    font-size:30px;
+    color:#111;
+}
+
+.reward-card{
+
+    display:inline-block;
+
+    background:#eef4ff;
+
+    padding:12px 18px;
+
+    border-radius:10px;
+
+    margin-bottom:35px;
+}
+
+.reward-card h4{
+
+    color:#1747d5;
+
+    margin-bottom:5px;
+}
+
+.reward-card p{
+
+    color:#1747d5;
+
+    font-size:14px;
+}
+
+.progress{
+
+    position:relative;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin:20px 0 40px;
+}
+
+.line{
+
+    position:absolute;
+
+    left:40px;
+    right:40px;
+    top:16px;
+
+    height:2px;
+
+    background:#d6d6d6;
+}
+
+.step{
+
+    width:120px;
+
+    position:relative;
+
+    z-index:2;
+}
+
+.circle{
+
+    width:32px;
+
+    height:32px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    border:2px solid #bdbdbd;
+
+    background:white;
+
+    color:#888;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+}
+
+.active .circle{
+
+    background:#1f57d6;
+
+    color:white;
+
+    border:none;
+}
+
+.step h5{
+
+    margin-top:12px;
+
+    font-size:14px;
+
+    color:#222;
+}
+
+.step span{
+
+    display:block;
+
+    margin-top:4px;
+
+    font-size:12px;
+
+    color:#777;
+}
+
+.active span{
+
+    color:#1f57d6;
+
+    font-weight:600;
+}
+
+.continueBtn{
+
+    border:none;
+
+    background:#1f57d6;
+
+    color:white;
+
+    padding:14px 35px;
+
+    border-radius:8px;
+
+    font-size:15px;
+
+    cursor:pointer;
+}
+
+.continueBtn:hover{
+
+    background:#1848b0;
+}
+
+@media(max-width:768px){
+
+.progress{
+
+    flex-direction:column;
+
+    gap:30px;
+}
+
+.line{
+
+    display:none;
+}
+
+.step{
+
+    width:100%;
+}
+
+.verified-container h2{
+
+    font-size:24px;
+}
+}
