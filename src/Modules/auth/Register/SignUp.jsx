@@ -6,8 +6,7 @@ import "./SignUp.css";
 =======
 import { Link } from "react-router-dom";
 import { Mail, Lock, User } from "lucide-react";
-import "./signup.css";
->>>>>>> 1fd7622 (login:):src/Pages/SignUp/SignUp.jsx
+import "./SignUp.css";
 import {
   AuthHomeScreen,
   BrandLogo,

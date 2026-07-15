@@ -1,4 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+﻿import React from 'react';
+=======
+>>>>>>> 2365e99 (import right place:)
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Lock, ArrowLeft } from "lucide-react";
@@ -20,9 +25,13 @@ export default function ResetPass() {
     console.log("Password reset:", { newPassword, confirmPassword });
     setIsSubmitted(true);
   };
+<<<<<<< HEAD
 =======
 ﻿import React from 'react';
 >>>>>>> d25f5d6 (feat: update dashboard UI)
+=======
+>>>>>>> 96bef49 (import right place:)
+>>>>>>> 2365e99 (import right place:)
 
   return (
     <div className="resetpass-page">
