@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+﻿import React from 'react';
+=======
+>>>>>>> 52f54a8 (import right place:)
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Lock, ArrowLeft } from "lucide-react";
@@ -19,6 +25,10 @@ export default function ResetPass() {
     console.log("Password reset:", { newPassword, confirmPassword });
     setIsSubmitted(true);
   };
+<<<<<<< HEAD
+=======
+>>>>>>> 4628298 (import right place:)
+>>>>>>> 52f54a8 (import right place:)
 
   return (
     <div className="resetpass-page">
