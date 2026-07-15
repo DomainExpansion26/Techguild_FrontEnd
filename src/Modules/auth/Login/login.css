@@ -13,8 +13,14 @@
 =======
   width: 100vw;
   height: 100vh;
-  position: relative;
->>>>>>> 2365e99 (import right place:)
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: 100% 100% !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
   overflow: hidden;
 }
 
