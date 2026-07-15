@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, Lock, User } from "lucide-react";
-import "./signup.css";
+import "./SignUp.css";
 import {
   AuthHomeScreen,
   BrandLogo,
@@ -12,7 +12,7 @@ import {
   TermsCheckbox,
   PrimaryButton,
   SignupCard,
-} from "../../Components";
+} from "../../../Components";
 
 // Google Icon SVG
 const GoogleIcon = () => (
