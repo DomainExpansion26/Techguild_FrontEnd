@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import "./secondary.css";
 
 const handleDefault = () => alert("Sending again!");

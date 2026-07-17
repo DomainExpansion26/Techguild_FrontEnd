@@ -1,6 +1,8 @@
-﻿import React from "react";
+import React from "react";
 import "./authhomescreen.css";
 import img1 from "../../assets/img1.png";
+// TODO: Replace with actual laptop image asset
+// import laptopImage from "../../assets/laptop.png";
 
 export default function AuthHomeScreen() {
   return (
@@ -22,6 +24,12 @@ export default function AuthHomeScreen() {
           <span className="logo-guild">Guild</span>
         </div>
       </div>
+
+      {/* Laptop Image Placeholder - positioned at bottom-right */}
+      {/* Uncomment and use actual laptop image when available */}
+      {/* <div className="auth-home-laptop">
+        <img src={laptopImage} alt="TechGuild Platform" />
+      </div> */}
     </div>
   );
 }
