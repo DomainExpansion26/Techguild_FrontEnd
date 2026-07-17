@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿* {
   margin: 0;
   padding: 0;
@@ -20,32 +19,26 @@
 
 .input-container {
   width: 100%;
-=======
 .input-container {
   width: 100%;
   margin-bottom: 10px;
->>>>>>> praveen/preprod/signup
 }
 
 .input-label {
   display: block;
-<<<<<<< HEAD
   font-size: 18px;
   font-weight: 600;
   color: #111;
   margin-bottom: 10px;
-=======
   font-size: 14px;
   font-weight: 500;
   color: #333;
   margin-bottom: 6px;
->>>>>>> praveen/preprod/signup
 }
 
 .input-box {
   display: flex;
   align-items: center;
-<<<<<<< HEAD
   border: 1.5px solid #cfcfcf;
   border-radius: 14px;
   background: #fff;
@@ -62,7 +55,6 @@
   display: flex;
   align-items: center;
   margin-right: 12px;
-=======
   gap: 10px;
   height: 42px;
   border: 1px solid #E5E7EB;
@@ -83,14 +75,12 @@
   justify-content: center;
   color: #9CA3AF;
   flex-shrink: 0;
->>>>>>> praveen/preprod/signup
 }
 
 .text-input {
   flex: 1;
   border: none;
   outline: none;
-<<<<<<< HEAD
   font-size: 18px;
   color: #222;
   background: transparent;
@@ -98,7 +88,6 @@
 
 .text-input::placeholder {
   color: #9e9e9e;
-=======
   background: none;
   font-size: 14px;
   color: #111827;
@@ -106,5 +95,5 @@
 
 .text-input::placeholder {
   color: #9CA3AF;
->>>>>>> praveen/preprod/signup
+}
 }
