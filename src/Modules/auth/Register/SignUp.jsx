@@ -1,9 +1,5 @@
 import { useState } from "react";
-<<<<<<< HEAD:src/Modules/auth/Register/SignUp.jsx
 import { Link, useNavigate } from "react-router-dom";
-=======
-import { Link } from "react-router-dom";
->>>>>>> fa3ef46 (login:):src/Pages/SignUp/SignUp.jsx
 import { Mail, Lock, User } from "lucide-react";
 import "./SignUp.css";
 import {
