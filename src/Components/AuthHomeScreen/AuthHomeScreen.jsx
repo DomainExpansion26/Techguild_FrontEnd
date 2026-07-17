@@ -1,6 +1,6 @@
 import React from "react";
 import "./authhomescreen.css";
-import img1 from "../../assets/img1.png";
+import img1 from "../../assets/img1.png"; 
 // TODO: Replace with actual laptop image asset
 // import laptopImage from "../../assets/laptop.png";
 
