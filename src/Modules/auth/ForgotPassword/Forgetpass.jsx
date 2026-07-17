@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+
 ﻿import React from 'react';
-=======
->>>>>>> 2365e99 (import right place:)
-=======
->>>>>>> 7ca1e97 (resolve conflicts:)
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, ArrowLeft } from "lucide-react";
@@ -27,16 +21,6 @@ export default function ForgetPass() {
     console.log("Password reset for:", email);
     setIsSubmitted(true);
   };
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-﻿import React from 'react';
->>>>>>> d25f5d6 (feat: update dashboard UI)
-=======
->>>>>>> 96bef49 (import right place:)
->>>>>>> 2365e99 (import right place:)
-=======
->>>>>>> 7ca1e97 (resolve conflicts:)
 
   return (
     <div className="forgetpass-page">
