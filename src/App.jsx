@@ -1,7 +1,10 @@
 ﻿import { Routes, Route } from "react-router-dom";
-import { AuthHomeScreen } from "@/Components";
+import SignUp from "./Modules/auth/Register/SignUp";
+import Login from "./Modules/auth/Login/Login";
+import VerifyEmail from "./Modules/auth/Verifyemail/Verifyemail";
+import EmailVerified from "./Modules/auth/Emailverify/Emailverify";
+import AccountType from "./Modules/auth/Accountype/Accounttype";
 import DashBoard from "./Pages/DashBoard/DashBoard";
-import SignUp from "./Pages/SignUp/SignUp";
 import Profile from "./Pages/Profile/Profile";
 import Projects from "./Pages/Projects/Projects";
 import Proposals from "./Pages/Proposals/Proposals";
@@ -21,9 +24,13 @@ import "./App.css";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<AuthHomeScreen />} />
+      <Route path="/" element={<SignUp />} />
       <Route path="/signup" element={<SignUp />} />
-      
+      <Route path="/login" element={<Login />} />
+      <Route path="/verify-email" element={<VerifyEmail />} />
+      <Route path="/emailverify" element={<EmailVerified />} />
+      <Route path="/account-type" element={<AccountType />} />
+
       {}
       <Route path="/dashboard" element={<DashBoard />} />
       <Route path="/profile" element={<Profile />} />
