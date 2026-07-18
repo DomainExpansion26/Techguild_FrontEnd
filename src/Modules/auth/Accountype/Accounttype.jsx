@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import SignupCard from "../../../Components/SignupCard/SignupCard";
 import { User, Building2, Briefcase } from "lucide-react";
 import img2 from "../../../assets/img2.png";
 import "./Accounttype.css";
 
 export default function AccountType() {
+  const navigate = useNavigate();
   const [selected, setSelected] = useState("individual");
 
   const accountTypes = [
@@ -75,7 +77,10 @@ export default function AccountType() {
             ))}
           </div>
 
-          <button className="continue-btn">
+          <button
+            className="continue-btn"
+            onClick={() => navigate("/dashboard")}
+          >
             Continue
           </button>
         </div>

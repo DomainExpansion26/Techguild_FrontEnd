@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 ﻿import "./textinput.css";
-=======
-import "./textinput.css";
->>>>>>> praveen/preprod/signup
 
 const TextInput = ({
   label,

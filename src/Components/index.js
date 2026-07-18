@@ -10,5 +10,11 @@ export { default as PasswordInput } from "./PasswordInput/PasswordInput";
 export { default as TermsCheckbox } from "./TermsCheckbox/TermsCheckbox";
 export { default as Divider } from "./Divider/Divider";
 export { default as SignupCard } from "./SignupCard/SignupCard";
-
+export { default as Navbar } from "./Navbar/Navbar";
+export { default as Cards } from "./Cards/cards";
+export { default as WelcomeBanner } from "./WelcomeBanner/WelcomeBanner";
+export { default as Charts } from "./Charts/Charts";
+export { default as Tables } from "./Tables/tables";
+export { default as Forms } from "./Froms/Froms";
+export { default as Ui } from "./Ui/ui";
 
