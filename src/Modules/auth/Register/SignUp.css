@@ -43,9 +43,9 @@
 }
 
 /* Social Button Size */
-.signup-card .social-button {
+.signup-card .social-btn {
   width: 363.5px;
-  height: 40px;
+  height: 40px !important;
 }
 
 /* Divider */
@@ -61,22 +61,21 @@
   justify-content: center;
 }
 
-.signup-card .name-row > div {
-  width: 173px;
-  height: 46px;
+.signup-card .name-row > .input-container {
+  width: 173px !important;
   flex: none;
 }
 
 /* Email & Password */
-.signup-card .input-container,
-.signup-card .password-input-container {
+.signup-card > .input-container,
+.signup-card > .password-input-container {
   width: 363.5px;
   margin: 0 auto 30px;
 }
 
 .signup-card .input-box,
 .signup-card .password-input-container .input-box {
-  height: 40px;
+  height: 40px !important;
   padding: 0 16px;
 }
 
@@ -86,9 +85,9 @@
 }
 
 /* Primary Button */
-.signup-card .primary-button {
+.signup-card .primary-btn {
   width: 363.5px;
-  height: 40px;
+  height: 40px !important;
   margin: 0 auto 30px;
 }
 
