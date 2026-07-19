@@ -49,9 +49,9 @@
 }
 
 .verify-content h2 {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
-  color: #111;
+  color: #000000;
   margin-bottom: 18px;
 }
 
@@ -65,7 +65,7 @@
   font-size: 15px;
   font-weight: 600;
   color: #111;
-  margin: 4px 0 8px;
+  margin: 0 0 8px;
 }
 
 .verify-buttons {
@@ -78,12 +78,13 @@
 .secondary-btn,
 .primary-btn {
   flex: 1;
-  height: 46px;
+  height: 54px;
   border-radius: 10px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: .25s;
+  min-width: 0;
 }
 
 .secondary-btn {
@@ -115,7 +116,8 @@
 .verify-page .signup-card {
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 480px;
+  width: 531px;
+  height: 506px;
   padding: 32px 32px 28px;
 
 }

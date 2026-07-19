@@ -28,11 +28,11 @@
   top: 50% !important;
   transform: translate(-50%, -50%) !important;
 
-  width: 750px !important;
+  width: 795px !important;
   max-width: 92% !important;
   min-height: 480px !important;
   max-height: none !important;
-  height: auto !important;
+  height:514px;
 
   padding: 28px !important;
 
@@ -84,6 +84,7 @@
   font-size: 24px;
   font-weight: 700;
   color: #111;
+  text-align: center;
 }
 
 .reward-card {
@@ -189,6 +190,7 @@
 .continueBtn {
   width: 50%;
   height: 52px;
+  margin-top: -20px;
 
   border: none;
   border-radius: 10px;
