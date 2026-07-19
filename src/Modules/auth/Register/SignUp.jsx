@@ -64,11 +64,13 @@ export default function Signup() {
       <AuthHomeScreen />
 
 <SignupCard>
-  <BrandLogo />
+  <div className="signup-header">
+    <BrandLogo />
 
-  <h2>Sign Up</h2>
+    <h2>Sign Up</h2>
 
-  <p className="subtitle">Start your TechGuild Journey</p>
+    <p className="subtitle">Start your TechGuild Journey</p>
+  </div>
 
   <div className="social-buttons">
     <SocialButton
@@ -132,7 +134,7 @@ export default function Signup() {
   <p className="login">
     Already have an account? <Link to="/login">Login</Link>
   </p>
-</SignupCard>   
+</SignupCard>
  </div>
   );
 }
