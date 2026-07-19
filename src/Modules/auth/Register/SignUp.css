@@ -3,106 +3,112 @@
   height: 100vh;
   position: fixed;
   inset: 0;
-  background-size: 100% 100% !important;
-  background-position: center center !important;
-  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center;
+  background-repeat: no-repeat;
   overflow: hidden;
 }
 
-/* Brand Logo */
+/* ---------- Logo ---------- */
 .signup-card .brand {
-  width: 363.5px;
-  height: 40px;
-  margin: 0 auto 30px;
+  width: fit-content;
+  margin: 0 0 24px 60px;
+  height: auto;
 }
 
-/* Heading */
+/* ---------- Heading ---------- */
 .signup-card h2 {
   font-size: 18px;
   font-weight: 600;
-  color: #111;
-  text-align: center;
-  margin: 0 0 30px;
+  color: #111827;
+  margin: 0 0 6px 60px;
+  text-align: left;
 }
 
-/* Subtitle */
+/* ---------- Subtitle ---------- */
 .signup-card .subtitle {
-  color: #6B7280;
   font-size: 13px;
-  text-align: center;
-  margin: 0 0 30px;
+  color: #6B7280;
+  margin: 0 0 34px 60px;
+  text-align: left;
 }
 
-/* Social Buttons */
+/* ---------- Social Buttons ---------- */
 .signup-card .social-buttons {
   width: 363.5px;
-  margin: 0 auto 30px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin: 0 auto 24px;
 }
 
-/* Social Button Size */
 .signup-card .social-btn {
-  width: 363.5px;
+  width: 363.5px !important;
   height: 40px !important;
 }
 
-/* Divider */
+/* ---------- Divider ---------- */
 .signup-card .divider {
-  margin-bottom: 30px;
+  margin: 0 0 24px;
 }
 
-/* Name Row */
+/* ---------- Name Row ---------- */
 .signup-card .name-row {
   display: flex;
+  justify-content: space-between;
   gap: 12px;
-  margin-bottom: 30px;
-  justify-content: center;
-}
-
-.signup-card .name-row > .input-container {
-  width: 173px !important;
-  flex: none;
-}
-
-/* Email & Password */
-.signup-card > .input-container,
-.signup-card > .password-input-container {
+  margin: 0 auto 20px;
   width: 363.5px;
-  margin: 0 auto 30px;
+}
+
+.signup-card .name-row>.input-container {
+  width: 175px;
+}
+
+/* ---------- Inputs ---------- */
+.signup-card>.input-container,
+.signup-card>.password-input-container {
+  width: 363.5px;
+  margin: 0 auto 20px;
 }
 
 .signup-card .input-box,
 .signup-card .password-input-container .input-box {
   height: 40px !important;
-  padding: 0 16px;
+  padding: 0 14px;
 }
 
-/* Terms */
+.signup-card .input-box::placeholder,
+.signup-card .password-input-container .input-box::placeholder {
+  color: #8E8E93;
+}
+
+/* ---------- Terms ---------- */
 .signup-card .terms-checkbox {
-  margin-bottom: 30px;
-}
-
-/* Primary Button */
-.signup-card .primary-btn {
+  margin: 0 auto 16px;
   width: 363.5px;
-  height: 40px !important;
-  margin: 0 auto 30px;
 }
 
-/* Login */
+/* ---------- Join Button ---------- */
+.signup-card .primary-btn {
+  width: 363.5px !important;
+  height: 40px !important;
+  margin: 0 auto 8px;
+  display: block;
+}
+
+/* ---------- Login ---------- */
 .signup-card .login {
   text-align: center;
-  margin: 0;
   font-size: 13px;
   color: #6B7280;
+  margin: 0;
 }
 
 .signup-card .login a {
   color: #2563EB;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .signup-card .login a:hover {
