@@ -44,16 +44,16 @@ export default function ResetPass() {
 
         {!isSubmitted ? (
           <>
-            <label className="input-label">New Password</label>
             <PasswordInput
+              label="New Password"
               placeholder="Enter new password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               icon={<Lock size={18} />}
             />
 
-            <label className="input-label">Confirm Password</label>
             <PasswordInput
+              label="Confirm Password"
               placeholder="Confirm new password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}

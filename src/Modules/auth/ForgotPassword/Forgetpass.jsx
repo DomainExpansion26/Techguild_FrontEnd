@@ -45,9 +45,9 @@ export default function ForgetPass() {
               onChange={(e) => setEmail(e.target.value)}
               icon={<Mail size={18} />}
             />
-
+             <Link >
             <PrimaryButton text="Send Reset Link" onClick={handleSubmit} />
-
+               </Link>
             <p className="back-to-login">
               <Link to="/login">
                 <ArrowLeft size={14} />
