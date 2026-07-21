@@ -12,7 +12,7 @@
 /* ---------- Logo ---------- */
 .signup-card .brand {
   width: fit-content;
-  margin: 0 0 24px 60px;
+  margin: 0 0 16px 60px;
   height: auto;
 }
 
@@ -29,7 +29,7 @@
 .signup-card .subtitle {
   font-size: 13px;
   color: #6B7280;
-  margin: 0 0 34px 60px;
+  margin: 0 0 24px 60px;
   text-align: left;
 }
 
@@ -39,7 +39,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin: 0 auto 24px;
+  margin: 0 auto 16px;
 }
 
 .signup-card .social-btn {
@@ -49,7 +49,7 @@
 
 /* ---------- Divider ---------- */
 .signup-card .divider {
-  margin: 0 0 24px;
+  margin: 0 0 16px;
 }
 
 /* ---------- Name Row ---------- */
@@ -57,7 +57,7 @@
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  margin: 0 auto 20px;
+  margin: 0 auto 14px;
   width: 363.5px;
 }
 
@@ -69,7 +69,7 @@
 .signup-card>.input-container,
 .signup-card>.password-input-container {
   width: 363.5px;
-  margin: 0 auto 20px;
+  margin: 0 auto 14px;
 }
 
 .signup-card .input-box,
@@ -85,7 +85,7 @@
 
 /* ---------- Terms ---------- */
 .signup-card .terms-checkbox {
-  margin: 0 auto 16px;
+  margin: 0 auto 12px;
   width: 363.5px;
 }
 
@@ -93,7 +93,7 @@
 .signup-card .primary-btn {
   width: 363.5px !important;
   height: 40px !important;
-  margin: 0 auto 8px;
+  margin: 0 auto 6px;
   display: block;
 }
 
