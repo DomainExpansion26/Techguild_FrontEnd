@@ -3,6 +3,7 @@ import { Eye, EyeOff } from "lucide-react";
 import "./PasswordInput.css";
 
 const PasswordInput = ({
+  label,
   placeholder = "Enter your password",
   value,
   onChange,
@@ -12,6 +13,7 @@ const PasswordInput = ({
 
   return (
     <div className="password-input-container">
+      {label && <label className="input-label">{label}</label>}
       <div className="input-box">
         {icon && <span className="input-icon">{icon}</span>}
 
