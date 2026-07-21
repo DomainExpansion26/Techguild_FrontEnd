@@ -67,8 +67,8 @@ export default function Login() {
 
         <Divider />
 
-        <label className="input-label">Email Address</label>
         <TextInput
+          label="Email Address"
           type="email"
           placeholder="Enter your email"
           value={email}
@@ -76,8 +76,8 @@ export default function Login() {
           icon={<Mail size={18} />}
         />
 
-        <label className="input-label">Password</label>
         <PasswordInput
+          label="Password"
           placeholder="Enter your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}

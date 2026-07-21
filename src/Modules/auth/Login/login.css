@@ -36,7 +36,7 @@
   color: #000000;
   margin-bottom: 6px;
   margin-top: 4px;
-  margin-left: 4px;
+  margin-left: 45px;
 }
 
 /* Forgot password row with Remember me */
@@ -46,6 +46,7 @@
   align-items: center;
   margin-bottom: 16px;
   margin-top: 4px;
+  marig-right: 45px;
 }
 
 .signup-card .remember-me {
@@ -56,6 +57,8 @@
   color: #000000;
   cursor: pointer;
   user-select: none;
+  margin-left: 45px;
+
 }
 
 .signup-card .remember-me input[type="checkbox"] {
@@ -95,4 +98,12 @@
 
 .signup-card .signup a:hover {
   text-decoration: underline;
+}
+
+/* Social media buttons - centered */
+.signup-card .social-btn {
+  width: 362px;
+  height: 50px;
+  margin-left: auto;
+  margin-right: auto;
 }
