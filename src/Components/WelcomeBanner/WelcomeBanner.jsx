@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { Camera, Zap, Briefcase, ShieldCheck } from "lucide-react";
 import img3 from "@/assets/img3.jpg";
 import "./welcome-banner.css";
@@ -17,13 +17,13 @@ export default function WelcomeBanner() {
         backgroundPosition: "center"
       }}
     >
-      {}
+      { }
       <div className="welcome-banner-overlay position-absolute top-0 start-0 w-100 h-100"></div>
 
-      {}
+      { }
       <div className="welcome-banner-content">
-        
-        {}
+
+        { }
         <div className="welcome-banner-info-section">
           <h2 className="welcome-banner-title">Welcome to TechGuild, Arjun!</h2>
           <h3 className="welcome-banner-subtitle">Complete your profile to stand out</h3>
@@ -32,12 +32,12 @@ export default function WelcomeBanner() {
           </p>
         </div>
 
-        {}
+        { }
         <button className="btn btn-light btn-complete-profile">
           Complete profile
         </button>
 
-        {}
+        { }
         <div className="w-100 welcome-banner-progress-section">
           <div className="progress-bar-container">
             <div className="progress-bar-line"></div>
@@ -47,7 +47,7 @@ export default function WelcomeBanner() {
           </div>
         </div>
 
-        {}
+        { }
         <div className="welcome-banner-steps">
           <div className="step-item">
             <div className="step-icon-circle">
