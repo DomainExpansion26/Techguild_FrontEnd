@@ -1,4 +1,15 @@
-﻿
-.card.shadow-sm {
-  border: 1px solid var(--bs-border-color-translucent, rgba(0, 0, 0, 0.125));
+.card:not(.welcome-banner-card):not(.tip-banner-card),
+.card.shadow-sm:not(.welcome-banner-card):not(.tip-banner-card) {
+  background: rgba(255, 255, 255, 0.50) !important;
+  background-color: rgba(255, 255, 255, 0.50) !important;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border: 1px solid #E5E7EB !important;
+  box-shadow: 4px 4px 8px 0px rgba(16, 60, 164, 0.35) !important;
+}
+
+.tip-banner-card {
+  background-color: #FFFBEB !important;
+  background: #FFFBEB !important;
+  border: 1px solid #FDE68A !important;
 }
