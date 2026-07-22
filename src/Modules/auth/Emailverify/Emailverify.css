@@ -196,7 +196,7 @@
 }
 
 .active span {
-  color: #2f5ae8;
+  color: #103CA4;
   font-weight: 700;
 }
 .continueBtn {
@@ -207,7 +207,7 @@
   border: none;
   border-radius: 10px;
 
-  background: #1f57d6;
+  background: #103CA4;
   color: #fff;
 
   font-size: 16px;
