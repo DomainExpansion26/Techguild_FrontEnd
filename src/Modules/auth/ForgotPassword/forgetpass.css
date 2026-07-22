@@ -8,16 +8,27 @@
 /* ForgetPass card dimensions */
 .forgetpass-page .signup-card {
   width: 500px;
-  height: 480px;
+  height: 410px;
   padding: 20px 24px 30px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
+/* Success state card - smaller height */
+.forgetpass-page .signup-card.success-state {
+  height: 520px;
+}
+
 /* Brand logo - reduce margin for forgetpass */
 .forgetpass-page .signup-card .brand {
-  margin: 0 0 8px 60px;
+  margin: 0 0 8px 40px;
+  margin-top: 30px;
+}
+
+/* Brand logo in success state */
+.forgetpass-page .signup-card.success-state .brand {
+  margin-top: 25px;
 }
 
 /* Card heading - Forgot Password */
@@ -26,6 +37,7 @@
   font-weight: 600;
   margin-bottom: 4px;
   margin-top: 6px;
+  margin-left: 45px;
   color: #111;
 }
 
@@ -34,6 +46,7 @@
   color: #6B7280;
   font-size: 13px;
   margin-bottom: 16px;
+  margin-left: 45px;
   min-height: 18px;
 }
 
@@ -69,7 +82,7 @@
 .signup-card .success-icon {
   display: flex;
   justify-content: center;
-  margin: 12px 0;
+  margin: 0 0 2px 0;
 }
 
 /* Success message */
@@ -78,7 +91,7 @@
   font-size: 14px;
   text-align: center;
   line-height: 1.5;
-  margin: 12px 0;
+  margin: -8px 0 8px 0;
   padding: 0 8px;
 }
 
@@ -86,8 +99,19 @@
 .signup-card .back-to-login {
   text-align: center;
   margin-top: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 0;
   font-size: 13px;
+}
+
+/* Center button in success state */
+.signup-card .success-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 8px 0;
+}
+
+.signup-card .success-button-wrapper .primary-btn {
+  margin: 0 !important;
 }
 
 .signup-card .back-to-login a {

@@ -24,7 +24,7 @@ export default function ForgetPass() {
     <div className="forgetpass-page">
       <AuthHomeScreen />
 
-      <SignupCard>
+      <SignupCard className={isSubmitted ? "success-state" : ""}>
         <BrandLogo />
 
         <h2>Forgot Password?</h2>
@@ -69,9 +69,11 @@ export default function ForgetPass() {
               We've sent a password reset link to your email address. Please check your inbox and follow the instructions.
             </p>
 
-            <Link to="/reset-password">
-              <PrimaryButton text="Go To Email box" onClick={() => {}} />
-            </Link>
+            <div className="success-button-wrapper">
+              <Link to="/reset-password">
+                <PrimaryButton text="Go To Email box" onClick={() => {}} />
+              </Link>
+            </div>
 
             <p className="back-to-login">
               <Link to="/login">
