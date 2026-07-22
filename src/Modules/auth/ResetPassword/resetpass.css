@@ -5,6 +5,12 @@
   overflow: hidden;
 }
 
+/* Move brand logo to the left */
+.resetpass-page .signup-card .brand {
+  margin: 0 0 8px 40px;
+  margin-top: 10px;
+}
+
 /* Card dimensions specific to Reset Password */
 .resetpass-page .signup-card {
   width: 500px;
@@ -17,6 +23,7 @@
     width: 340px;
   }
 }
+ 
 
 /* Card heading - Reset Password */
 .signup-card h2 {
