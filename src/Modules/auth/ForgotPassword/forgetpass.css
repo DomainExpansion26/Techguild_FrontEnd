@@ -8,7 +8,7 @@
 /* ForgetPass card dimensions */
 .forgetpass-page .signup-card {
   width: 500px;
-  height: 450px;
+  height: 480px;
   padding: 20px 24px 30px;
   display: flex;
   flex-direction: column;

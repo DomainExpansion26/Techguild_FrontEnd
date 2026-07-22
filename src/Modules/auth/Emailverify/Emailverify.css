@@ -30,7 +30,7 @@
 
   width: 795px !important;
   max-width: 92% !important;
-  min-height: 480px !important;
+  min-height: 600px !important;
   max-height: none !important;
   height:514px;
 
@@ -125,11 +125,13 @@
 .line {
   position: absolute;
   top: 18px;
-  left: 55px;
+  left: 70px;
   right: 55px;
-  height: 2px;
-  background: #d8d8d8;
+  height: 1px;
+  background: #918D8D;
   z-index: 0;
+  width: 80%;
+
 }
 
 .step {
@@ -177,6 +179,8 @@
   color: #222;
 
   white-space: nowrap;
+  flex: 1;
+  align-self: flex-start;
 }
 
 .step span {
@@ -185,6 +189,10 @@
   color: #777;
   font-weight: 500;
   white-space: nowrap;
+}
+
+.active h5 {
+  align-self: flex-start;
 }
 
 .active span {
@@ -256,5 +264,6 @@
 
   .step h5 {
     font-size: 13px;
+    align-self: flex-start;
   }
 }
