@@ -70,7 +70,7 @@
 
 .verify-buttons {
   display: flex;
-  gap: 30px;
+  gap: 1px;
   margin-top: 28px;
   margin-bottom: 30px;
 }
