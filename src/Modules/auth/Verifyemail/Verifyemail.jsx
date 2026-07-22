@@ -1,6 +1,6 @@
 import { Mail, CheckCircle2 } from "lucide-react";
 import SignupCard from "../../../Components/SignupCard/SignupCard";
-import img2 from "../../../assets/img2.png"; // change extension if png/webp
+import img2 from "../../../assets/img2.png";
 import { useNavigate } from "react-router-dom";
 
 import "./Verifyemail.css";

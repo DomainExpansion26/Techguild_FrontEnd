@@ -1,5 +1,3 @@
-﻿
-
 *,
 *::before,
 *::after {
@@ -13,7 +11,7 @@
   padding: 20px;
   gap: 20px;
   overflow: hidden;
-  background-image: url('../../assets/img2.jpg');
+  background-image: url('../../assets/dashboard.bg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -24,7 +22,6 @@
   flex: 1;
   min-width: 0;
   height: 100%;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -116,7 +113,6 @@
   display: grid;
   grid-template-rows: 2.8fr 1.6fr 2.0fr auto;
   gap: 20px;
-  overflow: hidden;
 }
 
 .db-row-banner {
@@ -124,7 +120,6 @@
   grid-template-columns: 3fr 1fr;
   gap: 20px;
   min-height: 0;
-  overflow: hidden;
 }
 
 .db-row-metrics {
@@ -132,7 +127,6 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   min-height: 0;
-  overflow: hidden;
 }
 
 .db-row-activity {
@@ -140,7 +134,6 @@
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   min-height: 0;
-  overflow: hidden;
 }
 
 .db-row-tip {
@@ -172,8 +165,7 @@
 .trust-card-inner {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
+  gap: 5px;
 }
 
 .trust-card-top {
@@ -221,21 +213,21 @@
 }
 
 .trust-badge-icon {
-  color: #10b981; 
+  color: #10b981;
   flex-shrink: 0;
 }
 
 .trust-badge-text {
   font-size: 0.74rem;
   font-weight: 400;
-  color: #374151; 
+  color: #374151;
 }
 
 .trust-card-bottom {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin-top: 4px;
+  margin-top: 0;
 }
 
 .trust-card-desc {
@@ -246,7 +238,7 @@
 }
 
 .trust-card-link {
-  font-size: 0.72rem;
+  font-size: 12px;
   color: #103ca4;
   font-weight: 700;
   text-decoration: none;
@@ -269,7 +261,7 @@
 .metric-card-inner {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   height: 100%;
 }
 
@@ -278,19 +270,19 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin-bottom: 12px; 
+  margin-bottom: 12px;
 }
 
 .metric-card-title {
   font-size: 0.82rem;
-  font-weight: 600; 
-  color: #565353; 
+  font-weight: 600;
+  color: #565353;
   margin: 0;
   line-height: 1.2;
 }
 
 .metric-card-icon {
-  color: #4b5563; 
+  color: #4b5563;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -299,23 +291,23 @@
 .metric-card-body {
   display: flex;
   flex-direction: column;
-  gap: 4px; 
+  gap: 4px;
 }
 
 .metric-card-value {
   font-size: 1.75rem;
-  font-weight: 700; 
-  color: #111827; 
+  font-weight: 700;
+  color: #111827;
   line-height: 1;
   margin: 0;
 }
 
 .metric-card-desc {
   font-size: 0.72rem;
-  color: #9ca3af; 
+  color: #9ca3af;
   line-height: 1.35;
   margin: 0;
-  max-width: 140px; 
+  max-width: 140px;
 }
 
 .activity-card-inner {
@@ -353,13 +345,13 @@
 }
 
 .activity-card-icon-centered {
-  color: #6a717d !important; 
+  color: #6a717d !important;
   margin-bottom: 2px;
   flex-shrink: 0;
 }
 
 .quests-card-icon-centered {
-  color: #c7c7cc !important; 
+  color: #c7c7cc !important;
   margin-top: 6px;
   margin-bottom: 0;
   flex-shrink: 0;
@@ -455,7 +447,7 @@
     gap: 12px;
   }
 
-  
+
   .metric-card-element {
     padding: 10px 14px !important;
   }
@@ -528,7 +520,7 @@
     height: auto;
   }
 
-  
+
   .db-row-banner {
     display: flex;
     flex-direction: column;
@@ -536,7 +528,7 @@
     gap: 16px;
   }
 
-  
+
   .db-row-metrics {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -544,7 +536,7 @@
     gap: 16px;
   }
 
-  
+
   .db-row-activity {
     display: flex;
     flex-direction: column;
@@ -552,7 +544,7 @@
     gap: 16px;
   }
 
-  
+
   .db-card-fill {
     height: auto;
     min-height: auto;
@@ -562,27 +554,27 @@
     padding: 16px !important;
   }
 
-  
+
   .db-row-banner .db-card-fill:first-child {
     min-height: 190px;
   }
 
-  
+
   .db-row-banner .db-card-fill:last-child {
     min-height: 180px;
   }
 
-  
+
   .db-row-metrics .db-card-fill {
     min-height: 110px;
   }
 
-  
+
   .db-row-activity .db-card-fill {
     min-height: 180px;
   }
 
-  
+
   .metric-card-inner {
     justify-content: flex-start;
     gap: 10px;
