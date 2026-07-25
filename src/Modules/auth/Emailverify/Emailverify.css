@@ -12,7 +12,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .overlay {
@@ -28,11 +28,11 @@
   top: 50% !important;
   transform: translate(-50%, -50%) !important;
 
-  width: 750px !important;
+  width: 795px !important;
   max-width: 92% !important;
-  min-height: 480px !important;
+  min-height: 600px !important;
   max-height: none !important;
-  height: auto !important;
+  height:514px;
 
   padding: 28px !important;
 
@@ -84,6 +84,7 @@
   font-size: 24px;
   font-weight: 700;
   color: #111;
+  text-align: center;
 }
 
 .reward-card {
@@ -107,93 +108,106 @@
 
 .progress {
   position: relative;
-  display: flex !important;
-  visibility: visible !important;
-  opacity: 1 !important;
+  display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 45px;
-  padding-top: 5px;
   width: 100%;
-  min-height: 100px;
-  z-index: 10;
+
+  margin: 40px 0;
+  padding-top: 8px;
+
+  min-height: 120px;   /* Important */
+  overflow: visible;   /* Important */
+
+  background: transparent !important;
 }
 
 .line {
   position: absolute;
-  top: 16px;
-  left: 40px;
-  right: 40px;
-  height: 3px;
-  background: #d8d8d8;
+  top: 18px;
+  left: 70px;
+  right: 55px;
+  height: 1px;
+  background: #918D8D;
   z-index: 0;
+  width: 80%;
+
 }
 
 .step {
-  width: 140px;
-  text-align: center;
   position: relative;
-  z-index: 1;
-  visibility: visible !important;
-  opacity: 1 !important;
-  display: block !important;
-  min-width: 120px;
+  z-index: 2;
+
+  width: 170px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  text-align: center;
+
+  overflow: visible;
 }
 
 .circle {
-  width: 34px;
-  height: 34px;
-  margin: 0 auto 12px;
-
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
+  border: 2px solid #d8d8d8;
   background: #fff;
-  border: 2px solid #cfcfcf;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  color: #999;
+  margin-bottom: 14px;
 }
 
 .active .circle {
-  background: #2d5bdb;
+  background: #2f5ae8;
+  border-color: #2f5ae8;
   color: #fff;
-  border-color: #2d5bdb;
 }
 
 .step h5 {
-  margin: 0 0 4px;
-  font-size: 14px;
-  font-weight: 600;
+  margin-top: 14px;
+  margin-bottom: 6px;
+
+  font-size: 16px;
+  font-weight: 700;
   color: #222;
-  line-height: 1.4;
+
+  white-space: nowrap;
+  flex: 1;
+  align-self: flex-start;
 }
 
 .step span {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  margin-top: 4px;
-  font-size: 13px;
-  color: #777 !important;
-  line-height: 1.4;
+  display: block;
+  font-size: 14px;
+  color: #777;
   font-weight: 500;
+  white-space: nowrap;
+}
+
+.active h5 {
+  align-self: flex-start;
 }
 
 .active span {
-  color: #2d5bdb !important;
-  font-weight: 700 !important;
+  color: #103CA4;
+  font-weight: 700;
 }
-
 .continueBtn {
   width: 50%;
   height: 52px;
+  margin-top: -20px;
 
   border: none;
   border-radius: 10px;
 
-  background: #1f57d6;
+  background: #103CA4;
   color: #fff;
 
   font-size: 16px;
@@ -250,5 +264,6 @@
 
   .step h5 {
     font-size: 13px;
+    align-self: flex-start;
   }
 }

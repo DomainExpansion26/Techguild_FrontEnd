@@ -5,12 +5,39 @@
   overflow: hidden;
 }
 
+/* ForgetPass card dimensions */
+.forgetpass-page .signup-card {
+  width: 500px;
+  height: 410px;
+  padding: 20px 24px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Success state card - smaller height */
+.forgetpass-page .signup-card.success-state {
+  height: 520px;
+}
+
+/* Brand logo - reduce margin for forgetpass */
+.forgetpass-page .signup-card .brand {
+  margin: 0 0 8px 40px;
+  margin-top: 30px;
+}
+
+/* Brand logo in success state */
+.forgetpass-page .signup-card.success-state .brand {
+  margin-top: 25px;
+}
+
 /* Card heading - Forgot Password */
 .signup-card h2 {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 4px;
-  margin-top: 12px;
+  margin-top: 6px;
+  margin-left: 45px;
   color: #111;
 }
 
@@ -18,26 +45,44 @@
 .signup-card .subtitle {
   color: #6B7280;
   font-size: 13px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
+  margin-left: 45px;
   min-height: 18px;
 }
 
-/* Input labels */
-.signup-card .input-label {
+/* Input labels - more specific for forgetpass */
+.forgetpass-page .signup-card > .input-label {
   display: block;
   font-size: 15px;
   font-weight: 500;
   color: #000000;
   margin-bottom: 6px;
   margin-top: 4px;
-  margin-left: 4px;
+  margin-left: 45px;
+  padding-left: 0;
+}
+
+/* Input container alignment */
+.forgetpass-page .signup-card .input-container {
+  margin-left: 45px;
+  margin-right: 45px;
+  margin-bottom: 16px;
+}
+
+/* Button styling and spacing */
+.signup-card .primary-btn {
+ width: 340px !important;
+  height: 40px !important;
+  margin-left: 45px;
+  margin-right: 45px;
+  margin-top: 4px;
 }
 
 /* Success icon */
 .signup-card .success-icon {
   display: flex;
   justify-content: center;
-  margin: 20px 0;
+  margin: 0 0 2px 0;
 }
 
 /* Success message */
@@ -46,16 +91,27 @@
   font-size: 14px;
   text-align: center;
   line-height: 1.5;
-  margin: 16px 0;
+  margin: -8px 0 8px 0;
   padding: 0 8px;
 }
 
 /* Back to login link */
 .signup-card .back-to-login {
   text-align: center;
-  margin-top: 16px;
-  margin-bottom: 4px;
+  margin-top: 8px;
+  margin-bottom: 0;
   font-size: 13px;
+}
+
+/* Center button in success state */
+.signup-card .success-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 8px 0;
+}
+
+.signup-card .success-button-wrapper .primary-btn {
+  margin: 0 !important;
 }
 
 .signup-card .back-to-login a {
@@ -68,5 +124,5 @@
 }
 
 .signup-card .back-to-login a:hover {
-  color:"#103CA4";
+  color: #103CA4;
 }

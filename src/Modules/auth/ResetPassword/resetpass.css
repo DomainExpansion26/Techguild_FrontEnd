@@ -5,12 +5,32 @@
   overflow: hidden;
 }
 
+/* Move brand logo to the left */
+.resetpass-page .signup-card .brand {
+  margin: 0 0 8px 40px;
+  margin-top: 10px;
+}
+
+/* Card dimensions specific to Reset Password */
+.resetpass-page .signup-card {
+  width: 500px;
+  height: 450px;
+}
+
+/* Tablet */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .resetpass-page .signup-card {
+    width: 340px;
+  }
+}
+ 
+
 /* Card heading - Reset Password */
 .signup-card h2 {
   font-size: 18px;
   font-weight: 600;
-  margin-bottom: 4px;
-  margin-top: 12px;
+  margin-bottom: 8px;
+  margin-top: 16px;
   color: #111;
 }
 
@@ -18,7 +38,7 @@
 .signup-card .subtitle {
   color: #6B7280;
   font-size: 13px;
-  margin-bottom: 14px;
+  margin-bottom: 20px;
   min-height: 18px;
 }
 
@@ -28,16 +48,21 @@
   font-size: 15px;
   font-weight: 500;
   color: #000000;
-  margin-bottom: 6px;
-  margin-top: 4px;
+  margin-bottom: 8px;
+  margin-top: 16px;
   margin-left: 4px;
+}
+
+/* Gap between PasswordInput components */
+.signup-card .password-input-container + .password-input-container {
+  margin-top: 30px;
 }
 
 /* Success icon */
 .signup-card .success-icon {
   display: flex;
   justify-content: center;
-  margin: 20px 0;
+  margin: 32px 0 24px 0;
 }
 
 /* Success message */
@@ -46,15 +71,20 @@
   font-size: 14px;
   text-align: center;
   line-height: 1.5;
-  margin: 16px 0;
-  padding: 0 8px;
+  margin: 24px 0;
+  padding: 0 12px;
+}
+
+/* Primary Button spacing */
+.signup-card .primary-button {
+  margin-top: 80px;
 }
 
 /* Back to login link */
 .signup-card .back-to-login {
   text-align: center;
-  margin-top: 16px;
-  margin-bottom: 4px;
+  margin-top: 20px;
+  margin-bottom: 8px;
   font-size: 13px;
 }
 

@@ -54,7 +54,7 @@ export default function EmailVerified() {
               <div className="circle">
                 <Check size={14}/>
               </div>
-
+              
               <h5>Email Verified</h5>
 
               <span>+10 Trust Points</span>

@@ -7,30 +7,45 @@ import "./Accounttype.css";
 
 export default function AccountType() {
   const navigate = useNavigate();
-  const [selected, setSelected] = useState("individual");
+  const [selected, setSelected] = useState("");
 
   const accountTypes = [
     {
       id: "individual",
       title: "Individual",
-      icon: <User size={22} />,
+      icon: <User size={28} />,
       description:
-        "Join as a freelancer, student or professional to find opportunities and build trust."
+        "I am a freelancer or independent professional looking for projects and opportunities.",
+      points: [
+        "Work on exciting projects",
+        "Build your professional reputation",
+        "Grow your career",
+      ],
     },
     {
       id: "agency",
       title: "Agency",
-      icon: <Building2 size={22} />,
+      icon: <Building2 size={28} />,
       description:
-        "Manage multiple team members and showcase your agency's services."
+        "I represent an agency or company providing professional services.",
+      points: [
+        "Manage your team",
+        "Find new clients",
+        "Scale your business",
+      ],
     },
     {
       id: "client",
       title: "Client",
-      icon: <Briefcase size={22} />,
+      icon: <Briefcase size={28} />,
       description:
-        "Hire freelancers, agencies and manage your projects efficiently."
-    }
+        "I am a business or individual looking to hire professionals for projects.",
+      points: [
+        "Post projects",
+        "Hire verified professionals",
+        "Get work done faster",
+      ],
+    },
   ];
 
   return (
@@ -45,7 +60,7 @@ export default function AccountType() {
           <h2>Choose Your Account Type</h2>
 
           <p className="subtitle">
-            Select the option that best describes how you'll use TechGuild.
+            Select the option that best describes you
           </p>
 
           <div className="account-list">
@@ -56,14 +71,20 @@ export default function AccountType() {
                   selected === item.id ? "active" : ""
                 }`}
                 onClick={() => setSelected(item.id)}
+                style={{ cursor: "pointer" }}
               >
-                <div className="account-icon">
-                  {item.icon}
-                </div>
+                <div className="account-icon">{item.icon}</div>
 
                 <div className="account-info">
                   <h3>{item.title}</h3>
-                  <p>{item.description}</p>
+
+                  <p className="desc">{item.description}</p>
+
+                  <ul>
+                    {item.points.map((point, index) => (
+                      <li key={index}>{point}</li>
+                    ))}
+                  </ul>
                 </div>
 
                 <div className="radio">
@@ -79,6 +100,7 @@ export default function AccountType() {
 
           <button
             className="continue-btn"
+            disabled={!selected}
             onClick={() => navigate("/dashboard")}
           >
             Continue

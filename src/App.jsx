@@ -1,6 +1,8 @@
 ﻿import { Routes, Route } from "react-router-dom";
 import SignUp from "./Modules/auth/Register/SignUp";
 import Login from "./Modules/auth/Login/Login";
+import ForgetPass from "./Modules/auth/ForgotPassword/Forgetpass";
+import ResetPass from "./Modules/auth/ResetPassword/Resetpass";
 import VerifyEmail from "./Modules/auth/Verifyemail/Verifyemail";
 import EmailVerified from "./Modules/auth/Emailverify/Emailverify";
 import AccountType from "./Modules/auth/Accountype/Accounttype";
@@ -27,6 +29,8 @@ function App() {
       <Route path="/" element={<SignUp />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/forgot-password" element={<ForgetPass />} />
+      <Route path="/reset-password" element={<ResetPass />} />
       <Route path="/verify-email" element={<VerifyEmail />} />
       <Route path="/emailverify" element={<EmailVerified />} />
       <Route path="/account-type" element={<AccountType />} />
