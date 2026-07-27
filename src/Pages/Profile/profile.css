@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿.profile-page-wrapper {
+=======
+.profile-page-wrapper {
+>>>>>>> 618466b (feat : Updated Profile Page)
   flex: 1;
   min-height: 0;
   display: flex;
@@ -22,7 +26,11 @@
 .profile-card-inner {
   flex: 1;
   min-height: 0;
+<<<<<<< HEAD
   padding: 14px 28px 14px 28px;
+=======
+  padding: 12px 32px 12px 32px;
+>>>>>>> 618466b (feat : Updated Profile Page)
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -30,7 +38,11 @@
 }
 
 .profile-card-inner::-webkit-scrollbar {
+<<<<<<< HEAD
   width: 5px;
+=======
+  width: 6px;
+>>>>>>> 618466b (feat : Updated Profile Page)
 }
 
 .profile-card-inner::-webkit-scrollbar-thumb {
@@ -41,6 +53,7 @@
 /* Header Section */
 .profile-header-section {
   flex-shrink: 0;
+<<<<<<< HEAD
   margin-bottom: 4px;
 }
 
@@ -49,11 +62,25 @@
   font-weight: 700;
   color: #111827;
   margin: 0 0 1px 0;
+=======
+  margin-bottom: 6px;
+}
+
+.profile-main-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 2px 0;
+>>>>>>> 618466b (feat : Updated Profile Page)
   letter-spacing: -0.02em;
 }
 
 .profile-main-subtitle {
+<<<<<<< HEAD
   font-size: 11.5px;
+=======
+  font-size: 12px;
+>>>>>>> 618466b (feat : Updated Profile Page)
   color: #6b7280;
   margin: 0;
 }
@@ -62,7 +89,11 @@
 .profile-stepper-container {
   position: relative;
   flex-shrink: 0;
+<<<<<<< HEAD
   margin-bottom: 8px;
+=======
+  margin-bottom: 14px;
+>>>>>>> 618466b (feat : Updated Profile Page)
   width: 100%;
 }
 
@@ -76,9 +107,15 @@
 
 .stepper-track-line {
   position: absolute;
+<<<<<<< HEAD
   top: 14px;
   left: 10%;
   right: 10%;
+=======
+  top: 16px;
+  left: 40px;
+  right: 40px;
+>>>>>>> 618466b (feat : Updated Profile Page)
   height: 1.5px;
   background-color: #d1d5db;
   z-index: 1;
@@ -98,6 +135,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+<<<<<<< HEAD
   gap: 4px;
   flex: 1;
   min-width: 0;
@@ -106,11 +144,25 @@
 .stepper-circle {
   width: 28px;
   height: 28px;
+=======
+  gap: 5px;
+  flex-shrink: 0;
+  min-width: 100px;
+}
+
+.stepper-circle {
+  width: 32px;
+  height: 32px;
+>>>>>>> 618466b (feat : Updated Profile Page)
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+<<<<<<< HEAD
   font-size: 13px;
+=======
+  font-size: 14px;
+>>>>>>> 618466b (feat : Updated Profile Page)
   font-weight: 600;
   background-color: #ffffff;
   border: 1.5px solid #d1d5db;
@@ -125,8 +177,13 @@
 }
 
 .stepper-label {
+<<<<<<< HEAD
   font-size: 14px;
   font-weight: 400 !important;
+=======
+  font-size: 12px;
+  font-weight: 400;
+>>>>>>> 618466b (feat : Updated Profile Page)
   color: #6b7280;
   line-height: 1.3;
   white-space: nowrap;
@@ -134,7 +191,11 @@
 
 .stepper-item.active .stepper-label {
   color: #111827;
+<<<<<<< HEAD
   font-weight: 400 !important;
+=======
+  font-weight: 600;
+>>>>>>> 618466b (feat : Updated Profile Page)
 }
 
 /* Form Section */
@@ -145,19 +206,32 @@
 }
 
 .profile-section-heading {
+<<<<<<< HEAD
   margin-bottom: 4px;
+=======
+  margin-bottom: 6px;
+>>>>>>> 618466b (feat : Updated Profile Page)
   flex-shrink: 0;
 }
 
 .section-title {
+<<<<<<< HEAD
   font-size: 15px !important;
   font-weight: 700 !important;
+=======
+  font-size: 15.5px;
+  font-weight: 700;
+>>>>>>> 618466b (feat : Updated Profile Page)
   color: #111827;
   margin: 0 0 1px 0;
 }
 
 .section-subtitle {
+<<<<<<< HEAD
   font-size: 11.5px;
+=======
+  font-size: 12px;
+>>>>>>> 618466b (feat : Updated Profile Page)
   color: #6b7280;
   margin: 0;
 }
@@ -165,14 +239,22 @@
 .profile-form {
   display: flex;
   flex-direction: column;
+<<<<<<< HEAD
   gap: 3px;
+=======
+  gap: 6px;
+>>>>>>> 618466b (feat : Updated Profile Page)
 }
 
 .profile-field-group {
   margin-bottom: 0;
 }
 
+<<<<<<< HEAD
 /* Text Input */
+=======
+/* Step 2 - Text Input */
+>>>>>>> 618466b (feat : Updated Profile Page)
 .profile-text-input {
   border: 1.2px solid #e5e7eb;
   border-radius: 8px;
@@ -183,7 +265,11 @@
   color: #111827;
   outline: none;
   font-family: inherit;
+<<<<<<< HEAD
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+=======
+  transition: border-color 0.2s ease;
+>>>>>>> 618466b (feat : Updated Profile Page)
 }
 
 .profile-text-input:focus {
@@ -193,6 +279,7 @@
 
 .profile-text-input::placeholder {
   color: #9ca3af;
+<<<<<<< HEAD
   font-weight: 400;
 }
 
@@ -227,6 +314,8 @@
 .upload-icon-right line,
 .upload-icon-right polyline {
   stroke: #111827 !important;
+=======
+>>>>>>> 618466b (feat : Updated Profile Page)
 }
 
 /* Step 2 - Bio Textarea */
@@ -246,11 +335,19 @@
 
 .bio-textarea {
   width: 100%;
+<<<<<<< HEAD
   height: 44px;
   min-height: unset;
   border: none;
   outline: none;
   padding: 4px 12px 18px 12px;
+=======
+  height: 50px;
+  min-height: unset;
+  border: none;
+  outline: none;
+  padding: 6px 12px 20px 12px;
+>>>>>>> 618466b (feat : Updated Profile Page)
   font-size: 13px;
   color: #111827;
   background: transparent;
@@ -278,8 +375,13 @@
 
 .field-label {
   display: block;
+<<<<<<< HEAD
   font-size: 14px !important;
   font-weight: 400 !important;
+=======
+  font-size: 12px;
+  font-weight: 600;
+>>>>>>> 618466b (feat : Updated Profile Page)
   color: #111827;
   margin-bottom: 2px;
 }
@@ -473,6 +575,7 @@
   color: #ffffff !important;
 }
 
+<<<<<<< HEAD
 /* Step 5 - Review & Submit Cards */
 .review-summary-card {
   border: 1.2px solid #e5e7eb;
@@ -664,6 +767,8 @@
   background-color: #092c85;
 }
 
+=======
+>>>>>>> 618466b (feat : Updated Profile Page)
 /* Responsive Scaling for Mobile & Small Windows */
 @media (max-width: 991px) {
   .stepper-label {
