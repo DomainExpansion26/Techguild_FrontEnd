@@ -10,11 +10,13 @@ import Star from "../../assets/icons/star.svg?react";
 import Bell from "../../assets/icons/bell.svg?react";
 import Settings from "../../assets/icons/settings.svg?react";
 import CircleQuestionMark from "../../assets/icons/circle-question-mark.svg?react";
-import Search           from "../../assets/icons/search.svg?react";
-import Mail             from "../../assets/icons/mail.svg?react";
-import Upload           from "../../assets/icons/upload.svg?react";
-import ChevronDown      from "../../assets/icons/chevron-down.svg?react";
-import ArrowRight       from "../../assets/icons/arrow-right.svg?react";
+import Search from "../../assets/icons/search.svg?react";
+import Mail from "../../assets/icons/mail.svg?react";
+import Upload from "../../assets/icons/upload.svg?react";
+import ChevronDown from "../../assets/icons/chevron-down.svg?react";
+import ArrowRight from "../../assets/icons/arrow-right.svg?react";
+import ArrowLeft from "../../assets/icons/arrow-left.svg?react";
+import Lock from "../../assets/icons/lock.svg?react";
 
 export {
   LayoutDashboard,
@@ -34,6 +36,8 @@ export {
   Upload,
   ChevronDown,
   ArrowRight,
+  ArrowLeft,
+  Lock,
 };
 
 
