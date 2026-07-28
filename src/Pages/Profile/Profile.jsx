@@ -22,6 +22,9 @@ export default function Profile() {
   const [step2Errors, setStep2Errors] = useState({});
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 8a51e02 (feat: Profile Page)
   // Step 3 Form States (Skills)
   const [skills, setSkills] = useState("");
   const [tools, setTools] = useState("");
@@ -35,8 +38,11 @@ export default function Profile() {
   const [resumeFile, setResumeFile] = useState(null);
   const [step4Errors, setStep4Errors] = useState({});
 
+<<<<<<< HEAD
 =======
 >>>>>>> 618466b (feat : Updated Profile Page)
+=======
+>>>>>>> 8a51e02 (feat: Profile Page)
   const steps = [
     { number: 1, label: "Basic Information", active: currentStep === 1 },
     { number: 2, label: "Professional Information", active: currentStep === 2 },
@@ -53,6 +59,9 @@ export default function Profile() {
   };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 8a51e02 (feat: Profile Page)
   const handleResumeUpload = (e) => {
     if (e.target.files && e.target.files[0]) {
       setResumeFile(e.target.files[0]);
@@ -64,10 +73,13 @@ export default function Profile() {
   const isStep2Complete = headline.trim() !== "" && bio.trim() !== "" && experience !== "" && availability !== "";
   const isStep3Complete = skills.trim() !== "" && tools.trim() !== "" && categories.trim() !== "";
   const isStep4Complete = portfolioUrl.trim() !== "" || githubUrl.trim() !== "" || linkedinUrl.trim() !== "" || resumeFile !== null;
+<<<<<<< HEAD
 =======
   const isStep1Complete = profilePhoto !== null && fullName.trim() !== "" && country !== "" && timeZone !== "";
   const isStep2Complete = headline.trim() !== "" && bio.trim() !== "" && experience !== "" && availability !== "";
 >>>>>>> 618466b (feat : Updated Profile Page)
+=======
+>>>>>>> 8a51e02 (feat: Profile Page)
 
   const handleStep1Continue = (e) => {
     e.preventDefault();
@@ -104,6 +116,9 @@ export default function Profile() {
   };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 8a51e02 (feat: Profile Page)
   const handleStep3Continue = (e) => {
     e.preventDefault();
     const errors = {};
@@ -137,8 +152,11 @@ export default function Profile() {
     setCurrentStep(5);
   };
 
+<<<<<<< HEAD
 =======
 >>>>>>> 618466b (feat : Updated Profile Page)
+=======
+>>>>>>> 8a51e02 (feat: Profile Page)
   const renderStepper = () => {
     const progressWidth = `${((currentStep - 1) / (steps.length - 1)) * 100}%`;
 
@@ -153,6 +171,7 @@ export default function Profile() {
               key={step.number}
               onClick={() => setCurrentStep(step.number)}
 <<<<<<< HEAD
+<<<<<<< HEAD
               className={`stepper-item d-flex flex-column align-items-center position-relative ${step.number <= currentStep ? "active" : ""
                 }`}
 =======
@@ -160,6 +179,10 @@ export default function Profile() {
                 step.number <= currentStep ? "active" : ""
               }`}
 >>>>>>> 618466b (feat : Updated Profile Page)
+=======
+              className={`stepper-item d-flex flex-column align-items-center position-relative ${step.number <= currentStep ? "active" : ""
+                }`}
+>>>>>>> 8a51e02 (feat: Profile Page)
               style={{ cursor: "pointer" }}
             >
               <div className="stepper-circle d-flex align-items-center justify-content-center">
@@ -184,10 +207,14 @@ export default function Profile() {
         {/* Profile Picture */}
         <div className="profile-field-group">
 <<<<<<< HEAD
+<<<<<<< HEAD
           <label className="field-label">Profile picture</label>
 =======
           <label className="field-label fw-semibold">Profile picture</label>
 >>>>>>> 618466b (feat : Updated Profile Page)
+=======
+          <label className="field-label">Profile picture</label>
+>>>>>>> 8a51e02 (feat: Profile Page)
           <div className="upload-btn-wrapper d-flex align-items-center gap-3">
             <label htmlFor="profile-photo-input" className="upload-photo-btn d-inline-flex align-items-center justify-content-center text-white gap-2" style={{ cursor: "pointer" }}>
               <span>{profilePhoto ? profilePhoto.name : "Upload photo"}</span>
@@ -201,10 +228,14 @@ export default function Profile() {
         {/* Full Name */}
         <div className="profile-field-group">
 <<<<<<< HEAD
+<<<<<<< HEAD
           <label className="field-label">Full name</label>
 =======
           <label className="field-label fw-semibold">Full name</label>
 >>>>>>> 618466b (feat : Updated Profile Page)
+=======
+          <label className="field-label">Full name</label>
+>>>>>>> 8a51e02 (feat: Profile Page)
           <input
             type="text"
             className={`profile-text-input w-100 ${step1Errors.fullName ? "input-error" : ""}`}
@@ -219,10 +250,14 @@ export default function Profile() {
         <div className="profile-field-group">
           <div className="custom-dropdown-container w-100">
 <<<<<<< HEAD
+<<<<<<< HEAD
             <label className="field-label">Country</label>
 =======
             <label className="field-label fw-semibold">Country</label>
 >>>>>>> 618466b (feat : Updated Profile Page)
+=======
+            <label className="field-label">Country</label>
+>>>>>>> 8a51e02 (feat: Profile Page)
             <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step1Errors.country ? "dropdown-error" : ""}`}>
               <select className="custom-dropdown-select w-100 h-100" value={country} onChange={(e) => { setCountry(e.target.value); setStep1Errors((p) => ({ ...p, country: "" })); }}>
                 <option value="" disabled hidden>Select your country</option>
@@ -245,10 +280,14 @@ export default function Profile() {
         <div className="profile-field-group">
           <div className="custom-dropdown-container w-100">
 <<<<<<< HEAD
+<<<<<<< HEAD
             <label className="field-label">Time Zone</label>
 =======
             <label className="field-label fw-semibold">Time Zone</label>
 >>>>>>> 618466b (feat : Updated Profile Page)
+=======
+            <label className="field-label">Time Zone</label>
+>>>>>>> 8a51e02 (feat: Profile Page)
             <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step1Errors.timeZone ? "dropdown-error" : ""}`}>
               <select className="custom-dropdown-select w-100 h-100" value={timeZone} onChange={(e) => { setTimeZone(e.target.value); setStep1Errors((p) => ({ ...p, timeZone: "" })); }}>
                 <option value="" disabled hidden>Select your time zone</option>
@@ -295,10 +334,14 @@ export default function Profile() {
         {/* Headline */}
         <div className="profile-field-group">
 <<<<<<< HEAD
+<<<<<<< HEAD
           <label className="field-label">Headline</label>
 =======
           <label className="field-label fw-semibold">Headline</label>
 >>>>>>> 618466b (feat : Updated Profile Page)
+=======
+          <label className="field-label">Headline</label>
+>>>>>>> 8a51e02 (feat: Profile Page)
           <input
             type="text"
             className={`profile-text-input w-100 ${step2Errors.headline ? "input-error" : ""}`}
@@ -312,10 +355,14 @@ export default function Profile() {
         {/* Bio */}
         <div className="profile-field-group">
 <<<<<<< HEAD
+<<<<<<< HEAD
           <label className="field-label">Bio</label>
 =======
           <label className="field-label fw-semibold">Bio</label>
 >>>>>>> 618466b (feat : Updated Profile Page)
+=======
+          <label className="field-label">Bio</label>
+>>>>>>> 8a51e02 (feat: Profile Page)
           <div className={`bio-textarea-wrapper w-100 ${step2Errors.bio ? "input-error" : ""}`}>
             <textarea
               className="bio-textarea"
@@ -333,10 +380,14 @@ export default function Profile() {
         <div className="profile-field-group">
           <div className="custom-dropdown-container w-100">
 <<<<<<< HEAD
+<<<<<<< HEAD
             <label className="field-label">Experience Level</label>
 =======
             <label className="field-label fw-semibold">Experience Level</label>
 >>>>>>> 618466b (feat : Updated Profile Page)
+=======
+            <label className="field-label">Experience Level</label>
+>>>>>>> 8a51e02 (feat: Profile Page)
             <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step2Errors.experience ? "dropdown-error" : ""}`}>
               <select className="custom-dropdown-select w-100 h-100" value={experience} onChange={(e) => { setExperience(e.target.value); setStep2Errors((p) => ({ ...p, experience: "" })); }}>
                 <option value="" disabled hidden>Select experience level</option>
@@ -355,10 +406,14 @@ export default function Profile() {
         <div className="profile-field-group">
           <div className="custom-dropdown-container w-100">
 <<<<<<< HEAD
+<<<<<<< HEAD
             <label className="field-label">Availability</label>
 =======
             <label className="field-label fw-semibold">Availability</label>
 >>>>>>> 618466b (feat : Updated Profile Page)
+=======
+            <label className="field-label">Availability</label>
+>>>>>>> 8a51e02 (feat: Profile Page)
             <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step2Errors.availability ? "dropdown-error" : ""}`}>
               <select className="custom-dropdown-select w-100 h-100" value={availability} onChange={(e) => { setAvailability(e.target.value); setStep2Errors((p) => ({ ...p, availability: "" })); }}>
                 <option value="" disabled hidden>Select availability</option>
@@ -393,6 +448,9 @@ export default function Profile() {
   );
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 8a51e02 (feat: Profile Page)
   const renderStep3 = () => (
     <div className="profile-form-section flex-grow-1 d-flex flex-column justify-content-between min-vh-0">
       <div className="profile-section-heading flex-shrink-0">
@@ -702,8 +760,11 @@ export default function Profile() {
     </div>
   );
 
+<<<<<<< HEAD
 =======
 >>>>>>> 618466b (feat : Updated Profile Page)
+=======
+>>>>>>> 8a51e02 (feat: Profile Page)
   return (
     <div className="dashboard-layout">
       <Navbar />
@@ -725,6 +786,7 @@ export default function Profile() {
 
         <div className="profile-page-wrapper flex-grow-1 min-vh-0 d-flex flex-column w-100">
           <Cards className="profile-main-card flex-grow-1 h-100 d-flex flex-column overflow-hidden w-100" padding="0">
+<<<<<<< HEAD
 <<<<<<< HEAD
             <div className="profile-card-inner d-flex flex-column h-100">
 
@@ -751,20 +813,38 @@ export default function Profile() {
               )}
 =======
             <div className="profile-card-inner d-flex flex-column justify-content-between h-100 overflow-hidden">
+=======
+            <div className="profile-card-inner d-flex flex-column h-100">
+>>>>>>> 8a51e02 (feat: Profile Page)
 
-              {/* Header */}
-              <div className="profile-header-section flex-shrink-0">
-                <h1 className="profile-main-title fw-bold">Complete Your Profile</h1>
-                <p className="profile-main-subtitle text-secondary">Lets build your profile step by step.</p>
-              </div>
+              {isSubmitted ? (
+                renderCompletionScreen()
+              ) : (
+                <>
+                  {/* Header */}
+                  <div className="profile-header-section flex-shrink-0">
+                    <h1 className="profile-main-title fw-bold">Complete Your Profile</h1>
+                    <p className="profile-main-subtitle text-secondary">Lets build your profile step by step.</p>
+                  </div>
 
-              {/* Stepper */}
-              {renderStepper()}
+                  {/* Stepper */}
+                  {renderStepper()}
 
+<<<<<<< HEAD
               {/* Step Content */}
               {currentStep === 1 && renderStep1()}
               {currentStep === 2 && renderStep2()}
 >>>>>>> 618466b (feat : Updated Profile Page)
+=======
+                  {/* Step Content */}
+                  {currentStep === 1 && renderStep1()}
+                  {currentStep === 2 && renderStep2()}
+                  {currentStep === 3 && renderStep3()}
+                  {currentStep === 4 && renderStep4()}
+                  {currentStep === 5 && renderStep5()}
+                </>
+              )}
+>>>>>>> 8a51e02 (feat: Profile Page)
 
             </div>
           </Cards>
