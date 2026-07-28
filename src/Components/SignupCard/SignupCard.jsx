@@ -1,7 +1,7 @@
 import "./SignupCard.css";
 
-const SignupCard = ({ children }) => {
-  return <div className="signup-card">{children}</div>;
+const SignupCard = ({ children, className }) => {
+  return <div className={`signup-card ${className || ""}`}>{children}</div>;
 };
 
 export default SignupCard;

@@ -63,63 +63,78 @@ export default function Signup() {
     <div className="signup-page">
       <AuthHomeScreen />
 
-      <SignupCard>
-        <BrandLogo />
+<SignupCard>
+  <div className="signup-header">
+    <BrandLogo />
 
-        <h2>Sign Up</h2>
+    <h2>Sign Up</h2>
 
-        <p className="subtitle">Start your TechGuild Journey</p>
+    <p className="subtitle">Start your TechGuild Journey</p>
+  </div>
 
-        <SocialButton text="Continue with Google" onClick={handleGoogleSignup} icon={<GoogleIcon />} />
+  <div className="social-buttons">
+    <SocialButton
+      text="Continue with Google"
+      onClick={handleGoogleSignup}
+      icon={<GoogleIcon />}
+    />
 
-        <SocialButton text="Continue with GitHub" onClick={handleGithubSignup} icon={<GitHubIcon />} />
+    <SocialButton
+      text="Continue with GitHub"
+      onClick={handleGithubSignup}
+      icon={<GitHubIcon />}
+    />
+  </div>
 
-        <Divider />
+  <Divider />
 
-        <div className="name-row">
-          <TextInput
-            type="text"
-            placeholder="First Name"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            icon={<User size={18} />}
-          />
+  <div className="name-row">
+    <TextInput
+      type="text"
+      placeholder="First Name"
+      value={firstName}
+      onChange={(e) => setFirstName(e.target.value)}
+      icon={<User size={18} />}
+    />
 
-          <TextInput
-            type="text"
-            placeholder="Last Name"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            icon={<User size={18} />}
-          />
-        </div>
+    <TextInput
+      type="text"
+      placeholder="Last Name"
+      value={lastName}
+      onChange={(e) => setLastName(e.target.value)}
+      icon={<User size={18} />}
+    />
+  </div>
 
-        <TextInput
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          icon={<Mail size={18} />}
-        />
+  <TextInput
+    type="email"
+    placeholder="Enter your email"
+    value={email}
+    onChange={(e) => setEmail(e.target.value)}
+    icon={<Mail size={18} />}
+  />
 
-        <PasswordInput
-          placeholder="Enter your password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          icon={<Lock size={18} />}
-        />
+  <PasswordInput
+    placeholder="Enter your password"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+    icon={<Lock size={18} />}
+  />
 
-        <TermsCheckbox
-          checked={termsAccepted}
-          onChange={(e) => setTermsAccepted(e.target.checked)}
-        />
+  <TermsCheckbox
+    checked={termsAccepted}
+    onChange={(e) => setTermsAccepted(e.target.checked)}
+  />
 
-        <PrimaryButton text="Join TechGuild" onClick={handleSignup} />
+  <PrimaryButton
+    text="Join TechGuild"
+    onClick={handleSignup}
+  />
 
-        <p className="login">
-          Already have an account? <Link to="/login">Login</Link>
-        </p>
-      </SignupCard>
-    </div>
+  <p className="login">
+    Already have an account? <Link to="/login">Login</Link>
+  </p>
+</SignupCard>
+ </div>
   );
 }

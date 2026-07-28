@@ -1,5 +1,6 @@
 import { Mail, CheckCircle2 } from "lucide-react";
 import SignupCard from "../../../Components/SignupCard/SignupCard";
+import PrimaryButton from "../../../Components/Button/Primarybutton";
 import img2 from "../../../assets/img2.png"; // change extension if png/webp
 import { useNavigate } from "react-router-dom";
 
@@ -56,12 +57,10 @@ export default function VerifyEmail() {
               Send Again
             </button>
 
-            <button
-              className="primary-btn"
+            <PrimaryButton
+              text="Go to Gmail Inbox"
               onClick={handleOpenGmail}
-            >
-              Go to Gmail Inbox
-            </button>
+            />
           </div>
 
           <p className="footer-text">

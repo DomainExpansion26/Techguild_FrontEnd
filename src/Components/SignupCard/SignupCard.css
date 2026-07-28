@@ -3,13 +3,14 @@
   left: 80px;
   top: 50%;
   transform: translateY(-50%);
-  width: 360px;
+  width: 509px;
+  height: 610px;
   padding: 24px 24px 20px;
   background: rgba(255, 255, 255, 0.28);
-  
-  
+
+
   border-radius: 18px;
-  
+
 }
 
 /* Tablet */

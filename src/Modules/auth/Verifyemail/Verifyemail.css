@@ -39,7 +39,7 @@
   top: -3px;
   width: 28px;
   height: 28px;
-  background: #2563eb;
+  background: #103CA4;
   color: #fff;
   border-radius: 50%;
   display: flex;
@@ -49,9 +49,9 @@
 }
 
 .verify-content h2 {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
-  color: #111;
+  color: #000000;
   margin-bottom: 18px;
 }
 
@@ -65,30 +65,32 @@
   font-size: 15px;
   font-weight: 600;
   color: #111;
-  margin: 4px 0 8px;
+  margin: 0 0 8px;
 }
 
 .verify-buttons {
   display: flex;
-  gap: 12px;
+  gap: 1px;
   margin-top: 28px;
-  margin-bottom: 24px;
+  margin-bottom: 30px;
 }
 
 .secondary-btn,
 .primary-btn {
-  flex: 1;
-  height: 46px;
+  height: 54px;
   border-radius: 10px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: .25s;
+  min-width: 0;
 }
 
 .secondary-btn {
+  flex: 1;
   border: 1px solid #d4d4d4;
   background: white;
+  
 }
 
 .secondary-btn:hover {
@@ -96,18 +98,19 @@
 }
 
 .primary-btn {
+  flex: 1.5;
   border: none;
   color: white;
-  background: #2563eb;
+  background: #103CA4;
 }
 
 .primary-btn:hover {
-  background: #1d4ed8;
+  background: #103CA4;
 }
 
 .footer-text {
   font-size: 14px;
-  color: #333;
+  color: #000000;
   line-height: 1.7;
 }
 
@@ -115,7 +118,8 @@
 .verify-page .signup-card {
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 480px;
+  width: 531px;
+  height: 506px;
   padding: 32px 32px 28px;
 
 }
@@ -124,7 +128,7 @@
 
 @media (max-width:1024px) {
   .verify-content h2 {
-    font-size: 24px;
+    font-size: 18px;
   }
 }
 
@@ -142,7 +146,7 @@
   }
 
   .verify-content h2 {
-    font-size: 22px;
+    font-size: 16px;
   }
 
   .mail-icon-wrapper {
