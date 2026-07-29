@@ -15,17 +15,25 @@
   z-index: 2;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   height: 100%;
+  width: 100%;
+  gap: 0;
+}
+
+.welcome-banner-info-section {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
   width: 100%;
   gap: 12px;
 }
 
-.welcome-banner-info-section {
-  padding-right: 180px;
+.welcome-banner-info-text {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .welcome-banner-title {
@@ -55,16 +63,18 @@
 }
 
 .btn-complete-profile {
-  position: absolute !important;
-  top: 16px !important;
-  right: 16px !important;
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  flex-shrink: 0 !important;
+  align-self: flex-start !important;
   background-color: #ffffff !important;
   color: #103ca4 !important;
   border: none !important;
-  border-radius: 9.13px !important;
+  border-radius: clamp(8px, 0.7vw, 12px) !important;
   font-weight: 600 !important;
-  font-size: 0.8rem !important;
-  padding: 8px 20px !important;
+  font-size: clamp(0.72rem, 0.85vw, 1.05rem) !important;
+  padding: clamp(7px, 0.7vh, 13px) clamp(14px, 1.4vw, 28px) !important;
   transition: all 0.2s ease !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
   z-index: 10 !important;
@@ -152,15 +162,8 @@
 
 @media (max-width: 767px) {
   .welcome-banner-info-section {
-    padding-right: 0;
-  }
-
-  .btn-complete-profile {
-    position: static !important;
-    margin-top: 8px !important;
-    align-self: flex-start !important;
-    padding: 8px 18px !important;
-    font-size: 0.78rem !important;
+    flex-direction: column;
+    gap: 8px;
   }
 
   .welcome-banner-title {
