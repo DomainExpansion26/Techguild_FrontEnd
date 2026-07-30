@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Lock, ArrowLeft } from "lucide-react";
@@ -25,77 +25,79 @@ export default function ResetPass() {
     <div className="resetpass-page">
       <AuthHomeScreen />
 
-      <SignupCard>
-        <BrandLogo />
+      <div className="auth-card-wrapper">
+        <SignupCard>
+          <BrandLogo />
 
-        <h2>Reset Password</h2>
+          <h2>Reset Password</h2>
 
-        <p className="subtitle">
-  {isSubmitted ? (
-    "Password reset successful"
-  ) : (
-    <>
-      Enter your new password below.
-      <br />
-      Make sure it's strong and unique.
-    </>
-  )}
-        </p>
+          <p className="subtitle">
+            {isSubmitted ? (
+              "Password reset successful"
+            ) : (
+              <>
+                Enter your new password below.
+                <br />
+                Make sure it's strong and unique.
+              </>
+            )}
+          </p>
 
-        {!isSubmitted ? (
-          <>
-            <PasswordInput
-              label="New Password"
-              placeholder="Enter new password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              icon={<Lock size={18} />}
-            />
+          {!isSubmitted ? (
+            <>
+              <PasswordInput
+                label="New Password"
+                placeholder="Enter new password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                icon={<Lock size={18} />}
+              />
 
-            <PasswordInput
-              label="Confirm Password"
-              placeholder="Confirm new password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              icon={<Lock size={18} />}
-            />
+              <PasswordInput
+                label="Confirm Password"
+                placeholder="Confirm new password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                icon={<Lock size={18} />}
+              />
 
-            <PrimaryButton text="Reset Password" onClick={handleSubmit} />
+              <PrimaryButton text="Reset Password" onClick={handleSubmit} />
 
-            <p className="back-to-login">
+              <p className="back-to-login">
+                <Link to="/login">
+                  <ArrowLeft size={14} />
+                  Back to Login
+                </Link>
+              </p>
+            </>
+          ) : (
+            <>
+              <div className="success-icon">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="32" cy="32" r="32" fill="#10B981" fillOpacity="0.1"/>
+                  <circle cx="32" cy="32" r="24" fill="#10B981" fillOpacity="0.2"/>
+                  <path d="M20 32L28 40L44 24" stroke="#10B981" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+
+              <p className="success-message">
+                Your password has been successfully reset. You can now use your new password to login to your account.
+              </p>
+
               <Link to="/login">
-                <ArrowLeft size={14} />
-                Back to Login
+                <PrimaryButton text="Go to Login" onClick={() => {}} />
               </Link>
-            </p>
-          </>
-        ) : (
-          <>
-            <div className="success-icon">
-              <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="32" cy="32" r="32" fill="#10B981" fillOpacity="0.1"/>
-                <circle cx="32" cy="32" r="24" fill="#10B981" fillOpacity="0.2"/>
-                <path d="M20 32L28 40L44 24" stroke="#10B981" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
 
-            <p className="success-message">
-              Your password has been successfully reset. You can now use your new password to login to your account.
-            </p>
-
-            <Link to="/login">
-              <PrimaryButton text="Go to Login" onClick={() => {}} />
-            </Link>
-
-            <p className="back-to-login">
-              <Link to="/login">
-                <ArrowLeft size={14} />
-                Back to Login
-              </Link>
-            </p>
-          </>
-        )}
-      </SignupCard>
+              <p className="back-to-login">
+                <Link to="/login">
+                  <ArrowLeft size={14} />
+                  Back to Login
+                </Link>
+              </p>
+            </>
+          )}
+        </SignupCard>
+      </div>
     </div>
   );
 }

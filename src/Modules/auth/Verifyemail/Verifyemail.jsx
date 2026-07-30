@@ -1,7 +1,7 @@
 import { Mail, CheckCircle2 } from "lucide-react";
 import SignupCard from "../../../Components/SignupCard/SignupCard";
 import PrimaryButton from "../../../Components/Button/Primarybutton";
-import img2 from "../../../assets/img2.png"; // change extension if png/webp
+import img2 from "../../../assets/img2.png";
 import { useNavigate } from "react-router-dom";
 
 import "./Verifyemail.css";
@@ -29,7 +29,7 @@ export default function VerifyEmail() {
         <div className="verify-content">
 
           <div className="mail-icon-wrapper">
-            <Mail size={48} strokeWidth={1.8} />
+            <Mail size={44} strokeWidth={1.8} />
             <span className="badge">
               <CheckCircle2 size={16} />
             </span>
