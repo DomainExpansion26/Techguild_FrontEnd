@@ -1,43 +1,114 @@
-.signup-card {
+/* ===== Auth Card Wrapper (holds card + footer text) ===== */
+.auth-card-wrapper {
   position: absolute;
   left: 80px;
   top: 50%;
   transform: translateY(-50%);
-  width: 509px;
-  height: 610px;
-  padding: 24px 24px 20px;
-  background: rgba(255, 255, 255, 0.28);
-
-
-  border-radius: 18px;
-
+  width: 430px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Tablet */
-@media (max-width: 1024px) and (min-width: 768px) {
-  .signup-card {
-    left: 40px;
-    width: 340px;
+/* ===== Glass Card ===== */
+.signup-card {
+  width: 430px;
+  height: 530px;
+  padding: 24px 28px 14px 28px;
+  background: rgba(255, 255, 255, 0.48);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+/* ===== Footer text outside card ===== */
+.auth-footer-text {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 13px;
+  color: #6c757d;
+  margin-bottom: 0;
+}
+
+.auth-footer-text a {
+  color: #103CA4;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-footer-text a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Tablet & Laptop adjustments ===== */
+@media (max-width: 1366px) and (min-width: 1025px) {
+  .auth-card-wrapper {
+    left: 4vw;
   }
 }
 
-/* Mobile */
-@media (max-width: 767px) {
+@media (max-width: 1024px) and (min-width: 768px) {
+  .auth-card-wrapper {
+    left: 4vw;
+    width: 390px;
+  }
+
   .signup-card {
+    width: 100%;
+    height: 520px;
+    padding: 20px 22px 14px 22px;
+  }
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 767px) {
+  .auth-card-wrapper {
     position: relative;
     left: auto;
     top: auto;
     transform: none;
-    width: 92%;
+    width: 90%;
     max-width: 400px;
-    margin: 20px auto;
-    padding: 20px;
+    margin: 30px auto;
+  }
+
+  .signup-card {
+    width: 100%;
+    height: auto;
+    min-height: 510px;
+    padding: 20px 20px 14px 20px;
   }
 }
 
 @media (max-width: 480px) {
-  .signup-card {
-    width: 95%;
-    padding: 18px;
+  .auth-card-wrapper {
+    width: 92%;
+    margin: 20px auto;
   }
+
+  .signup-card {
+    padding: 18px 16px 14px 16px;
+  }
+}
+
+/* ===== Input Placeholder styling ===== */
+.signup-card input::placeholder {
+  color: #B3B3B3 !important;
+  opacity: 1 !important;
+}
+
+.signup-card input::-webkit-input-placeholder {
+  color: #B3B3B3 !important;
+}
+
+.signup-card input::-moz-placeholder {
+  color: #B3B3B3 !important;
+  opacity: 1 !important;
+}
+
+.signup-card input:-ms-input-placeholder {
+  color: #B3B3B3 !important;
 }

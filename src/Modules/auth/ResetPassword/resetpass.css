@@ -12,8 +12,12 @@
 }
 
 /* Card dimensions specific to Reset Password */
-.resetpass-page .signup-card {
+.resetpass-page .auth-card-wrapper {
   width: 500px;
+}
+
+.resetpass-page .signup-card {
+  width: 100%;
   height: 450px;
 }
 
