@@ -1,4 +1,4 @@
-﻿
+
 
 import LayoutDashboard  from "../../assets/icons/layout-dashboard.svg?react";
 import User2            from "../../assets/icons/user2.svg?react";
@@ -12,6 +12,8 @@ import Star             from "../../assets/icons/star.svg?react";
 import Bell             from "../../assets/icons/bell.svg?react";
 import Settings         from "../../assets/icons/settings.svg?react";
 import CircleQuestionMark from "../../assets/icons/circle-question-mark.svg?react";
+import Mail             from "../../assets/icons/mail.svg?react";
+import Check            from "../../assets/icons/check.svg?react";
 
 export {
   LayoutDashboard,
@@ -26,5 +28,8 @@ export {
   Bell,
   Settings,
   CircleQuestionMark,
+  Mail,
+  Check,
 };
+
 

@@ -23,16 +23,15 @@
 
 /* Override SignupCard ONLY on this page */
 .verified-page .signup-card {
-  position: absolute !important;
-  left: 50% !important;
-  top: 50% !important;
-  transform: translate(-50%, -50%) !important;
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
 
   width: 795px !important;
   max-width: 92% !important;
-  min-height: 600px !important;
-  max-height: none !important;
-  height:514px;
+  min-height: 514px !important;
+  height: auto !important;
 
   padding: 28px !important;
 

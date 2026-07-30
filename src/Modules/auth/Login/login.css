@@ -12,98 +12,24 @@
   overflow: hidden;
 }
 
-/* Card heading - Login */
-.signup-card h2 {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 4px;
-  margin-top: 12px;
-  color: #111;
-}
-
-/* Subtitle */
-.signup-card .subtitle {
-  color: #6B7280;
-  font-size: 13px;
-  margin-bottom: 14px;
-}
-
-/* Input labels */
-.signup-card .input-label {
-  display: block;
-  font-size: 15px;
-  font-weight: 500;
-  color: #000000;
-  margin-bottom: 6px;
-  margin-top: 4px;
-  margin-left: 45px;
-}
-
-/* Forgot password row with Remember me */
-.signup-card .forgot-password-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-  margin-top: 4px;
-  margin-right: 45px;
-}
-
-.signup-card .remember-me {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 15px;
-  color: #000000;
+.cursor-pointer {
   cursor: pointer;
-  user-select: none;
-  margin-left: 45px;
-
 }
 
-.signup-card .remember-me input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-  accent-color: #2563EB;
-  border-color: #B3B3B3;
-  border: 1px solid #B3B3B3;
+/* Clean autofill background inside glass card */
+.signup-card input:-webkit-autofill,
+.signup-card input:-webkit-autofill:hover,
+.signup-card input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset !important;
+  box-shadow: 0 0 0px 1000px #fff inset !important;
+  -webkit-text-fill-color: #212529 !important;
 }
 
-.signup-card .forgot-password-row a {
-  color: #2563EB;
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.signup-card .forgot-password-row a:hover {
-  text-decoration: underline;
-}
-
-/* Signup text at bottom */
-.signup-card .signup {
-  text-align: center;
-  margin-top: 16px;
-  margin-bottom: 4px;
-  font-size: 13px;
-  color: #6B7280;
-}
-
-.signup-card .signup a {
-  color: #2563EB;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.signup-card .signup a:hover {
-  text-decoration: underline;
-}
-
-/* Social media buttons - centered */
-.signup-card .social-btn {
-  width: 362px;
-  height: 50px;
-  margin-left: auto;
-  margin-right: auto;
+@media (max-width: 767px) {
+  .login-page {
+    position: relative;
+    min-height: 100vh;
+    height: auto;
+    overflow-y: auto;
+  }
 }

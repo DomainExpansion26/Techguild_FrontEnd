@@ -1,12 +1,13 @@
-    .verify-page {
+.verify-page {
   width: 100%;
   height: 100vh;
   position: relative;
-  background-size: 100% 100%;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   overflow: hidden;
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 
@@ -21,31 +22,33 @@
 }
 
 .mail-icon-wrapper {
-  width: 78px;
-  height: 78px;
+  width: 74px;
+  height: 74px;
   margin: 0 auto 18px;
-  background: rgba(255,255,255,.55);
-  border-radius: 20px;
+  background: #FFFFFF;
+  border-radius: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #444;
+  color: #555555;
   position: relative;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .badge {
   position: absolute;
-  right: -3px;
-  top: -3px;
-  width: 28px;
-  height: 28px;
+  right: -5px;
+  top: -5px;
+  width: 26px;
+  height: 26px;
   background: #103CA4;
-  color: #fff;
+  color: #FFFFFF;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 3px solid white;
+  border: 3px solid #FFFFFF;
 }
 
 .verify-content h2 {
@@ -58,7 +61,7 @@
 .verify-text {
   font-size: 14px;
   color: #444;
-  
+
 }
 
 .email {
@@ -90,7 +93,7 @@
   flex: 1;
   border: 1px solid #d4d4d4;
   background: white;
-  
+
 }
 
 .secondary-btn:hover {
@@ -116,12 +119,16 @@
 
 /* Center and wider card for Verifyemail page only */
 .verify-page .signup-card {
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 531px;
-  height: 506px;
-  padding: 32px 32px 28px;
-
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  width: 450px;
+  max-width: 90%;
+  height: auto;
+  min-height: 370px;
+  padding: 20px 24px 16px;
+  box-sizing: border-box;
 }
 
 /* Tablet */
