@@ -1,4 +1,4 @@
-﻿export { default as PrimaryButton } from "./Button/Primarybutton";
+export { default as PrimaryButton } from "./Button/Primarybutton";
 export { default as SecondaryButton } from "./SecondaryButton/SecondaryButton";
 export { default as TextInput } from "./Textinput/Textinput";
 export { default as LoadingButton } from "./LoadingButton/Loadingbutton";
@@ -17,4 +17,3 @@ export { default as Charts } from "./Charts/Charts";
 export { default as Tables } from "./Tables/tables";
 export { default as Forms } from "./Froms/Froms";
 export { default as Ui } from "./Ui/ui";
-
