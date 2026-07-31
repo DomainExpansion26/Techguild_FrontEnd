@@ -157,349 +157,341 @@ export default function Profile() {
   };
 
   const renderStep1 = () => (
-    <div className="profile-form-section flex-grow-1 d-flex flex-column justify-content-between min-vh-0">
+    <form className="profile-step-form flex-grow-1 d-flex flex-column min-vh-0 h-100" onSubmit={handleStep1Continue}>
+      {/* Section Heading */}
       <div className="profile-section-heading flex-shrink-0">
         <h2 className="section-title fw-bold">Basic information</h2>
         <p className="section-subtitle text-secondary">Add your basic details.</p>
       </div>
 
-      <form className="profile-form d-flex flex-column justify-content-between flex-grow-1" onSubmit={handleStep1Continue}>
-        {/* Profile Picture */}
-        <div className="profile-field-group">
-          <label className="field-label">Profile picture</label>
-          <div className="upload-btn-wrapper d-flex align-items-center gap-3">
-            <label htmlFor="profile-photo-input" className="upload-photo-btn d-inline-flex align-items-center justify-content-center text-white gap-2" style={{ cursor: "pointer" }}>
-              <span>{profilePhoto ? profilePhoto.name : "Upload photo"}</span>
-              <Icon name={profilePhoto ? "Check" : "Upload"} size={15} color="#ffffff" />
-            </label>
-            <input id="profile-photo-input" type="file" accept="image/*" style={{ display: "none" }} onChange={handlePhotoUpload} />
-          </div>
-          {step1Errors.photo && <span className="field-error">{step1Errors.photo}</span>}
+      {/* Profile Picture */}
+      <div className="profile-field-group">
+        <label className="field-label">Profile picture</label>
+        <div className="upload-btn-wrapper d-flex align-items-center gap-3">
+          <label htmlFor="profile-photo-input" className="upload-photo-btn d-inline-flex align-items-center justify-content-center text-white gap-2" style={{ cursor: "pointer" }}>
+            <span>{profilePhoto ? profilePhoto.name : "Upload photo"}</span>
+            <Icon name={profilePhoto ? "Check" : "Upload"} size={15} color="#ffffff" />
+          </label>
+          <input id="profile-photo-input" type="file" accept="image/*" style={{ display: "none" }} onChange={handlePhotoUpload} />
         </div>
+        {step1Errors.photo && <span className="field-error">{step1Errors.photo}</span>}
+      </div>
 
-        {/* Full Name */}
-        <div className="profile-field-group">
-          <label className="field-label">Full name</label>
-          <input
-            type="text"
-            className={`profile-text-input w-100 ${step1Errors.fullName ? "input-error" : ""}`}
-            placeholder="Enter your full name"
-            value={fullName}
-            onChange={(e) => { setFullName(e.target.value); setStep1Errors((p) => ({ ...p, fullName: "" })); }}
+      {/* Full Name */}
+      <div className="profile-field-group">
+        <label className="field-label">Full name</label>
+        <input
+          type="text"
+          className={`profile-text-input w-100 ${step1Errors.fullName ? "input-error" : ""}`}
+          placeholder="Enter your full name"
+          value={fullName}
+          onChange={(e) => { setFullName(e.target.value); setStep1Errors((p) => ({ ...p, fullName: "" })); }}
+        />
+        {step1Errors.fullName && <span className="field-error">{step1Errors.fullName}</span>}
+      </div>
+
+      {/* Country */}
+      <div className="profile-field-group">
+        <div className="custom-dropdown-container w-100">
+          <label className="field-label">Country</label>
+          <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step1Errors.country ? "dropdown-error" : ""}`}>
+            <select className="custom-dropdown-select w-100 h-100" value={country} onChange={(e) => { setCountry(e.target.value); setStep1Errors((p) => ({ ...p, country: "" })); }}>
+              <option value="" disabled hidden>Select your country</option>
+              <option value="India">India</option>
+              <option value="United States">United States</option>
+              <option value="United Kingdom">United Kingdom</option>
+              <option value="Canada">Canada</option>
+              <option value="Australia">Australia</option>
+              <option value="Germany">Germany</option>
+              <option value="France">France</option>
+              <option value="Japan">Japan</option>
+            </select>
+            <Icon name="ChevronDown" size={18} className="dropdown-chevron-icon position-absolute" />
+          </div>
+          {step1Errors.country && <span className="field-error">{step1Errors.country}</span>}
+        </div>
+      </div>
+
+      {/* Time Zone */}
+      <div className="profile-field-group">
+        <div className="custom-dropdown-container w-100">
+          <label className="field-label">Time Zone</label>
+          <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step1Errors.timeZone ? "dropdown-error" : ""}`}>
+            <select className="custom-dropdown-select w-100 h-100" value={timeZone} onChange={(e) => { setTimeZone(e.target.value); setStep1Errors((p) => ({ ...p, timeZone: "" })); }}>
+              <option value="" disabled hidden>Select your time zone</option>
+              <option value="(UTC+05:30) India Standard Time">(UTC+05:30) India Standard Time</option>
+              <option value="(UTC-05:00) Eastern Time (US & Canada)">(UTC-05:00) Eastern Time (US & Canada)</option>
+              <option value="(UTC-08:00) Pacific Time (US & Canada)">(UTC-08:00) Pacific Time (US & Canada)</option>
+              <option value="(UTC+00:00) Greenwich Mean Time">(UTC+00:00) Greenwich Mean Time</option>
+              <option value="(UTC+01:00) Central European Time">(UTC+01:00) Central European Time</option>
+              <option value="(UTC+09:00) Japan Standard Time">(UTC+09:00) Japan Standard Time</option>
+            </select>
+            <Icon name="ChevronDown" size={18} className="dropdown-chevron-icon position-absolute" />
+          </div>
+          {step1Errors.timeZone && <span className="field-error">{step1Errors.timeZone}</span>}
+        </div>
+      </div>
+
+      {/* Continue Button */}
+      <div className="profile-form-actions d-flex justify-content-end flex-shrink-0">
+        <div className="continue-btn-wrapper">
+          <PrimaryButton
+            type="submit"
+            disabled={!isStep1Complete}
+            text={
+              <span className="btn-content text-white d-inline-flex align-items-center gap-2">
+                <span>Continue</span>
+                <Icon name="ArrowRight" size={18} color="#ffffff" />
+              </span>
+            }
           />
-          {step1Errors.fullName && <span className="field-error">{step1Errors.fullName}</span>}
         </div>
-
-        {/* Country */}
-        <div className="profile-field-group">
-          <div className="custom-dropdown-container w-100">
-            <label className="field-label">Country</label>
-            <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step1Errors.country ? "dropdown-error" : ""}`}>
-              <select className="custom-dropdown-select w-100 h-100" value={country} onChange={(e) => { setCountry(e.target.value); setStep1Errors((p) => ({ ...p, country: "" })); }}>
-                <option value="" disabled hidden>Select your country</option>
-                <option value="India">India</option>
-                <option value="United States">United States</option>
-                <option value="United Kingdom">United Kingdom</option>
-                <option value="Canada">Canada</option>
-                <option value="Australia">Australia</option>
-                <option value="Germany">Germany</option>
-                <option value="France">France</option>
-                <option value="Japan">Japan</option>
-              </select>
-              <Icon name="ChevronDown" size={18} className="dropdown-chevron-icon position-absolute" />
-            </div>
-            {step1Errors.country && <span className="field-error">{step1Errors.country}</span>}
-          </div>
-        </div>
-
-        {/* Time Zone */}
-        <div className="profile-field-group">
-          <div className="custom-dropdown-container w-100">
-            <label className="field-label">Time Zone</label>
-            <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step1Errors.timeZone ? "dropdown-error" : ""}`}>
-              <select className="custom-dropdown-select w-100 h-100" value={timeZone} onChange={(e) => { setTimeZone(e.target.value); setStep1Errors((p) => ({ ...p, timeZone: "" })); }}>
-                <option value="" disabled hidden>Select your time zone</option>
-                <option value="(UTC+05:30) India Standard Time">(UTC+05:30) India Standard Time</option>
-                <option value="(UTC-05:00) Eastern Time (US & Canada)">(UTC-05:00) Eastern Time (US & Canada)</option>
-                <option value="(UTC-08:00) Pacific Time (US & Canada)">(UTC-08:00) Pacific Time (US & Canada)</option>
-                <option value="(UTC+00:00) Greenwich Mean Time">(UTC+00:00) Greenwich Mean Time</option>
-                <option value="(UTC+01:00) Central European Time">(UTC+01:00) Central European Time</option>
-                <option value="(UTC+09:00) Japan Standard Time">(UTC+09:00) Japan Standard Time</option>
-              </select>
-              <Icon name="ChevronDown" size={18} className="dropdown-chevron-icon position-absolute" />
-            </div>
-            {step1Errors.timeZone && <span className="field-error">{step1Errors.timeZone}</span>}
-          </div>
-        </div>
-
-        {/* Continue Button */}
-        <div className="profile-form-actions mt-auto d-flex justify-content-end flex-shrink-0">
-          <div className="continue-btn-wrapper">
-            <PrimaryButton
-              type="submit"
-              disabled={!isStep1Complete}
-              text={
-                <span className="btn-content text-white d-inline-flex align-items-center gap-2">
-                  <span>Continue</span>
-                  <Icon name="ArrowRight" size={18} color="#ffffff" />
-                </span>
-              }
-            />
-          </div>
-        </div>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 
   const renderStep2 = () => (
-    <div className="profile-form-section flex-grow-1 d-flex flex-column justify-content-between min-vh-0">
+    <form className="profile-step-form flex-grow-1 d-flex flex-column min-vh-0 h-100" onSubmit={handleStep2Continue}>
+      {/* Section Heading */}
       <div className="profile-section-heading flex-shrink-0">
         <h2 className="section-title fw-bold">Professional Information</h2>
         <p className="section-subtitle text-secondary">Tell us about your professional background</p>
       </div>
 
-      <form className="profile-form d-flex flex-column justify-content-between flex-grow-1" onSubmit={handleStep2Continue}>
-        {/* Headline */}
-        <div className="profile-field-group">
-          <label className="field-label">Headline</label>
-          <input
-            type="text"
-            className={`profile-text-input w-100 ${step2Errors.headline ? "input-error" : ""}`}
-            placeholder="e.g. UI/UX Designer"
-            value={headline}
-            onChange={(e) => { setHeadline(e.target.value); setStep2Errors((p) => ({ ...p, headline: "" })); }}
+      {/* Headline */}
+      <div className="profile-field-group">
+        <label className="field-label">Headline</label>
+        <input
+          type="text"
+          className={`profile-text-input w-100 ${step2Errors.headline ? "input-error" : ""}`}
+          placeholder="e.g. UI/UX Designer"
+          value={headline}
+          onChange={(e) => { setHeadline(e.target.value); setStep2Errors((p) => ({ ...p, headline: "" })); }}
+        />
+        {step2Errors.headline && <span className="field-error">{step2Errors.headline}</span>}
+      </div>
+
+      {/* Bio */}
+      <div className="profile-field-group">
+        <label className="field-label">Bio</label>
+        <div className={`bio-textarea-wrapper w-100 ${step2Errors.bio ? "input-error" : ""}`}>
+          <textarea
+            className="bio-textarea"
+            placeholder="Write a short bio about yourself"
+            maxLength={300}
+            value={bio}
+            onChange={(e) => { setBio(e.target.value); setStep2Errors((p) => ({ ...p, bio: "" })); }}
           />
-          {step2Errors.headline && <span className="field-error">{step2Errors.headline}</span>}
+          <span className="bio-char-count">{bio.length}/300</span>
         </div>
+        {step2Errors.bio && <span className="field-error">{step2Errors.bio}</span>}
+      </div>
 
-        {/* Bio */}
-        <div className="profile-field-group">
-          <label className="field-label">Bio</label>
-          <div className={`bio-textarea-wrapper w-100 ${step2Errors.bio ? "input-error" : ""}`}>
-            <textarea
-              className="bio-textarea"
-              placeholder="Write a short bio about yourself"
-              maxLength={300}
-              value={bio}
-              onChange={(e) => { setBio(e.target.value); setStep2Errors((p) => ({ ...p, bio: "" })); }}
-            />
-            <span className="bio-char-count">{bio.length}/300</span>
+      {/* Experience Level */}
+      <div className="profile-field-group">
+        <div className="custom-dropdown-container w-100">
+          <label className="field-label">Experience Level</label>
+          <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step2Errors.experience ? "dropdown-error" : ""}`}>
+            <select className="custom-dropdown-select w-100 h-100" value={experience} onChange={(e) => { setExperience(e.target.value); setStep2Errors((p) => ({ ...p, experience: "" })); }}>
+              <option value="" disabled hidden>Select experience level</option>
+              <option value="entry">Entry Level (0-2 years)</option>
+              <option value="mid">Mid Level (3-5 years)</option>
+              <option value="senior">Senior (5-8 years)</option>
+              <option value="expert">Expert (8+ years)</option>
+            </select>
+            <Icon name="ChevronDown" size={18} className="dropdown-chevron-icon position-absolute" />
           </div>
-          {step2Errors.bio && <span className="field-error">{step2Errors.bio}</span>}
+          {step2Errors.experience && <span className="field-error">{step2Errors.experience}</span>}
         </div>
+      </div>
 
-        {/* Experience Level */}
-        <div className="profile-field-group">
-          <div className="custom-dropdown-container w-100">
-            <label className="field-label">Experience Level</label>
-            <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step2Errors.experience ? "dropdown-error" : ""}`}>
-              <select className="custom-dropdown-select w-100 h-100" value={experience} onChange={(e) => { setExperience(e.target.value); setStep2Errors((p) => ({ ...p, experience: "" })); }}>
-                <option value="" disabled hidden>Select experience level</option>
-                <option value="entry">Entry Level (0-2 years)</option>
-                <option value="mid">Mid Level (3-5 years)</option>
-                <option value="senior">Senior (5-8 years)</option>
-                <option value="expert">Expert (8+ years)</option>
-              </select>
-              <Icon name="ChevronDown" size={18} className="dropdown-chevron-icon position-absolute" />
-            </div>
-            {step2Errors.experience && <span className="field-error">{step2Errors.experience}</span>}
+      {/* Availability */}
+      <div className="profile-field-group">
+        <div className="custom-dropdown-container w-100">
+          <label className="field-label">Availability</label>
+          <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step2Errors.availability ? "dropdown-error" : ""}`}>
+            <select className="custom-dropdown-select w-100 h-100" value={availability} onChange={(e) => { setAvailability(e.target.value); setStep2Errors((p) => ({ ...p, availability: "" })); }}>
+              <option value="" disabled hidden>Select availability</option>
+              <option value="full-time">Full-time (40 hrs/week)</option>
+              <option value="part-time">Part-time (20 hrs/week)</option>
+              <option value="hourly">Hourly / As needed</option>
+              <option value="weekends">Weekends only</option>
+            </select>
+            <Icon name="ChevronDown" size={18} className="dropdown-chevron-icon position-absolute" />
           </div>
+          {step2Errors.availability && <span className="field-error">{step2Errors.availability}</span>}
         </div>
+      </div>
 
-        {/* Availability */}
-        <div className="profile-field-group">
-          <div className="custom-dropdown-container w-100">
-            <label className="field-label">Availability</label>
-            <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step2Errors.availability ? "dropdown-error" : ""}`}>
-              <select className="custom-dropdown-select w-100 h-100" value={availability} onChange={(e) => { setAvailability(e.target.value); setStep2Errors((p) => ({ ...p, availability: "" })); }}>
-                <option value="" disabled hidden>Select availability</option>
-                <option value="full-time">Full-time (40 hrs/week)</option>
-                <option value="part-time">Part-time (20 hrs/week)</option>
-                <option value="hourly">Hourly / As needed</option>
-                <option value="weekends">Weekends only</option>
-              </select>
-              <Icon name="ChevronDown" size={18} className="dropdown-chevron-icon position-absolute" />
-            </div>
-            {step2Errors.availability && <span className="field-error">{step2Errors.availability}</span>}
-          </div>
+      {/* Continue Button */}
+      <div className="profile-form-actions d-flex justify-content-end flex-shrink-0">
+        <div className="continue-btn-wrapper">
+          <PrimaryButton
+            type="submit"
+            disabled={!isStep2Complete}
+            text={
+              <span className="btn-content text-white d-inline-flex align-items-center gap-2">
+                <span>Continue</span>
+                <Icon name="ArrowRight" size={18} color="#ffffff" />
+              </span>
+            }
+          />
         </div>
-
-        {/* Continue Button */}
-        <div className="profile-form-actions mt-auto d-flex justify-content-end flex-shrink-0">
-          <div className="continue-btn-wrapper">
-            <PrimaryButton
-              type="submit"
-              disabled={!isStep2Complete}
-              text={
-                <span className="btn-content text-white d-inline-flex align-items-center gap-2">
-                  <span>Continue</span>
-                  <Icon name="ArrowRight" size={18} color="#ffffff" />
-                </span>
-              }
-            />
-          </div>
-        </div>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 
   const renderStep3 = () => (
-    <div className="profile-form-section flex-grow-1 d-flex flex-column justify-content-between min-vh-0">
+    <form className="profile-step-form flex-grow-1 d-flex flex-column min-vh-0 h-100" onSubmit={handleStep3Continue}>
+      {/* Section Heading */}
       <div className="profile-section-heading flex-shrink-0">
         <h2 className="section-title fw-bold">Skills</h2>
         <p className="section-subtitle text-secondary">Add your skills and expertise</p>
       </div>
 
-      <form className="profile-form d-flex flex-column justify-content-between flex-grow-1" onSubmit={handleStep3Continue}>
-        <div className="d-flex flex-column gap-2">
-          {/* Skills */}
-          <div className="profile-field-group">
-            <label className="field-label">Skills</label>
-            <input
-              type="text"
-              className={`profile-text-input w-100 ${step3Errors.skills ? "input-error" : ""}`}
-              placeholder="Add skills"
-              value={skills}
-              onChange={(e) => { setSkills(e.target.value); setStep3Errors((p) => ({ ...p, skills: "" })); }}
-            />
-            {step3Errors.skills && <span className="field-error">{step3Errors.skills}</span>}
-          </div>
+      {/* Skills */}
+      <div className="profile-field-group">
+        <label className="field-label">Skills</label>
+        <input
+          type="text"
+          className={`profile-text-input w-100 ${step3Errors.skills ? "input-error" : ""}`}
+          placeholder="Add skills"
+          value={skills}
+          onChange={(e) => { setSkills(e.target.value); setStep3Errors((p) => ({ ...p, skills: "" })); }}
+        />
+        {step3Errors.skills && <span className="field-error">{step3Errors.skills}</span>}
+      </div>
 
-          {/* Tools */}
-          <div className="profile-field-group">
-            <label className="field-label">Tools</label>
-            <input
-              type="text"
-              className={`profile-text-input w-100 ${step3Errors.tools ? "input-error" : ""}`}
-              placeholder="Add tools"
-              value={tools}
-              onChange={(e) => { setTools(e.target.value); setStep3Errors((p) => ({ ...p, tools: "" })); }}
-            />
-            {step3Errors.tools && <span className="field-error">{step3Errors.tools}</span>}
-          </div>
+      {/* Tools */}
+      <div className="profile-field-group">
+        <label className="field-label">Tools</label>
+        <input
+          type="text"
+          className={`profile-text-input w-100 ${step3Errors.tools ? "input-error" : ""}`}
+          placeholder="Add tools"
+          value={tools}
+          onChange={(e) => { setTools(e.target.value); setStep3Errors((p) => ({ ...p, tools: "" })); }}
+        />
+        {step3Errors.tools && <span className="field-error">{step3Errors.tools}</span>}
+      </div>
 
-          {/* Categories */}
-          <div className="profile-field-group">
-            <label className="field-label">Categories</label>
-            <input
-              type="text"
-              className={`profile-text-input w-100 ${step3Errors.categories ? "input-error" : ""}`}
-              placeholder="Add categories"
-              value={categories}
-              onChange={(e) => { setCategories(e.target.value); setStep3Errors((p) => ({ ...p, categories: "" })); }}
-            />
-            {step3Errors.categories && <span className="field-error">{step3Errors.categories}</span>}
-          </div>
+      {/* Categories */}
+      <div className="profile-field-group">
+        <label className="field-label">Categories</label>
+        <input
+          type="text"
+          className={`profile-text-input w-100 ${step3Errors.categories ? "input-error" : ""}`}
+          placeholder="Add categories"
+          value={categories}
+          onChange={(e) => { setCategories(e.target.value); setStep3Errors((p) => ({ ...p, categories: "" })); }}
+        />
+        {step3Errors.categories && <span className="field-error">{step3Errors.categories}</span>}
+      </div>
+
+      {/* Continue Button */}
+      <div className="profile-form-actions d-flex justify-content-end flex-shrink-0">
+        <div className="continue-btn-wrapper">
+          <PrimaryButton
+            type="submit"
+            disabled={!isStep3Complete}
+            text={
+              <span className="btn-content text-white d-inline-flex align-items-center gap-2">
+                <span>Continue</span>
+                <Icon name="ArrowRight" size={18} color="#ffffff" />
+              </span>
+            }
+          />
         </div>
-
-        {/* Continue Button */}
-        <div className="profile-form-actions mt-auto d-flex justify-content-end flex-shrink-0">
-          <div className="continue-btn-wrapper">
-            <PrimaryButton
-              type="submit"
-              disabled={!isStep3Complete}
-              text={
-                <span className="btn-content text-white d-inline-flex align-items-center gap-2">
-                  <span>Continue</span>
-                  <Icon name="ArrowRight" size={18} color="#ffffff" />
-                </span>
-              }
-            />
-          </div>
-        </div>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 
   const renderStep4 = () => (
-    <div className="profile-form-section flex-grow-1 d-flex flex-column justify-content-between min-vh-0">
+    <form className="profile-step-form flex-grow-1 d-flex flex-column min-vh-0 h-100" onSubmit={handleStep4Continue}>
+      {/* Section Heading */}
       <div className="profile-section-heading flex-shrink-0">
         <h2 className="section-title fw-bold">Portfolio and links</h2>
         <p className="section-subtitle text-secondary">Add your portfolio and social links</p>
       </div>
 
-      <form className="profile-form d-flex flex-column justify-content-between flex-grow-1" onSubmit={handleStep4Continue}>
-        <div className="d-flex flex-column gap-2">
-          {/* Portfolio website */}
-          <div className="profile-field-group">
-            <label className="field-label">Portfolio website</label>
-            <input
-              type="text"
-              className={`profile-text-input w-100 ${step4Errors.portfolioUrl ? "input-error" : ""}`}
-              placeholder="Enter URL"
-              value={portfolioUrl}
-              onChange={(e) => { setPortfolioUrl(e.target.value); setStep4Errors((p) => ({ ...p, portfolioUrl: "" })); }}
-            />
-            {step4Errors.portfolioUrl && <span className="field-error">{step4Errors.portfolioUrl}</span>}
-          </div>
+      {/* Portfolio website */}
+      <div className="profile-field-group">
+        <label className="field-label">Portfolio website</label>
+        <input
+          type="text"
+          className={`profile-text-input w-100 ${step4Errors.portfolioUrl ? "input-error" : ""}`}
+          placeholder="Enter URL"
+          value={portfolioUrl}
+          onChange={(e) => { setPortfolioUrl(e.target.value); setStep4Errors((p) => ({ ...p, portfolioUrl: "" })); }}
+        />
+        {step4Errors.portfolioUrl && <span className="field-error">{step4Errors.portfolioUrl}</span>}
+      </div>
 
-          {/* Github */}
-          <div className="profile-field-group">
-            <label className="field-label">Github</label>
-            <input
-              type="text"
-              className={`profile-text-input w-100 ${step4Errors.githubUrl ? "input-error" : ""}`}
-              placeholder="Enter URL"
-              value={githubUrl}
-              onChange={(e) => { setGithubUrl(e.target.value); setStep4Errors((p) => ({ ...p, githubUrl: "" })); }}
-            />
-            {step4Errors.githubUrl && <span className="field-error">{step4Errors.githubUrl}</span>}
-          </div>
+      {/* Github */}
+      <div className="profile-field-group">
+        <label className="field-label">Github</label>
+        <input
+          type="text"
+          className={`profile-text-input w-100 ${step4Errors.githubUrl ? "input-error" : ""}`}
+          placeholder="Enter URL"
+          value={githubUrl}
+          onChange={(e) => { setGithubUrl(e.target.value); setStep4Errors((p) => ({ ...p, githubUrl: "" })); }}
+        />
+        {step4Errors.githubUrl && <span className="field-error">{step4Errors.githubUrl}</span>}
+      </div>
 
-          {/* Linkedin */}
-          <div className="profile-field-group">
-            <label className="field-label">Linkedin</label>
-            <input
-              type="text"
-              className={`profile-text-input w-100 ${step4Errors.linkedinUrl ? "input-error" : ""}`}
-              placeholder="Enter URL"
-              value={linkedinUrl}
-              onChange={(e) => { setLinkedinUrl(e.target.value); setStep4Errors((p) => ({ ...p, linkedinUrl: "" })); }}
-            />
-            {step4Errors.linkedinUrl && <span className="field-error">{step4Errors.linkedinUrl}</span>}
-          </div>
+      {/* Linkedin */}
+      <div className="profile-field-group">
+        <label className="field-label">Linkedin</label>
+        <input
+          type="text"
+          className={`profile-text-input w-100 ${step4Errors.linkedinUrl ? "input-error" : ""}`}
+          placeholder="Enter URL"
+          value={linkedinUrl}
+          onChange={(e) => { setLinkedinUrl(e.target.value); setStep4Errors((p) => ({ ...p, linkedinUrl: "" })); }}
+        />
+        {step4Errors.linkedinUrl && <span className="field-error">{step4Errors.linkedinUrl}</span>}
+      </div>
 
-          {/* Resume */}
-          <div className="profile-field-group">
-            <label className="field-label">Resume</label>
-            <label
-              htmlFor="resume-file-input"
-              className={`profile-file-upload-box d-flex align-items-center justify-content-between w-100 ${step4Errors.resumeFile ? "input-error" : ""}`}
-              style={{ cursor: "pointer" }}
-            >
-              <span className={`file-upload-text ${resumeFile ? "text-dark" : "text-placeholder"}`}>
-                {resumeFile ? resumeFile.name : "Upload PDF"}
+      {/* Resume */}
+      <div className="profile-field-group">
+        <label className="field-label">Resume</label>
+        <label
+          htmlFor="resume-file-input"
+          className={`profile-file-upload-box d-flex align-items-center justify-content-between w-100 ${step4Errors.resumeFile ? "input-error" : ""}`}
+          style={{ cursor: "pointer" }}
+        >
+          <span className={`file-upload-text ${resumeFile ? "text-dark" : "text-placeholder"}`}>
+            {resumeFile ? resumeFile.name : "Upload PDF"}
+          </span>
+          <Icon name="Upload" size={18} className="upload-icon-right" />
+        </label>
+        <input
+          id="resume-file-input"
+          type="file"
+          accept=".pdf,application/pdf"
+          style={{ display: "none" }}
+          onChange={handleResumeUpload}
+        />
+        {step4Errors.resumeFile && <span className="field-error">{step4Errors.resumeFile}</span>}
+      </div>
+
+      {/* Continue Button */}
+      <div className="profile-form-actions d-flex justify-content-end flex-shrink-0">
+        <div className="continue-btn-wrapper">
+          <PrimaryButton
+            type="submit"
+            disabled={!isStep4Complete}
+            text={
+              <span className="btn-content text-white d-inline-flex align-items-center gap-2">
+                <span>Continue</span>
+                <Icon name="ArrowRight" size={18} color="#ffffff" />
               </span>
-              <Icon name="Upload" size={18} className="upload-icon-right" />
-            </label>
-            <input
-              id="resume-file-input"
-              type="file"
-              accept=".pdf,application/pdf"
-              style={{ display: "none" }}
-              onChange={handleResumeUpload}
-            />
-            {step4Errors.resumeFile && <span className="field-error">{step4Errors.resumeFile}</span>}
-          </div>
+            }
+          />
         </div>
-
-        {/* Continue Button */}
-        <div className="profile-form-actions mt-auto d-flex justify-content-end flex-shrink-0">
-          <div className="continue-btn-wrapper">
-            <PrimaryButton
-              type="submit"
-              disabled={!isStep4Complete}
-              text={
-                <span className="btn-content text-white d-inline-flex align-items-center gap-2">
-                  <span>Continue</span>
-                  <Icon name="ArrowRight" size={18} color="#ffffff" />
-                </span>
-              }
-            />
-          </div>
-        </div>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -510,58 +502,55 @@ export default function Profile() {
   };
 
   const renderStep5 = () => (
-    <div className="profile-form-section flex-grow-1 d-flex flex-column justify-content-between min-vh-0">
+    <form className="profile-step-form flex-grow-1 d-flex flex-column min-vh-0 h-100" onSubmit={handleFinalSubmit}>
+      {/* Section Heading */}
       <div className="profile-section-heading flex-shrink-0">
         <h2 className="section-title fw-bold">Review & Submit</h2>
         <p className="section-subtitle text-secondary">Review your information before continuing</p>
       </div>
 
-      <form className="profile-form d-flex flex-column justify-content-between flex-grow-1" onSubmit={handleFinalSubmit}>
-        <div className="d-flex flex-column gap-3 mt-1">
-          {/* Basic Information Review Box */}
-          <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
-            <span className="review-summary-title fw-bold">Basic Information</span>
-            <span className="review-edit-btn fw-bold" onClick={() => setCurrentStep(1)} role="button">
-              Edit
-            </span>
-          </div>
+      {/* Basic Information Review Box */}
+      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
+        <span className="review-summary-title fw-bold">Basic Information</span>
+        <span className="review-edit-btn fw-bold" onClick={() => setCurrentStep(1)} role="button">
+          Edit
+        </span>
+      </div>
 
-          {/* Professional Information Review Box */}
-          <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
-            <span className="review-summary-title fw-bold">Professional Information</span>
-            <span className="review-edit-btn fw-bold" onClick={() => setCurrentStep(2)} role="button">
-              Edit
-            </span>
-          </div>
+      {/* Professional Information Review Box */}
+      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
+        <span className="review-summary-title fw-bold">Professional Information</span>
+        <span className="review-edit-btn fw-bold" onClick={() => setCurrentStep(2)} role="button">
+          Edit
+        </span>
+      </div>
 
-          {/* Skills Review Box */}
-          <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
-            <span className="review-summary-title fw-bold">Skills</span>
-            <span className="review-edit-btn fw-bold" onClick={() => setCurrentStep(3)} role="button">
-              Edit
-            </span>
-          </div>
+      {/* Skills Review Box */}
+      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
+        <span className="review-summary-title fw-bold">Skills</span>
+        <span className="review-edit-btn fw-bold" onClick={() => setCurrentStep(3)} role="button">
+          Edit
+        </span>
+      </div>
 
-          {/* Portfolio and links Review Box */}
-          <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
-            <span className="review-summary-title fw-bold">Portfolio and links</span>
-            <span className="review-edit-btn fw-bold" onClick={() => setCurrentStep(4)} role="button">
-              Edit
-            </span>
-          </div>
+      {/* Portfolio and links Review Box */}
+      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
+        <span className="review-summary-title fw-bold">Portfolio and links</span>
+        <span className="review-edit-btn fw-bold" onClick={() => setCurrentStep(4)} role="button">
+          Edit
+        </span>
+      </div>
+
+      {/* Submit Button */}
+      <div className="profile-form-actions d-flex justify-content-end flex-shrink-0">
+        <div className="continue-btn-wrapper">
+          <PrimaryButton
+            type="submit"
+            text={<span className="btn-content text-white justify-content-center fw-bold">Submit</span>}
+          />
         </div>
-
-        {/* Submit Button */}
-        <div className="profile-form-actions mt-auto d-flex justify-content-end flex-shrink-0">
-          <div className="continue-btn-wrapper">
-            <PrimaryButton
-              type="submit"
-              text={<span className="btn-content text-white justify-content-center fw-bold">Submit</span>}
-            />
-          </div>
-        </div>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 
   const renderCompletionScreen = () => (
@@ -674,21 +663,20 @@ export default function Profile() {
         <div className="profile-page-wrapper flex-grow-1 min-vh-0 d-flex flex-column w-100">
           <Cards className="profile-main-card flex-grow-1 h-100 d-flex flex-column overflow-hidden w-100" padding="0">
             <div className="profile-card-inner d-flex flex-column h-100">
-
               {isSubmitted ? (
                 renderCompletionScreen()
               ) : (
                 <>
-                  {/* Header */}
+                  {/* Header - FIXED AT TOP */}
                   <div className="profile-header-section flex-shrink-0">
                     <h1 className="profile-main-title fw-bold">Complete Your Profile</h1>
                     <p className="profile-main-subtitle text-secondary">Lets build your profile step by step.</p>
                   </div>
 
-                  {/* Stepper */}
+                  {/* Stepper - FIXED BELOW HEADER */}
                   {renderStepper()}
 
-                  {/* Step Content */}
+                  {/* Dynamic Step Content */}
                   {currentStep === 1 && renderStep1()}
                   {currentStep === 2 && renderStep2()}
                   {currentStep === 3 && renderStep3()}
@@ -696,7 +684,6 @@ export default function Profile() {
                   {currentStep === 5 && renderStep5()}
                 </>
               )}
-
             </div>
           </Cards>
         </div>

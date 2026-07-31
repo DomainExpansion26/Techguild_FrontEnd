@@ -25,17 +25,17 @@ export default function WelcomeBanner() {
 
         { }
         <div className="welcome-banner-info-section">
-          <h2 className="welcome-banner-title">Welcome to TechGuild, Arjun!</h2>
-          <h3 className="welcome-banner-subtitle">Complete your profile to stand out</h3>
-          <p className="welcome-banner-desc">
-            Finish these steps to improve your chances of getting hired.
-          </p>
+          <div className="welcome-banner-info-text">
+            <h2 className="welcome-banner-title">Welcome to TechGuild, Arjun!</h2>
+            <h3 className="welcome-banner-subtitle">Complete your profile to stand out</h3>
+            <p className="welcome-banner-desc">
+              Finish these steps to improve your chances of getting hired.
+            </p>
+          </div>
+          <button className="btn btn-light btn-complete-profile">
+            Complete profile
+          </button>
         </div>
-
-        { }
-        <button className="btn btn-light btn-complete-profile">
-          Complete profile
-        </button>
 
         { }
         <div className="w-100 welcome-banner-progress-section">

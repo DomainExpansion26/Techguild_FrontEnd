@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import {
   Search,
   Bell,
@@ -23,17 +23,12 @@ function MetricCard({ title, icon, value, description, delay }) {
       style={{ animationDelay: delay }}
     >
       <div className="metric-card-inner">
-        {}
         <div className="metric-card-header">
           <span className="metric-card-title">{title}</span>
           <span className="metric-card-icon">{icon}</span>
         </div>
-
-        {}
-        <div className="metric-card-body">
-          <h4 className="metric-card-value">{value}</h4>
-          <p className="metric-card-desc">{description}</p>
-        </div>
+        <h4 className="metric-card-value">{value}</h4>
+        <p className="metric-card-desc">{description}</p>
       </div>
     </Cards>
   );
@@ -77,35 +72,22 @@ export default function DashBoard() {
             {}
             <Cards className="db-card-fill trust-card-element animate-fade-in" style={{ animationDelay: "0.08s" }}>
               <div className="trust-card-inner">
-                {}
-                <div className="trust-card-top">
-                  <h4 className="trust-card-title">Trust Points</h4>
-                  
-                  {}
-                  <div className="trust-card-value-container">
-                    <span className="trust-card-value">10</span>
-                    <span className="trust-card-unit">TP</span>
-                  </div>
-
-                  {}
-                  <span className="trust-card-rank">Rank F</span>
-
-                  {}
-                  <div className="trust-card-badge">
-                    <Verified size={14} strokeWidth={2.5} className="trust-badge-icon" />
-                    <span className="trust-badge-text">Email Verified</span>
-                  </div>
+                <h4 className="trust-card-title">Trust Points</h4>
+                <div className="trust-card-value-container">
+                  <span className="trust-card-value">10</span>
+                  <span className="trust-card-unit">TP</span>
                 </div>
-
-                {}
-                <div className="trust-card-bottom">
-                  <p className="trust-card-desc">
-                    Trust Points increase as you complete your profile, finish projects, and receive client reviews.
-                  </p>
-                  <a href="#trust-history" className="trust-card-link">
-                    View Trust History <span className="trust-card-arrow">&gt;</span>
-                  </a>
+                <span className="trust-card-rank">Rank F</span>
+                <div className="trust-card-badge">
+                  <Verified size={14} strokeWidth={2.5} className="trust-badge-icon" />
+                  <span className="trust-badge-text">Email Verified</span>
                 </div>
+                <p className="trust-card-desc">
+                  Trust Points increase as you complete your profile, finish projects, and receive client reviews.
+                </p>
+                <a href="#trust-history" className="trust-card-link">
+                  View Trust History <span className="trust-card-arrow">&gt;</span>
+                </a>
               </div>
             </Cards>
           </div>
