@@ -1,13 +1,16 @@
 import React from 'react';
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Lock, ArrowLeft } from "lucide-react";
+import Lock from "../../../assets/icons/lock.svg?react";
+import Eye from "../../../assets/icons/eye.svg?react";
+import EyeOff from "../../../assets/icons/eye-off.svg?react";
+import Icon from "../../../Components/icons/Icon";
+import TickIcon from "../../../assets/tick.png";
 import "./resetpass.css";
 import {
   AuthHomeScreen,
   BrandLogo,
   PasswordInput,
-  PrimaryButton,
   SignupCard,
 } from "../../../Components";
 
@@ -15,6 +18,8 @@ export default function ResetPass() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSubmit = () => {
     console.log("Password reset:", { newPassword, confirmPassword });
@@ -26,72 +31,118 @@ export default function ResetPass() {
       <AuthHomeScreen />
 
       <div className="auth-card-wrapper">
-        <SignupCard>
-          <BrandLogo />
+        <SignupCard className={isSubmitted ? "success-state-card" : ""}>
+          <div style={isSubmitted ? { display: 'flex', justifyContent: 'center', width: '100%' } : {}}>
+            <BrandLogo />
+          </div>
 
-          <h2>Reset Password</h2>
-
-          <p className="subtitle">
-            {isSubmitted ? (
-              "Password reset successful"
-            ) : (
-              <>
+          {!isSubmitted && (
+            <>
+              <h2>Reset Your Password</h2>
+              <p className="subtitle">
                 Enter your new password below.
                 <br />
                 Make sure it's strong and unique.
-              </>
-            )}
-          </p>
+              </p>
+            </>
+          )}
 
           {!isSubmitted ? (
             <>
-              <PasswordInput
-                label="New Password"
-                placeholder="Enter new password"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                icon={<Lock size={18} />}
-              />
+              {/* New Password */}
+              <label htmlFor="new-password" style={{ fontWeight: 700, fontSize: '13px', color: '#111827', display: 'block', margin: '6px 0 5px 0' }}>New Password</label>
+              <div className="input-group rounded-3 overflow-hidden bg-white" style={{ marginBottom: '12px', border: '1px solid #B3B3B3' }}>
+                <span className="input-group-text bg-white border-0 d-flex align-items-center justify-content-center" style={{ padding: '0 10px', minWidth: '36px' }}>
+                  <Lock width={16} height={16} />
+                </span>
+                <input
+                  id="new-password"
+                  type={showNewPassword ? "text" : "password"}
+                  className="form-control border-0 shadow-none bg-white"
+                  placeholder="Enter new password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  required
+                  style={{ fontSize: '13px', padding: '8px 10px 8px 0' }}
+                />
+                <button
+                  type="button"
+                  className="input-group-text bg-white border-0 btn shadow-none d-flex align-items-center justify-content-center"
+                  onClick={() => setShowNewPassword(!showNewPassword)}
+                  style={{ padding: '0 10px' }}
+                >
+                  {showNewPassword ? <EyeOff width={16} height={16} /> : <Eye width={16} height={16} />}
+                </button>
+              </div>
 
-              <PasswordInput
-                label="Confirm Password"
-                placeholder="Confirm new password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                icon={<Lock size={18} />}
-              />
+              {/* Confirm Password */}
+              <label htmlFor="confirm-password" style={{ fontWeight: 700, fontSize: '13px', color: '#111827', display: 'block', margin: '6px 0 5px 0' }}>Confirm Password</label>
+              <div className="input-group rounded-3 overflow-hidden bg-white" style={{ marginBottom: '12px', border: '1px solid #B3B3B3' }}>
+                <span className="input-group-text bg-white border-0 d-flex align-items-center justify-content-center" style={{ padding: '0 10px', minWidth: '36px' }}>
+                  <Lock width={16} height={16} />
+                </span>
+                <input
+                  id="confirm-password"
+                  type={showConfirmPassword ? "text" : "password"}
+                  className="form-control border-0 shadow-none bg-white"
+                  placeholder="Confirm new password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  style={{ fontSize: '13px', padding: '8px 10px 8px 0' }}
+                />
+                <button
+                  type="button"
+                  className="input-group-text bg-white border-0 btn shadow-none d-flex align-items-center justify-content-center"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  style={{ padding: '0 10px' }}
+                >
+                  {showConfirmPassword ? <EyeOff width={16} height={16} /> : <Eye width={16} height={16} />}
+                </button>
+              </div>
 
-              <PrimaryButton text="Reset Password" onClick={handleSubmit} />
+              <button
+                type="button"
+                onClick={handleSubmit}
+                className="btn auth-primary-btn w-100"
+              >
+                Reset Password
+              </button>
 
               <p className="back-to-login">
-                <Link to="/login">
-                  <ArrowLeft size={14} />
-                  Back to Login
+                <Link to="/login" style={{ gap: "8px" }}>
+                  <Icon name="ArrowLeft" size={20} color="#033E8A" />
+                  Back to log in
                 </Link>
               </p>
             </>
           ) : (
             <>
-              <div className="success-icon">
-                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="32" cy="32" r="32" fill="#10B981" fillOpacity="0.1"/>
-                  <circle cx="32" cy="32" r="24" fill="#10B981" fillOpacity="0.2"/>
-                  <path d="M20 32L28 40L44 24" stroke="#10B981" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+              {/* If we need to center the logo specifically for success state, we could do it, but let's center the rest first */}
+              <div className="success-icon" style={{ display: 'flex', justifyContent: 'center', margin: '0' }}>
+                <img src={TickIcon} alt="Success" width="80" height="80" />
               </div>
 
-              <p className="success-message">
-                Your password has been successfully reset. You can now use your new password to login to your account.
+              <h2 style={{ textAlign: 'center', fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '0px' }}>
+                Password reset successful !
+              </h2>
+
+              <p className="success-message" style={{ textAlign: 'center', fontSize: '13px', color: '#333', marginBottom: '12px', marginTop: '4px' }}>
+                Your password has been updated<br />successfully.
               </p>
 
-              <Link to="/login">
-                <PrimaryButton text="Go to Login" onClick={() => {}} />
+              <Link to="/login" style={{ textDecoration: 'none', width: '100%', display: 'block' }}>
+                <button
+                  type="button"
+                  className="btn auth-primary-btn w-100"
+                >
+                  Continue to Log in
+                </button>
               </Link>
 
-              <p className="back-to-login">
-                <Link to="/login">
-                  <ArrowLeft size={14} />
-                  Back to Login
+              <p className="back-to-login" style={{ textAlign: 'center', marginTop: '10px' }}>
+                <Link to="/" style={{ color: '#103CA4', fontWeight: '600', textDecoration: 'none', fontSize: '14px' }}>
+                  Back to Home
                 </Link>
               </p>
             </>

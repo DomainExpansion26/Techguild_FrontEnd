@@ -4,7 +4,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -24,7 +25,9 @@ html, body {
 }
 
 @media (max-width: 767px) {
-  html, body {
+
+  html,
+  body {
     height: auto;
     overflow-x: hidden;
     overflow-y: auto;
@@ -34,4 +37,36 @@ html, body {
     height: auto;
     overflow: visible;
   }
+}
+
+/* Primary Auth Button - Same as Account Type Continue button */
+.auth-primary-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-height: 40px !important;
+  padding: 9.5px 0 !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  background: #103CA4 !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 4px 14px rgba(16, 60, 164, 0.25) !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease !important;
+  text-decoration: none !important;
+}
+
+.auth-primary-btn:hover {
+  background: #0c3188 !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 18px rgba(12, 49, 136, 0.35) !important;
+  transform: none !important;
+}
+
+.auth-primary-btn:active {
+  background: #092363 !important;
+  transform: none !important;
 }

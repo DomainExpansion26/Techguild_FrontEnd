@@ -13,14 +13,15 @@
 }
 
 .primary-btn:hover {
-  background: #1E40AF;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(29, 78, 216, 0.3);
+  background: #0c3188;
+  color: white;
+  box-shadow: 0 6px 18px rgba(12, 49, 136, 0.35);
+  transform: none;
 }
 
 .primary-btn:active {
-  transform: translateY(0);
-  background: #1E3A8A;
+  background: #092363;
+  transform: none;
 }
 
 .primary-btn:disabled {
