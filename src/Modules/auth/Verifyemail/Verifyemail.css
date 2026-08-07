@@ -34,7 +34,7 @@
 }
 
 .logo-tech {
-  color: #FFFFFF;
+  color: #111827;
 }
 
 .logo-guild {
@@ -90,8 +90,8 @@
 }
 
 .mail-icon-wrapper {
-  width: 76px;
-  height: 56px;
+  width: auto;
+  height: auto;
   margin: 4px auto 20px;
   position: relative;
   display: flex;
@@ -178,12 +178,14 @@
   width: auto;
   border: none;
   color: white;
-  background: #1155F4;
-  box-shadow: none;
+  background: #103CA4;
+  box-shadow: 0 4px 14px rgba(16, 60, 164, 0.25);
+  transition: all 0.25s ease;
 }
 
 .verify-buttons .primary-btn:hover {
-  background: #0D45CE;
+  background: #0c3188;
+  box-shadow: 0 6px 18px rgba(12, 49, 136, 0.35);
   transform: none;
 }
 
@@ -195,24 +197,28 @@
   margin: 0;
 }
 
-/* Center, smaller and slightly higher card for Verifyemail page only */
+/* Override SignupCard ONLY on this page to match Emailverify */
 .verify-page .signup-card {
-  position: relative;
-  left: auto;
-  top: auto;
-  transform: none;
-  margin-top: -95px;
-  width: 410px;
-  max-width: 90%;
-  height: auto;
-  padding: 24px 26px 18px;
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
-  box-sizing: border-box;
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  transform: translateY(-20px) !important;
+  margin: auto !important;
+
+  width: 420px !important;
+  max-width: 95% !important;
+  height: auto !important;
+  min-height: 390px !important;
+  max-height: calc(100vh - 32px) !important;
+
+  padding: 20px 32px 18px 32px !important;
+  border-radius: 20px !important;
+
+  overflow-y: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1) !important;
+  box-sizing: border-box !important;
 }
 
 /* Tablet */
@@ -241,7 +247,7 @@
   }
 
   .mail-icon-wrapper {
-    width: 70px;
-    height: 70px;
+    width: auto;
+    height: auto;
   }
 }

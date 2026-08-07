@@ -2,8 +2,7 @@ import SignupCard from "../../../Components/SignupCard/SignupCard";
 import PrimaryButton from "../../../Components/Button/Primarybutton";
 import img2 from "../../../assets/img2.png";
 import userIcon from "../../../assets/icons/user.svg";
-import mailIcon from "../../../assets/icons/mail.svg";
-import checkIcon from "../../../assets/icons/check-circle2.svg";
+import mailCommentIcon from "../../../assets/mail-comment.png";
 import { useNavigate } from "react-router-dom";
 
 import "./Verifyemail.css";
@@ -41,10 +40,7 @@ export default function VerifyEmail() {
         <div className="verify-content">
 
           <div className="mail-icon-wrapper">
-            <img src={mailIcon} alt="Mail" className="card-mail-icon" />
-            <span className="badge">
-              <img src={checkIcon} alt="Check" className="badge-check-icon" />
-            </span>
+            <img src={mailCommentIcon} alt="Mail" style={{ width: '130px', height: 'auto' }} />
           </div>
 
           <h2>Verify Your Email To Continue.</h2>
