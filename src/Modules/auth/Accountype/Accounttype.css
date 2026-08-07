@@ -37,7 +37,7 @@
 }
 
 .logo-tech {
-  color: #FFFFFF;
+  color: #111827;
 }
 
 .logo-guild {
@@ -88,7 +88,7 @@
   max-width: 92% !important;
   height: auto !important;
 
-  padding: 10px 20px 10px !important;
+  padding: 22px 22px 20px !important;
   background: rgba(255, 255, 255, 0.55) !important;
   border-radius: 20px !important;
   border: 1px solid rgba(255, 255, 255, 0.7) !important;
@@ -148,7 +148,8 @@
 .account-card.active {
   border: 2px solid #2D61DB;
   background: rgba(255, 255, 255, 0.45);
-  padding: 7px 9px; /* Reduce padding by 1px to offset the 2px border and prevent layout shift */
+  padding: 7px 9px;
+  /* Reduce padding by 1px to offset the 2px border and prevent layout shift */
 }
 
 /* Icon Box */

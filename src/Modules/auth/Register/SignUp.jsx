@@ -74,14 +74,14 @@ export default function Signup() {
               type="button"
               onClick={handleGithubSignup}
               className="btn btn-light bg-white border d-flex align-items-center justify-content-center gap-2 w-100 shadow-sm fw-medium rounded-3"
-              style={{ fontSize: '13px', padding: '8px 0', marginBottom: '14px' }}
+              style={{ fontSize: '13px', padding: '8px 0', marginBottom: '0px' }}
             >
               <GitHubIcon />
               <span>Continue with GitHub</span>
             </button>
 
             {/* Divider */}
-            <div style={{ display: 'flex', alignItems: 'center', margin: '12px 0 6px 0' }}>
+            <div style={{ display: 'flex', alignItems: 'center', margin: '8px 0 8px 0' }}>
               <div style={{ flex: 1, height: '1px', backgroundColor: '#B3B3B3' }}></div>
               <span style={{ padding: '0 12px', fontSize: '11px', fontWeight: 600, color: '#4B5563', letterSpacing: '0.05em' }}>OR</span>
               <div style={{ flex: 1, height: '1px', backgroundColor: '#B3B3B3' }}></div>
@@ -171,8 +171,7 @@ export default function Signup() {
             {/* Join button */}
             <button
               type="submit"
-              className="btn w-100 fw-bold text-white shadow-sm"
-              style={{ backgroundColor: '#103CA4', borderColor: '#103CA4', padding: '10px 0', fontSize: '14px', borderRadius: '10px' }}
+              className="btn auth-primary-btn"
             >
               Join TechGuild
             </button>

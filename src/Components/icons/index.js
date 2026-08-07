@@ -12,8 +12,10 @@ import Settings from "../../assets/icons/settings.svg?react";
 import CircleQuestionMark from "../../assets/icons/circle-question-mark.svg?react";
 import Mail             from "../../assets/icons/mail.svg?react";
 import Check            from "../../assets/icons/check.svg?react";
+import ArrowLeft        from "../../assets/icons/arrow-left.svg?react";
 
 export {
+  ArrowLeft,
   LayoutDashboard,
   User2,
   Files,
