@@ -11,7 +11,7 @@
   padding: clamp(16px, 1.6vw, 32px);
   gap: clamp(16px, 1.6vw, 32px);
   overflow: hidden;
-  background-image: url('../../assets/dashboard.bg.png');
+  background-image: url('../../../../assets/dashboard.bg.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
