@@ -70,14 +70,14 @@ export default function Login() {
               type="button"
               onClick={handleGithubLogin}
               className="btn btn-light bg-white border d-flex align-items-center justify-content-center gap-2 w-100 shadow-sm fw-medium rounded-3"
-              style={{ fontSize: '13px', padding: '8px 0', marginBottom: '14px' }}
+              style={{ fontSize: '13px', padding: '8px 0', marginBottom: '0px' }}
             >
               <GitHubIcon />
               <span>Continue with GitHub</span>
             </button>
 
             {/* Divider */}
-            <div style={{ display: 'flex', alignItems: 'center', margin: '12px 0 6px 0' }}>
+            <div style={{ display: 'flex', alignItems: 'center', margin: '8px 0 8px 0' }}>
               <div style={{ flex: 1, height: '1px', backgroundColor: '#B3B3B3' }}></div>
               <span style={{ padding: '0 12px', fontSize: '11px', fontWeight: 600, color: '#4B5563', letterSpacing: '0.05em' }}>OR</span>
               <div style={{ flex: 1, height: '1px', backgroundColor: '#B3B3B3' }}></div>
@@ -86,7 +86,7 @@ export default function Login() {
             {/* Middle Form Controls Container - Fixed height for identical alignment with SignUp */}
             <div style={{ height: '188px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
               {/* Email Address */}
-              <label htmlFor="login-email" style={{ fontWeight: 700, fontSize: '13px', color: '#111827', display: 'block', margin: '2px 0 5px 0' }}>Email Address</label>
+              <label htmlFor="login-email" style={{ fontWeight: 700, fontSize: '13px', color: '#111827', display: 'block', margin: '0 0 5px 0' }}>Email Address</label>
               <div className="input-group rounded-3 overflow-hidden bg-white" style={{ marginBottom: '10px', border: '1px solid #B3B3B3' }}>
                 <span className="input-group-text bg-white border-0 d-flex align-items-center justify-content-center" style={{ padding: '0 10px', minWidth: '36px' }}>
                   <Mail size={16} strokeWidth={2.4} color="#6A717D" />
@@ -153,8 +153,7 @@ export default function Login() {
             {/* Log in button */}
             <button
               type="submit"
-              className="btn w-100 fw-bold text-white shadow-sm"
-              style={{ backgroundColor: '#103CA4', borderColor: '#103CA4', padding: '10px 0', fontSize: '14px', borderRadius: '10px' }}
+              className="btn auth-primary-btn"
             >
               Log in
             </button>
