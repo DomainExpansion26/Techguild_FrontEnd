@@ -1,27 +1,27 @@
-﻿import React from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import Icon from "@/Components/icons/Icon";
 import "./navbar.css";
 
-export default function Navbar() {
+const defaultMenuItems = [
+  { id: "dashboard",        label: "Dashboard",           icon: "LayoutDashboard"    },
+  { id: "profile",          label: "Profile (Guild Card)",icon: "User2"              },
+  { id: "quest-board",      label: "Quest Board",         icon: "Files"              },
+  { id: "my-applications",  label: "My Applications",     icon: "FileText"           },
+  { id: "active-quests",    label: "Active Quests",       icon: "Files"              },
+  { id: "party-management", label: "Party Management",    icon: "Group"              },
+  { id: "reputation-rank",  label: "Reputation & Rank",   icon: "Verified"           },
+  { id: "verification-hub", label: "Verification Hub",    icon: "Bookmark"           },
+  { id: "earnings-payouts", label: "Earnings & Payouts",  icon: "IndianRupee"        },
+  { id: "reviews-feedback", label: "Reviews & Feedback",  icon: "Star"               },
+  { id: "notifications",    label: "Notifications",       icon: "Bell"               },
+  { id: "settings",         label: "Settings",            icon: "Settings"           },
+  { id: "help-support",     label: "Help & Support",      icon: "CircleQuestionMark" },
+];
+
+export default function Navbar({ items = defaultMenuItems }) {
   const location = useLocation();
   const currentPath = location.pathname;
-
-  const menuItems = [
-    { id: "dashboard",        label: "Dashboard",           icon: "LayoutDashboard"    },
-    { id: "profile",          label: "Profile (Guild Card)",icon: "User2"              },
-    { id: "quest-board",      label: "Quest Board",         icon: "Files"              },
-    { id: "my-applications",  label: "My Applications",     icon: "FileText"           },
-    { id: "active-quests",    label: "Active Quests",       icon: "Files"              },
-    { id: "party-management", label: "Party Management",    icon: "Group"              },
-    { id: "reputation-rank",  label: "Reputation & Rank",   icon: "Verified"           },
-    { id: "verification-hub", label: "Verification Hub",    icon: "Bookmark"           },
-    { id: "earnings-payouts", label: "Earnings & Payouts",  icon: "IndianRupee"        },
-    { id: "reviews-feedback", label: "Reviews & Feedback",  icon: "Star"               },
-    { id: "notifications",    label: "Notifications",       icon: "Bell"               },
-    { id: "settings",         label: "Settings",            icon: "Settings"           },
-    { id: "help-support",     label: "Help & Support",      icon: "CircleQuestionMark" },
-  ];
 
   return (
     <aside className="card shadow-sm border border-light-subtle rounded-3 p-0 sidebar flex-shrink-0">
@@ -35,9 +35,9 @@ export default function Navbar() {
 
         <div className="sidebar-menu-container flex-grow-1">
           <ul className="sidebar-menu">
-            {menuItems.map((item) => {
+            {items.map((item) => {
               const isDashboard = item.id === "dashboard";
-              const targetPath = isDashboard ? "/dashboard" : `/${item.id}`;
+              const targetPath = item.path || (isDashboard ? "/dashboard" : `/${item.id}`);
               const isActive = currentPath === targetPath || (isDashboard && currentPath === "/");
               return (
                 <li key={item.id}>

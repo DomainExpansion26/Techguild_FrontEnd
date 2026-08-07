@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import SignupCard from "../../../Components/SignupCard/SignupCard";
 import { User, Building2, Briefcase } from "lucide-react";
 import img2 from "../../../assets/img2.png";
+import userIcon from "../../../assets/icons/user.svg";
 import "./Accounttype.css";
 
 export default function AccountType() {
@@ -53,6 +54,16 @@ export default function AccountType() {
       className="account-page"
       style={{ backgroundImage: `url(${img2})` }}
     >
+      <header className="auth-header">
+        <div className="auth-header-logo" onClick={() => navigate("/")}>
+          <span className="logo-tech">Tech</span>
+          <span className="logo-guild">Guild</span>
+        </div>
+        <div className="auth-header-profile">
+          <img src={userIcon} alt="Profile Icon" className="header-profile-icon" />
+        </div>
+      </header>
+
       <div className="overlay"></div>
 
       <SignupCard>
@@ -67,9 +78,8 @@ export default function AccountType() {
             {accountTypes.map((item) => (
               <div
                 key={item.id}
-                className={`account-card ${
-                  selected === item.id ? "active" : ""
-                }`}
+                className={`account-card ${selected === item.id ? "active" : ""
+                  }`}
                 onClick={() => setSelected(item.id)}
                 style={{ cursor: "pointer" }}
               >
@@ -89,9 +99,8 @@ export default function AccountType() {
 
                 <div className="radio">
                   <div
-                    className={`dot ${
-                      selected === item.id ? "selected" : ""
-                    }`}
+                    className={`dot ${selected === item.id ? "selected" : ""
+                      }`}
                   ></div>
                 </div>
               </div>
@@ -101,7 +110,7 @@ export default function AccountType() {
           <button
             className="continue-btn"
             disabled={!selected}
-            onClick={() => navigate("/dashboard")}
+            onClick={() => navigate(selected === "client" ? "/client-dashboard" : "/dashboard")}
           >
             Continue
           </button>

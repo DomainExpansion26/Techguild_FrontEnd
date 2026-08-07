@@ -1,4 +1,4 @@
-﻿import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import SignUp from "./Modules/auth/Register/SignUp";
 import Login from "./Modules/auth/Login/Login";
 import ForgetPass from "./Modules/auth/ForgotPassword/Forgetpass";
@@ -6,20 +6,31 @@ import ResetPass from "./Modules/auth/ResetPassword/Resetpass";
 import VerifyEmail from "./Modules/auth/Verifyemail/Verifyemail";
 import EmailVerified from "./Modules/auth/Emailverify/Emailverify";
 import AccountType from "./Modules/auth/Accountype/Accounttype";
-import DashBoard from "./Pages/DashBoard/DashBoard";
-import Profile from "./Pages/Profile/Profile";
-import Projects from "./Pages/Projects/Projects";
-import Proposals from "./Pages/Proposals/Proposals";
-import Earnings from "./Pages/Earnings/Earnings";
-import Reviews from "./Pages/Reviews/Reviews";
-import SavedJobs from "./Pages/SavedJobs/SavedJobs";
-import Settings from "./Pages/Settings/Settings";
-import HelpSupport from "./Pages/HelpSupport/HelpSupport";
+import DashBoard from "./Modules/Individual/Pages/DashBoard/DashBoard";
+import ClientDashboard from "./Modules/Client/Pages/Dashboard/Dashboard";
+import ClientProfile from "./Modules/Client/Pages/Profile/Profile";
+import ClientQuestBoard from "./Modules/Client/Pages/QuestBoard/QuestBoard";
+import ClientApplications from "./Modules/Client/Pages/Applications/Applications";
+import ClientActiveQuests from "./Modules/Client/Pages/ActiveQuests/ActiveQuests";
+import ClientCompanyReputation from "./Modules/Client/Pages/CompanyReputation/CompanyReputation";
+import ClientVerificationHub from "./Modules/Client/Pages/VerificationHub/VerificationHub";
+import ClientPayouts from "./Modules/Client/Pages/Payouts/Payouts";
+import ClientNotifications from "./Modules/Client/Pages/Notifications/Notifications";
+import ClientSettings from "./Modules/Client/Pages/Settings/Settings";
+import ClientHelpSupport from "./Modules/Client/Pages/HelpSupport/HelpSupport";
+import Profile from "./Modules/Individual/Pages/Profile/Profile";
+import Projects from "./Modules/Individual/Pages/Projects/Projects";
+import Proposals from "./Modules/Individual/Pages/Proposals/Proposals";
+import Earnings from "./Modules/Individual/Pages/Earnings/Earnings";
+import Reviews from "./Modules/Individual/Pages/Reviews/Reviews";
+import SavedJobs from "./Modules/Individual/Pages/SavedJobs/SavedJobs";
+import Settings from "./Modules/Individual/Pages/Settings/Settings";
+import HelpSupport from "./Modules/Individual/Pages/HelpSupport/HelpSupport";
 
-import ActiveQuests from "./Pages/ActiveQuests/ActiveQuests";
-import PartyManagement from "./Pages/PartyManagement/PartyManagement";
-import ReputationRank from "./Pages/ReputationRank/ReputationRank";
-import Notifications from "./Pages/Notifications/Notifications";
+import ActiveQuests from "./Modules/Individual/Pages/ActiveQuests/ActiveQuests";
+import PartyManagement from "./Modules/Individual/Pages/PartyManagement/PartyManagement";
+import ReputationRank from "./Modules/Individual/Pages/ReputationRank/ReputationRank";
+import Notifications from "./Modules/Individual/Pages/Notifications/Notifications";
 
 import "./App.css";
 
@@ -37,6 +48,17 @@ function App() {
 
       {}
       <Route path="/dashboard" element={<DashBoard />} />
+      <Route path="/client-dashboard" element={<ClientDashboard />} />
+      <Route path="/client-profile" element={<ClientProfile />} />
+      <Route path="/client-quest-board" element={<ClientQuestBoard />} />
+      <Route path="/client-applications" element={<ClientApplications />} />
+      <Route path="/client-active-quests" element={<ClientActiveQuests />} />
+      <Route path="/client-company-reputation" element={<ClientCompanyReputation />} />
+      <Route path="/client-verification-hub" element={<ClientVerificationHub />} />
+      <Route path="/client-payouts" element={<ClientPayouts />} />
+      <Route path="/client-notifications" element={<ClientNotifications />} />
+      <Route path="/client-settings" element={<ClientSettings />} />
+      <Route path="/client-help-support" element={<ClientHelpSupport />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/quest-board" element={<Projects />} />
       <Route path="/my-applications" element={<Proposals />} />
