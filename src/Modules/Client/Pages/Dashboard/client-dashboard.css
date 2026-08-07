@@ -1,0 +1,162 @@
+.client-db-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.client-db-main-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.client-db-sidebar-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Card titles */
+.card-header-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 15px;
+}
+
+.card-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.card-link-text {
+  font-size: 0.75rem;
+  color: #103ca4;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+/* How it works */
+.hiw-empty-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #F3F4F6;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+}
+
+.hiw-empty-text {
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 5px;
+}
+.hiw-empty-subtext {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #6B7280;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+.hiw-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.hiw-step {
+  display: flex;
+  gap: 12px;
+}
+.hiw-step-num {
+  width: 24px;
+  height: 24px;
+  background-color: #103ca4;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.hiw-step-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 2px;
+}
+.hiw-step-desc {
+  font-size: 0.75rem;
+  color: #6B7280;
+}
+
+/* Quest Overview Grid */
+.quest-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.qo-metric-card {
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 12px;
+  background: white;
+}
+.qo-metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.qo-metric-title {
+  font-size: 0.75rem;
+  color: #6B7280;
+  font-weight: 500;
+}
+.qo-metric-icon {
+  color: #9CA3AF;
+}
+.qo-metric-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 5px;
+}
+.qo-metric-sub {
+  font-size: 0.7rem;
+  color: #9CA3AF;
+}
+
+/* Category Tags */
+.category-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.category-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  background-color: #fff;
+  border: 1px solid #E5E7EB;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+/* Shared utility */
+.text-muted-sm {
+  font-size: 0.8rem;
+  color: #6B7280;
+  line-height: 1.4;
+}

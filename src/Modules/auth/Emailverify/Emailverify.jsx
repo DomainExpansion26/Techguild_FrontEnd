@@ -7,6 +7,8 @@ import {
 } from "lucide-react";
 
 import img2 from "../../../assets/img2.png";
+import userIcon from "../../../assets/icons/user.svg";
+import mailImage from "../../../assets/mail.png";
 import "./Emailverify.css";
 
 export default function EmailVerified() {
@@ -20,6 +22,16 @@ export default function EmailVerified() {
       className="verified-page"
       style={{ backgroundImage: `url(${img2})` }}
     >
+      <header className="auth-header">
+        <div className="auth-header-logo" onClick={() => navigate("/")}>
+          <span className="logo-tech">Tech</span>
+          <span className="logo-guild">Guild</span>
+        </div>
+        <div className="auth-header-profile">
+          <img src={userIcon} alt="Profile Icon" className="header-profile-icon" />
+        </div>
+      </header>
+
       <div className="overlay" />
 
       <SignupCard>
@@ -28,11 +40,7 @@ export default function EmailVerified() {
 
           <div className="mailBox">
 
-            <Mail size={55} strokeWidth={1.5} />
-
-            <span className="tick">
-              <Check size={18} strokeWidth={3}/>
-            </span>
+            <img src={mailImage} alt="Mail" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
 
           </div>
 
@@ -46,15 +54,15 @@ export default function EmailVerified() {
 
           </div>
 
-          <div className="progress">
+          <div className="verify-progress">
 
             <div className="line"></div>
 
             <div className="step active">
               <div className="circle">
-                <Check size={14}/>
+                <Check size={14} />
               </div>
-              
+
               <h5>Email Verified</h5>
 
               <span>+10 Trust Points</span>
@@ -62,7 +70,7 @@ export default function EmailVerified() {
 
             <div className="step">
               <div className="circle">
-                <Lock size={14}/>
+                <Lock size={14} />
               </div>
 
               <h5>Profile Completed</h5>
@@ -72,7 +80,7 @@ export default function EmailVerified() {
 
             <div className="step">
               <div className="circle">
-                <Lock size={14}/>
+                <Lock size={14} />
               </div>
 
               <h5>Identity Verified</h5>
@@ -82,7 +90,7 @@ export default function EmailVerified() {
 
             <div className="step">
               <div className="circle">
-                <Lock size={14}/>
+                <Lock size={14} />
               </div>
 
               <h5>First Project</h5>

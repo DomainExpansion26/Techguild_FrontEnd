@@ -1,7 +1,9 @@
-import { Mail, CheckCircle2 } from "lucide-react";
 import SignupCard from "../../../Components/SignupCard/SignupCard";
 import PrimaryButton from "../../../Components/Button/Primarybutton";
 import img2 from "../../../assets/img2.png";
+import userIcon from "../../../assets/icons/user.svg";
+import mailIcon from "../../../assets/icons/mail.svg";
+import checkIcon from "../../../assets/icons/check-circle2.svg";
 import { useNavigate } from "react-router-dom";
 
 import "./Verifyemail.css";
@@ -23,15 +25,25 @@ export default function VerifyEmail() {
       className="verify-page"
       style={{ backgroundImage: `url(${img2})` }}
     >
+      <header className="auth-header">
+        <div className="auth-header-logo" onClick={() => navigate("/")}>
+          <span className="logo-tech">Tech</span>
+          <span className="logo-guild">Guild</span>
+        </div>
+        <div className="auth-header-profile">
+          <img src={userIcon} alt="Profile Icon" className="header-profile-icon" />
+        </div>
+      </header>
+
       <div className="overlay"></div>
 
       <SignupCard>
         <div className="verify-content">
 
           <div className="mail-icon-wrapper">
-            <Mail size={44} strokeWidth={1.8} />
+            <img src={mailIcon} alt="Mail" className="card-mail-icon" />
             <span className="badge">
-              <CheckCircle2 size={16} />
+              <img src={checkIcon} alt="Check" className="badge-check-icon" />
             </span>
           </div>
 
@@ -40,13 +52,9 @@ export default function VerifyEmail() {
           <p className="verify-text">
             We just sent an email to the address :
           </p>
-
           <p className="email">{email}</p>
-
           <p className="verify-text">
-            Please check your email and click the link provided to ,
-             <br /> 
-            verify your email address.
+            Please check your email and click the link provided to verify your email address.
           </p>
 
           <div className="verify-buttons">
