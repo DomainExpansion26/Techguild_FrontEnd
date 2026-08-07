@@ -1,24 +1,76 @@
 .verified-page {
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background-size: 100% 100% !important;
   background-position: center center !important;
   background-repeat: no-repeat !important;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: visible;
+}
+
+.auth-header {
+  position: absolute;
+  top: 24px;
+  left: 36px;
+  right: 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 20;
+}
+
+.auth-header-logo {
+  font-size: 26px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.logo-tech {
+  color: #FFFFFF;
+}
+
+.logo-guild {
+  color: #1155F4;
+}
+
+.auth-header-profile {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.auth-header-profile:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+}
+
+.header-profile-icon {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1) opacity(0.85);
 }
 
 .overlay {
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.08);
 }
 
 /* Override SignupCard ONLY on this page */
@@ -26,118 +78,126 @@
   position: relative !important;
   left: auto !important;
   top: auto !important;
-  transform: none !important;
+  transform: translateY(5px) !important;
+  margin: auto !important;
 
-  width: 795px !important;
-  max-width: 92% !important;
-  min-height: 514px !important;
+  width: 540px !important;
+  max-width: 95% !important;
   height: auto !important;
+  max-height: calc(100vh - 32px) !important;
 
-  padding: 28px !important;
+  padding: 10px 32px 10px 32px !important;
+  border-radius: 20px !important;
 
-  overflow: visible !important;
+  overflow-y: auto !important;
   visibility: visible !important;
   opacity: 1 !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1) !important;
+  box-sizing: border-box !important;
 }
 
 .verified-container {
   width: 100%;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .mailBox {
-  width: 82px;
-  height: 82px;
-  margin: 0 auto;
-  background: #fff;
-  border-radius: 18px;
+  width: 180px;
+  height: 130px;
+  margin: 0 auto 12px;
+  background: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  color: #666;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+  box-shadow: none;
 }
 
 .tick {
   position: absolute;
-  right: -8px;
-  top: -8px;
+  right: 0px;
+  top: -5px;
 
-  width: 34px;
-  height: 34px;
+  width: 24px;
+  height: 24px;
 
   border-radius: 50%;
-  background: #0742e4;
+  background: #1155F4;
   color: #fff;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  border: 3px solid #fff;
+  border: 2px solid #fff;
 }
 
 .verified-container h2 {
-  margin: 26px 0;
-  font-size: 24px;
+  margin: 0 0 10px;
+  font-size: 22px;
   font-weight: 700;
   color: #111;
   text-align: center;
 }
 
 .reward-card {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background: #eef4ff;
+  border: 1px solid #d4e3ff;
   border-radius: 12px;
-  padding: 14px 22px;
-  margin-bottom: 45px;
+  padding: 8px 24px;
+  margin-bottom: 18px;
 }
 
 .reward-card h4 {
-  color: #1f57d6;
-  font-size: 16px;
-  margin-bottom: 6px;
+  color: #103ca4;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
 }
 
 .reward-card p {
-  color: #1f57d6;
+  color: #103ca4;
   font-size: 13px;
+  font-weight: 600;
+  margin: 0;
 }
 
-.progress {
+.verify-progress {
   position: relative;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   width: 100%;
 
-  margin: 40px 0;
-  padding-top: 8px;
+  margin: 0 0 28px;
+  padding: 0;
+  overflow: visible;
 
-  min-height: 120px;   /* Important */
-  overflow: visible;   /* Important */
-
+  height: auto !important;
   background: transparent !important;
 }
 
 .line {
   position: absolute;
-  top: 18px;
-  left: 70px;
-  right: 55px;
-  height: 1px;
-  background: #918D8D;
+  top: 16px;
+  left: calc(12.5% + 16px);
+  right: calc(12.5% + 16px);
+  height: 2px;
+  background: #cbd5e1;
   z-index: 0;
-  width: 80%;
-
 }
 
 .step {
   position: relative;
   z-index: 2;
-
-  width: 170px;
+  flex: 1;
 
   display: flex;
   flex-direction: column;
@@ -145,124 +205,148 @@
   justify-content: flex-start;
 
   text-align: center;
-
   overflow: visible;
+  padding: 0 4px;
 }
 
 .circle {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  border: 2px solid #d8d8d8;
+  border: 2px solid #cbd5e1;
   background: #fff;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  margin-bottom: 14px;
+  margin-bottom: 8px;
+  color: #94a3b8;
+  transition: all 0.2s ease;
 }
 
-.active .circle {
-  background: #2f5ae8;
-  border-color: #2f5ae8;
+.step.active .circle {
+  background: #103ca4;
+  border-color: #103ca4;
   color: #fff;
+  box-shadow: 0 4px 12px rgba(16, 60, 164, 0.25);
 }
 
 .step h5 {
-  margin-top: 14px;
-  margin-bottom: 6px;
+  margin: 0 0 3px 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  white-space: normal;
+  line-height: 1.3;
+}
 
-  font-size: 16px;
+.step.active h5 {
+  color: #0f172a;
   font-weight: 700;
-  color: #222;
-
-  white-space: nowrap;
-  flex: 1;
-  align-self: flex-start;
 }
 
 .step span {
   display: block;
-  font-size: 14px;
-  color: #777;
+  font-size: 11px;
+  color: #94a3b8;
   font-weight: 500;
-  white-space: nowrap;
+  white-space: normal;
+  line-height: 1.3;
 }
 
-.active h5 {
-  align-self: flex-start;
-}
-
-.active span {
-  color: #103CA4;
+.step.active span {
+  color: #103ca4;
   font-weight: 700;
 }
+
 .continueBtn {
-  width: 50%;
-  height: 52px;
-  margin-top: -20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 240px;
+  max-width: 90%;
+  height: 44px;
+  margin: 0 auto;
 
   border: none;
   border-radius: 10px;
 
-  background: #103CA4;
+  background: #103ca4;
   color: #fff;
 
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
 
   cursor: pointer;
 
-  transition: .25s;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(16, 60, 164, 0.25);
 }
 
 .continueBtn:hover {
-  background: #1848b0;
+  background: #0c3188;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(16, 60, 164, 0.35);
 }
 
-/* Tablet */
+.continueBtn:active {
+  transform: translateY(0);
+}
 
-@media (max-width: 768px) {
-
+/* Tablet & Mobile Responsiveness */
+@media (max-width: 640px) {
   .verified-page .signup-card {
-    width: 95% !important;
-    min-height: auto !important;
-    padding: 25px !important;
+    width: 100% !important;
+    padding: 22px 16px !important;
+    transform: none !important;
   }
 
   .verified-container h2 {
-    font-size: 28px;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .reward-card {
+    padding: 8px 16px;
+    margin-bottom: 18px;
   }
 
   .reward-card h4 {
-    font-size: 18px;
+    font-size: 13px;
   }
 
   .reward-card p {
-    font-size: 14px;
-  }
-
-  .progress {
-    flex-direction: column;
-    gap: 28px;
-    align-items: center;
-  }
-
-  .line {
-    display: none;
-  }
-
-  .step {
-    width: 100%;
-  }
-
-  .step span {
     font-size: 12px;
   }
 
+  .verify-progress {
+    margin: 0 0 20px;
+  }
+
+  .circle {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 6px;
+  }
+
+  .line {
+    top: 13px;
+    left: calc(12.5% + 14px);
+    right: calc(12.5% + 14px);
+  }
+
   .step h5 {
-    font-size: 13px;
-    align-self: flex-start;
+    font-size: 10.5px;
+  }
+
+  .step span {
+    font-size: 9.5px;
+  }
+
+  .continueBtn {
+    height: 40px;
+    font-size: 14px;
+    width: 210px;
   }
 }
