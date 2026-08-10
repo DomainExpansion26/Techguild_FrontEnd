@@ -1,16 +1,12 @@
-import React from 'react';
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Lock from "../../../assets/icons/lock.svg?react";
-import Eye from "../../../assets/icons/eye.svg?react";
-import EyeOff from "../../../assets/icons/eye-off.svg?react";
+import { Lock, Eye, EyeOff } from "../../../Components/icons";
 import Icon from "../../../Components/icons/Icon";
 import TickIcon from "../../../assets/tick.png";
 import "./resetpass.css";
 import {
   AuthHomeScreen,
   BrandLogo,
-  PasswordInput,
   SignupCard,
 } from "../../../Components";
 
@@ -49,7 +45,6 @@ export default function ResetPass() {
 
           {!isSubmitted ? (
             <>
-              {/* New Password */}
               <label htmlFor="new-password" style={{ fontWeight: 700, fontSize: '13px', color: '#111827', display: 'block', margin: '6px 0 5px 0' }}>New Password</label>
               <div className="input-group rounded-3 overflow-hidden bg-white" style={{ marginBottom: '12px', border: '1px solid #B3B3B3' }}>
                 <span className="input-group-text bg-white border-0 d-flex align-items-center justify-content-center" style={{ padding: '0 10px', minWidth: '36px' }}>
@@ -71,11 +66,10 @@ export default function ResetPass() {
                   onClick={() => setShowNewPassword(!showNewPassword)}
                   style={{ padding: '0 10px' }}
                 >
-                  {showNewPassword ? <EyeOff width={16} height={16} /> : <Eye width={16} height={16} />}
+                  {showNewPassword ? <Eye width={16} height={16} /> : <EyeOff width={16} height={16} />}
                 </button>
               </div>
 
-              {/* Confirm Password */}
               <label htmlFor="confirm-password" style={{ fontWeight: 700, fontSize: '13px', color: '#111827', display: 'block', margin: '6px 0 5px 0' }}>Confirm Password</label>
               <div className="input-group rounded-3 overflow-hidden bg-white" style={{ marginBottom: '12px', border: '1px solid #B3B3B3' }}>
                 <span className="input-group-text bg-white border-0 d-flex align-items-center justify-content-center" style={{ padding: '0 10px', minWidth: '36px' }}>
@@ -97,7 +91,7 @@ export default function ResetPass() {
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   style={{ padding: '0 10px' }}
                 >
-                  {showConfirmPassword ? <EyeOff width={16} height={16} /> : <Eye width={16} height={16} />}
+                  {showConfirmPassword ? <Eye width={16} height={16} /> : <EyeOff width={16} height={16} />}
                 </button>
               </div>
 
@@ -118,7 +112,6 @@ export default function ResetPass() {
             </>
           ) : (
             <>
-              {/* If we need to center the logo specifically for success state, we could do it, but let's center the rest first */}
               <div className="success-icon" style={{ display: 'flex', justifyContent: 'center', margin: '0' }}>
                 <img src={TickIcon} alt="Success" width="80" height="80" />
               </div>

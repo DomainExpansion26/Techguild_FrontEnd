@@ -1,11 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import SignupCard from "../../../Components/SignupCard/SignupCard";
-import {
-  Mail,
-  Check,
-  Lock
-} from "lucide-react";
-
+import { Mail, Check, Lock } from "../../../Components/icons";
 import img2 from "../../../assets/img2.png";
 import userIcon from "../../../assets/icons/user.svg";
 import mailImage from "../../../assets/mail.png";
@@ -60,7 +55,7 @@ export default function EmailVerified() {
 
             <div className="step active">
               <div className="circle">
-                <Check size={14} />
+                <Check width={14} height={14} />
               </div>
 
               <h5>Email Verified</h5>
@@ -70,7 +65,7 @@ export default function EmailVerified() {
 
             <div className="step">
               <div className="circle">
-                <Lock size={14} />
+                <Lock width={14} height={14} />
               </div>
 
               <h5>Profile Completed</h5>
@@ -80,7 +75,7 @@ export default function EmailVerified() {
 
             <div className="step">
               <div className="circle">
-                <Lock size={14} />
+                <Lock width={14} height={14} />
               </div>
 
               <h5>Identity Verified</h5>
@@ -90,7 +85,7 @@ export default function EmailVerified() {
 
             <div className="step">
               <div className="circle">
-                <Lock size={14} />
+                <Lock width={14} height={14} />
               </div>
 
               <h5>First Project</h5>
