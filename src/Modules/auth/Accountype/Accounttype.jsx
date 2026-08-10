@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SignupCard from "../../../Components/SignupCard/SignupCard";
-import { User, Building2, Briefcase } from "lucide-react";
+import { User, Building2, Briefcase } from "../../../Components/icons";
 import img2 from "../../../assets/img2.png";
 import userIcon from "../../../assets/icons/user.svg";
 import "./Accounttype.css";
@@ -14,7 +14,7 @@ export default function AccountType() {
     {
       id: "individual",
       title: "Individual",
-      icon: <User size={28} />,
+      icon: <User width={28} height={28} />,
       description:
         "I am a freelancer or independent professional looking for projects and opportunities.",
       points: [
@@ -26,7 +26,7 @@ export default function AccountType() {
     {
       id: "agency",
       title: "Agency",
-      icon: <Building2 size={28} />,
+      icon: <Building2 width={28} height={28} />,
       description:
         "I represent an agency or company providing professional services.",
       points: [
@@ -38,7 +38,7 @@ export default function AccountType() {
     {
       id: "client",
       title: "Client",
-      icon: <Briefcase size={28} />,
+      icon: <Briefcase width={28} height={28} />,
       description:
         "I am a business or individual looking to hire professionals for projects.",
       points: [
@@ -78,10 +78,8 @@ export default function AccountType() {
             {accountTypes.map((item) => (
               <div
                 key={item.id}
-                className={`account-card ${selected === item.id ? "active" : ""
-                  }`}
+                className={`account-card ${selected === item.id ? "active" : ""}`}
                 onClick={() => setSelected(item.id)}
-                style={{ cursor: "pointer" }}
               >
                 <div className="account-icon">{item.icon}</div>
 
@@ -99,8 +97,7 @@ export default function AccountType() {
 
                 <div className="radio">
                   <div
-                    className={`dot ${selected === item.id ? "selected" : ""
-                      }`}
+                    className={`dot ${selected === item.id ? "selected" : ""}`}
                   ></div>
                 </div>
               </div>
