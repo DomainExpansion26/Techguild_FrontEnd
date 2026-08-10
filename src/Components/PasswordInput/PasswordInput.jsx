@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff } from "../icons";
 import "./PasswordInput.css";
 
 const PasswordInput = ({
@@ -31,7 +31,7 @@ const PasswordInput = ({
           onClick={() => setShowPassword(!showPassword)}
           aria-label={showPassword ? "Hide password" : "Show password"}
         >
-          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          {showPassword ? <Eye width={18} height={18} /> : <EyeOff width={18} height={18} />}
         </button>
       </div>
     </div>
