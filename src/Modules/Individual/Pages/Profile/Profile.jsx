@@ -6,33 +6,33 @@ import "./profile.css";
 
 export default function Profile() {
   const [currentStep, setCurrentStep] = useState(1);
+  const [isEditingFromReview, setIsEditingFromReview] = useState(false);
+  const [snapshot, setSnapshot] = useState({});
 
-  // Step 1 Form States
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [fullName, setFullName] = useState("");
   const [country, setCountry] = useState("");
   const [timeZone, setTimeZone] = useState("");
   const [step1Errors, setStep1Errors] = useState({});
 
-  // Step 2 Form States
   const [headline, setHeadline] = useState("");
   const [bio, setBio] = useState("");
   const [experience, setExperience] = useState("");
   const [availability, setAvailability] = useState("");
   const [step2Errors, setStep2Errors] = useState({});
 
-  // Step 3 Form States (Skills)
   const [skills, setSkills] = useState("");
   const [tools, setTools] = useState("");
   const [categories, setCategories] = useState("");
   const [step3Errors, setStep3Errors] = useState({});
 
-  // Step 4 Form States (Portfolio and links)
   const [portfolioUrl, setPortfolioUrl] = useState("");
   const [githubUrl, setGithubUrl] = useState("");
   const [linkedinUrl, setLinkedinUrl] = useState("");
   const [resumeFile, setResumeFile] = useState(null);
   const [step4Errors, setStep4Errors] = useState({});
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const steps = [
     { number: 1, label: "Basic Information", active: currentStep === 1 },
@@ -68,14 +68,19 @@ export default function Profile() {
     if (!fullName.trim()) errors.fullName = "Full name is required";
     if (!country) errors.country = "Country is required";
     if (!timeZone) errors.timeZone = "Time zone is required";
-
-    if (Object.keys(errors).length > 0) {
-      setStep1Errors(errors);
-      return;
-    }
-
+    if (Object.keys(errors).length > 0) { setStep1Errors(errors); return; }
     setStep1Errors({});
-    setCurrentStep(2);
+    if (isEditingFromReview) { setIsEditingFromReview(false); setCurrentStep(5); } else { setCurrentStep(2); }
+  };
+
+  const handleStep1Cancel = () => {
+    setProfilePhoto(snapshot.profilePhoto ?? profilePhoto);
+    setFullName(snapshot.fullName ?? fullName);
+    setCountry(snapshot.country ?? country);
+    setTimeZone(snapshot.timeZone ?? timeZone);
+    setStep1Errors({});
+    setIsEditingFromReview(false);
+    setCurrentStep(5);
   };
 
   const handleStep2Continue = (e) => {
@@ -85,14 +90,19 @@ export default function Profile() {
     if (!bio.trim()) errors.bio = "Bio is required";
     if (!experience) errors.experience = "Experience level is required";
     if (!availability) errors.availability = "Availability is required";
-
-    if (Object.keys(errors).length > 0) {
-      setStep2Errors(errors);
-      return;
-    }
-
+    if (Object.keys(errors).length > 0) { setStep2Errors(errors); return; }
     setStep2Errors({});
-    setCurrentStep(3);
+    if (isEditingFromReview) { setIsEditingFromReview(false); setCurrentStep(5); } else { setCurrentStep(3); }
+  };
+
+  const handleStep2Cancel = () => {
+    setHeadline(snapshot.headline ?? headline);
+    setBio(snapshot.bio ?? bio);
+    setExperience(snapshot.experience ?? experience);
+    setAvailability(snapshot.availability ?? availability);
+    setStep2Errors({});
+    setIsEditingFromReview(false);
+    setCurrentStep(5);
   };
 
   const handleStep3Continue = (e) => {
@@ -101,14 +111,18 @@ export default function Profile() {
     if (!skills.trim()) errors.skills = "Skills are required";
     if (!tools.trim()) errors.tools = "Tools are required";
     if (!categories.trim()) errors.categories = "Categories are required";
-
-    if (Object.keys(errors).length > 0) {
-      setStep3Errors(errors);
-      return;
-    }
-
+    if (Object.keys(errors).length > 0) { setStep3Errors(errors); return; }
     setStep3Errors({});
-    setCurrentStep(4);
+    if (isEditingFromReview) { setIsEditingFromReview(false); setCurrentStep(5); } else { setCurrentStep(4); }
+  };
+
+  const handleStep3Cancel = () => {
+    setSkills(snapshot.skills ?? skills);
+    setTools(snapshot.tools ?? tools);
+    setCategories(snapshot.categories ?? categories);
+    setStep3Errors({});
+    setIsEditingFromReview(false);
+    setCurrentStep(5);
   };
 
   const handleStep4Continue = (e) => {
@@ -118,19 +132,39 @@ export default function Profile() {
     if (!githubUrl.trim()) errors.githubUrl = "Github URL is required";
     if (!linkedinUrl.trim()) errors.linkedinUrl = "Linkedin URL is required";
     if (!resumeFile) errors.resumeFile = "Resume PDF is required";
-
-    if (Object.keys(errors).length > 0) {
-      setStep4Errors(errors);
-      return;
-    }
-
+    if (Object.keys(errors).length > 0) { setStep4Errors(errors); return; }
     setStep4Errors({});
+    if (isEditingFromReview) { setIsEditingFromReview(false); setCurrentStep(5); } else { setCurrentStep(5); }
+  };
+
+  const handleStep4Cancel = () => {
+    setPortfolioUrl(snapshot.portfolioUrl ?? portfolioUrl);
+    setGithubUrl(snapshot.githubUrl ?? githubUrl);
+    setLinkedinUrl(snapshot.linkedinUrl ?? linkedinUrl);
+    setResumeFile(snapshot.resumeFile ?? resumeFile);
+    setStep4Errors({});
+    setIsEditingFromReview(false);
     setCurrentStep(5);
+  };
+
+  const goToEditStep = (step) => {
+    setSnapshot({
+      profilePhoto, fullName, country, timeZone,
+      headline, bio, experience, availability,
+      skills, tools, categories,
+      portfolioUrl, githubUrl, linkedinUrl, resumeFile,
+    });
+    setIsEditingFromReview(true);
+    setCurrentStep(step);
+  };
+
+  const handleFinalSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitted(true);
   };
 
   const renderStepper = () => {
     const progressWidth = `${((currentStep - 1) / (steps.length - 1)) * 100}%`;
-
     return (
       <div className="profile-stepper-container flex-shrink-0 w-100 position-relative">
         <div className="profile-stepper position-relative d-flex align-items-start justify-content-between w-100">
@@ -140,10 +174,8 @@ export default function Profile() {
           {steps.map((step) => (
             <div
               key={step.number}
-              onClick={() => setCurrentStep(step.number)}
-              className={`stepper-item d-flex flex-column align-items-center position-relative ${step.number <= currentStep ? "active" : ""
-                }`}
-              style={{ cursor: "pointer" }}
+              className={`stepper-item d-flex flex-column align-items-center position-relative ${step.number <= currentStep ? "active" : ""}`}
+              style={{ cursor: "default", pointerEvents: "none" }}
             >
               <div className="stepper-circle d-flex align-items-center justify-content-center">
                 {step.number}
@@ -156,28 +188,57 @@ export default function Profile() {
     );
   };
 
+  const renderActionButtons = (isComplete, onCancel) => (
+    <div className="profile-form-actions d-flex justify-content-end flex-shrink-0 gap-2">
+      {isEditingFromReview ? (
+        <>
+          <button type="button" className="profile-cancel-btn" onClick={onCancel}>
+            Cancel
+          </button>
+          <div className="continue-btn-wrapper">
+            <PrimaryButton
+              type="submit"
+              disabled={!isComplete}
+              text={<span className="btn-content text-white d-inline-flex align-items-center gap-2"><span>Save</span></span>}
+            />
+          </div>
+        </>
+      ) : (
+        <div className="continue-btn-wrapper">
+          <PrimaryButton
+            type="submit"
+            disabled={!isComplete}
+            text={
+              <span className="btn-content text-white d-inline-flex align-items-center gap-2">
+                <span>Continue</span>
+                <Icon name="ArrowRight" size={18} color="#ffffff" />
+              </span>
+            }
+          />
+        </div>
+      )}
+    </div>
+  );
+
   const renderStep1 = () => (
     <form className="profile-step-form flex-grow-1 d-flex flex-column min-vh-0 h-100" onSubmit={handleStep1Continue}>
-      {/* Section Heading */}
       <div className="profile-section-heading flex-shrink-0">
         <h2 className="section-title fw-bold">Basic information</h2>
         <p className="section-subtitle text-secondary">Add your basic details.</p>
       </div>
 
-      {/* Profile Picture */}
       <div className="profile-field-group">
         <label className="field-label">Profile picture</label>
         <div className="upload-btn-wrapper d-flex align-items-center gap-3">
           <label htmlFor="profile-photo-input" className="upload-photo-btn d-inline-flex align-items-center justify-content-center text-white gap-2" style={{ cursor: "pointer" }}>
             <span>{profilePhoto ? profilePhoto.name : "Upload photo"}</span>
-            <Icon name={profilePhoto ? "Check" : "Upload"} size={15} color="#ffffff" />
+            <Icon name={profilePhoto ? "Check" : "Upload"} size={16} color="#ffffff" />
           </label>
           <input id="profile-photo-input" type="file" accept="image/*" style={{ display: "none" }} onChange={handlePhotoUpload} />
         </div>
         {step1Errors.photo && <span className="field-error">{step1Errors.photo}</span>}
       </div>
 
-      {/* Full Name */}
       <div className="profile-field-group">
         <label className="field-label">Full name</label>
         <input
@@ -190,7 +251,6 @@ export default function Profile() {
         {step1Errors.fullName && <span className="field-error">{step1Errors.fullName}</span>}
       </div>
 
-      {/* Country */}
       <div className="profile-field-group">
         <div className="custom-dropdown-container w-100">
           <label className="field-label">Country</label>
@@ -212,7 +272,6 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* Time Zone */}
       <div className="profile-field-group">
         <div className="custom-dropdown-container w-100">
           <label className="field-label">Time Zone</label>
@@ -232,33 +291,17 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* Continue Button */}
-      <div className="profile-form-actions d-flex justify-content-end flex-shrink-0">
-        <div className="continue-btn-wrapper">
-          <PrimaryButton
-            type="submit"
-            disabled={!isStep1Complete}
-            text={
-              <span className="btn-content text-white d-inline-flex align-items-center gap-2">
-                <span>Continue</span>
-                <Icon name="ArrowRight" size={18} color="#ffffff" />
-              </span>
-            }
-          />
-        </div>
-      </div>
+      {renderActionButtons(isStep1Complete, handleStep1Cancel)}
     </form>
   );
 
   const renderStep2 = () => (
     <form className="profile-step-form flex-grow-1 d-flex flex-column min-vh-0 h-100" onSubmit={handleStep2Continue}>
-      {/* Section Heading */}
       <div className="profile-section-heading flex-shrink-0">
         <h2 className="section-title fw-bold">Professional Information</h2>
         <p className="section-subtitle text-secondary">Tell us about your professional background</p>
       </div>
 
-      {/* Headline */}
       <div className="profile-field-group">
         <label className="field-label">Headline</label>
         <input
@@ -271,7 +314,6 @@ export default function Profile() {
         {step2Errors.headline && <span className="field-error">{step2Errors.headline}</span>}
       </div>
 
-      {/* Bio */}
       <div className="profile-field-group">
         <label className="field-label">Bio</label>
         <div className={`bio-textarea-wrapper w-100 ${step2Errors.bio ? "input-error" : ""}`}>
@@ -287,7 +329,6 @@ export default function Profile() {
         {step2Errors.bio && <span className="field-error">{step2Errors.bio}</span>}
       </div>
 
-      {/* Experience Level */}
       <div className="profile-field-group">
         <div className="custom-dropdown-container w-100">
           <label className="field-label">Experience Level</label>
@@ -305,7 +346,6 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* Availability */}
       <div className="profile-field-group">
         <div className="custom-dropdown-container w-100">
           <label className="field-label">Availability</label>
@@ -323,33 +363,17 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* Continue Button */}
-      <div className="profile-form-actions d-flex justify-content-end flex-shrink-0">
-        <div className="continue-btn-wrapper">
-          <PrimaryButton
-            type="submit"
-            disabled={!isStep2Complete}
-            text={
-              <span className="btn-content text-white d-inline-flex align-items-center gap-2">
-                <span>Continue</span>
-                <Icon name="ArrowRight" size={18} color="#ffffff" />
-              </span>
-            }
-          />
-        </div>
-      </div>
+      {renderActionButtons(isStep2Complete, handleStep2Cancel)}
     </form>
   );
 
   const renderStep3 = () => (
     <form className="profile-step-form flex-grow-1 d-flex flex-column min-vh-0 h-100" onSubmit={handleStep3Continue}>
-      {/* Section Heading */}
       <div className="profile-section-heading flex-shrink-0">
         <h2 className="section-title fw-bold">Skills</h2>
         <p className="section-subtitle text-secondary">Add your skills and expertise</p>
       </div>
 
-      {/* Skills */}
       <div className="profile-field-group">
         <label className="field-label">Skills</label>
         <input
@@ -362,7 +386,6 @@ export default function Profile() {
         {step3Errors.skills && <span className="field-error">{step3Errors.skills}</span>}
       </div>
 
-      {/* Tools */}
       <div className="profile-field-group">
         <label className="field-label">Tools</label>
         <input
@@ -375,7 +398,6 @@ export default function Profile() {
         {step3Errors.tools && <span className="field-error">{step3Errors.tools}</span>}
       </div>
 
-      {/* Categories */}
       <div className="profile-field-group">
         <label className="field-label">Categories</label>
         <input
@@ -388,33 +410,17 @@ export default function Profile() {
         {step3Errors.categories && <span className="field-error">{step3Errors.categories}</span>}
       </div>
 
-      {/* Continue Button */}
-      <div className="profile-form-actions d-flex justify-content-end flex-shrink-0">
-        <div className="continue-btn-wrapper">
-          <PrimaryButton
-            type="submit"
-            disabled={!isStep3Complete}
-            text={
-              <span className="btn-content text-white d-inline-flex align-items-center gap-2">
-                <span>Continue</span>
-                <Icon name="ArrowRight" size={18} color="#ffffff" />
-              </span>
-            }
-          />
-        </div>
-      </div>
+      {renderActionButtons(isStep3Complete, handleStep3Cancel)}
     </form>
   );
 
   const renderStep4 = () => (
     <form className="profile-step-form flex-grow-1 d-flex flex-column min-vh-0 h-100" onSubmit={handleStep4Continue}>
-      {/* Section Heading */}
       <div className="profile-section-heading flex-shrink-0">
         <h2 className="section-title fw-bold">Portfolio and links</h2>
         <p className="section-subtitle text-secondary">Add your portfolio and social links</p>
       </div>
 
-      {/* Portfolio website */}
       <div className="profile-field-group">
         <label className="field-label">Portfolio website</label>
         <input
@@ -427,7 +433,6 @@ export default function Profile() {
         {step4Errors.portfolioUrl && <span className="field-error">{step4Errors.portfolioUrl}</span>}
       </div>
 
-      {/* Github */}
       <div className="profile-field-group">
         <label className="field-label">Github</label>
         <input
@@ -440,7 +445,6 @@ export default function Profile() {
         {step4Errors.githubUrl && <span className="field-error">{step4Errors.githubUrl}</span>}
       </div>
 
-      {/* Linkedin */}
       <div className="profile-field-group">
         <label className="field-label">Linkedin</label>
         <input
@@ -453,7 +457,6 @@ export default function Profile() {
         {step4Errors.linkedinUrl && <span className="field-error">{step4Errors.linkedinUrl}</span>}
       </div>
 
-      {/* Resume */}
       <div className="profile-field-group">
         <label className="field-label">Resume</label>
         <label
@@ -476,72 +479,37 @@ export default function Profile() {
         {step4Errors.resumeFile && <span className="field-error">{step4Errors.resumeFile}</span>}
       </div>
 
-      {/* Continue Button */}
-      <div className="profile-form-actions d-flex justify-content-end flex-shrink-0">
-        <div className="continue-btn-wrapper">
-          <PrimaryButton
-            type="submit"
-            disabled={!isStep4Complete}
-            text={
-              <span className="btn-content text-white d-inline-flex align-items-center gap-2">
-                <span>Continue</span>
-                <Icon name="ArrowRight" size={18} color="#ffffff" />
-              </span>
-            }
-          />
-        </div>
-      </div>
+      {renderActionButtons(isStep4Complete, handleStep4Cancel)}
     </form>
   );
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const handleFinalSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitted(true);
-  };
-
   const renderStep5 = () => (
     <form className="profile-step-form flex-grow-1 d-flex flex-column min-vh-0 h-100" onSubmit={handleFinalSubmit}>
-      {/* Section Heading */}
       <div className="profile-section-heading flex-shrink-0">
         <h2 className="section-title fw-bold">Review & Submit</h2>
         <p className="section-subtitle text-secondary">Review your information before continuing</p>
       </div>
 
-      {/* Basic Information Review Box */}
       <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
         <span className="review-summary-title fw-bold">Basic Information</span>
-        <span className="review-edit-btn fw-bold" onClick={() => setCurrentStep(1)} role="button">
-          Edit
-        </span>
+        <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(1)} role="button">Edit</span>
       </div>
 
-      {/* Professional Information Review Box */}
       <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
         <span className="review-summary-title fw-bold">Professional Information</span>
-        <span className="review-edit-btn fw-bold" onClick={() => setCurrentStep(2)} role="button">
-          Edit
-        </span>
+        <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(2)} role="button">Edit</span>
       </div>
 
-      {/* Skills Review Box */}
       <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
         <span className="review-summary-title fw-bold">Skills</span>
-        <span className="review-edit-btn fw-bold" onClick={() => setCurrentStep(3)} role="button">
-          Edit
-        </span>
+        <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(3)} role="button">Edit</span>
       </div>
 
-      {/* Portfolio and links Review Box */}
       <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
         <span className="review-summary-title fw-bold">Portfolio and links</span>
-        <span className="review-edit-btn fw-bold" onClick={() => setCurrentStep(4)} role="button">
-          Edit
-        </span>
+        <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(4)} role="button">Edit</span>
       </div>
 
-      {/* Submit Button */}
       <div className="profile-form-actions d-flex justify-content-end flex-shrink-0">
         <div className="continue-btn-wrapper">
           <PrimaryButton
@@ -555,7 +523,6 @@ export default function Profile() {
 
   const renderCompletionScreen = () => (
     <div className="completion-screen-wrapper d-flex flex-column align-items-center h-100 w-100 py-1">
-      {/* Top Left Back Button */}
       <div className="w-100 d-flex justify-content-start flex-shrink-0 mb-1">
         <button
           type="button"
@@ -567,33 +534,26 @@ export default function Profile() {
         </button>
       </div>
 
-      {/* Main Content Area */}
       <div className="d-flex flex-column align-items-center w-100 my-auto">
-        {/* User Avatar Circle */}
         <div className="completion-avatar-circle d-flex align-items-center justify-content-center mb-3">
           <Icon name="User2" size={44} color="#103CA4" />
         </div>
 
-        {/* Title */}
         <h1 className="completion-main-title fw-bold text-center mb-3">
           Profile Setup Completed<br />Successfully !
         </h1>
 
-        {/* Reward Banner */}
         <div className="completion-reward-banner text-start mb-4 w-100">
           <h3 className="reward-banner-title fw-bold mb-1">Profile Completed</h3>
           <p className="reward-banner-subtitle mb-0">You have earned +20 trust points!</p>
         </div>
 
-        {/* Trust Points Stepper Roadmap */}
         <div className="completion-stepper-container position-relative w-100 mb-4">
           <div className="completion-stepper position-relative d-flex align-items-start justify-content-between w-100">
-            {/* Track Line */}
             <div className="completion-track-line position-absolute">
               <div className="completion-active-line" style={{ width: "33.33%" }}></div>
             </div>
 
-            {/* Step 1: Email Verified */}
             <div className="completion-step-item d-flex flex-column align-items-center">
               <div className="completion-circle active d-flex align-items-center justify-content-center">
                 <span className="dot-white"></span>
@@ -602,7 +562,6 @@ export default function Profile() {
               <span className="completion-step-points fw-bold text-primary">+10 Trust Points</span>
             </div>
 
-            {/* Step 2: Profile Completed */}
             <div className="completion-step-item d-flex flex-column align-items-center">
               <div className="completion-circle active d-flex align-items-center justify-content-center">
                 <span className="dot-white"></span>
@@ -611,7 +570,6 @@ export default function Profile() {
               <span className="completion-step-points fw-bold text-primary">+20 Trust Points</span>
             </div>
 
-            {/* Step 3: Identity Verified */}
             <div className="completion-step-item d-flex flex-column align-items-center">
               <div className="completion-circle locked d-flex align-items-center justify-content-center">
                 <Icon name="Lock" size={16} color="#9ca3af" />
@@ -620,7 +578,6 @@ export default function Profile() {
               <span className="completion-step-points text-muted">+40 Trust Points</span>
             </div>
 
-            {/* Step 4: First Project/ Proposal */}
             <div className="completion-step-item d-flex flex-column align-items-center">
               <div className="completion-circle locked d-flex align-items-center justify-content-center">
                 <Icon name="Lock" size={16} color="#9ca3af" />
@@ -631,7 +588,6 @@ export default function Profile() {
           </div>
         </div>
 
-        {/* CTA Button */}
         <div className="completion-cta-wrapper d-flex justify-content-center mt-2">
           <button type="button" className="completion-cta-btn border-0 text-white fw-bold d-inline-flex align-items-center justify-content-center">
             Continue to Verify Identity
@@ -644,7 +600,6 @@ export default function Profile() {
   return (
     <div className="dashboard-layout">
       <Navbar />
-
       <main className="main-workspace d-flex flex-column h-100">
         <Cards className="header-card flex-shrink-0" padding="0">
           <header className="header">
@@ -667,16 +622,11 @@ export default function Profile() {
                 renderCompletionScreen()
               ) : (
                 <>
-                  {/* Header - FIXED AT TOP */}
                   <div className="profile-header-section flex-shrink-0">
                     <h1 className="profile-main-title fw-bold">Complete Your Profile</h1>
                     <p className="profile-main-subtitle text-secondary">Lets build your profile step by step.</p>
                   </div>
-
-                  {/* Stepper - FIXED BELOW HEADER */}
                   {renderStepper()}
-
-                  {/* Dynamic Step Content */}
                   {currentStep === 1 && renderStep1()}
                   {currentStep === 2 && renderStep2()}
                   {currentStep === 3 && renderStep3()}
