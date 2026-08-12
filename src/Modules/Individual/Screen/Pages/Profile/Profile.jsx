@@ -55,6 +55,7 @@ export default function Profile() {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+<<<<<<< HEAD:src/Modules/Individual/Screen/Pages/Profile/Profile.jsx
   useEffect(() => {
     if (step) {
       if (step === "completed") {
@@ -71,6 +72,8 @@ export default function Profile() {
     navigate(`/profile/${slug}`);
   };
 
+=======
+>>>>>>> e5a5267 (feat: updated profile individual):src/Modules/Individual/Pages/Profile/Profile.jsx
   const steps = [
     { number: 1, label: "Basic Information", active: currentStep === 1 },
     { number: 2, label: "Professional Information", active: currentStep === 2 },
@@ -107,7 +110,11 @@ export default function Profile() {
     if (!timeZone) errors.timeZone = "Time zone is required";
     if (Object.keys(errors).length > 0) { setStep1Errors(errors); return; }
     setStep1Errors({});
+<<<<<<< HEAD:src/Modules/Individual/Screen/Pages/Profile/Profile.jsx
     if (isEditingFromReview) { setIsEditingFromReview(false); goToStep(5); } else { goToStep(2); }
+=======
+    if (isEditingFromReview) { setIsEditingFromReview(false); setCurrentStep(5); } else { setCurrentStep(2); }
+>>>>>>> e5a5267 (feat: updated profile individual):src/Modules/Individual/Pages/Profile/Profile.jsx
   };
 
   const handleStep1Cancel = () => {
@@ -117,7 +124,11 @@ export default function Profile() {
     setTimeZone(snapshot.timeZone ?? timeZone);
     setStep1Errors({});
     setIsEditingFromReview(false);
+<<<<<<< HEAD:src/Modules/Individual/Screen/Pages/Profile/Profile.jsx
     goToStep(5);
+=======
+    setCurrentStep(5);
+>>>>>>> e5a5267 (feat: updated profile individual):src/Modules/Individual/Pages/Profile/Profile.jsx
   };
 
   const handleStep2Continue = (e) => {
@@ -129,7 +140,11 @@ export default function Profile() {
     if (!availability) errors.availability = "Availability is required";
     if (Object.keys(errors).length > 0) { setStep2Errors(errors); return; }
     setStep2Errors({});
+<<<<<<< HEAD:src/Modules/Individual/Screen/Pages/Profile/Profile.jsx
     if (isEditingFromReview) { setIsEditingFromReview(false); goToStep(5); } else { goToStep(3); }
+=======
+    if (isEditingFromReview) { setIsEditingFromReview(false); setCurrentStep(5); } else { setCurrentStep(3); }
+>>>>>>> e5a5267 (feat: updated profile individual):src/Modules/Individual/Pages/Profile/Profile.jsx
   };
 
   const handleStep2Cancel = () => {
@@ -139,7 +154,11 @@ export default function Profile() {
     setAvailability(snapshot.availability ?? availability);
     setStep2Errors({});
     setIsEditingFromReview(false);
+<<<<<<< HEAD:src/Modules/Individual/Screen/Pages/Profile/Profile.jsx
     goToStep(5);
+=======
+    setCurrentStep(5);
+>>>>>>> e5a5267 (feat: updated profile individual):src/Modules/Individual/Pages/Profile/Profile.jsx
   };
 
   const handleStep3Continue = (e) => {
@@ -150,7 +169,11 @@ export default function Profile() {
     if (!categories.trim()) errors.categories = "Categories are required";
     if (Object.keys(errors).length > 0) { setStep3Errors(errors); return; }
     setStep3Errors({});
+<<<<<<< HEAD:src/Modules/Individual/Screen/Pages/Profile/Profile.jsx
     if (isEditingFromReview) { setIsEditingFromReview(false); goToStep(5); } else { goToStep(4); }
+=======
+    if (isEditingFromReview) { setIsEditingFromReview(false); setCurrentStep(5); } else { setCurrentStep(4); }
+>>>>>>> e5a5267 (feat: updated profile individual):src/Modules/Individual/Pages/Profile/Profile.jsx
   };
 
   const handleStep3Cancel = () => {
@@ -159,7 +182,11 @@ export default function Profile() {
     setCategories(snapshot.categories ?? categories);
     setStep3Errors({});
     setIsEditingFromReview(false);
+<<<<<<< HEAD:src/Modules/Individual/Screen/Pages/Profile/Profile.jsx
     goToStep(5);
+=======
+    setCurrentStep(5);
+>>>>>>> e5a5267 (feat: updated profile individual):src/Modules/Individual/Pages/Profile/Profile.jsx
   };
 
   const handleStep4Continue = (e) => {
@@ -171,7 +198,11 @@ export default function Profile() {
     if (!resumeFile) errors.resumeFile = "Resume PDF is required";
     if (Object.keys(errors).length > 0) { setStep4Errors(errors); return; }
     setStep4Errors({});
+<<<<<<< HEAD:src/Modules/Individual/Screen/Pages/Profile/Profile.jsx
     if (isEditingFromReview) { setIsEditingFromReview(false); goToStep(5); } else { goToStep(5); }
+=======
+    if (isEditingFromReview) { setIsEditingFromReview(false); setCurrentStep(5); } else { setCurrentStep(5); }
+>>>>>>> e5a5267 (feat: updated profile individual):src/Modules/Individual/Pages/Profile/Profile.jsx
   };
 
   const handleStep4Cancel = () => {
@@ -181,6 +212,7 @@ export default function Profile() {
     setResumeFile(snapshot.resumeFile ?? resumeFile);
     setStep4Errors({});
     setIsEditingFromReview(false);
+<<<<<<< HEAD:src/Modules/Individual/Screen/Pages/Profile/Profile.jsx
     goToStep(5);
   };
 
@@ -199,6 +231,25 @@ export default function Profile() {
     e.preventDefault();
     setIsSubmitted(true);
     goToStep(6);
+=======
+    setCurrentStep(5);
+>>>>>>> e5a5267 (feat: updated profile individual):src/Modules/Individual/Pages/Profile/Profile.jsx
+  };
+
+  const goToEditStep = (step) => {
+    setSnapshot({
+      profilePhoto, fullName, country, timeZone,
+      headline, bio, experience, availability,
+      skills, tools, categories,
+      portfolioUrl, githubUrl, linkedinUrl, resumeFile,
+    });
+    setIsEditingFromReview(true);
+    setCurrentStep(step);
+  };
+
+  const handleFinalSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitted(true);
   };
 
   const renderStepper = () => {
@@ -640,6 +691,7 @@ export default function Profile() {
   );
 
   return (
+<<<<<<< HEAD:src/Modules/Individual/Screen/Pages/Profile/Profile.jsx
     <DashboardLayout>
       <div className="profile-page-wrapper flex-grow-1 min-vh-0 d-flex flex-column w-100">
         <Cards className="profile-main-card flex-grow-1 h-100 d-flex flex-column overflow-hidden w-100" padding="0">
@@ -664,5 +716,48 @@ export default function Profile() {
         </Cards>
       </div>
     </DashboardLayout>
+=======
+    <div className="dashboard-layout">
+      <Navbar />
+      <main className="main-workspace d-flex flex-column h-100">
+        <Cards className="header-card flex-shrink-0" padding="0">
+          <header className="header">
+            <div className="header-search-bar">
+              <Icon name="Search" size={16} className="search-icon" />
+              <input type="text" placeholder="Search for Clients, projects or freelancers.." className="search-input" />
+            </div>
+            <div className="header-actions">
+              <button className="icon-btn"><Icon name="Bell" size={20} /></button>
+              <button className="icon-btn"><Icon name="Mail" size={20} /></button>
+              <div className="header-avatar">A</div>
+            </div>
+          </header>
+        </Cards>
+
+        <div className="profile-page-wrapper flex-grow-1 min-vh-0 d-flex flex-column w-100">
+          <Cards className="profile-main-card flex-grow-1 h-100 d-flex flex-column overflow-hidden w-100" padding="0">
+            <div className="profile-card-inner d-flex flex-column h-100">
+              {isSubmitted ? (
+                renderCompletionScreen()
+              ) : (
+                <>
+                  <div className="profile-header-section flex-shrink-0">
+                    <h1 className="profile-main-title fw-bold">Complete Your Profile</h1>
+                    <p className="profile-main-subtitle text-secondary">Lets build your profile step by step.</p>
+                  </div>
+                  {renderStepper()}
+                  {currentStep === 1 && renderStep1()}
+                  {currentStep === 2 && renderStep2()}
+                  {currentStep === 3 && renderStep3()}
+                  {currentStep === 4 && renderStep4()}
+                  {currentStep === 5 && renderStep5()}
+                </>
+              )}
+            </div>
+          </Cards>
+        </div>
+      </main>
+    </div>
+>>>>>>> e5a5267 (feat: updated profile individual):src/Modules/Individual/Pages/Profile/Profile.jsx
   );
 }
