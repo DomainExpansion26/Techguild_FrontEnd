@@ -11,9 +11,9 @@ import "./Profile.css";
 
 export default function ClientProfile() {
   const [currentStep, setCurrentStep] = useState(1);
-  
   const [isEditMode, setIsEditMode] = useState(false);
 
+  // Nav Items
   const clientNavItems = [
     { id: "dashboard", label: "Dashboard", icon: "LayoutDashboard", path: "/client-dashboard" },
     { id: "profile", label: "Profile (Guild Card)", icon: "User2", path: "/client-profile" },
@@ -41,12 +41,15 @@ export default function ClientProfile() {
   const [teamSize, setTeamSize] = useState("");
   const [step2Errors, setStep2Errors] = useState({});
 
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const steps = [
     { number: 1, label: "Agency Information" },
     { number: 2, label: "Services" },
     { number: 3, label: "Review and Submit" },
   ];
 
+  // --- Handlers ---
   const handleLogoUpload = (e) => {
     if (e.target.files && e.target.files[0]) {
       setLogoFile(e.target.files[0]);
@@ -80,7 +83,6 @@ export default function ClientProfile() {
       setCurrentStep(3);
     } else {
       setCurrentStep(2);
-  
     }
   };
 
@@ -101,13 +103,17 @@ export default function ClientProfile() {
       setCurrentStep(3);
     } else {
       setCurrentStep(3);
-   
     }
   };
 
+  const handleFinalSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+  };
+
+  // --- Render Helpers ---
   const renderStepper = () => {
     const progressWidth = `${((currentStep - 1) / (steps.length - 1)) * 100}%`;
-
     return (
       <div className="profile-stepper-container">
         <div className="profile-stepper">
@@ -116,15 +122,9 @@ export default function ClientProfile() {
           </div>
           {steps.map((step) => {
             const isActive = step.number <= currentStep;
-
             return (
-              <div
-                key={step.number}
-                className={`stepper-item ${isActive ? "active" : ""}`}
-              >
-                <div className="stepper-circle">
-                  {step.number}
-                </div>
+              <div key={step.number} className={`stepper-item ${isActive ? "active" : ""}`}>
+                <div className="stepper-circle">{step.number}</div>
                 <span className="stepper-label mt-2">{step.label}</span>
               </div>
             );
@@ -197,11 +197,9 @@ export default function ClientProfile() {
         {step1Errors.website && <span className="field-error">{step1Errors.website}</span>}
       </div>
 
-      <div className="profile-form-actions d-flex justify-content-end align-items-center flex-shrink-0 mt-auto gap-3">
+      <div className="profile-form-actions">
         {isEditMode && (
-          <button type="button" className="cancel-btn" onClick={handleCancelEdit}>
-            Cancel
-          </button>
+          <button type="button" className="cancel-btn" onClick={handleCancelEdit}>Cancel</button>
         )}
         <div className="continue-btn-wrapper">
           <PrimaryButton
@@ -276,11 +274,9 @@ export default function ClientProfile() {
         </div>
       </div>
 
-      <div className="profile-form-actions d-flex justify-content-end align-items-center flex-shrink-0 mt-auto gap-3">
+      <div className="profile-form-actions">
         {isEditMode && (
-          <button type="button" className="cancel-btn" onClick={handleCancelEdit}>
-            Cancel
-          </button>
+          <button type="button" className="cancel-btn" onClick={handleCancelEdit}>Cancel</button>
         )}
         <div className="continue-btn-wrapper">
           <PrimaryButton
@@ -297,12 +293,6 @@ export default function ClientProfile() {
       </div>
     </form>
   );
-
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const handleFinalSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitted(true);
-  };
 
   const renderStep3 = () => (
     <form className="profile-step-form" onSubmit={handleFinalSubmit}>
@@ -323,7 +313,7 @@ export default function ClientProfile() {
         </div>
       </div>
 
-      <div className="profile-form-actions d-flex justify-content-end align-items-center flex-shrink-0 mt-auto gap-3">
+      <div className="profile-form-actions">
         <div className="continue-btn-wrapper">
           <PrimaryButton
             type="submit"
@@ -403,10 +393,16 @@ export default function ClientProfile() {
   );
 
   return (
+    /* OUTER WRAPPER: Now powered by Flexbox in CSS to side-by-side align */
     <div className="dashboard-layout client-profile-page">
+      
+      {/* 1. SIDEBAR / NAVBAR */}
       <Navbar items={clientNavItems} userRole="Client" />
 
+      {/* 2. FRAME / MAIN CONTENT AREA */}
       <main className="main-workspace d-flex flex-column h-100">
+        
+        {/* Top Header Card */}
         <Cards className="header-card flex-shrink-0" padding="0">
           <header className="header">
             <div className="header-search-bar">
@@ -421,6 +417,7 @@ export default function ClientProfile() {
           </header>
         </Cards>
 
+        {/* Profile Form Card */}
         <div className="profile-page-wrapper">
           <Cards className="profile-main-card" padding="0">
             <div className="profile-card-inner">
@@ -464,6 +461,7 @@ export default function ClientProfile() {
           </Cards>
         </div>
       </main>
+
     </div>
   );
 }
