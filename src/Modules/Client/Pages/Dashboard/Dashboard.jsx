@@ -1,5 +1,5 @@
 import React from 'react';
-import { DashboardCommonScreen } from "@/Components";
+import { DashboardLayout } from "@/Components";
 import "./client-dashboard.css";
 
 export default function Dashboard() {
@@ -18,10 +18,13 @@ export default function Dashboard() {
   ];
 
   return (
-    <DashboardCommonScreen navItems={clientNavItems}>
-      <div className="client-db-grid">
-        {/* Skeleton layout left for the person who will work on the client flow */}
+    <DashboardLayout navbarItems={clientNavItems}>
+      <div className="dashboard-content">
+        <div className="client-db-grid">
+          {/* Skeleton layout left for the person who will work on the client flow */}
+        </div>
       </div>
-    </DashboardCommonScreen>
+    </DashboardLayout>
   );
 }
+
