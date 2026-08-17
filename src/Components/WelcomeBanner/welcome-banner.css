@@ -162,12 +162,25 @@
 
 @media (max-width: 767px) {
   .welcome-banner-info-section {
-    flex-direction: column;
-    gap: 8px;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 10px;
+  }
+
+  .welcome-banner-info-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .btn-complete-profile {
+    font-size: 0.72rem !important;
+    padding: 6px 12px !important;
+    align-self: flex-start !important;
   }
 
   .welcome-banner-title {
-    font-size: 1.3rem;
+    font-size: 1.15rem;
   }
 
   .welcome-banner-steps {
@@ -175,6 +188,6 @@
   }
 
   .step-text {
-    font-size: 0.74rem;
+    font-size: 0.72rem;
   }
 }
