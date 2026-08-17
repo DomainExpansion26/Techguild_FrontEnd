@@ -1,0 +1,461 @@
+.verification-page-layout .sidebar {
+  height: 100% !important;
+  max-height: 100% !important;
+  width: 211px !important;
+  min-width: 211px !important;
+  max-width: 211px !important;
+  flex-shrink: 0 !important;
+  align-self: stretch !important;
+}
+
+.verification-workspace {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 12px;
+  padding-bottom: 12px;
+}
+
+.verification-workspace::-webkit-scrollbar {
+  width: 4px;
+}
+
+.verification-workspace::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 220px 0;
+}
+
+.verification-workspace::-webkit-scrollbar-thumb {
+  background-color: rgba(16, 60, 164, 0.3);
+  border-radius: 10px;
+}
+
+.verification-workspace::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(16, 60, 164, 0.6);
+}
+
+.verification-back-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent !important;
+  border: none !important;
+  color: #103ca4 !important;
+  cursor: pointer;
+  padding: 0 !important;
+  margin-bottom: 8px;
+  align-self: flex-start;
+  flex-shrink: 0;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.verification-back-arrow:hover,
+.verification-back-arrow:focus,
+.verification-back-arrow:active {
+  background: transparent !important;
+  background-color: transparent !important;
+  transform: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.verification-page-heading {
+  font-size: clamp(20px, 1.8vw, 26px);
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 16px 12px !important;
+  padding-left: 2px;
+  text-align: left;
+  flex-shrink: 0;
+}
+
+/* Stepper Bar Outside Card */
+.verification-stepper-outer {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  max-width: clamp(720px, 60vw, 1000px);
+  margin: 0 auto 24px auto;
+  flex-shrink: 0;
+}
+
+.v-stepper-outer-line {
+  position: absolute;
+  top: 16px;
+  left: 12%;
+  right: 12%;
+  height: 2px;
+  background-color: #cbd5e1;
+  z-index: 1;
+}
+
+.v-outer-step {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  text-align: center;
+}
+
+.v-outer-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 2px solid #cbd5e1;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 13.5px;
+  transition: all 0.2s ease;
+}
+
+.v-outer-step.active .v-outer-circle {
+  background-color: #0f3ba5;
+  border-color: #0f3ba5;
+  color: #ffffff;
+}
+
+.v-outer-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+.v-outer-step.active .v-outer-label {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+/* Main Verification Card */
+.verification-main-card {
+  flex: 1;
+  min-height: fit-content;
+  width: 100%;
+  border-radius: clamp(12px, 1vw, 20px) !important;
+  background: rgba(255, 255, 255, 0.65) !important;
+  background-color: rgba(255, 255, 255, 0.65) !important;
+  backdrop-filter: blur(2px) !important;
+  -webkit-backdrop-filter: blur(2px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 4px 4px 8px 0px rgba(16, 60, 164, 0.35) !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.verification-card-inner {
+  flex: 1;
+  min-height: fit-content;
+  padding: clamp(24px, 3vw, 48px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: visible !important;
+}
+
+.verification-card-inner::-webkit-scrollbar {
+  display: none;
+}
+
+/* Intro Screen */
+.v-start-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: clamp(640px, 58vw, 960px);
+  width: 100%;
+  margin: auto;
+  padding: 10px 0;
+}
+
+.v-start-title {
+  font-size: clamp(22px, 2.2vw, 34px);
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.v-start-desc {
+  font-size: clamp(13px, 1vw, 17px);
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 32px;
+  max-width: clamp(580px, 50vw, 840px);
+}
+
+.v-checklist-card {
+  background-color: #ffffff !important;
+  border: 2.5px solid #E1EBFF !important;
+  border-radius: 16px !important;
+  padding: 20px 24px !important;
+  width: fit-content !important;
+  max-width: 340px !important;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.v-checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.v-checklist-icon {
+  color: #103CA4 !important;
+  stroke: #103CA4 !important;
+  flex-shrink: 0;
+}
+
+.v-checklist-icon svg,
+.v-checklist-icon svg path,
+.v-checklist-icon svg polyline,
+.v-checklist-icon svg line {
+  stroke: #103CA4 !important;
+  stroke-width: 2.5px !important;
+}
+
+.v-checklist-text {
+  font-size: clamp(14px, 1vw, 16.5px);
+  font-weight: 500;
+  color: #111827;
+}
+
+.v-start-btn {
+  background-color: #103CA4 !important;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: clamp(13px, 1.2vh, 16px) clamp(24px, 2vw, 36px);
+  font-size: clamp(15px, 1.05vw, 17px);
+  font-weight: 600;
+  width: 100%;
+  max-width: clamp(340px, 32vw, 420px) !important;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.v-start-btn:hover {
+  background-color: #092c85;
+}
+
+.v-skip-btn {
+  background: transparent;
+  border: none;
+  color: #0f3ba5;
+  font-size: clamp(15px, 1.05vw, 17px);
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  padding: 4px 12px;
+}
+
+.v-skip-btn:hover {
+  opacity: 0.8;
+}
+
+/* Step 1: Choose Document Screen (Matching exact SS) */
+.v-choose-doc-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: clamp(760px, 68vw, 1100px);
+  margin: auto;
+  padding: 10px 0;
+}
+
+.v-choose-title {
+  font-size: clamp(20px, 1.8vw, 30px);
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 8px;
+  text-align: center;
+  letter-spacing: -0.01em;
+}
+
+.v-choose-subtitle {
+  font-size: clamp(13px, 0.95vw, 16px);
+  color: #64748b;
+  text-align: center;
+  margin-bottom: 32px;
+  max-width: clamp(520px, 48vw, 760px);
+  line-height: 1.4;
+}
+
+.v-doc-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(20px, 1.8vw, 32px);
+  width: 100%;
+  margin-bottom: 36px;
+}
+
+.v-doc-option-card {
+  background: #ffffff !important;
+  border: 1.5px solid #E1EBFF !important;
+  border-radius: 14px !important;
+  padding: clamp(20px, 1.8vw, 28px) clamp(22px, 2vw, 32px) !important;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.v-doc-option-card:hover {
+  border-color: #103CA4 !important;
+  box-shadow: 0 4px 16px rgba(16, 60, 164, 0.08) !important;
+}
+
+.v-doc-option-card.selected {
+  border-color: #103CA4 !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(16, 60, 164, 0.12) !important;
+}
+
+.v-doc-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.v-doc-icon-box {
+  width: clamp(38px, 3vw, 48px);
+  height: clamp(38px, 3vw, 48px);
+  border-radius: 10px;
+  background: #E1EBFF !important;
+  background-color: #E1EBFF !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #103CA4 !important;
+}
+
+.v-doc-icon-box svg {
+  color: #103CA4 !important;
+  stroke: #103CA4 !important;
+}
+
+.v-doc-icon-box svg path,
+.v-doc-icon-box svg circle,
+.v-doc-icon-box svg rect,
+.v-doc-icon-box svg line {
+  stroke: #103CA4 !important;
+  stroke-width: 1.75px !important;
+}
+
+.v-radio-indicator {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #103CA4 !important;
+  background-color: transparent !important;
+  transition: all 0.2s ease;
+}
+
+.v-doc-option-card.selected .v-radio-indicator {
+  border-color: #103CA4 !important;
+  background: #103CA4 !important;
+  background-color: #103CA4 !important;
+}
+
+.v-doc-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.v-doc-name {
+  font-size: clamp(15px, 1.1vw, 18px);
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.v-doc-desc {
+  font-size: clamp(13px, 0.95vw, 15px);
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.v-continue-btn {
+  background-color: #103CA4 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: clamp(13px, 1.3vh, 17px) clamp(28px, 2.5vw, 42px) !important;
+  font-size: clamp(15px, 1.05vw, 17px) !important;
+  font-weight: 600 !important;
+  width: 100% !important;
+  max-width: clamp(380px, 35vw, 540px) !important;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.v-continue-btn:hover {
+  background-color: #0c2b7a !important;
+}
+
+.v-continue-btn svg,
+.v-continue-btn svg path,
+.v-continue-btn svg line,
+.v-continue-btn svg polyline {
+  stroke: #ffffff !important;
+  color: #ffffff !important;
+  fill: none !important;
+}
+
+@media (max-width: 767px) {
+  .v-doc-options-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .verification-card-inner {
+    padding: 20px 16px;
+  }
+
+  .v-stepper-outer-line {
+    top: 14px;
+  }
+
+  .v-outer-circle {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .v-outer-label {
+    font-size: 11px;
+  }
+}
