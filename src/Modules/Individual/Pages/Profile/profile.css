@@ -400,8 +400,11 @@
 .dropdown-chevron-icon {
   position: absolute;
   right: clamp(10px, 0.8vw, 16px);
+  top: 50%;
+  transform: translateY(-50%);
   color: #111827;
   pointer-events: none;
+  z-index: 1;
   width: clamp(15px, 1.0vw, 20px) !important;
   height: clamp(15px, 1.0vw, 20px) !important;
 }
@@ -512,6 +515,31 @@
   opacity: 0.85;
 }
 
+.profile-cancel-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(32px, 3.6vh, 48px);
+  padding: 0 clamp(20px, 1.5vw, 34px);
+  background-color: transparent;
+  border: 1.5px solid #d1d5db;
+  border-radius: clamp(6px, 0.5vw, 10px);
+  font-size: clamp(12.5px, 0.85vw, 16.5px);
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.profile-cancel-btn:hover {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+  color: #111827;
+}
+
 .completion-screen-wrapper {
   padding: clamp(8px, 0.8vh, 16px) clamp(16px, 1.5vw, 32px);
 }
@@ -526,11 +554,10 @@
   justify-content: center;
   margin-left: -28px;
   margin-top: -6px;
-  transition: transform 0.2s ease;
 }
 
 .completion-back-btn:hover {
-  transform: translateX(-3px);
+  transform: none;
 }
 
 .completion-back-btn svg {
