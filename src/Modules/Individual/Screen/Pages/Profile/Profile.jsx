@@ -603,45 +603,29 @@ export default function Profile() {
   );
 
   return (
-    <div className="dashboard-layout">
-      <Navbar />
-      <main className="main-workspace d-flex flex-column h-100">
-        <Cards className="header-card flex-shrink-0" padding="0">
-          <header className="header">
-            <div className="header-search-bar">
-              <Icon name="Search" size={16} className="search-icon" />
-              <input type="text" placeholder="Search for Clients, projects or freelancers.." className="search-input" />
-            </div>
-            <div className="header-actions">
-              <button className="icon-btn"><Icon name="Bell" size={20} /></button>
-              <button className="icon-btn"><Icon name="Mail" size={20} /></button>
-              <div className="header-avatar">A</div>
-            </div>
-          </header>
+    <DashboardLayout>
+      <div className="profile-page-wrapper flex-grow-1 min-vh-0 d-flex flex-column w-100">
+        <Cards className="profile-main-card flex-grow-1 h-100 d-flex flex-column overflow-hidden w-100" padding="0">
+          <div className="profile-card-inner d-flex flex-column h-100">
+            {isSubmitted ? (
+              renderCompletionScreen()
+            ) : (
+              <>
+                <div className="profile-header-section flex-shrink-0">
+                  <h1 className="profile-main-title fw-bold">Complete Your Profile</h1>
+                  <p className="profile-main-subtitle text-secondary">Lets build your profile step by step.</p>
+                </div>
+                {renderStepper()}
+                {currentStep === 1 && renderStep1()}
+                {currentStep === 2 && renderStep2()}
+                {currentStep === 3 && renderStep3()}
+                {currentStep === 4 && renderStep4()}
+                {currentStep === 5 && renderStep5()}
+              </>
+            )}
+          </div>
         </Cards>
-
-        <div className="profile-page-wrapper flex-grow-1 min-vh-0 d-flex flex-column w-100">
-          <Cards className="profile-main-card flex-grow-1 h-100 d-flex flex-column overflow-hidden w-100" padding="0">
-            <div className="profile-card-inner d-flex flex-column h-100">
-              {isSubmitted ? (
-                renderCompletionScreen()
-              ) : (
-                <>
-                  <div className="profile-header-section flex-shrink-0">
-                    <h1 className="profile-main-title fw-bold">Complete Your Profile</h1>
-                    <p className="profile-main-subtitle text-secondary">Lets build your profile step by step.</p>
-                  </div>
-                  {renderStepper()}
-                  {currentStep === 1 && renderStep1()}
-                  {currentStep === 2 && renderStep2()}
-                  {currentStep === 3 && renderStep3()}
-                  {currentStep === 4 && renderStep4()}
-                  {currentStep === 5 && renderStep5()}
-                </>
-              )}
-            </div>
-          </Cards>
-        </div>
+      </div>
     </DashboardLayout>
   );
 }
