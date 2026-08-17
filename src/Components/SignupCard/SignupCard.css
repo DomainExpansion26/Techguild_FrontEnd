@@ -66,31 +66,39 @@
 /* ===== Mobile ===== */
 @media (max-width: 767px) {
   .auth-card-wrapper {
-    position: relative;
-    left: auto;
-    top: auto;
-    transform: none;
-    width: 90%;
-    max-width: 400px;
-    margin: 30px auto;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 90% !important;
+    max-width: 410px !important;
+    margin: 0 !important;
+    z-index: 100 !important;
   }
 
   .signup-card {
-    width: 100%;
-    height: auto;
-    min-height: 510px;
-    padding: 20px 20px 14px 20px;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 94vh !important;
+    overflow-y: auto !important;
+    padding: 22px 20px 16px 20px !important;
+    background: rgba(255, 255, 255, 0.65) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    border-radius: 18px !important;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.12) !important;
   }
 }
 
 @media (max-width: 480px) {
   .auth-card-wrapper {
-    width: 92%;
-    margin: 20px auto;
+    width: 92% !important;
   }
 
   .signup-card {
-    padding: 18px 16px 14px 16px;
+    padding: 20px 16px 14px 16px !important;
+    border-radius: 16px !important;
   }
 }
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Navbar, Cards, PrimaryButton } from "@/Components";
 import Icon from "@/Components/icons/Icon";
-import "@/Modules/Individual/Pages/DashBoard/dashboard.css";
+import "@/Modules/Individual/Screen/Pages/DashBoard/dashboard.css";
 import uploadIcon from "@/assets/icons/arrow-up-from-line.svg";
 import ContinueIcon from "@/assets/icons/arrow-right.svg";
 import Back from "@/assets/icons/arrow-left.svg";

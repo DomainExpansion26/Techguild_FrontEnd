@@ -1,6 +1,15 @@
-﻿import * as Icons from "./index";
+import * as Icons from "./index";
 
-function Icon({ name, size = 20, color = "currentColor", ...props }) {
+function Icon({
+  name,
+  size = 20,
+  color = "currentColor",
+  stroke,
+  strokeWidth = 1.75,
+  fill,
+  style,
+  ...props
+}) {
   const SvgIcon = Icons[name];
 
   if (!SvgIcon) {
@@ -13,6 +22,14 @@ function Icon({ name, size = 20, color = "currentColor", ...props }) {
       width={size}
       height={size}
       color={color}
+      stroke={stroke || color}
+      strokeWidth={strokeWidth}
+      style={{
+        color: color,
+        stroke: stroke || color,
+        strokeWidth: strokeWidth,
+        ...style,
+      }}
       aria-hidden="true"
       {...props}
     />

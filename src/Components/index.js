@@ -3,8 +3,7 @@ export { default as SecondaryButton } from "./SecondaryButton/SecondaryButton";
 export { default as TextInput } from "./Textinput/Textinput";
 export { default as LoadingButton } from "./LoadingButton/Loadingbutton";
 export { default as BasicModal } from "./Modals/BasicModal";
-export { default as AuthHomeScreen } from "./AuthHomeScreen/AuthHomeScreen";
-export { default as DashboardCommonScreen } from "./Common/DashboardCommonScreen";
+export { default as AuthHomeScreen } from "./Common/AuthHomeScreen/AuthHomeScreen";
 export { default as BrandLogo } from "./BrandLogo/BrandLogo";
 export { default as SocialButton } from "./SocialButton/SocialButton";
 export { default as PasswordInput } from "./PasswordInput/PasswordInput";
@@ -18,3 +17,7 @@ export { default as Charts } from "./Charts/Charts";
 export { default as Tables } from "./Tables/tables";
 export { default as Forms } from "./Froms/Froms";
 export { default as Ui } from "./Ui/ui";
+export { default as SearchBar } from "./SearchBar/SearchBar";
+export { default as Header } from "./Header/Header";
+export { default as DashboardLayout } from "./Common/DashboardLayout/DashboardLayout";
+
