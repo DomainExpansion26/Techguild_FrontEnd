@@ -28,12 +28,19 @@ import Menu from "../../assets/icons/menu.svg?react";
 import X from "../../assets/icons/x.svg?react";
 import ChevronRight from "../../assets/icons/chevron-right.svg?react";
 import ChevronDown from "../../assets/icons/chevron-down.svg?react";
+import Google from "../../assets/icons/google.svg?react";
+import GitHub from "../../assets/icons/github.svg?react";
+import Lock from "../../assets/icons/lock.svg?react";
+import Eye from "../../assets/icons/eye.svg?react";
+import EyeOff from "../../assets/icons/eye-off.svg?react";
+import Building2 from "../../assets/icons/building2.svg?react";
 
 export {
   ArrowLeft,
   ArrowRight,
   Search,
   LayoutDashboard,
+  User,
   User2,
   UserCheck,
   CreditCard,
@@ -59,4 +66,10 @@ export {
   X,
   ChevronRight,
   ChevronDown,
+  Google,
+  GitHub,
+  Lock,
+  Eye,
+  EyeOff,
+  Building2,
 };
