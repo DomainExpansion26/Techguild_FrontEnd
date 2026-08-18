@@ -1,11 +1,31 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { DashboardLayout, Cards, PrimaryButton } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import "./profile.css";
 
+const stepSlugMap = {
+  1: "basic-info",
+  2: "professional",
+  3: "skills",
+  4: "portfolio",
+  5: "review",
+  6: "completed"
+};
+
+const slugStepMap = {
+  "basic-info": 1,
+  "professional": 2,
+  "skills": 3,
+  "portfolio": 4,
+  "review": 5,
+  "completed": 6
+};
+
 export default function Profile() {
   const navigate = useNavigate();
+  const { step } = useParams();
+
   const [currentStep, setCurrentStep] = useState(1);
   const [isEditingFromReview, setIsEditingFromReview] = useState(false);
   const [snapshot, setSnapshot] = useState({});
@@ -34,6 +54,22 @@ export default function Profile() {
   const [step4Errors, setStep4Errors] = useState({});
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (step) {
+      if (step === "completed") {
+        setIsSubmitted(true);
+      } else if (slugStepMap[step]) {
+        setIsSubmitted(false);
+        setCurrentStep(slugStepMap[step]);
+      }
+    }
+  }, [step]);
+
+  const goToStep = (stepNum) => {
+    const slug = stepSlugMap[stepNum] || "basic-info";
+    navigate(`/profile/${slug}`);
+  };
 
   const steps = [
     { number: 1, label: "Basic Information", active: currentStep === 1 },
@@ -71,7 +107,7 @@ export default function Profile() {
     if (!timeZone) errors.timeZone = "Time zone is required";
     if (Object.keys(errors).length > 0) { setStep1Errors(errors); return; }
     setStep1Errors({});
-    if (isEditingFromReview) { setIsEditingFromReview(false); setCurrentStep(5); } else { setCurrentStep(2); }
+    if (isEditingFromReview) { setIsEditingFromReview(false); goToStep(5); } else { goToStep(2); }
   };
 
   const handleStep1Cancel = () => {
@@ -81,7 +117,7 @@ export default function Profile() {
     setTimeZone(snapshot.timeZone ?? timeZone);
     setStep1Errors({});
     setIsEditingFromReview(false);
-    setCurrentStep(5);
+    goToStep(5);
   };
 
   const handleStep2Continue = (e) => {
@@ -93,7 +129,7 @@ export default function Profile() {
     if (!availability) errors.availability = "Availability is required";
     if (Object.keys(errors).length > 0) { setStep2Errors(errors); return; }
     setStep2Errors({});
-    if (isEditingFromReview) { setIsEditingFromReview(false); setCurrentStep(5); } else { setCurrentStep(3); }
+    if (isEditingFromReview) { setIsEditingFromReview(false); goToStep(5); } else { goToStep(3); }
   };
 
   const handleStep2Cancel = () => {
@@ -103,7 +139,7 @@ export default function Profile() {
     setAvailability(snapshot.availability ?? availability);
     setStep2Errors({});
     setIsEditingFromReview(false);
-    setCurrentStep(5);
+    goToStep(5);
   };
 
   const handleStep3Continue = (e) => {
@@ -114,7 +150,7 @@ export default function Profile() {
     if (!categories.trim()) errors.categories = "Categories are required";
     if (Object.keys(errors).length > 0) { setStep3Errors(errors); return; }
     setStep3Errors({});
-    if (isEditingFromReview) { setIsEditingFromReview(false); setCurrentStep(5); } else { setCurrentStep(4); }
+    if (isEditingFromReview) { setIsEditingFromReview(false); goToStep(5); } else { goToStep(4); }
   };
 
   const handleStep3Cancel = () => {
@@ -123,7 +159,7 @@ export default function Profile() {
     setCategories(snapshot.categories ?? categories);
     setStep3Errors({});
     setIsEditingFromReview(false);
-    setCurrentStep(5);
+    goToStep(5);
   };
 
   const handleStep4Continue = (e) => {
@@ -135,7 +171,7 @@ export default function Profile() {
     if (!resumeFile) errors.resumeFile = "Resume PDF is required";
     if (Object.keys(errors).length > 0) { setStep4Errors(errors); return; }
     setStep4Errors({});
-    if (isEditingFromReview) { setIsEditingFromReview(false); setCurrentStep(5); } else { setCurrentStep(5); }
+    if (isEditingFromReview) { setIsEditingFromReview(false); goToStep(5); } else { goToStep(5); }
   };
 
   const handleStep4Cancel = () => {
@@ -145,10 +181,10 @@ export default function Profile() {
     setResumeFile(snapshot.resumeFile ?? resumeFile);
     setStep4Errors({});
     setIsEditingFromReview(false);
-    setCurrentStep(5);
+    goToStep(5);
   };
 
-  const goToEditStep = (step) => {
+  const goToEditStep = (stepNum) => {
     setSnapshot({
       profilePhoto, fullName, country, timeZone,
       headline, bio, experience, availability,
@@ -156,12 +192,13 @@ export default function Profile() {
       portfolioUrl, githubUrl, linkedinUrl, resumeFile,
     });
     setIsEditingFromReview(true);
-    setCurrentStep(step);
+    goToStep(stepNum);
   };
 
   const handleFinalSubmit = (e) => {
     e.preventDefault();
     setIsSubmitted(true);
+    goToStep(6);
   };
 
   const renderStepper = () => {
