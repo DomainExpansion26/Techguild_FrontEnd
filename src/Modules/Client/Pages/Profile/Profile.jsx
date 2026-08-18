@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Navbar, Cards, PrimaryButton } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import "@/Modules/Individual/Screen/Pages/DashBoard/dashboard.css";
@@ -9,24 +10,27 @@ import SelectIcon from "@/assets/icons/chevron-down.svg";
 
 import "./Profile.css";
 
+const clientStepSlugMap = {
+  1: "company-info",
+  2: "hiring-preferences",
+  3: "review",
+  4: "completed"
+};
+
+const clientSlugStepMap = {
+  "company-info": 1,
+  "hiring-preferences": 2,
+  "review": 3,
+  "completed": 4
+};
+
 export default function ClientProfile() {
+  const navigate = useNavigate();
+  const { step } = useParams();
+
   const [currentStep, setCurrentStep] = useState(1);
   const [isEditMode, setIsEditMode] = useState(false);
-
-  // Nav Items
-  const clientNavItems = [
-    { id: "dashboard", label: "Dashboard", icon: "LayoutDashboard", path: "/client-dashboard" },
-    { id: "profile", label: "Profile (Guild Card)", icon: "User2", path: "/client-profile" },
-    { id: "quest-board", label: "Quest Board", icon: "Files", path: "/client-quest-board" },
-    { id: "applications", label: "Applications", icon: "FileText", path: "/client-applications" },
-    { id: "active-quests", label: "Active Quests", icon: "Files", path: "/client-active-quests" },
-    { id: "company-reputation", label: "Company Reputation", icon: "Verified", path: "/client-company-reputation" },
-    { id: "verification-hub", label: "Verification Hub", icon: "Bookmark", path: "/client-verification-hub" },
-    { id: "payouts", label: "Payouts", icon: "IndianRupee", path: "/client-payouts" },
-    { id: "notifications", label: "Notifications", icon: "Bell", path: "/client-notifications" },
-    { id: "settings", label: "Settings", icon: "Settings", path: "/client-settings" },
-    { id: "help-support", label: "Help & Support", icon: "CircleQuestionMark", path: "/client-help-support" },
-  ];
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Step 1 Form States
   const [clientName, setClientName] = useState("");
@@ -41,7 +45,21 @@ export default function ClientProfile() {
   const [teamSize, setTeamSize] = useState("");
   const [step2Errors, setStep2Errors] = useState({});
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  useEffect(() => {
+    if (step) {
+      if (step === "completed") {
+        setIsSubmitted(true);
+      } else if (clientSlugStepMap[step]) {
+        setIsSubmitted(false);
+        setCurrentStep(clientSlugStepMap[step]);
+      }
+    }
+  }, [step]);
+
+  const goToStep = (stepNum) => {
+    const slug = clientStepSlugMap[stepNum] || "company-info";
+    navigate(`/client-profile/${slug}`);
+  };
 
   const steps = [
     { number: 1, label: "Agency Information" },
@@ -62,7 +80,7 @@ export default function ClientProfile() {
 
   const handleCancelEdit = () => {
     setIsEditMode(false);
-    setCurrentStep(3);
+    goToStep(3);
   };
 
   const handleStep1Continue = (e) => {
@@ -80,9 +98,9 @@ export default function ClientProfile() {
     setStep1Errors({});
     if (isEditMode) {
       setIsEditMode(false);
-      setCurrentStep(3);
+      goToStep(3);
     } else {
-      setCurrentStep(2);
+      goToStep(2);
     }
   };
 
@@ -100,15 +118,16 @@ export default function ClientProfile() {
     setStep2Errors({});
     if (isEditMode) {
       setIsEditMode(false);
-      setCurrentStep(3);
+      goToStep(3);
     } else {
-      setCurrentStep(3);
+      goToStep(3);
     }
   };
 
   const handleFinalSubmit = (e) => {
     e.preventDefault();
     setIsSubmitted(true);
+    goToStep(4);
   };
 
   // --- Render Helpers ---
@@ -304,12 +323,12 @@ export default function ClientProfile() {
       <div className="d-flex flex-column gap-3 mb-4">
         <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
           <span className="review-summary-title">Company Information</span>
-          <span className="review-edit-btn" onClick={() => { setIsEditMode(true); setCurrentStep(1); }} role="button">Edit</span>
+          <span className="review-edit-btn" onClick={() => { setIsEditMode(true); goToStep(1); }} role="button">Edit</span>
         </div>
 
         <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
           <span className="review-summary-title">Hiring Preferences</span>
-          <span className="review-edit-btn" onClick={() => { setIsEditMode(true); setCurrentStep(2); }} role="button">Edit</span>
+          <span className="review-edit-btn" onClick={() => { setIsEditMode(true); goToStep(2); }} role="button">Edit</span>
         </div>
       </div>
 
@@ -395,13 +414,11 @@ export default function ClientProfile() {
   return (
     /* OUTER WRAPPER: Now powered by Flexbox in CSS to side-by-side align */
     <div className="dashboard-layout client-profile-page">
-      
-      {/* 1. SIDEBAR / NAVBAR */}
-      <Navbar items={clientNavItems} userRole="Client" />
+      <Navbar userRole="Client" />
 
       {/* 2. FRAME / MAIN CONTENT AREA */}
       <main className="main-workspace d-flex flex-column h-100">
-        
+
         {/* Top Header Card */}
         <Cards className="header-card flex-shrink-0" padding="0">
           <header className="header">
