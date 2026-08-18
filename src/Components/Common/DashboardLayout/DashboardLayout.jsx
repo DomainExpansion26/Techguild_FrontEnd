@@ -18,6 +18,8 @@ export default function DashboardLayout({
   hideNavbar = false,
   customHeader,
   navbarItems,
+  activeSettingsTab,
+  onSelectSettingsTab,
   mainWorkspaceClass = "",
   containerClass = "",
   style = {},
@@ -27,7 +29,13 @@ export default function DashboardLayout({
       className={`dashboard-layout ${containerClass}`}
       style={{ backgroundImage: `url(${dashboardBg})`, ...style }}
     >
-      {!hideNavbar && <Navbar items={navbarItems} />}
+      {!hideNavbar && (
+        <Navbar
+          items={navbarItems}
+          activeSettingsTab={activeSettingsTab}
+          onSelectSettingsTab={onSelectSettingsTab}
+        />
+      )}
 
       <main className={`main-workspace ${mainWorkspaceClass}`}>
         {!hideHeader &&
