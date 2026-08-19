@@ -40,6 +40,9 @@ import Building2 from "../../assets/icons/building2.svg?react";
 import Shield from "../../assets/icons/shield.svg?react";
 import Trash from "../../assets/icons/trash.svg?react";
 import LogOut from "../../assets/icons/log-out.svg?react";
+import MessageSquareMore from "../../assets/icons/message-square-more.svg?react";
+import NotebookText from "../../assets/icons/notebook-text.svg?react";
+import BarChart3 from "../../assets/icons/bar-chart3.svg?react";
 
 export {
   ArrowLeft,
@@ -83,4 +86,7 @@ export {
   Shield,
   Trash,
   LogOut,
+  MessageSquareMore,
+  NotebookText,
+  BarChart3,
 };
