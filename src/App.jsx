@@ -9,6 +9,7 @@ import AccountType from "./Modules/auth/Accountype/Accounttype";
 import DashBoard from "./Modules/Individual/Screen/Pages/DashBoard/DashBoard";
 import ClientDashboard from "./Modules/Client/Pages/Dashboard/Dashboard";
 import ClientProfile from "./Modules/Client/Pages/Profile/Profile";
+import WholeProfile from "./Modules/Client/Pages/whole_Profile";
 import ClientQuestBoard from "./Modules/Client/Pages/QuestBoard/QuestBoard";
 import ClientApplications from "./Modules/Client/Pages/Applications/Applications";
 import ClientActiveQuests from "./Modules/Client/Pages/ActiveQuests/ActiveQuests";

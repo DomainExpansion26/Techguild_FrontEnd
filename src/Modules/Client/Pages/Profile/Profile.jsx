@@ -448,7 +448,7 @@ export default function ClientProfile() {
                   className="completion-back-btn"
                   onClick={() => {
                     if (isSubmitted) {
-                      setIsSubmitted(false);
+                      navigate("/client-whole-profile");
                     } else if (isEditMode) {
                       setIsEditMode(false);
                       setCurrentStep(3);
