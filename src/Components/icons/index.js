@@ -11,6 +11,8 @@ import Star from "../../assets/icons/star.svg?react";
 import Bell from "../../assets/icons/bell.svg?react";
 import Settings from "../../assets/icons/settings.svg?react";
 import CircleQuestionMark from "../../assets/icons/circle-question-mark.svg?react";
+import Focus from "../../assets/icons/focus.svg?react";
+import CircleCheck from "../../assets/icons/circle-check.svg?react";
 import Mail from "../../assets/icons/mail.svg?react";
 import Check from "../../assets/icons/check.svg?react";
 import ArrowLeft from "../../assets/icons/arrow-left.svg?react";
@@ -35,6 +37,13 @@ import Eye from "../../assets/icons/eye.svg?react";
 import EyeOff from "../../assets/icons/eye-off.svg?react";
 import Building2 from "../../assets/icons/building2.svg?react";
 
+import Shield from "../../assets/icons/shield.svg?react";
+import Trash from "../../assets/icons/trash.svg?react";
+import LogOut from "../../assets/icons/log-out.svg?react";
+import MessageSquareMore from "../../assets/icons/message-square-more.svg?react";
+import NotebookText from "../../assets/icons/notebook-text.svg?react";
+import BarChart3 from "../../assets/icons/bar-chart3.svg?react";
+
 export {
   ArrowLeft,
   ArrowRight,
@@ -56,6 +65,8 @@ export {
   Bell,
   Settings,
   CircleQuestionMark,
+  Focus,
+  CircleCheck,
   Mail,
   Check,
   Clock9,
@@ -72,4 +83,10 @@ export {
   Eye,
   EyeOff,
   Building2,
+  Shield,
+  Trash,
+  LogOut,
+  MessageSquareMore,
+  NotebookText,
+  BarChart3,
 };
