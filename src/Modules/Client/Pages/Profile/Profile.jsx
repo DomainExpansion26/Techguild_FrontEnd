@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Navbar, Cards, PrimaryButton } from "@/Components";
 import Icon from "@/Components/icons/Icon";
+import dashboardBg from "@/assets/dashboard.bg.png";
 import "@/Modules/Individual/Screen/Pages/DashBoard/dashboard.css";
 import uploadIcon from "@/assets/icons/arrow-up-from-line.svg";
 import ContinueIcon from "@/assets/icons/arrow-right.svg";
@@ -16,6 +17,7 @@ const clientStepSlugMap = {
   3: "review",
   4: "completed"
 };
+//
 
 const clientSlugStepMap = {
   "company-info": 1,
@@ -403,7 +405,11 @@ export default function ClientProfile() {
         </div>
 
         <div className="completion-cta-wrapper d-flex justify-content-center mt-4">
-          <button type="button" className="completion-cta-btn border-0 text-white fw-bold d-inline-flex align-items-center justify-content-center px-5">
+          <button
+            type="button"
+            className="completion-cta-btn border-0 text-white fw-bold d-inline-flex align-items-center justify-content-center px-5"
+            onClick={() => navigate("/client-verification-hub")}
+          >
             Continue to Verify Identity
           </button>
         </div>
@@ -412,8 +418,10 @@ export default function ClientProfile() {
   );
 
   return (
-    /* OUTER WRAPPER: Now powered by Flexbox in CSS to side-by-side align */
-    <div className="dashboard-layout client-profile-page">
+    <div
+      className="dashboard-layout client-profile-page"
+      style={{ backgroundImage: `url(${dashboardBg})` }}
+    >
       <Navbar userRole="Client" />
 
       {/* 2. FRAME / MAIN CONTENT AREA */}
@@ -444,12 +452,14 @@ export default function ClientProfile() {
                   className="completion-back-btn"
                   onClick={() => {
                     if (isSubmitted) {
-                      setIsSubmitted(false);
+                      navigate("/client-whole-profile");
                     } else if (isEditMode) {
                       setIsEditMode(false);
-                      setCurrentStep(3);
+                      goToStep(3);
                     } else if (currentStep > 1) {
-                      setCurrentStep(currentStep - 1);
+                      goToStep(currentStep - 1);
+                    } else {
+                      navigate("/client-whole-profile");
                     }
                   }}
                   aria-label="Go back"
