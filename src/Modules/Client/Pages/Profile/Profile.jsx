@@ -124,11 +124,6 @@ export default function ClientProfile() {
     }
   };
 
-  const handleFinalSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitted(true);
-  };
-
   // --- Render Helpers ---
   const renderStepper = () => {
     const progressWidth = `${((currentStep - 1) / (steps.length - 1)) * 100}%`;
