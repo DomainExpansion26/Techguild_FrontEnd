@@ -36,18 +36,31 @@ import Lock from "../../assets/icons/lock.svg?react";
 import Eye from "../../assets/icons/eye.svg?react";
 import EyeOff from "../../assets/icons/eye-off.svg?react";
 import Building2 from "../../assets/icons/building2.svg?react";
-
 import Shield from "../../assets/icons/shield.svg?react";
 import Trash from "../../assets/icons/trash.svg?react";
 import LogOut from "../../assets/icons/log-out.svg?react";
 import MessageSquareMore from "../../assets/icons/message-square-more.svg?react";
 import NotebookText from "../../assets/icons/notebook-text.svg?react";
 import BarChart3 from "../../assets/icons/bar-chart3.svg?react";
-import BadgeCheck from "../../assets/icons/badge-check.svg?react";
-import Laptop from "../../assets/icons/laptop.svg?react";
-import Monitor from "../../assets/icons/monitor.svg?react";
-import Smartphone from "../../assets/icons/smartphone.svg?react";
-import TriangleAlert from "../../assets/icons/triangle-alert.svg?react";
+import Upload from "../../assets/icons/upload.svg?react";
+
+import Pencil from "../../assets/icons/pencil.svg?react";
+import MoreHorizontal from "../../assets/icons/more-horizontal.svg?react";
+import MapPin from "../../assets/icons/map-pin.svg?react";
+import Calendar from "../../assets/icons/calendar.svg?react";
+import Globe from "../../assets/icons/globe.svg?react";
+import Users from "../../assets/icons/users.svg?react";
+import Hash from "../../assets/icons/hash.svg?react";
+import Linkedin from "../../assets/icons/linkedin.svg?react";
+import Circle from "../../assets/icons/circle.svg?react";
+import Layers from "../../assets/icons/layers.svg?react";
+import Clock from "../../assets/icons/clock.svg?react";
+import TrendingUp from "../../assets/icons/trending-up.svg?react";
+import Plus from "../../assets/icons/plus.svg?react";
+import UserPlus from "../../assets/icons/user-plus.svg?react";
+import ClipboardList from "../../assets/icons/clipboard-list.svg?react";
+import Download from "../../assets/icons/download.svg?react";
+import ExternalLink from "../../assets/icons/external-link.svg?react";
 
 export {
   ArrowLeft,
@@ -84,6 +97,7 @@ export {
   ChevronDown,
   Google,
   GitHub,
+  GitHub as Github,
   Lock,
   Eye,
   EyeOff,
@@ -94,9 +108,24 @@ export {
   MessageSquareMore,
   NotebookText,
   BarChart3,
-  BadgeCheck,
-  Laptop,
-  Monitor,
-  Smartphone,
-  TriangleAlert,
+  Upload,
+  Pencil,
+  MoreHorizontal,
+  MapPin,
+  Calendar,
+  Globe,
+  Users,
+  Hash,
+  Linkedin,
+  Linkedin as LinkedIn,
+  Circle,
+  Layers,
+  Clock,
+  TrendingUp,
+  Plus,
+  UserPlus,
+  ClipboardList,
+  Download,
+  ExternalLink,
 };
+
