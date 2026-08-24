@@ -6,7 +6,7 @@ function Icon({
   color = "currentColor",
   stroke,
   strokeWidth = 1.75,
-  fill,
+  fill = "none",
   style,
   ...props
 }) {
@@ -17,6 +17,8 @@ function Icon({
     return null;
   }
 
+  const effectiveFill = fill || "none";
+
   return (
     <SvgIcon
       width={size}
@@ -24,10 +26,12 @@ function Icon({
       color={color}
       stroke={stroke || color}
       strokeWidth={strokeWidth}
+      fill={effectiveFill}
       style={{
         color: color,
         stroke: stroke || color,
         strokeWidth: strokeWidth,
+        fill: effectiveFill,
         ...style,
       }}
       aria-hidden="true"
