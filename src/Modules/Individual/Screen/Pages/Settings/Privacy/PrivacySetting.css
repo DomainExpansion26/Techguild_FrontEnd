@@ -1,4 +1,40 @@
-.privacy-setting-container {
-  max-width: 800px;
-  margin: 0 auto;
+/* privacy.css */
+
+/* ===========================================================
+   Layout (matches ProfileSetting alignment)
+   =========================================================== */
+
+/* ===========================================================
+   Layout gap (moved out of the inline style on DashboardLayout)
+   =========================================================== */
+.dashboard-layout.privacy-layout {
+  gap: 30px;
+}
+
+.privacy-settings-container {
+  max-width: none;
+  gap: 24px;
+  padding-bottom: 24px;
+}
+
+.privacy-settings-section {
+  gap: 28px;
+}
+
+.privacy-settings-section .settings-section-header {
+  width: 100%;
+}
+
+/* ===========================================================
+   Buttons (10px radius to match Settings design system)
+   =========================================================== */
+
+.privacy-settings-section .btn-light {
+  border-radius: 10px !important;
+}
+
+@media (max-width: 768px) {
+  .privacy-settings-container {
+    gap: 20px;
+  }
 }

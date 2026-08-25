@@ -1,4 +1,164 @@
-.notifications-setting-container {
-  max-width: 800px;
-  margin: 0 auto;
+/* NotificationsSetting.css
+   Matched 1:1 to the Figma "Settings / Notifications" frame (1440px):
+   font stack 'SF Pro' → 'Inter' fallback, exact sizes / colors / spacing. */
+
+/* ===========================================================
+   Page container  (cards stacked with 20px gap like the panel)
+   =========================================================== */
+/* ===========================================================
+   Layout gap (moved out of the inline style on DashboardLayout)
+   =========================================================== */
+.dashboard-layout.notifications-layout {
+  gap: 30px;
+}
+
+.notifications-settings-container {
+  max-width: none;
+  gap: 20px;
+  padding-bottom: 24px;
+
+  font-family: "SF Pro", "Inter", system-ui, sans-serif;
+}
+
+/* Page title: 30px / 700 / -0.45px / #111827 */
+.notifications-settings-container .settings-page-title {
+  font-family: inherit;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 30px;
+  letter-spacing: -0.45px;
+  color: #111827;
+  margin: 0 0 4px 0;
+}
+
+/* Subtitle: 14px / 400 / #6b7280 */
+.notifications-settings-container .settings-page-subtitle {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19.5px;
+  letter-spacing: -0.08px;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* ===========================================================
+   Card  (padding 24x28, radius 10, hairline border, soft shadow)
+   =========================================================== */
+.notifications-settings-section {
+  gap: 0;
+
+  padding: 24px 28px !important;
+
+  background: rgba(255, 255, 255, 0.6) !important;
+  background-color: rgba(255, 255, 255, 0.6) !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 10px !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04) !important;
+}
+
+/* ===========================================================
+   Card header row:  section title left + EMAIL / PUSH right
+   =========================================================== */
+.notifications-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Section title: 24px / 600 / #111827 */
+.notifications-settings-section .settings-section-title {
+  font-family: inherit;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 22.5px;
+  letter-spacing: -0.23px;
+  color: #111827;
+  margin: 0;
+}
+
+/* ===========================================================
+   Toggle columns — shared by header labels and item toggles so
+   they always align: 80px cells + 8px gap (88px pitch)
+   =========================================================== */
+.notifications-toggle-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.notifications-toggle-cell {
+  width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Column labels: 11px / 600 / +0.61px / #9ca3af */
+.notifications-col-label {
+  width: 80px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 16.5px;
+  letter-spacing: 0.61px;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+
+/* ===========================================================
+   List items  (row: 11px 0 padding, #f3f4f6 divider)
+   =========================================================== */
+.notifications-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 11px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+/* Item title: 14px / 500 / #111827 */
+.notifications-item-title {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 19.5px;
+  letter-spacing: -0.08px;
+  color: #111827;
+}
+
+/* Item description: 12px / 400 / #999ca4 */
+.notifications-item-desc {
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16.5px;
+  letter-spacing: 0.06px;
+  color: #999ca4;
+}
+
+/* ===========================================================
+   Responsive
+   =========================================================== */
+@media (max-width: 768px) {
+  .notifications-settings-container {
+    gap: 20px;
+  }
+
+  .notifications-settings-section {
+    padding: 20px !important;
+  }
+
+  .notifications-toggle-cell,
+  .notifications-col-label {
+    width: 56px;
+  }
+
+  .notifications-card-header {
+    flex-direction: column;
+    gap: 8px;
+  }
 }

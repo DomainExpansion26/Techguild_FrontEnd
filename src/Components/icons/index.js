@@ -43,6 +43,11 @@ import LogOut from "../../assets/icons/log-out.svg?react";
 import MessageSquareMore from "../../assets/icons/message-square-more.svg?react";
 import NotebookText from "../../assets/icons/notebook-text.svg?react";
 import BarChart3 from "../../assets/icons/bar-chart3.svg?react";
+import BadgeCheck from "../../assets/icons/badge-check.svg?react";
+import Laptop from "../../assets/icons/laptop.svg?react";
+import Monitor from "../../assets/icons/monitor.svg?react";
+import Smartphone from "../../assets/icons/smartphone.svg?react";
+import TriangleAlert from "../../assets/icons/triangle-alert.svg?react";
 
 export {
   ArrowLeft,
@@ -89,4 +94,9 @@ export {
   MessageSquareMore,
   NotebookText,
   BarChart3,
+  BadgeCheck,
+  Laptop,
+  Monitor,
+  Smartphone,
+  TriangleAlert,
 };
