@@ -1,0 +1,631 @@
+﻿/* =========================================================
+   SETTINGS PAGE
+   ========================================================= */
+
+/*
+ * Collapse the sidebar only on Settings page.
+ * Scoped via DashboardLayout containerClass so other pages are unaffected.
+ */
+@media (min-width: 768px) {
+  .settings-layout-collapsed-nav .sidebar {
+    width: 78px;
+  }
+
+  /*
+   * NOTE: Do NOT hide .logo-guild or re-center .sidebar-logo-container here.
+   * The Navbar renders its own 272px "settings-mode" split-rail view on
+   * settings pages (see navbar.css .sidebar.settings-mode), so the full
+   * TechGuild logo must stay left-aligned exactly like the dashboard.
+   * The old 78px collapsed-sidebar logo overrides were removed.
+   */
+  .settings-layout-collapsed-nav .sidebar-item {
+    justify-content: center;
+    gap: 0;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .settings-layout-collapsed-nav .sidebar-item span,
+  .settings-layout-collapsed-nav .sidebar-user-info {
+    display: none;
+  }
+
+  .settings-layout-collapsed-nav .sidebar-footer {
+    justify-content: center;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+/*
+ * IMPORTANT:
+ * Do NOT add a background color here.
+ *
+ * The background image belongs to .dashboard-layout
+ * in dashboard.css:
+ *
+ * background-image: url('../../../../assets/dashboard.bg.png');
+ *
+ * Keeping this transparent allows that background to remain
+ * visible exactly like the Dashboard/Profile pages.
+ */
+
+
+/* =========================================================
+   SCROLL AREA
+   ========================================================= */
+
+.settings-scroll-area {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+
+  width: 100%;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  background: transparent;
+}
+
+
+/* Scrollbar */
+
+.settings-scroll-area {
+  scrollbar-width: thin;
+  scrollbar-color: #e5e7eb transparent;
+}
+
+.settings-scroll-area::-webkit-scrollbar {
+  width: 4px;
+}
+
+.settings-scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.settings-scroll-area::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 10px;
+}
+
+.settings-scroll-area::-webkit-scrollbar-thumb:hover {
+  background: #d1d5db;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.settings-container {
+  display: flex;
+  flex-direction: column;
+
+  gap: 32px;
+
+  width: 100%;
+  max-width: 900px;
+
+  margin: 0 auto;
+
+  padding-bottom: 40px;
+
+  background: transparent;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.settings-header {
+  margin-bottom: 8px;
+}
+
+.settings-page-title {
+  font-family: "Hanken Grotesk", sans-serif;
+
+  font-size: 24px;
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  color: #111827;
+
+  margin: 0 0 4px 0;
+}
+
+.settings-page-subtitle {
+  font-size: 14px;
+
+  line-height: 1.5;
+
+  color: #6b7280;
+
+  margin: 0;
+}
+
+
+/* =========================================================
+   SETTINGS CARD
+   ========================================================= */
+
+.settings-section {
+  padding: 32px !important;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 32px;
+
+  /*
+   * Do NOT give this a background.
+   *
+   * Cards.css already controls the translucent
+   * white card appearance.
+   */
+}
+
+.card.settings-section {
+  border-radius: 10px !important;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+   ========================================================= */
+
+.settings-section-header {
+  margin-bottom: 8px;
+}
+
+.settings-section-title {
+  font-family: "Hanken Grotesk", sans-serif;
+
+  font-size: 18px;
+  font-weight: 600;
+
+  line-height: 1.3;
+
+  color: #111827;
+
+  margin: 0 0 4px 0;
+}
+
+.settings-section-desc {
+  font-size: 14px;
+
+  line-height: 1.5;
+
+  color: #6b7280;
+
+  margin: 0;
+}
+
+
+/* =========================================================
+   FORM GRID
+   ========================================================= */
+
+.settings-form-grid {
+  display: grid;
+
+  grid-template-columns: 200px minmax(0, 1fr);
+
+  row-gap: 24px;
+  column-gap: 32px;
+
+  width: 100%;
+}
+
+.settings-form-grid.align-center {
+  align-items: center;
+}
+
+
+/* =========================================================
+   LABELS
+   ========================================================= */
+
+.settings-label {
+  font-size: 14px;
+
+  font-weight: 500;
+
+  line-height: 1.4;
+
+  color: #121c2a;
+}
+
+.pt-2 {
+  padding-top: 8px;
+}
+
+.mt-1 {
+  margin-top: 4px;
+}
+
+
+/* =========================================================
+   CAPTION
+   ========================================================= */
+
+.settings-caption {
+  font-size: 12px;
+
+  line-height: 1.5;
+
+  color: #6b7280;
+
+  margin: 6px 0 0 0;
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.settings-divider {
+  grid-column: 1 / -1;
+
+  width: 100%;
+  height: 1px;
+
+  background-color: #f3f4f6;
+
+  margin: 8px 0;
+}
+
+
+/* =========================================================
+   PROFILE PHOTO
+   ========================================================= */
+
+.settings-photo-container {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+}
+
+.settings-avatar-large {
+  width: 64px;
+  height: 64px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background-color: #dce1ff;
+
+  color: #00277a;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Hanken Grotesk", sans-serif;
+
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.settings-photo-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.settings-input {
+  width: 100%;
+  max-width: 576px;
+
+  height: 40px;
+
+  padding: 8px 12px;
+
+  background-color: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+
+  color: #121c2a;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.settings-input:focus {
+  border-color: #103ca4;
+
+  box-shadow: 0 0 0 3px rgba(16, 60, 164, 0.08);
+}
+
+.settings-textarea {
+  height: auto;
+
+  min-height: 100px;
+
+  resize: vertical;
+}
+
+
+/* =========================================================
+   SELECT
+   ========================================================= */
+
+.settings-select-wrapper {
+  position: relative;
+
+  width: 100%;
+  max-width: 576px;
+}
+
+.settings-select {
+  appearance: none;
+
+  padding-right: 40px;
+}
+
+.settings-select-icon {
+  position: absolute;
+
+  right: 12px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #6a717d;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.settings-actions {
+  display: flex;
+
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 12px;
+
+  padding-top: 24px;
+
+  border-top: 1px solid #e5e7eb;
+
+  margin-top: auto;
+}
+
+
+/* =========================================================
+   PRIMARY BUTTON
+   ========================================================= */
+
+.settings-btn-primary {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  background-color: #103ca4;
+
+  color: #ffffff;
+
+  border: none;
+
+  border-radius: 10px;
+
+  padding: 0 20px;
+
+  height: 40px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+}
+
+.settings-btn-primary:hover {
+  background-color: #0c2b7a;
+}
+
+.settings-btn-primary:active {
+  transform: translateY(1px);
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+   ========================================================= */
+
+.settings-btn-secondary {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  background-color: transparent;
+
+  color: #121c2a;
+  background-color: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 10px;
+
+  padding: 0 20px;
+
+  height: 40px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.settings-btn-secondary:hover {
+  background-color: #eff3ff;
+
+  border-color: #d5dcf7;
+}
+
+
+/* =========================================================
+   TEXT BUTTON
+   ========================================================= */
+
+.settings-btn-text {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background-color: transparent;
+
+  color: #6b7280;
+
+  border: none;
+
+  padding: 0 16px;
+
+  height: 40px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: color 0.2s ease;
+}
+
+.settings-btn-text:hover {
+  color: #121c2a;
+}
+
+
+/* =========================================================
+   TOGGLE
+   ========================================================= */
+
+.settings-toggle-container {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.settings-status-text {
+  font-size: 14px;
+
+  font-weight: 500;
+
+  color: #6b7280;
+}
+
+.settings-status-text.available {
+  color: #059669;
+}
+
+
+/* =========================================================
+   TABLET / MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .settings-scroll-area {
+    overflow-x: hidden;
+  }
+
+  .settings-container {
+    max-width: none;
+
+    gap: 20px;
+
+    padding-bottom: 24px;
+  }
+
+  .settings-form-grid {
+    grid-template-columns: 1fr;
+
+    row-gap: 16px;
+  }
+
+  .settings-divider {
+    display: none;
+  }
+
+  .settings-label {
+    padding-top: 0;
+
+    margin-bottom: 4px;
+  }
+
+  .settings-caption {
+    margin-top: 0;
+
+    margin-bottom: 8px;
+  }
+
+  .settings-section {
+    padding: 24px !important;
+
+    gap: 24px;
+  }
+
+  .settings-photo-container {
+    flex-wrap: wrap;
+  }
+
+  .settings-actions {
+    flex-wrap: wrap;
+  }
+
+  .settings-input {
+    max-width: none;
+  }
+
+  .settings-select-wrapper {
+    max-width: none;
+  }
+}
