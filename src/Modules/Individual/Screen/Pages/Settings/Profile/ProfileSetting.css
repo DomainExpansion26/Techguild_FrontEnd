@@ -1,17 +1,70 @@
-.profile-setting-container {
-  max-width: 800px;
-  margin: 0 auto;
+/* ===========================================================
+   Layout gap (moved out of the inline style on DashboardLayout)
+   =========================================================== */
+.dashboard-layout.profile-settings-layout {
+  gap: 30px;
 }
 
-.profile-avatar-circle {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background-color: #103ca4;
-  color: #ffffff;
-  font-size: 24px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.profile-settings-container {
+  max-width: none;
+  gap: 24px;
+  padding-bottom: 24px;
+}
+
+.profile-settings-section {
+  gap: 28px;
+}
+
+.profile-settings-section .settings-form-grid {
+  row-gap: 18px;
+}
+
+.profile-settings-section .settings-divider {
+  margin: 0;
+}
+
+.profile-upload-button,
+.profile-remove-button {
+  height: 34px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.profile-upload-button {
+  padding: 0 14px;
+  color: #273449;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid #e5e7eb;
+}
+
+.profile-remove-button {
+  padding: 0;
+  color: #9ca3af;
+  background: transparent;
+  border: 0;
+}
+
+.profile-upload-button:hover {
+  border-color: #cbd5e1;
+  background: #ffffff;
+}
+
+.profile-remove-button:hover {
+  color: #6b7280;
+}
+
+.availability-section {
+  min-height: 254px;
+}
+
+@media (max-width: 768px) {
+  .profile-settings-container {
+    gap: 20px;
+  }
+
+  .profile-settings-section .settings-form-grid {
+    row-gap: 16px;
+  }
 }

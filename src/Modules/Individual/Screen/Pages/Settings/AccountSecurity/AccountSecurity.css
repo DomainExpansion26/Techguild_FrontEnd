@@ -1,4 +1,349 @@
+/* ===========================================================
+   Layout gap (moved out of the inline style on DashboardLayout)
+   =========================================================== */
+.dashboard-layout.account-security-layout {
+  gap: 30px;
+}
+
 .account-security-container {
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: none;
+  gap: 24px;
+  padding-bottom: 24px;
+}
+.account-security-section {
+  gap: 20px;
+}
+.account-security-section .settings-section-header {
+  margin: 0;
+}
+.account-security-grid {
+  row-gap: 18px;
+}
+.account-security-grid .settings-divider {
+  margin: 0;
+}
+.account-security-field-control {
+  min-width: 0;
+}
+.account-security-field-control .settings-input {
+  max-width: 521px;
+}
+
+.account-security-inline-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.account-security-email-input {
+  max-width: 232px !important;
+  background: #f9fafb;
+}
+.account-security-secondary-button,
+.account-security-primary-button,
+.account-security-signout-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+}
+.account-security-secondary-button {
+  min-height: 34px;
+  padding: 6px 14px;
+  color: #374151;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+}
+.account-security-secondary-button:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.account-security-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #9ca3af;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.account-security-password-input {
+  position: relative;
+  display: block;
+  max-width: 521px;
+}
+.account-security-password-input .settings-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 40px;
+}
+.account-security-password-visibility {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 8px;
+  margin: auto 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  color: #6b7280;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+}
+.account-security-password-visibility:hover {
+  color: #374151;
+  background: #f3f4f6;
+}
+
+.account-security-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.account-security-primary-button {
+  min-height: 36px;
+  padding: 8px 18px;
+  color: #ffffff;
+  background: #103ca4;
+  border: 0;
+  font-weight: 600;
+}
+.account-security-primary-button:hover {
+  background: #0c2b7a;
+}
+
+.account-security-setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 56px;
+  padding: 12px 0;
+  border-top: 1px solid #f3f4f6;
+}
+.account-security-setting-row:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+.account-security-row-title {
+  color: #111827;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 19.5px;
+}
+.account-security-setting-row p {
+  margin: 3px 0 0;
+  color: #9ca3af;
+  font-size: 12px;
+  line-height: 18px;
+}
+.account-security-row-action {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.account-security-enabled {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #16a34a;
+  font-size: 12px;
+  font-weight: 600;
+}
+.account-security-sessions {
+  border-top: 1px solid #f3f4f6;
+}
+.account-security-session {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 61px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+.account-security-device {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.account-security-device-icon {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  background: #f3f4f6;
+  border-radius: 8px;
+}
+.account-security-device b {
+  display: block;
+  color: #111827;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 19.5px;
+}
+.account-security-device small {
+  display: block;
+  margin-top: 2px;
+  color: #9ca3af;
+  font-size: 11px;
+  line-height: 16.5px;
+}
+/* 1. "Current" now has plain text style (was the revoke style) */
+.account-security-current {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  color: #16a34a;
+  font-size: 12px;
+  font-weight: 500;
+  /* Removed background, padding, border-radius */
+}
+
+/* "Revoke" now has the button style (white bg, border, red text) */
+.account-security-revoke {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  min-height: 34px;
+  padding: 6px 14px;
+  color: #dc2626;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+.account-security-revoke:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+/* 3. Keep "Sign out of all other sessions" as plain red text 
+   (since it also uses the .account-security-revoke class) */
+.account-security-signout-others {
+  margin-top: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  /* Override the button styles */
+  display: inline;
+  min-height: auto;
+  padding: 0;
+  color: #dc2626;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.account-security-signout-others:hover {
+  background: transparent;
+  border: 0;
+  color: #b91c1c;
+}
+
+.account-security-signout-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.account-security-signout h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+}
+.account-security-signout p {
+  margin: 4px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 19.5px;
+}
+.account-security-signout-button {
+  padding: 9px 18px;
+  color: #374151;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 600;
+}
+
+/* Cream background card for signout section (Figma: #FFFBEB @ 60%, border #FEF3C7, r10).
+   Selector is scoped + high-specificity so it beats the shared .card glass style in cards.css
+   without modifying that file (Cards always renders `card shadow-sm rounded-3`). */
+.settings-container .card.shadow-sm.rounded-3.account-security-signout {
+  background: rgba(255, 251, 235, 0.6) !important;
+  background-color: rgba(255, 251, 235, 0.6) !important;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border: 1px solid #fef3c7 !important;
+  border-radius: 10px !important;
+}
+
+
+@media (max-width: 768px) {
+  .account-security-container {
+    gap: 20px;
+  }
+  .account-security-inline-control,
+  .account-security-setting-row,
+  .account-security-signout-content {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .account-security-email-input {
+    max-width: none !important;
+  }
+  .account-security-row-action {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* Change the row from space-between to flex-start so it doesn't push items to the edge */
+.account-security-setting-row {
+  display: flex;
+  justify-content: flex-start; /* was space-between */
+  align-items: center;
+  gap: 16px;
+  /* ... keep the rest of your existing properties ... */
+}
+
+/* New class for the left side group */
+.account-security-left-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+/* Ensure the buttons stay pushed to the far right */
+.account-security-row-action {
+  margin-left: auto;
 }
