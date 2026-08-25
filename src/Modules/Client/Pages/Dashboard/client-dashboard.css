@@ -1,162 +1,2263 @@
-.client-db-grid {
+   /*CLIENT DASHBOARD*/
+
+
+
+
+/*  EQUAL SIZE   */
+
+.posting-card,
+.how-it-works-card,
+.recent-activity-card {
+  width: 100% !important;
+
+  height: 291px !important;
+  min-width: 0;
+
+  min-height: 291px !important;
+  max-height: 291px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  box-sizing: border-box;
+  align-self: stretch;
+}
+
+
+.posting-card > *,
+.how-it-works-card > *,
+.recent-activity-card > * {
+  width: 100% !important;
+
+  height: 291px !important;
+  min-height: 291px !important;
+  max-height: 291px !important;
+
+  margin: 0 !important;
+
+  box-sizing: border-box;
+}
+
+/* PAGE / SCROLL */
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.dashboard-layout {
+  width: 100%;
+  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main-workspace {
+  width: 100%;
+  height: 100vh;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+
+/* STICKY HEADER
+   Transparent header + clean background underneath */
+
+.client-dashboard-workspace {
+  position: relative;
+}
+
+.client-dashboard-workspace > :first-child {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+
+  /*
+    IMPORTANT:
+    Do not add background, opacity, or backdrop-filter here.
+    The original transparent appearance remains untouched.
+  */
+}
+
+
+/* 
+   BACKGROUND LAYER BEHIND TRANSPARENT HEADER
+   */
+
+.client-dashboard-workspace > :first-child::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  z-index: -1;
+
+  background-color: white;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  pointer-events: none;
+}
+
+
+/* DASHBOARD CONTENT */
+
+.client-dashboard-workspace > .dashboard-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* DASHBOARD CONTENT */
+
+.dashboard-content {
+  width: 100%;
+  max-width: 100%;
+  padding: 0 20px 40px;
+  margin: 0;
+}
+
+
+/* 
+   TOP SECTION
+   Welcome Banner + Trust Points */
+
+.dashboard-top-section {
+  width: 100%;
+
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
-  margin-top: 20px;
+  grid-template-columns:
+    minmax(0, 2.65fr)
+    minmax(240px, 0.9fr);
+
+  gap: 18px;
+
+  margin-bottom: 20px;
+
+  align-items: stretch;
 }
 
-.client-db-main-col {
+.welcome-banner-wrapper {
+  width: 100%;
+  min-width: 0;
+}
+
+.welcome-banner-wrapper > * {
+  width: 100%;
+  height: 250px;
+}
+
+
+/* TRUST CARD */
+
+.trust-card {
+  width: 100%;
+  height: 250px;
+  min-width: 0;
+
+  padding: 24px 22px;
+
+  background: rgba(255, 255, 255, 0.72);
+
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+
+  box-shadow: 3px 4px 8px rgba(16, 60, 164, 0.18);
+
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.trust-card-header {
+  margin-bottom: 8px;
+}
+
+.trust-card-header h3 {
+  margin: 0;
+
+  font-size: 14px;
+  line-height: 1.3;
+  font-weight: 600;
+
+  color: #111827;
+}
+
+.trust-points {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  align-items: baseline;
+  gap: 6px;
+
+  margin-top: 5px;
 }
 
-.client-db-sidebar-col {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* Card titles */
-.card-header-title {
-  font-size: 0.9rem;
+.trust-points-number {
+  font-size: 28px;
+  line-height: 1;
   font-weight: 600;
   color: #111827;
-  margin-bottom: 15px;
 }
 
-.card-header-flex {
+.trust-points-label {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.trust-rank {
+  margin-top: 5px;
+
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.trust-verified {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  gap: 6px;
+
+  margin-top: 7px;
+
+  font-size: 11px;
+  color: #4b5563;
 }
 
-.card-link-text {
-  font-size: 0.75rem;
+.trust-verified img {
+  width: 15px;
+  height: 15px;
+
+  flex-shrink: 0;
+  object-fit: contain;
+
+  filter:
+    brightness(0)
+    saturate(100%)
+    invert(39%)
+    sepia(92%)
+    saturate(1020%)
+    hue-rotate(99deg)
+    brightness(91%)
+    contrast(87%);
+}
+
+.trust-description {
+  max-width: 280px;
+
+  margin: 16px 0 12px;
+
+  font-size: 11px;
+  line-height: 1.45;
+
+  color: #6b7280;
+}
+
+.trust-history-btn {
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
   color: #103ca4;
-  font-weight: 500;
-  text-decoration: none;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
 }
 
-/* How it works */
-.hiw-empty-icon {
-  width: 40px;
-  height: 40px;
-  background-color: #F3F4F6;
-  border-radius: 8px;
+
+/* 
+   MAIN THREE CARDS
+   Posting | How It Works | Recent Activity
+    */
+
+.dashboard-main-cards {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+
+  margin-bottom: 20px;
+}
+
+.posting-card,
+.how-it-works-card,
+.recent-activity-card {
+  width: 100%;
+  min-width: 0;
+  height: 291px;
+}
+
+.posting-card > *,
+.how-it-works-card > *,
+.recent-activity-card > * {
+  width: 100%;
+  height: 100%;
+}
+
+
+/* POSTING CARD */
+
+.posting-card-content {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 28px;
+
+  text-align: center;
+}
+
+.posting-card-icon {
+  width: 48px;
+  height: 48px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 15px;
+
+  margin-bottom: 18px;
+
+  border-radius: 50%;
+
+  background: #f3f4f6;
+  color: #9ca3af;
 }
 
-.hiw-empty-text {
-  text-align: center;
-  font-size: 0.95rem;
+.posting-card-icon-image {
+  width: 22px;
+  height: 22px;
+
+  object-fit: contain;
+}
+
+.posting-card-content h3 {
+  max-width: 330px;
+
+  margin: 0 0 10px;
+
+  font-size: 15px;
+  line-height: 1.4;
   font-weight: 600;
+
   color: #111827;
-  margin-bottom: 5px;
 }
-.hiw-empty-subtext {
-  text-align: center;
-  font-size: 0.8rem;
-  color: #6B7280;
-  margin-bottom: 20px;
-  padding: 0 20px;
+
+.posting-card-content p {
+  max-width: 330px;
+
+  margin: 0 0 20px;
+
+  font-size: 11px;
+  line-height: 1.5;
+
+  color: #9ca3af;
 }
-.hiw-steps {
+
+.post-quest-button {
+  padding: 10px 20px;
+
+  border: 0;
+  border-radius: 6px;
+
+  background: #103ca4;
+  color: #fff;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow: 0 2px 5px rgba(16, 60, 164, 0.2);
+}
+
+.post-quest-button:hover {
+  background: #0d328a;
+}
+
+
+/*  HOW IT WORKS */
+
+.how-it-works-content {
+  width: 100%;
+  height: 100%;
+
+  padding: 26px;
+}
+
+.how-it-works-content h3 {
+  margin: 0 0 22px;
+
+  font-size: 15px;
+  line-height: 1.3;
+  font-weight: 600;
+
+  color: #111827;
+}
+
+.how-it-works-step {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.how-it-works-step:last-child {
+  margin-bottom: 0;
+}
+
+.step-number {
+  width: 22px;
+  height: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #103ca4;
+  color: #fff;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.how-it-works-step h4 {
+  margin: 0 0 4px;
+
+  font-size: 11px;
+  line-height: 1.3;
+  font-weight: 600;
+
+  color: #111827;
+}
+
+.how-it-works-step p {
+  margin: 0;
+
+  font-size: 10px;
+  line-height: 1.4;
+
+  color: #9ca3af;
+}
+
+
+/* RECENT ACTIVITY */
+
+.recent-activity-content {
+  width: 100%;
+  height: 100%;
+
+  padding: 26px;
+}
+
+.recent-activity-content h3 {
+  margin: 0;
+
+  font-size: 15px;
+  line-height: 1.3;
+  font-weight: 600;
+
+  color: #111827;
+}
+
+.recent-activity-empty {
+  height: calc(100% - 35px);
+
   display: flex;
   flex-direction: column;
-  gap: 15px;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
 }
-.hiw-step {
+
+.activity-icon-image {
+  display: block;
+
+  width: 28px;
+  height: 28px;
+
+  margin-bottom: 10px;
+
+  object-fit: contain;
+}
+
+.recent-activity-empty p {
+  margin: 0 0 5px;
+
+  font-size: 11px;
+  line-height: 1.3;
+  font-weight: 500;
+
+  color: #9ca3af;
+}
+
+.recent-activity-empty span {
+  font-size: 10px;
+  line-height: 1.3;
+
+  color: #d1d5db;
+}
+
+
+/* 
+   FINAL LOWER-CARD ALIGNMENT
+   Quest Overview → Get Started
+   Payout Guide → Need Help
+    */
+
+.dashboard-left-column {
   display: flex;
+  flex-direction: column;
   gap: 12px;
 }
-.hiw-step-num {
-  width: 24px;
-  height: 24px;
-  background-color: #103ca4;
-  color: white;
-  border-radius: 50%;
+
+.dashboard-right-column {
+  display: grid;
+  grid-template-rows: 160px 155px;
+  gap: 12px;
+  align-content: start;
+}
+
+/* Keep the actual card heights */
+.payout-guide-card {
+  height: 160px !important;
+  min-height: 160px !important;
+  flex: 0 0 160px !important;
+}
+
+.need-help-card {
+  height: 155px !important;
+  min-height: 155px !important;
+  flex: 0 0 155px !important;
+}
+
+/* Make sure inner elements don't create extra spacing */
+.payout-guide-card > *,
+.need-help-card > * {
+  box-sizing: border-box;
+}
+
+/* QUEST OVERVIEW */
+
+/* 
+   QUEST OVERVIEW + BOTTOM CONTENT
+   MAIN 2-COLUMN ALIGNMENT
+    */
+
+.dashboard-lower-grid {
+  width: 100%;
+  display: grid;
+
+  /*
+    Left side is approximately 2/3
+    Right side is approximately 1/3
+  */
+  grid-template-columns: minmax(0, 2fr) minmax(230px, 0.95fr);
+
+  column-gap: 18px;
+  row-gap: 0px;
+
+  align-items: start;
+  box-sizing: border-box;
+
+  margin-top: 0;
+}
+
+
+/*
+   Get Started
+    */
+
+.dashboard-left-column {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+  height: 100%;
+}
+
+
+/* 
+   RIGHT COLUMN
+   Payout Guide
+   Need Help
+   */
+
+.dashboard-right-column {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: 160px 155px;
+  gap: 12px;
+  align-content: start;
+  height: auto;
+}
+
+/* 
+   QUEST OVERVIEW
+   */
+
+.quest-overview-section {
+  width: 100%;
+  min-width: 0;
+
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+}
+
+
+.section-header {
+  width: 100%;
+
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 0.75rem;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-.hiw-step-title {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #111827;
-  margin-bottom: 2px;
-}
-.hiw-step-desc {
-  font-size: 0.75rem;
-  color: #6B7280;
+  justify-content: space-between;
+
+  margin-bottom: 8px;
 }
 
-/* Quest Overview Grid */
-.quest-overview-grid {
+
+.section-header h2 {
+  margin: 0;
+
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: 600;
+
+  color: #111827;
+}
+
+
+.overview-filter {
+  font-size: 8px;
+  font-weight: 500;
+
+  color: #103ca4;
+}
+
+
+/*
+   QUEST OVERVIEW CARDS
+   */
+
+.quest-overview-cards {
+  width: 100%;
+
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
   gap: 10px;
+
+  box-sizing: border-box;
 }
-.qo-metric-card {
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
-  padding: 12px;
-  background: white;
-}
-.qo-metric-header {
+
+
+/* 
+   QUEST OVERVIEW CARD
+   */
+
+.overview-card {
+  width: 100%;
+  height: 142px;
+
+  min-width: 0;
+
+  padding: 16px 14px;
+
+  box-sizing: border-box;
+
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 10px;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  border-radius: 8px;
+
+  background: rgba(255, 255, 255, 0.72);
+
+  border: 1px solid rgba(229, 231, 235, 0.9);
+
+  box-shadow:
+    2px 3px 7px rgba(16, 60, 164, 0.13);
+
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
-.qo-metric-title {
-  font-size: 0.75rem;
-  color: #6B7280;
+
+
+/* 
+   CARD HEADER
+   */
+
+.overview-card-header {
+  width: 100%;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+}
+
+.overview-card-header .overview-card-title {
+  margin: 0;
+  width: auto;
+}
+
+
+/*
+   CARD ICON
+    */
+
+.overview-card-icon {
+  width: 16px;
+  height: 16px;
+
+  flex-shrink: 0;
+
+  object-fit: contain;
+}
+
+
+/* =========================================================
+   CARD TITLE
+   ========================================================= */
+
+.overview-card-title {
+  display: block;
+
+  font-size: 10px;
+  line-height: 1.3;
+
+  color: #6b7280;
   font-weight: 500;
 }
-.qo-metric-icon {
-  color: #9CA3AF;
-}
-.qo-metric-value {
-  font-size: 1.25rem;
-  font-weight: 600;
+
+
+/* =========================================================
+   CARD VALUE
+   ========================================================= */
+
+.overview-card strong {
+  display: block;
+
+  margin: 0 0 10px;
+
+  font-size: 21px;
+  line-height: 1;
+
   color: #111827;
-  margin-bottom: 5px;
-}
-.qo-metric-sub {
-  font-size: 0.7rem;
-  color: #9CA3AF;
+  font-weight: 600;
 }
 
-/* Category Tags */
-.category-tags {
+
+/* =========================================================
+   CARD DESCRIPTION
+   ========================================================= */
+
+.overview-card-description {
+  display: block;
+
+  font-size: 9px;
+  line-height: 1.4;
+
+  color: #9ca3af;
+}
+
+
+/* =========================================================
+   GET STARTED
+   ========================================================= */
+
+/* =========================================================
+   GET STARTED + NEED HELP — EQUAL HEIGHT
+   ========================================================= */
+
+.get-started-card,
+.need-help-card {
+  width: 100%;
+  min-width: 0;
+  height: 155px;
+  min-height: 155px;
+  box-sizing: border-box;
+}
+
+.get-started-card > *,
+.need-help-card > * {
+  width: 100%;
+  height: 155px !important;
+  min-height: 155px !important;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   GET STARTED CONTENT
+   ========================================================= */
+
+.get-started-content {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   NEED HELP CONTENT
+   ========================================================= */
+
+.need-help-card > * {
+  padding: 18px;
+}
+
+.need-help-card .need-help-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+
+/* =========================================================
+   GET STARTED HEADER
+   ========================================================= */
+
+.get-started-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 12px;
+}
+
+.get-started-header h3 {
+  margin: 0;
+
+  font-size: 14px;
+  line-height: 1.2;
+
+  font-weight: 600;
+
+  color: #111827;
+}
+
+.get-started-header button {
+  border: none;
+  background: transparent;
+
+  padding: 0;
+
+  font-size: 10px;
+  line-height: 1.2;
+
+  font-weight: 600;
+
+  color: #103ca4;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.get-started-content > p {
+  margin: 0 0 16px;
+
+  font-size: 10px;
+  line-height: 1.5;
+
+  color: #9ca3af;
+}
+
+
+/* =========================================================
+   CATEGORY TAGS
+   ========================================================= */
+
+.category-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-}
-.category-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 6px 12px;
-  background-color: #fff;
-  border: 1px solid #E5E7EB;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  color: #374151;
-  font-weight: 500;
+
+  gap: 8px;
 }
 
-/* Shared utility */
-.text-muted-sm {
-  font-size: 0.8rem;
-  color: #6B7280;
-  line-height: 1.4;
+.category-tag-with-icon {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 6px;
+
+  padding: 7px 12px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  font-size: 9px;
+  line-height: 1.2;
+
+  color: #6b7280;
+}
+
+.category-tag-with-icon img {
+  width: 13px;
+  height: 13px;
+
+  object-fit: contain;
+}
+
+
+/* =========================================================
+   RIGHT COLUMN
+   ========================================================= */
+
+.dashboard-right-column {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: 160px 155px;
+  gap: 12px;
+  align-content: start;
+  height: auto;
+}
+
+
+/* =========================================================
+   PAYOUT GUIDE
+   ========================================================= */
+
+.payout-guide-card {
+  width: 100%;
+  min-width: 0;
+
+  height: 160px;
+
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+}
+
+.payout-guide-card > * {
+  width: 100%;
+  height: 160px !important;
+
+  padding: 18px;
+
+  box-sizing: border-box;
+}
+
+
+/* Payout Header */
+
+.payout-guide-header {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 12px;
+}
+
+.payout-guide-header h3 {
+  margin: 0;
+
+  font-size: 14px;
+  line-height: 1.2;
+
+  font-weight: 600;
+
+  color: #111827;
+}
+
+
+/* Payout Icon */
+
+.payout-guide-icon {
+  width: 15px;
+  height: 18px;
+
+  object-fit: contain;
+
+  flex-shrink: 0;
+
+  display: block;
+
+  transform: translateY(-2px);
+}
+
+
+/* Payout Description */
+
+.payout-guide-card p {
+  margin: 0 0 16px;
+
+  max-width: 95%;
+
+  font-size: 10px;
+  line-height: 1.5;
+
+  color: #9ca3af;
+}
+
+
+/* Payout Button */
+
+.payout-guide-card button {
+  border: none;
+
+  background: transparent;
+
+  padding: 0;
+
+  font-size: 10px;
+  line-height: 1.2;
+
+  font-weight: 600;
+
+  color: #103ca4;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   NEED HELP
+   ========================================================= */
+
+.need-help-card {
+  width: 100%;
+  min-width: 0;
+
+  height: 155px;
+
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+}
+
+.need-help-card > * {
+  width: 100%;
+  height: 155px !important;
+
+  padding: 18px;
+
+  box-sizing: border-box;
+}
+
+
+/* Need Help Header */
+
+.need-help-header {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 12px;
+}
+
+.need-help-header h3 {
+  margin: 0;
+
+  font-size: 14px;
+  line-height: 1.2;
+
+  font-weight: 600;
+
+  color: #111827;
+}
+
+
+/* Need Help Icon */
+
+.need-help-icon {
+  width: 15px;
+  height: 18px;
+
+  object-fit: contain;
+
+  display: block;
+
+  flex-shrink: 0;
+
+  transform: translateY(-2px);
+
+  filter:
+    invert(23%)
+    sepia(98%)
+    saturate(1945%)
+    hue-rotate(209deg)
+    brightness(85%)
+    contrast(98%);
+}
+
+
+/* Need Help Description */
+
+.need-help-card p {
+  margin: 0 0 16px;
+
+  max-width: 95%;
+
+  font-size: 10px;
+  line-height: 1.5;
+
+  color: #9ca3af;
+}
+
+
+/* Need Help Button */
+
+.need-help-card button {
+  border: none;
+
+  background: transparent;
+
+  padding: 0;
+
+  font-size: 10px;
+  line-height: 1.2;
+
+  font-weight: 600;
+
+  color: #103ca4;
+
+  cursor: pointer;
+}
+
+
+
+/* =========================================================
+   TIP BANNER
+   ========================================================= */
+
+.db-row-tip {
+    flex: 0 0 auto;
+  }
+
+  .db-card-fill {
+    height: 100%;
+    flex: 1;
+    min-height: min-content;
+  }
+
+  .db-row-banner .db-card-fill:first-child { flex: 1; height: 100%; min-height: 160px; }
+  .db-row-banner .db-card-fill:last-child  { flex: 1; height: 100%; min-height: 150px; }
+
+  
+/* =========================================================
+   RESPONSIVE DASHBOARD
+   Compact + Fluid + Overflow Safe
+   ========================================================= */
+
+/* =========================================================
+   1200px AND BELOW
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+  .dashboard-content {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .dashboard-top-section {
+    grid-template-columns:
+      minmax(0, 2fr)
+      minmax(220px, 0.9fr);
+    gap: 16px;
+  }
+
+  .dashboard-main-cards {
+    gap: 14px;
+  }
+
+  .dashboard-lower-grid {
+    grid-template-columns:
+      minmax(0, 1.8fr)
+      minmax(220px, 0.95fr);
+    gap: 14px;
+  }
+
+  .quest-overview-cards {
+    gap: 8px;
+  }
+
+  .overview-card {
+    min-width: 0;
+    padding: 14px 12px;
+  }
+
+  /* Prevent content from forcing width */
+  .trust-card,
+  .how-it-works-card,
+  .get-started-card {
+    min-width: 0;
+  }
+
+  .trust-card *,
+  .how-it-works-card *,
+  .get-started-card * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .trust-description,
+  .how-it-works-step p,
+  .get-started-content > p {
+    overflow-wrap: anywhere;
+  }
+
+  .category-list {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .category-tag-with-icon {
+    max-width: 100%;
+    min-width: 0;
+  }
+}
+
+
+/* =========================================================
+   1100px AND BELOW
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+  .dashboard-top-section {
+    grid-template-columns:
+      minmax(0, 1.7fr)
+      minmax(200px, 0.9fr);
+  }
+
+  .dashboard-main-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .recent-activity-card {
+    grid-column: 1 / -1;
+  }
+
+  .dashboard-lower-grid {
+    grid-template-columns:
+      minmax(0, 1.6fr)
+      minmax(200px, 1fr);
+  }
+
+  .quest-overview-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* =========================================================
+   992px AND BELOW
+   ========================================================= */
+
+@media (max-width: 992px) {
+
+  .dashboard-content {
+    padding: 0 16px 40px;
+  }
+
+  /* TOP */
+
+  .dashboard-top-section {
+    grid-template-columns:
+      minmax(0, 1.6fr)
+      minmax(190px, 1fr);
+    gap: 14px;
+  }
+
+  .welcome-banner-wrapper > *,
+  .trust-card {
+    height: 200px;
+  }
+
+  .trust-card {
+    min-height: 200px;
+    padding: 18px 16px;
+    overflow: hidden;
+  }
+
+  .trust-points {
+    flex-wrap: wrap;
+  }
+
+  .trust-description {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  /* MAIN CARDS */
+
+  .dashboard-main-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .posting-card,
+  .how-it-works-card,
+  .recent-activity-card {
+    height: 250px;
+    min-height: 250px;
+    max-height: 250px;
+  }
+
+  .posting-card > *,
+  .how-it-works-card > *,
+  .recent-activity-card > * {
+    height: 100%;
+    min-height: 0;
+    max-height: none;
+  }
+
+  /* LOWER */
+
+  .dashboard-lower-grid {
+    grid-template-columns:
+      minmax(0, 1.5fr)
+      minmax(190px, 1fr);
+    gap: 14px;
+  }
+
+  .quest-overview-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .overview-card {
+    min-height: 120px;
+    height: auto;
+    padding: 13px 11px;
+  }
+
+  .overview-card-header {
+    margin-bottom: 12px;
+  }
+
+  .overview-card strong {
+    font-size: 19px;
+  }
+
+  /* GET STARTED */
+
+  .get-started-card {
+    height: auto;
+    min-height: 155px;
+    max-height: none;
+    overflow: hidden;
+  }
+
+  .get-started-card > * {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible;
+  }
+
+  .get-started-content {
+    height: auto;
+    min-height: 0;
+    padding: 16px;
+    overflow: visible;
+  }
+
+  .get-started-header {
+    min-width: 0;
+  }
+
+  .get-started-header h3 {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .get-started-content > p {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .category-list {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .category-tag-with-icon {
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+}
+
+
+/* =========================================================
+   850px AND BELOW
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+  .dashboard-top-section {
+    grid-template-columns: 1fr;
+  }
+
+  .welcome-banner-wrapper > *,
+  .trust-card {
+    height: 190px;
+  }
+
+  .trust-card {
+    min-height: 190px;
+  }
+
+  .dashboard-lower-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-right-column {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto;
+    gap: 12px;
+  }
+
+  .payout-guide-card,
+  .need-help-card {
+    height: 155px;
+  }
+
+  .payout-guide-card > *,
+  .need-help-card > * {
+    height: 155px !important;
+    min-height: 0 !important;
+  }
+
+  /* GET STARTED — allow natural height */
+
+  .get-started-card,
+  .get-started-card > *,
+  .get-started-content {
+    height: auto !important;
+    min-height: 155px !important;
+    max-height: none !important;
+  }
+
+  .get-started-content {
+    padding: 14px;
+  }
+
+  .get-started-header {
+    gap: 8px;
+  }
+
+  .get-started-header h3 {
+    font-size: 12px;
+  }
+
+  .get-started-content > p {
+    font-size: 8px;
+    line-height: 1.45;
+  }
+
+  .category-list {
+    gap: 5px;
+  }
+
+  .category-tag-with-icon {
+    padding: 5px 8px;
+    font-size: 7px;
+  }
+}
+
+
+/* =========================================================
+   767px AND BELOW — MOBILE
+   ========================================================= */
+
+@media (max-width: 767px) {
+
+  .dashboard-content {
+    width: 100%;
+    padding: 0 12px 40px;
+  }
+
+  /* TOP */
+
+  .dashboard-top-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .welcome-banner-wrapper > * {
+    height: 160px;
+  }
+
+  .trust-card {
+    width: 100%;
+    height: auto;
+    min-height: 160px;
+    padding: 15px;
+  }
+
+  .trust-description {
+    max-width: 100%;
+  }
+
+
+  /* MAIN CARDS */
+
+  .dashboard-main-cards {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .posting-card,
+  .how-it-works-card,
+  .recent-activity-card {
+    width: 100%;
+    height: auto;
+    min-height: 210px;
+    max-height: none;
+  }
+
+  .posting-card > *,
+  .how-it-works-card > *,
+  .recent-activity-card > * {
+    width: 100%;
+    height: auto;
+    min-height: 210px;
+    max-height: none;
+  }
+
+  .posting-card-content,
+  .how-it-works-content,
+  .recent-activity-content {
+    padding: 20px;
+  }
+
+
+  /* LOWER GRID */
+
+  .dashboard-lower-grid {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .dashboard-left-column,
+  .dashboard-right-column {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .dashboard-right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+
+  /* QUEST OVERVIEW */
+
+  .quest-overview-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .overview-card {
+    width: 100%;
+    height: auto;
+    min-height: 105px;
+    padding: 11px 10px;
+  }
+
+  .overview-card-header {
+    margin-bottom: 10px;
+  }
+
+  .overview-card-title {
+    font-size: 8px;
+  }
+
+  .overview-card strong {
+    font-size: 16px;
+    margin-bottom: 7px;
+  }
+
+  .overview-card-description {
+    font-size: 7px;
+  }
+
+
+  /* =====================================================
+     GET STARTED — IMPORTANT FIX
+     ===================================================== */
+
+  .get-started-card {
+    width: 100%;
+    height: auto !important;
+    min-height: 145px !important;
+    max-height: none !important;
+
+    overflow: visible !important;
+  }
+
+  .get-started-card > * {
+    width: 100%;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+
+    overflow: visible !important;
+  }
+
+  .get-started-content {
+    width: 100%;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+
+    padding: 14px;
+
+    overflow: visible !important;
+  }
+
+  .get-started-header {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .get-started-header h3 {
+    flex: 1 1 auto;
+    min-width: 0;
+
+    font-size: 11px;
+    line-height: 1.3;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .get-started-header button {
+    flex: 0 0 auto;
+
+    font-size: 8px;
+    white-space: nowrap;
+  }
+
+  .get-started-content > p {
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0 0 10px;
+
+    font-size: 8px;
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .category-list {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 5px;
+  }
+
+  .category-tag-with-icon {
+    max-width: 100%;
+    min-width: 0;
+
+    padding: 5px 7px;
+
+    font-size: 7px;
+    line-height: 1.2;
+
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+
+  /* PAYOUT / NEED HELP */
+
+  .payout-guide-card,
+  .need-help-card {
+    width: 100%;
+    height: auto;
+    min-height: 145px;
+    max-height: none;
+  }
+
+  .payout-guide-card > *,
+  .need-help-card > * {
+    width: 100%;
+    height: auto !important;
+    min-height: 145px !important;
+    max-height: none !important;
+
+    padding: 14px;
+  }
+
+  .payout-guide-header h3,
+  .need-help-header h3 {
+    font-size: 11px;
+  }
+
+  .payout-guide-card p,
+  .need-help-card p {
+    max-width: 100%;
+    font-size: 8px;
+    overflow-wrap: anywhere;
+  }
+
+  .payout-guide-card button,
+  .need-help-card button {
+    font-size: 8px;
+  }
+
+
+  /* TIP */
+
+  .dashboard-tip {
+    margin-top: 12px;
+  }
+
+  .tip-content {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 7px 9px;
+    gap: 5px;
+  }
+
+  .tip-text {
+    flex: 1 1 calc(100% - 25px);
+    min-width: 0;
+    font-size: 7px;
+  }
+
+  .tip-action {
+    width: 100%;
+    text-align: right;
+    font-size: 7px;
+  }
+}
+
+
+/* =========================================================
+   600px AND BELOW
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .dashboard-content {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .welcome-banner-wrapper > * {
+    height: 150px;
+  }
+
+  .trust-card {
+    min-height: 150px;
+    padding: 13px;
+  }
+
+  .dashboard-main-cards {
+    gap: 10px;
+  }
+
+  .posting-card,
+  .how-it-works-card,
+  .recent-activity-card {
+    min-height: 200px;
+  }
+
+  .posting-card > *,
+  .how-it-works-card > *,
+  .recent-activity-card > * {
+    min-height: 200px;
+  }
+
+  .quest-overview-cards {
+    gap: 7px;
+  }
+
+  .overview-card {
+    padding: 10px 9px;
+  }
+
+  /* GET STARTED */
+
+  .get-started-card,
+  .get-started-card > *,
+  .get-started-content {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+
+  .get-started-card {
+    min-height: 145px !important;
+  }
+
+  .get-started-content {
+    padding: 12px;
+  }
+
+  .get-started-header {
+    margin-bottom: 8px;
+  }
+
+  .get-started-header h3 {
+    font-size: 10px;
+  }
+
+  .get-started-header button {
+    font-size: 7px;
+  }
+
+  .get-started-content > p {
+    margin-bottom: 8px;
+    font-size: 7px;
+  }
+
+  .category-list {
+    gap: 4px;
+  }
+
+  .category-tag-with-icon {
+    padding: 4px 6px;
+    font-size: 6.5px;
+  }
+
+  .category-tag-with-icon img {
+    width: 9px;
+    height: 9px;
+  }
+}
+
+
+/* =========================================================
+   480px AND BELOW
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .dashboard-content {
+    padding-left: 9px;
+    padding-right: 9px;
+    padding-bottom: 30px;
+  }
+
+  .welcome-banner-wrapper > * {
+    height: 145px;
+  }
+
+  .trust-card {
+    min-height: 145px;
+    padding: 12px;
+  }
+
+  .trust-points-number {
+    font-size: 20px;
+  }
+
+  .trust-description {
+    font-size: 7px;
+  }
+
+
+  /* MAIN CARDS */
+
+  .posting-card,
+  .how-it-works-card,
+  .recent-activity-card {
+    min-height: 190px;
+  }
+
+  .posting-card > *,
+  .how-it-works-card > *,
+  .recent-activity-card > * {
+    min-height: 190px;
+  }
+
+  .posting-card-content,
+  .how-it-works-content,
+  .recent-activity-content {
+    padding: 16px;
+  }
+
+  .posting-card-content h3 {
+    font-size: 13px;
+  }
+
+  .posting-card-content p {
+    font-size: 9px;
+  }
+
+
+  /* OVERVIEW */
+
+  .overview-card {
+    min-height: 95px;
+    padding: 10px 9px;
+  }
+
+  .overview-card-title {
+    font-size: 7.5px;
+  }
+
+  .overview-card strong {
+    font-size: 15px;
+  }
+
+  .overview-card-description {
+    font-size: 6.8px;
+  }
+
+
+  /* GET STARTED */
+
+  .get-started-card {
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  .get-started-card > *,
+  .get-started-content {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+
+  .get-started-content {
+    padding: 11px;
+  }
+
+  .get-started-header {
+    flex-wrap: nowrap;
+  }
+
+  .get-started-header h3 {
+    font-size: 9px;
+  }
+
+  .get-started-header button {
+    font-size: 7px;
+  }
+
+  .get-started-content > p {
+    font-size: 6.8px;
+  }
+
+  .category-tag-with-icon {
+    padding: 4px 5px;
+    font-size: 6px;
+  }
+
+
+  /* RIGHT CARDS */
+
+  .payout-guide-card,
+  .need-help-card {
+    min-height: 140px;
+  }
+
+  .payout-guide-card > *,
+  .need-help-card > * {
+    min-height: 140px !important;
+    height: auto !important;
+  }
+}
+
+
+/* =========================================================
+   360px AND BELOW
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+  .dashboard-content {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .welcome-banner-wrapper > * {
+    height: 135px;
+  }
+
+  .trust-card {
+    min-height: 135px;
+    padding: 10px;
+  }
+
+  .trust-card-header h3 {
+    font-size: 9px;
+  }
+
+  .trust-points-number {
+    font-size: 18px;
+  }
+
+  .trust-points-label {
+    font-size: 7px;
+  }
+
+  .trust-description {
+    font-size: 6.5px;
+  }
+
+
+  /* MAIN CARDS */
+
+  .posting-card,
+  .how-it-works-card,
+  .recent-activity-card {
+    min-height: 175px;
+  }
+
+  .posting-card > *,
+  .how-it-works-card > *,
+  .recent-activity-card > * {
+    min-height: 175px;
+  }
+
+  .posting-card-content,
+  .how-it-works-content,
+  .recent-activity-content {
+    padding: 13px;
+  }
+
+
+  /* QUEST OVERVIEW */
+
+  .quest-overview-cards {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .overview-card {
+    min-height: 85px;
+  }
+
+
+  /* GET STARTED */
+
+  .get-started-card,
+  .get-started-card > *,
+  .get-started-content {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+
+  .get-started-content {
+    padding: 9px;
+  }
+
+  .get-started-header {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .get-started-header h3 {
+    font-size: 8px;
+  }
+
+  .get-started-header button {
+    font-size: 6px;
+  }
+
+  .get-started-content > p {
+    font-size: 6px;
+  }
+
+  .category-tag-with-icon {
+    max-width: 100%;
+    padding: 3px 5px;
+    font-size: 5.5px;
+  }
+}
+
+
+/* =========================================================
+   320px AND BELOW
+   ========================================================= */
+
+@media (max-width: 320px) {
+
+  .dashboard-content {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  .posting-card-content,
+  .how-it-works-content,
+  .recent-activity-content {
+    padding: 11px;
+  }
+
+  .posting-card-content h3 {
+    font-size: 12px;
+  }
+
+  .posting-card-content p {
+    font-size: 8px;
+  }
+
+  .post-quest-button {
+    padding: 8px 14px;
+    font-size: 9px;
+  }
+
+  .overview-card {
+    padding: 9px 8px;
+  }
+
+  /* GET STARTED */
+
+  .get-started-content {
+    padding: 8px;
+  }
+
+  .get-started-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .get-started-header button {
+    align-self: flex-start;
+  }
+
+  .category-list {
+    width: 100%;
+    gap: 4px;
+  }
+
+  .category-tag-with-icon {
+    max-width: 100%;
+    padding: 3px 4px;
+  }
+}
+
+
+/* =========================================================
+   FINAL CONTENT SAFETY
+   ========================================================= */
+
+@media (max-width: 767px) {
+
+  .dashboard-content,
+  .dashboard-top-section,
+  .dashboard-main-cards,
+  .dashboard-lower-grid,
+  .dashboard-left-column,
+  .dashboard-right-column,
+  .get-started-card,
+  .get-started-card > *,
+  .get-started-content,
+  .category-list {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .get-started-card {
+    overflow: visible !important;
+  }
+
+  .get-started-content {
+    overflow: visible !important;
+  }
+
+  .get-started-content * {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+/* =========================================================
+   DASHBOARD CARDS — BORDER RADIUS
+   ========================================================= */
+
+.trust-card,
+.posting-card,
+.how-it-works-card,
+.recent-activity-card,
+.overview-card,
+.get-started-card,
+.payout-guide-card,
+.need-help-card,
+.tip-banner-card,
+
+.posting-card > *,
+.how-it-works-card > *,
+.recent-activity-card > *,
+.get-started-card > *,
+.payout-guide-card > *,
+.need-help-card > * {
+  border-radius: 10px;
+}
+/* =========================================================
+   BUTTON BORDER RADIUS
+   ========================================================= */
+
+button {
+  border-radius: 10px;
 }
