@@ -9,7 +9,7 @@ import AccountType from "./Modules/auth/Accountype/Accounttype";
 import DashBoard from "./Modules/Individual/Screen/Pages/DashBoard/DashBoard";
 import ClientDashboard from "./Modules/Client/Pages/Dashboard/Dashboard";
 import ClientProfile from "./Modules/Client/Pages/Profile/Profile";
-import WholeProfile from "./Modules/Client/Pages/whole_Profile";
+import ClientWholeProfile from "./Modules/Client/Pages/whole_Profile";
 import ClientQuestBoard from "./Modules/Client/Pages/QuestBoard/QuestBoard";
 import ClientApplications from "./Modules/Client/Pages/Applications/Applications";
 import ClientActiveQuests from "./Modules/Client/Pages/ActiveQuests/ActiveQuests";
@@ -36,6 +36,7 @@ import ReputationRank from "./Modules/Individual/Screen/Pages/ReputationRank/Rep
 import Notifications from "./Modules/Individual/Screen/Pages/Notifications/Notifications";
 import Verification from "./Modules/Individual/Screen/Pages/Verification/Verification";
 import VerificationHub from "./Modules/Individual/Screen/Pages/VerificationHub/VerificationHub";
+import WholeProfile from "./Modules/Individual/Screen/Pages/WholeProfile/WholeProfile";
 
 import IndividualSettingsWrapper from "./Modules/Individual/Screen/Pages/Settings/Settings";
 
@@ -58,9 +59,8 @@ function App() {
       <Route path="/client-dashboard" element={<ClientDashboard />} />
       <Route path="/client-profile" element={<ClientProfile />} />
       <Route path="/client-profile/:step" element={<ClientProfile />} />
-      <Route path="/client-whole-profile" element={<WholeProfile />} />
-      <Route path="/whole-profile" element={<WholeProfile />} />
-      <Route path="/client-profile/whole" element={<WholeProfile />} />
+      <Route path="/client-whole-profile" element={<ClientWholeProfile />} />
+      <Route path="/client-profile/whole" element={<ClientWholeProfile />} />
       <Route path="/client-quest-board" element={<ClientQuestBoard />} />
       <Route path="/client-quest-board/:questId" element={<ClientQuestBoard />} />
       <Route path="/client-applications" element={<ClientApplications />} />
@@ -78,6 +78,8 @@ function App() {
       {/* Individual Routes */}
       <Route path="/profile" element={<Profile />} />
       <Route path="/profile/:step" element={<Profile />} />
+      <Route path="/whole-profile" element={<WholeProfile />} />
+      <Route path="/wholeprofile" element={<WholeProfile />} />
       <Route path="/verification" element={<Verification />} />
       <Route path="/quest-board" element={<Projects />} />
       <Route path="/quest-board/:questId" element={<Projects />} />

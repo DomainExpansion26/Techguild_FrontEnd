@@ -47,6 +47,9 @@ import Laptop from "../../assets/icons/laptop.svg?react";
 import Monitor from "../../assets/icons/monitor.svg?react";
 import Smartphone from "../../assets/icons/smartphone.svg?react";
 import TriangleAlert from "../../assets/icons/triangle-alert.svg?react";
+import Upload from "../../assets/icons/upload.svg?react";
+import UploadIcon from "../../assets/icons/upload.svg?react";
+import Share from "../../assets/icons/share.svg?react";
 
 export {
   ArrowLeft,
@@ -99,5 +102,8 @@ export {
   Monitor,
   Smartphone,
   TriangleAlert,
+  Upload,
+  UploadIcon,
+  Share,
 };
 
