@@ -43,6 +43,9 @@ import LogOut from "../../assets/icons/log-out.svg?react";
 import MessageSquareMore from "../../assets/icons/message-square-more.svg?react";
 import NotebookText from "../../assets/icons/notebook-text.svg?react";
 import BarChart3 from "../../assets/icons/bar-chart3.svg?react";
+import Upload from "../../assets/icons/upload.svg?react";
+import UploadIcon from "../../assets/icons/upload.svg?react";
+import Share from "../../assets/icons/share.svg?react";
 
 export {
   ArrowLeft,
@@ -89,4 +92,7 @@ export {
   MessageSquareMore,
   NotebookText,
   BarChart3,
+  Upload,
+  UploadIcon,
+  Share,
 };
