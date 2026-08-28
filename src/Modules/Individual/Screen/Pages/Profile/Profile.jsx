@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DashboardLayout, Cards, PrimaryButton } from "@/Components";
 import Icon from "@/Components/icons/Icon";
@@ -22,6 +22,24 @@ const slugStepMap = {
   "completed": 6
 };
 
+const clearDraftStorage = () => {
+  sessionStorage.removeItem("ind_profilePhotoName");
+  sessionStorage.removeItem("ind_fullName");
+  sessionStorage.removeItem("ind_country");
+  sessionStorage.removeItem("ind_timeZone");
+  sessionStorage.removeItem("ind_headline");
+  sessionStorage.removeItem("ind_bio");
+  sessionStorage.removeItem("ind_experience");
+  sessionStorage.removeItem("ind_availability");
+  sessionStorage.removeItem("ind_skills");
+  sessionStorage.removeItem("ind_tools");
+  sessionStorage.removeItem("ind_categories");
+  sessionStorage.removeItem("ind_portfolioUrl");
+  sessionStorage.removeItem("ind_githubUrl");
+  sessionStorage.removeItem("ind_linkedinUrl");
+  sessionStorage.removeItem("ind_resumeFileName");
+};
+
 export default function Profile() {
   const navigate = useNavigate();
   const { step } = useParams();
@@ -31,40 +49,94 @@ export default function Profile() {
   const [snapshot, setSnapshot] = useState({});
 
   const [profilePhoto, setProfilePhoto] = useState(null);
-  const [fullName, setFullName] = useState("");
-  const [country, setCountry] = useState("");
-  const [timeZone, setTimeZone] = useState("");
+  const [profilePhotoName, setProfilePhotoName] = useState(() => sessionStorage.getItem("ind_profilePhotoName") || "");
+  const [fullName, setFullName] = useState(() => sessionStorage.getItem("ind_fullName") || "");
+  const [country, setCountry] = useState(() => sessionStorage.getItem("ind_country") || "");
+  const [timeZone, setTimeZone] = useState(() => sessionStorage.getItem("ind_timeZone") || "");
   const [step1Errors, setStep1Errors] = useState({});
 
-  const [headline, setHeadline] = useState("");
-  const [bio, setBio] = useState("");
-  const [experience, setExperience] = useState("");
-  const [availability, setAvailability] = useState("");
+  const [headline, setHeadline] = useState(() => sessionStorage.getItem("ind_headline") || "");
+  const [bio, setBio] = useState(() => sessionStorage.getItem("ind_bio") || "");
+  const [experience, setExperience] = useState(() => sessionStorage.getItem("ind_experience") || "");
+  const [availability, setAvailability] = useState(() => sessionStorage.getItem("ind_availability") || "");
   const [step2Errors, setStep2Errors] = useState({});
 
-  const [skills, setSkills] = useState("");
-  const [tools, setTools] = useState("");
-  const [categories, setCategories] = useState("");
+  const [skills, setSkills] = useState(() => sessionStorage.getItem("ind_skills") || "");
+  const [tools, setTools] = useState(() => sessionStorage.getItem("ind_tools") || "");
+  const [categories, setCategories] = useState(() => sessionStorage.getItem("ind_categories") || "");
   const [step3Errors, setStep3Errors] = useState({});
 
-  const [portfolioUrl, setPortfolioUrl] = useState("");
-  const [githubUrl, setGithubUrl] = useState("");
-  const [linkedinUrl, setLinkedinUrl] = useState("");
+  const [portfolioUrl, setPortfolioUrl] = useState(() => sessionStorage.getItem("ind_portfolioUrl") || "");
+  const [githubUrl, setGithubUrl] = useState(() => sessionStorage.getItem("ind_githubUrl") || "");
+  const [linkedinUrl, setLinkedinUrl] = useState(() => sessionStorage.getItem("ind_linkedinUrl") || "");
   const [resumeFile, setResumeFile] = useState(null);
+  const [resumeFileName, setResumeFileName] = useState(() => sessionStorage.getItem("ind_resumeFileName") || "");
   const [step4Errors, setStep4Errors] = useState({});
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(() => sessionStorage.getItem("ind_profile_submitted") === "true");
+
+  const resetFormState = () => {
+    setProfilePhoto(null);
+    setProfilePhotoName("");
+    setFullName("");
+    setCountry("");
+    setTimeZone("");
+    setStep1Errors({});
+
+    setHeadline("");
+    setBio("");
+    setExperience("");
+    setAvailability("");
+    setStep2Errors({});
+
+    setSkills("");
+    setTools("");
+    setCategories("");
+    setStep3Errors({});
+
+    setPortfolioUrl("");
+    setGithubUrl("");
+    setLinkedinUrl("");
+    setResumeFile(null);
+    setResumeFileName("");
+    setStep4Errors({});
+  };
+
+  const cardInnerRef = useRef(null);
 
   useEffect(() => {
-    if (step) {
-      if (step === "completed") {
-        setIsSubmitted(true);
-      } else if (slugStepMap[step]) {
-        setIsSubmitted(false);
-        setCurrentStep(slugStepMap[step]);
+    if (cardInnerRef.current) {
+      cardInnerRef.current.scrollTop = 0;
+    }
+    window.scrollTo(0, 0);
+  }, [currentStep, step]);
+
+  useEffect(() => {
+    if (!step) {
+      if (!isSubmitted) {
+        clearDraftStorage();
+        resetFormState();
+        setCurrentStep(1);
       }
+    } else if (step === "completed") {
+      setIsSubmitted(true);
+      setCurrentStep(6);
+    } else if (slugStepMap[step]) {
+      setIsSubmitted(false);
+      setCurrentStep(slugStepMap[step]);
     }
   }, [step]);
+
+  const handleBackTop = () => {
+    if (isEditingFromReview) {
+      setIsEditingFromReview(false);
+      goToStep(5);
+    } else if (currentStep > 1 && currentStep <= 5) {
+      goToStep(currentStep - 1);
+    } else {
+      navigate(-1);
+    }
+  };
 
   const goToStep = (stepNum) => {
     const slug = stepSlugMap[stepNum] || "basic-info";
@@ -79,42 +151,74 @@ export default function Profile() {
     { number: 5, label: "Review and Submit", active: currentStep === 5 },
   ];
 
+  const formatFileName = (name) => {
+    if (!name) return "";
+    const cleanName = name.trim();
+    if (cleanName.length > 3) {
+      return `${cleanName.slice(0, 3)}...`;
+    }
+    return cleanName;
+  };
+
   const handlePhotoUpload = (e) => {
     if (e.target.files && e.target.files[0]) {
-      setProfilePhoto(e.target.files[0]);
+      const file = e.target.files[0];
+      setProfilePhoto(file);
+      setProfilePhotoName(file.name);
+      sessionStorage.setItem("ind_profilePhotoName", file.name);
       setStep1Errors((prev) => ({ ...prev, photo: "" }));
     }
   };
 
   const handleResumeUpload = (e) => {
     if (e.target.files && e.target.files[0]) {
-      setResumeFile(e.target.files[0]);
+      const file = e.target.files[0];
+      setResumeFile(file);
+      setResumeFileName(file.name);
+      sessionStorage.setItem("ind_resumeFileName", file.name);
       setStep4Errors((prev) => ({ ...prev, resumeFile: "" }));
     }
   };
 
-  const isStep1Complete = profilePhoto !== null && fullName.trim() !== "" && country !== "" && timeZone !== "";
+  const isStep1Complete = (profilePhoto !== null || profilePhotoName !== "") && fullName.trim() !== "" && country !== "" && timeZone !== "";
   const isStep2Complete = headline.trim() !== "" && bio.trim() !== "" && experience !== "" && availability !== "";
   const isStep3Complete = skills.trim() !== "" && tools.trim() !== "" && categories.trim() !== "";
-  const isStep4Complete = portfolioUrl.trim() !== "" || githubUrl.trim() !== "" || linkedinUrl.trim() !== "" || resumeFile !== null;
+  const isStep4Complete = portfolioUrl.trim() !== "" || githubUrl.trim() !== "" || linkedinUrl.trim() !== "" || resumeFile !== null || resumeFileName !== "";
 
   const handleStep1Continue = (e) => {
     e.preventDefault();
     const errors = {};
-    if (!profilePhoto) errors.photo = "Profile picture is required";
+    if (!profilePhoto && !profilePhotoName) errors.photo = "Profile picture is required";
     if (!fullName.trim()) errors.fullName = "Full name is required";
     if (!country) errors.country = "Country is required";
     if (!timeZone) errors.timeZone = "Time zone is required";
     if (Object.keys(errors).length > 0) { setStep1Errors(errors); return; }
     setStep1Errors({});
+    sessionStorage.setItem("ind_fullName", fullName);
+    sessionStorage.setItem("ind_country", country);
+    sessionStorage.setItem("ind_timeZone", timeZone);
+    if (profilePhotoName) sessionStorage.setItem("ind_profilePhotoName", profilePhotoName);
     if (isEditingFromReview) { setIsEditingFromReview(false); goToStep(5); } else { goToStep(2); }
   };
 
   const handleStep1Cancel = () => {
-    setProfilePhoto(snapshot.profilePhoto ?? profilePhoto);
-    setFullName(snapshot.fullName ?? fullName);
-    setCountry(snapshot.country ?? country);
-    setTimeZone(snapshot.timeZone ?? timeZone);
+    const pPhoto = snapshot.profilePhoto ?? profilePhoto;
+    const pPhotoName = snapshot.profilePhotoName ?? profilePhotoName;
+    const fName = snapshot.fullName ?? fullName;
+    const ctry = snapshot.country ?? country;
+    const tz = snapshot.timeZone ?? timeZone;
+
+    setProfilePhoto(pPhoto);
+    setProfilePhotoName(pPhotoName);
+    setFullName(fName);
+    setCountry(ctry);
+    setTimeZone(tz);
+
+    sessionStorage.setItem("ind_fullName", fName);
+    sessionStorage.setItem("ind_country", ctry);
+    sessionStorage.setItem("ind_timeZone", tz);
+    sessionStorage.setItem("ind_profilePhotoName", pPhotoName);
+
     setStep1Errors({});
     setIsEditingFromReview(false);
     goToStep(5);
@@ -133,10 +237,21 @@ export default function Profile() {
   };
 
   const handleStep2Cancel = () => {
-    setHeadline(snapshot.headline ?? headline);
-    setBio(snapshot.bio ?? bio);
-    setExperience(snapshot.experience ?? experience);
-    setAvailability(snapshot.availability ?? availability);
+    const hd = snapshot.headline ?? headline;
+    const b = snapshot.bio ?? bio;
+    const exp = snapshot.experience ?? experience;
+    const avail = snapshot.availability ?? availability;
+
+    setHeadline(hd);
+    setBio(b);
+    setExperience(exp);
+    setAvailability(avail);
+
+    sessionStorage.setItem("ind_headline", hd);
+    sessionStorage.setItem("ind_bio", b);
+    sessionStorage.setItem("ind_experience", exp);
+    sessionStorage.setItem("ind_availability", avail);
+
     setStep2Errors({});
     setIsEditingFromReview(false);
     goToStep(5);
@@ -154,9 +269,18 @@ export default function Profile() {
   };
 
   const handleStep3Cancel = () => {
-    setSkills(snapshot.skills ?? skills);
-    setTools(snapshot.tools ?? tools);
-    setCategories(snapshot.categories ?? categories);
+    const sk = snapshot.skills ?? skills;
+    const tl = snapshot.tools ?? tools;
+    const cat = snapshot.categories ?? categories;
+
+    setSkills(sk);
+    setTools(tl);
+    setCategories(cat);
+
+    sessionStorage.setItem("ind_skills", sk);
+    sessionStorage.setItem("ind_tools", tl);
+    sessionStorage.setItem("ind_categories", cat);
+
     setStep3Errors({});
     setIsEditingFromReview(false);
     goToStep(5);
@@ -168,17 +292,30 @@ export default function Profile() {
     if (!portfolioUrl.trim()) errors.portfolioUrl = "Portfolio URL is required";
     if (!githubUrl.trim()) errors.githubUrl = "Github URL is required";
     if (!linkedinUrl.trim()) errors.linkedinUrl = "Linkedin URL is required";
-    if (!resumeFile) errors.resumeFile = "Resume PDF is required";
+    if (!resumeFile && !resumeFileName) errors.resumeFile = "Resume PDF is required";
     if (Object.keys(errors).length > 0) { setStep4Errors(errors); return; }
     setStep4Errors({});
     if (isEditingFromReview) { setIsEditingFromReview(false); goToStep(5); } else { goToStep(5); }
   };
 
   const handleStep4Cancel = () => {
-    setPortfolioUrl(snapshot.portfolioUrl ?? portfolioUrl);
-    setGithubUrl(snapshot.githubUrl ?? githubUrl);
-    setLinkedinUrl(snapshot.linkedinUrl ?? linkedinUrl);
-    setResumeFile(snapshot.resumeFile ?? resumeFile);
+    const pUrl = snapshot.portfolioUrl ?? portfolioUrl;
+    const ghUrl = snapshot.githubUrl ?? githubUrl;
+    const liUrl = snapshot.linkedinUrl ?? linkedinUrl;
+    const rFile = snapshot.resumeFile ?? resumeFile;
+    const rFileName = snapshot.resumeFileName ?? resumeFileName;
+
+    setPortfolioUrl(pUrl);
+    setGithubUrl(ghUrl);
+    setLinkedinUrl(liUrl);
+    setResumeFile(rFile);
+    setResumeFileName(rFileName);
+
+    sessionStorage.setItem("ind_portfolioUrl", pUrl);
+    sessionStorage.setItem("ind_githubUrl", ghUrl);
+    sessionStorage.setItem("ind_linkedinUrl", liUrl);
+    sessionStorage.setItem("ind_resumeFileName", rFileName);
+
     setStep4Errors({});
     setIsEditingFromReview(false);
     goToStep(5);
@@ -186,10 +323,10 @@ export default function Profile() {
 
   const goToEditStep = (stepNum) => {
     setSnapshot({
-      profilePhoto, fullName, country, timeZone,
+      profilePhoto, profilePhotoName, fullName, country, timeZone,
       headline, bio, experience, availability,
       skills, tools, categories,
-      portfolioUrl, githubUrl, linkedinUrl, resumeFile,
+      portfolioUrl, githubUrl, linkedinUrl, resumeFile, resumeFileName,
     });
     setIsEditingFromReview(true);
     goToStep(stepNum);
@@ -197,6 +334,7 @@ export default function Profile() {
 
   const handleFinalSubmit = (e) => {
     e.preventDefault();
+    sessionStorage.setItem("ind_profile_submitted", "true");
     setIsSubmitted(true);
     goToStep(6);
   };
@@ -237,7 +375,7 @@ export default function Profile() {
             <PrimaryButton
               type="submit"
               disabled={!isComplete}
-              text={<span className="btn-content text-white d-inline-flex align-items-center gap-2"><span>Save</span></span>}
+              text={<span className="btn-content text-white d-inline-flex align-items-center gap-2"><span>Save Changes</span></span>}
             />
           </div>
         </>
@@ -261,7 +399,7 @@ export default function Profile() {
   const renderStep1 = () => (
     <form className="profile-step-form flex-grow-1 d-flex flex-column min-vh-0 h-100" onSubmit={handleStep1Continue}>
       <div className="profile-section-heading flex-shrink-0">
-        <h2 className="section-title fw-bold">Basic information</h2>
+        <h2 className="section-title fw-bold">Basic Information</h2>
         <p className="section-subtitle text-secondary">Add your basic details.</p>
       </div>
 
@@ -269,8 +407,8 @@ export default function Profile() {
         <label className="field-label">Profile picture</label>
         <div className="upload-btn-wrapper d-flex align-items-center gap-3">
           <label htmlFor="profile-photo-input" className="upload-photo-btn d-inline-flex align-items-center justify-content-center text-white gap-2" style={{ cursor: "pointer" }}>
-            <span>{profilePhoto ? profilePhoto.name : "Upload photo"}</span>
-            <Icon name={profilePhoto ? "Check" : "Upload"} size={16} color="#ffffff" />
+            <span>{profilePhoto ? formatFileName(profilePhoto.name) : (formatFileName(profilePhotoName) || "Upload photo")}</span>
+            <Icon name={profilePhoto || profilePhotoName ? "Check" : "Upload"} size={16} color="#ffffff" />
           </label>
           <input id="profile-photo-input" type="file" accept="image/*" style={{ display: "none" }} onChange={handlePhotoUpload} />
         </div>
@@ -284,7 +422,12 @@ export default function Profile() {
           className={`profile-text-input w-100 ${step1Errors.fullName ? "input-error" : ""}`}
           placeholder="Enter your full name"
           value={fullName}
-          onChange={(e) => { setFullName(e.target.value); setStep1Errors((p) => ({ ...p, fullName: "" })); }}
+          onChange={(e) => {
+            const val = e.target.value;
+            setFullName(val);
+            sessionStorage.setItem("ind_fullName", val);
+            setStep1Errors((p) => ({ ...p, fullName: "" }));
+          }}
         />
         {step1Errors.fullName && <span className="field-error">{step1Errors.fullName}</span>}
       </div>
@@ -293,7 +436,16 @@ export default function Profile() {
         <div className="custom-dropdown-container w-100">
           <label className="field-label">Country</label>
           <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step1Errors.country ? "dropdown-error" : ""}`}>
-            <select className="custom-dropdown-select w-100 h-100" value={country} onChange={(e) => { setCountry(e.target.value); setStep1Errors((p) => ({ ...p, country: "" })); }}>
+            <select
+              className="custom-dropdown-select w-100 h-100"
+              value={country}
+              onChange={(e) => {
+                const val = e.target.value;
+                setCountry(val);
+                sessionStorage.setItem("ind_country", val);
+                setStep1Errors((p) => ({ ...p, country: "" }));
+              }}
+            >
               <option value="" disabled hidden>Select your country</option>
               <option value="India">India</option>
               <option value="United States">United States</option>
@@ -314,7 +466,16 @@ export default function Profile() {
         <div className="custom-dropdown-container w-100">
           <label className="field-label">Time Zone</label>
           <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step1Errors.timeZone ? "dropdown-error" : ""}`}>
-            <select className="custom-dropdown-select w-100 h-100" value={timeZone} onChange={(e) => { setTimeZone(e.target.value); setStep1Errors((p) => ({ ...p, timeZone: "" })); }}>
+            <select
+              className="custom-dropdown-select w-100 h-100"
+              value={timeZone}
+              onChange={(e) => {
+                const val = e.target.value;
+                setTimeZone(val);
+                sessionStorage.setItem("ind_timeZone", val);
+                setStep1Errors((p) => ({ ...p, timeZone: "" }));
+              }}
+            >
               <option value="" disabled hidden>Select your time zone</option>
               <option value="(UTC+05:30) India Standard Time">(UTC+05:30) India Standard Time</option>
               <option value="(UTC-05:00) Eastern Time (US & Canada)">(UTC-05:00) Eastern Time (US & Canada)</option>
@@ -347,7 +508,12 @@ export default function Profile() {
           className={`profile-text-input w-100 ${step2Errors.headline ? "input-error" : ""}`}
           placeholder="e.g. UI/UX Designer"
           value={headline}
-          onChange={(e) => { setHeadline(e.target.value); setStep2Errors((p) => ({ ...p, headline: "" })); }}
+          onChange={(e) => {
+            const val = e.target.value;
+            setHeadline(val);
+            sessionStorage.setItem("ind_headline", val);
+            setStep2Errors((p) => ({ ...p, headline: "" }));
+          }}
         />
         {step2Errors.headline && <span className="field-error">{step2Errors.headline}</span>}
       </div>
@@ -360,7 +526,12 @@ export default function Profile() {
             placeholder="Write a short bio about yourself"
             maxLength={300}
             value={bio}
-            onChange={(e) => { setBio(e.target.value); setStep2Errors((p) => ({ ...p, bio: "" })); }}
+            onChange={(e) => {
+              const val = e.target.value;
+              setBio(val);
+              sessionStorage.setItem("ind_bio", val);
+              setStep2Errors((p) => ({ ...p, bio: "" }));
+            }}
           />
           <span className="bio-char-count">{bio.length}/300</span>
         </div>
@@ -371,7 +542,16 @@ export default function Profile() {
         <div className="custom-dropdown-container w-100">
           <label className="field-label">Experience Level</label>
           <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step2Errors.experience ? "dropdown-error" : ""}`}>
-            <select className="custom-dropdown-select w-100 h-100" value={experience} onChange={(e) => { setExperience(e.target.value); setStep2Errors((p) => ({ ...p, experience: "" })); }}>
+            <select
+              className="custom-dropdown-select w-100 h-100"
+              value={experience}
+              onChange={(e) => {
+                const val = e.target.value;
+                setExperience(val);
+                sessionStorage.setItem("ind_experience", val);
+                setStep2Errors((p) => ({ ...p, experience: "" }));
+              }}
+            >
               <option value="" disabled hidden>Select experience level</option>
               <option value="entry">Entry Level (0-2 years)</option>
               <option value="mid">Mid Level (3-5 years)</option>
@@ -388,7 +568,16 @@ export default function Profile() {
         <div className="custom-dropdown-container w-100">
           <label className="field-label">Availability</label>
           <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step2Errors.availability ? "dropdown-error" : ""}`}>
-            <select className="custom-dropdown-select w-100 h-100" value={availability} onChange={(e) => { setAvailability(e.target.value); setStep2Errors((p) => ({ ...p, availability: "" })); }}>
+            <select
+              className="custom-dropdown-select w-100 h-100"
+              value={availability}
+              onChange={(e) => {
+                const val = e.target.value;
+                setAvailability(val);
+                sessionStorage.setItem("ind_availability", val);
+                setStep2Errors((p) => ({ ...p, availability: "" }));
+              }}
+            >
               <option value="" disabled hidden>Select availability</option>
               <option value="full-time">Full-time (40 hrs/week)</option>
               <option value="part-time">Part-time (20 hrs/week)</option>
@@ -419,7 +608,12 @@ export default function Profile() {
           className={`profile-text-input w-100 ${step3Errors.skills ? "input-error" : ""}`}
           placeholder="Add skills"
           value={skills}
-          onChange={(e) => { setSkills(e.target.value); setStep3Errors((p) => ({ ...p, skills: "" })); }}
+          onChange={(e) => {
+            const val = e.target.value;
+            setSkills(val);
+            sessionStorage.setItem("ind_skills", val);
+            setStep3Errors((p) => ({ ...p, skills: "" }));
+          }}
         />
         {step3Errors.skills && <span className="field-error">{step3Errors.skills}</span>}
       </div>
@@ -431,7 +625,12 @@ export default function Profile() {
           className={`profile-text-input w-100 ${step3Errors.tools ? "input-error" : ""}`}
           placeholder="Add tools"
           value={tools}
-          onChange={(e) => { setTools(e.target.value); setStep3Errors((p) => ({ ...p, tools: "" })); }}
+          onChange={(e) => {
+            const val = e.target.value;
+            setTools(val);
+            sessionStorage.setItem("ind_tools", val);
+            setStep3Errors((p) => ({ ...p, tools: "" }));
+          }}
         />
         {step3Errors.tools && <span className="field-error">{step3Errors.tools}</span>}
       </div>
@@ -443,7 +642,12 @@ export default function Profile() {
           className={`profile-text-input w-100 ${step3Errors.categories ? "input-error" : ""}`}
           placeholder="Add categories"
           value={categories}
-          onChange={(e) => { setCategories(e.target.value); setStep3Errors((p) => ({ ...p, categories: "" })); }}
+          onChange={(e) => {
+            const val = e.target.value;
+            setCategories(val);
+            sessionStorage.setItem("ind_categories", val);
+            setStep3Errors((p) => ({ ...p, categories: "" }));
+          }}
         />
         {step3Errors.categories && <span className="field-error">{step3Errors.categories}</span>}
       </div>
@@ -466,7 +670,12 @@ export default function Profile() {
           className={`profile-text-input w-100 ${step4Errors.portfolioUrl ? "input-error" : ""}`}
           placeholder="Enter URL"
           value={portfolioUrl}
-          onChange={(e) => { setPortfolioUrl(e.target.value); setStep4Errors((p) => ({ ...p, portfolioUrl: "" })); }}
+          onChange={(e) => {
+            const val = e.target.value;
+            setPortfolioUrl(val);
+            sessionStorage.setItem("ind_portfolioUrl", val);
+            setStep4Errors((p) => ({ ...p, portfolioUrl: "" }));
+          }}
         />
         {step4Errors.portfolioUrl && <span className="field-error">{step4Errors.portfolioUrl}</span>}
       </div>
@@ -478,7 +687,12 @@ export default function Profile() {
           className={`profile-text-input w-100 ${step4Errors.githubUrl ? "input-error" : ""}`}
           placeholder="Enter URL"
           value={githubUrl}
-          onChange={(e) => { setGithubUrl(e.target.value); setStep4Errors((p) => ({ ...p, githubUrl: "" })); }}
+          onChange={(e) => {
+            const val = e.target.value;
+            setGithubUrl(val);
+            sessionStorage.setItem("ind_githubUrl", val);
+            setStep4Errors((p) => ({ ...p, githubUrl: "" }));
+          }}
         />
         {step4Errors.githubUrl && <span className="field-error">{step4Errors.githubUrl}</span>}
       </div>
@@ -490,7 +704,12 @@ export default function Profile() {
           className={`profile-text-input w-100 ${step4Errors.linkedinUrl ? "input-error" : ""}`}
           placeholder="Enter URL"
           value={linkedinUrl}
-          onChange={(e) => { setLinkedinUrl(e.target.value); setStep4Errors((p) => ({ ...p, linkedinUrl: "" })); }}
+          onChange={(e) => {
+            const val = e.target.value;
+            setLinkedinUrl(val);
+            sessionStorage.setItem("ind_linkedinUrl", val);
+            setStep4Errors((p) => ({ ...p, linkedinUrl: "" }));
+          }}
         />
         {step4Errors.linkedinUrl && <span className="field-error">{step4Errors.linkedinUrl}</span>}
       </div>
@@ -502,8 +721,8 @@ export default function Profile() {
           className={`profile-file-upload-box d-flex align-items-center justify-content-between w-100 ${step4Errors.resumeFile ? "input-error" : ""}`}
           style={{ cursor: "pointer" }}
         >
-          <span className={`file-upload-text ${resumeFile ? "text-dark" : "text-placeholder"}`}>
-            {resumeFile ? resumeFile.name : "Upload PDF"}
+          <span className={`file-upload-text ${(resumeFile || resumeFileName) ? "text-dark" : "text-placeholder"}`}>
+            {resumeFile ? resumeFile.name : (resumeFileName || "Upload PDF")}
           </span>
           <Icon name="Upload" size={18} className="upload-icon-right" />
         </label>
@@ -522,8 +741,8 @@ export default function Profile() {
   );
 
   const renderStep5 = () => (
-    <form className="profile-step-form flex-grow-1 d-flex flex-column min-vh-0 h-100" onSubmit={handleFinalSubmit}>
-      <div className="profile-section-heading flex-shrink-0">
+    <form className="profile-step-form flex-grow-1 d-flex flex-column min-vh-0" onSubmit={handleFinalSubmit}>
+      <div className="profile-section-heading flex-shrink-0 mb-4">
         <h2 className="section-title fw-bold">Review & Submit</h2>
         <p className="section-subtitle text-secondary">Review your information before continuing</p>
       </div>
@@ -565,7 +784,7 @@ export default function Profile() {
         <button
           type="button"
           className="completion-back-btn"
-          onClick={() => setIsSubmitted(false)}
+          onClick={() => navigate("/whole-profile")}
           aria-label="Go back"
         >
           <Icon name="ArrowLeft" size={24} color="#103CA4" />
@@ -643,11 +862,21 @@ export default function Profile() {
     <DashboardLayout>
       <div className="profile-page-wrapper flex-grow-1 min-vh-0 d-flex flex-column w-100">
         <Cards className="profile-main-card flex-grow-1 h-100 d-flex flex-column overflow-hidden w-100" padding="0">
-          <div className="profile-card-inner d-flex flex-column h-100">
+          <div ref={cardInnerRef} className="profile-card-inner d-flex flex-column h-100">
             {isSubmitted ? (
               renderCompletionScreen()
             ) : (
               <>
+                <div className="profile-top-back-wrapper flex-shrink-0 w-100 d-flex justify-content-start">
+                  <button
+                    type="button"
+                    className="profile-top-back-btn"
+                    onClick={handleBackTop}
+                    aria-label="Go back"
+                  >
+                    <Icon name="ArrowLeft" size={24} color="#0b38a8" />
+                  </button>
+                </div>
                 <div className="profile-header-section flex-shrink-0">
                   <h1 className="profile-main-title fw-bold">Complete Your Profile</h1>
                   <p className="profile-main-subtitle text-secondary">Lets build your profile step by step.</p>
