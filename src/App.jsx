@@ -35,6 +35,7 @@ import ReputationRank from "./Modules/Individual/Screen/Pages/ReputationRank/Rep
 import Notifications from "./Modules/Individual/Screen/Pages/Notifications/Notifications";
 import Verification from "./Modules/Individual/Screen/Pages/Verification/Verification";
 import VerificationHub from "./Modules/Individual/Screen/Pages/VerificationHub/VerificationHub";
+import WholeProfile from "./Modules/Individual/Screen/Pages/WholeProfile/WholeProfile";
 
 import IndividualSettingsWrapper from "./Modules/Individual/Screen/Pages/Settings/Settings";
 
@@ -74,6 +75,8 @@ function App() {
       {/* Individual Routes */}
       <Route path="/profile" element={<Profile />} />
       <Route path="/profile/:step" element={<Profile />} />
+      <Route path="/whole-profile" element={<WholeProfile />} />
+      <Route path="/wholeprofile" element={<WholeProfile />} />
       <Route path="/verification" element={<Verification />} />
       <Route path="/quest-board" element={<Projects />} />
       <Route path="/quest-board/:questId" element={<Projects />} />
