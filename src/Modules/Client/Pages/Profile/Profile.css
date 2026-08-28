@@ -24,7 +24,7 @@
   --cp-btn-pad-x: 24px;
   --cp-btn-min-w: 160px;
   --cp-upload-min-w: 140px;
-
+  /*====*/
   /* layout */
   --cp-content-max: 780px;
   --cp-card-pad-x: 32px;
@@ -55,8 +55,13 @@
 /* =========================================
    UTILITIES & ICONS
    ========================================= */
-.client-profile-page .cursor-pointer { cursor: pointer; }
-.client-profile-page .hidden-input { display: none; }
+.client-profile-page .cursor-pointer {
+  cursor: pointer;
+}
+
+.client-profile-page .hidden-input {
+  display: none;
+}
 
 .client-profile-page .btn-icon-svg {
   width: 18px;
@@ -75,6 +80,13 @@
 /* =========================================
    BASE LAYOUT & CONTAINERS
    ========================================= */
+.client-profile-page.dashboard-layout {
+  background-image: url('../../../../assets/dashboard.bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .client-profile-page .profile-page-wrapper {
   flex: 1;
   min-height: 0;
@@ -112,6 +124,7 @@
 .client-profile-page .profile-card-inner::-webkit-scrollbar {
   width: 5px;
 }
+
 .client-profile-page .profile-card-inner::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.12);
   border-radius: 4px;
@@ -321,7 +334,7 @@
    so field spacing tightens with everything else on small/short screens */
 .client-profile-page .profile-field-group.mb-4,
 .client-profile-page .client-info-row.mb-4,
-.client-profile-page .profile-step-form > .mb-4 {
+.client-profile-page .profile-step-form>.mb-4 {
   margin-bottom: var(--cp-field-gap) !important;
 }
 
@@ -376,7 +389,10 @@
   font-weight: 400;
 }
 
-.client-profile-page .input-error { border-color: #dc2626 !important; }
+.client-profile-page .input-error {
+  border-color: #dc2626 !important;
+}
+
 .client-profile-page .field-error {
   display: block;
   font-size: 12px;
@@ -429,8 +445,13 @@
 }
 
 /* grey placeholder text until a real option is chosen */
-.client-profile-page .custom-dropdown-select.is-placeholder { color: #9ca3af; }
-.client-profile-page .custom-dropdown-select option { color: #111827; }
+.client-profile-page .custom-dropdown-select.is-placeholder {
+  color: #9ca3af;
+}
+
+.client-profile-page .custom-dropdown-select option {
+  color: #111827;
+}
 
 .client-profile-page .dropdown-chevron-icon {
   position: absolute;
@@ -441,7 +462,9 @@
   opacity: 0.8;
 }
 
-.client-profile-page .dropdown-error { border-color: #dc2626 !important; }
+.client-profile-page .dropdown-error {
+  border-color: #dc2626 !important;
+}
 
 /* =========================================
    BUTTONS — one shared size for every button on these screens
@@ -472,7 +495,10 @@
 }
 
 /* Upload Logo */
-.client-profile-page .upload-btn-wrapper { display: flex; align-items: center; }
+.client-profile-page .upload-btn-wrapper {
+  display: flex;
+  align-items: center;
+}
 
 .client-profile-page .upload-photo-btn {
   min-width: var(--cp-upload-min-w);
@@ -483,7 +509,9 @@
   font-weight: 500 !important;
 }
 
-.client-profile-page .upload-photo-btn:hover { background-color: #092c85 !important; }
+.client-profile-page .upload-photo-btn:hover {
+  background-color: #092c85 !important;
+}
 
 /* Continue / Submit */
 .client-profile-page .profile-form-actions {
@@ -496,7 +524,9 @@
   gap: 12px;
 }
 
-.client-profile-page .continue-btn-wrapper { display: inline-flex; }
+.client-profile-page .continue-btn-wrapper {
+  display: inline-flex;
+}
 
 /* Continue button always stays the same blue — including while disabled,
    since the design shows it solid regardless of form-completion state.
@@ -548,7 +578,9 @@
   gap: 16px;
 }
 
-.client-profile-page .review-summary-card:hover { border-color: #b6bdc7; }
+.client-profile-page .review-summary-card:hover {
+  border-color: #b6bdc7;
+}
 
 .client-profile-page .review-summary-title {
   font-size: 15px;
@@ -568,7 +600,9 @@
   transition: opacity 0.2s ease;
 }
 
-.client-profile-page .review-edit-btn:hover { opacity: 0.75; }
+.client-profile-page .review-edit-btn:hover {
+  opacity: 0.75;
+}
 
 /* =========================================
    COMPLETION SCREEN
@@ -606,8 +640,16 @@
   text-align: left;
 }
 
-.client-profile-page .reward-banner-title { font-size: 15px; color: #103ca4; }
-.client-profile-page .reward-banner-subtitle { font-size: var(--cp-control-font); color: #103ca4; font-weight: 500; }
+.client-profile-page .reward-banner-title {
+  font-size: 15px;
+  color: #103ca4;
+}
+
+.client-profile-page .reward-banner-subtitle {
+  font-size: var(--cp-control-font);
+  color: #103ca4;
+  font-weight: 500;
+}
 
 /* Completion 4-Step Graph */
 .client-profile-page .completion-stepper-container {
@@ -663,9 +705,20 @@
   border-radius: 50%;
 }
 
-.client-profile-page .completion-step-title { font-size: var(--cp-step-label); line-height: 1.2; }
-.client-profile-page .completion-step-points { font-size: 12px; margin-top: 4px; color: #6b7280; }
-.client-profile-page .completion-step-points.text-primary { color: #0b38a8 !important; }
+.client-profile-page .completion-step-title {
+  font-size: var(--cp-step-label);
+  line-height: 1.2;
+}
+
+.client-profile-page .completion-step-points {
+  font-size: 12px;
+  margin-top: 4px;
+  color: #6b7280;
+}
+
+.client-profile-page .completion-step-points.text-primary {
+  color: #0b38a8 !important;
+}
 
 .client-profile-page .completion-cta-btn {
   min-width: 240px;
@@ -674,7 +727,9 @@
   border: none !important;
 }
 
-.client-profile-page .completion-cta-btn:hover { background-color: #092c85 !important; }
+.client-profile-page .completion-cta-btn:hover {
+  background-color: #092c85 !important;
+}
 
 /* =========================================
    RESPONSIVE — width breakpoints
@@ -720,7 +775,9 @@
     --cp-comp-title: 21px;
   }
 
-  .client-profile-page .stepper-label { font-size: 12px; }
+  .client-profile-page .stepper-label {
+    font-size: 12px;
+  }
 }
 
 /* Tablet portrait — the 3-step labels stop fitting on one line here */
@@ -752,7 +809,10 @@
     height: 100% !important;
   }
 
-  .client-profile-page .completion-active-line { width: 100% !important; height: 33.33% !important; }
+  .client-profile-page .completion-active-line {
+    width: 100% !important;
+    height: 33.33% !important;
+  }
 
   .client-profile-page .completion-step-item {
     display: grid !important;
@@ -764,9 +824,23 @@
     width: 100% !important;
   }
 
-  .client-profile-page .completion-circle { grid-column: 1; grid-row: 1 / span 2; }
-  .client-profile-page .completion-step-title { grid-column: 2; grid-row: 1; margin-top: 0 !important; font-size: 14px; }
-  .client-profile-page .completion-step-points { grid-column: 2; grid-row: 2; margin-top: 2px !important; }
+  .client-profile-page .completion-circle {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  .client-profile-page .completion-step-title {
+    grid-column: 2;
+    grid-row: 1;
+    margin-top: 0 !important;
+    font-size: 14px;
+  }
+
+  .client-profile-page .completion-step-points {
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: 2px !important;
+  }
 }
 
 /* Mobile */
@@ -802,7 +876,9 @@
     max-width: 100%;
   }
 
-  .client-profile-page .client-logo-group { width: 100%; }
+  .client-profile-page .client-logo-group {
+    width: 100%;
+  }
 
   .client-profile-page .stepper-label {
     font-size: 11px;
@@ -817,7 +893,9 @@
   }
 
   .client-profile-page .continue-btn-wrapper,
-  .client-profile-page .upload-btn-wrapper { width: 100%; }
+  .client-profile-page .upload-btn-wrapper {
+    width: 100%;
+  }
 
   .client-profile-page .upload-photo-btn,
   .client-profile-page .continue-btn-wrapper .primary-btn,
@@ -827,8 +905,13 @@
     min-width: 0 !important;
   }
 
-  .client-profile-page .completion-reward-banner { max-width: 100%; }
-  .client-profile-page .completion-cta-wrapper { width: 100%; }
+  .client-profile-page .completion-reward-banner {
+    max-width: 100%;
+  }
+
+  .client-profile-page .completion-cta-wrapper {
+    width: 100%;
+  }
 }
 
 /* Small phones */
@@ -841,8 +924,14 @@
     --cp-step-circle: 26px;
   }
 
-  .client-profile-page .stepper-label { font-size: 10px; max-width: 72px; }
-  .client-profile-page .review-summary-title { font-size: 14px; }
+  .client-profile-page .stepper-label {
+    font-size: 10px;
+    max-width: 72px;
+  }
+
+  .client-profile-page .review-summary-title {
+    font-size: 14px;
+  }
 }
 
 /* =========================================
@@ -862,7 +951,9 @@
     --cp-comp-title: 21px;
   }
 
-  .client-profile-page .profile-header-section { margin-bottom: 18px; }
+  .client-profile-page .profile-header-section {
+    margin-bottom: 18px;
+  }
 }
 
 @media (min-width: 768px) and (max-height: 700px) {
@@ -880,7 +971,15 @@
     --cp-comp-circle: 26px;
   }
 
-  .client-profile-page .profile-header-section { margin-bottom: 12px; }
-  .client-profile-page .profile-section-heading { margin-bottom: 12px; }
-  .client-profile-page .completion-reward-banner { padding: 10px 18px; }
+  .client-profile-page .profile-header-section {
+    margin-bottom: 12px;
+  }
+
+  .client-profile-page .profile-section-heading {
+    margin-bottom: 12px;
+  }
+
+  .client-profile-page .completion-reward-banner {
+    padding: 10px 18px;
+  }
 }
