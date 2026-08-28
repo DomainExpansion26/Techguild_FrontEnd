@@ -1,0 +1,77 @@
+/* Toggle Switch
+   Base: 44x24, knob 18x18, ON #103ca4, OFF #e0e0e0.
+   All values are CSS variables so they can be overridden
+   via props (activeColor / inactiveColor / thumbColor) or inline style. */
+.toggle-switch {
+  --toggle-width: 44px;
+  --toggle-height: 24px;
+  --toggle-padding: 3px;
+  --toggle-thumb-size: 18px;
+
+  --toggle-active-bg: #103ca4;
+  --toggle-inactive-bg: #e0e0e0;
+  --toggle-thumb-bg: #ffffff;
+
+  position: relative;
+  display: inline-block;
+  width: var(--toggle-width);
+  height: var(--toggle-height);
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  border-radius: calc(var(--toggle-height) / 2);
+  background-color: var(--toggle-inactive-bg);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-switch .toggle-thumb {
+  position: absolute;
+  top: var(--toggle-padding);
+  left: var(--toggle-padding);
+  width: var(--toggle-thumb-size);
+  height: var(--toggle-thumb-size);
+  background-color: var(--toggle-thumb-bg);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.toggle-switch.active {
+  background-color: var(--toggle-active-bg);
+}
+
+.toggle-switch.active .toggle-thumb {
+  transform: translateX(
+    calc(
+      var(--toggle-width) - var(--toggle-thumb-size) -
+        (var(--toggle-padding) * 2)
+    )
+  );
+}
+
+/* Sizes */
+.toggle-switch.sm {
+  --toggle-width: 36px;
+  --toggle-height: 20px;
+  --toggle-padding: 2px;
+  --toggle-thumb-size: 16px;
+}
+
+.toggle-switch.lg {
+  --toggle-width: 48px;
+  --toggle-height: 24px;
+  --toggle-padding: 4px;
+  --toggle-thumb-size: 16px;
+}
+
+/* States */
+.toggle-switch:focus-visible {
+  outline: 2px solid var(--toggle-active-bg);
+  outline-offset: 2px;
+}
+
+.toggle-switch.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

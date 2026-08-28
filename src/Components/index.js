@@ -9,6 +9,7 @@ export { default as SocialButton } from "./SocialButton/SocialButton";
 export { default as PasswordInput } from "./PasswordInput/PasswordInput";
 export { default as TermsCheckbox } from "./TermsCheckbox/TermsCheckbox";
 export { default as Divider } from "./Divider/Divider";
+export { default as Toggle } from "./Toggle/Toggle";
 export { default as SignupCard } from "./SignupCard/SignupCard";
 export { default as Navbar } from "./Navbar/Navbar";
 export { default as Cards } from "./Cards/cards";
