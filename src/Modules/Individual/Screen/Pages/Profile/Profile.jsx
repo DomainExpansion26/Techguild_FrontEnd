@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { DashboardLayout, Cards, PrimaryButton } from "@/Components";
+import { DashboardLayout, Cards, PrimaryButton, SecondaryButton, TextInput } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import "./profile.css";
 
@@ -368,14 +368,17 @@ export default function Profile() {
     <div className="profile-form-actions d-flex justify-content-end flex-shrink-0 gap-2">
       {isEditingFromReview ? (
         <>
-          <button type="button" className="profile-cancel-btn" onClick={onCancel}>
-            Cancel
-          </button>
+          <SecondaryButton
+            type="button"
+            className="profile-cancel-btn"
+            onClick={onCancel}
+            text="Cancel"
+          />
           <div className="continue-btn-wrapper">
             <PrimaryButton
               type="submit"
               disabled={!isComplete}
-              text={<span className="btn-content text-white d-inline-flex align-items-center gap-2"><span>Save Changes</span></span>}
+              text="Save Changes"
             />
           </div>
         </>
@@ -384,12 +387,9 @@ export default function Profile() {
           <PrimaryButton
             type="submit"
             disabled={!isComplete}
-            text={
-              <span className="btn-content text-white d-inline-flex align-items-center gap-2">
-                <span>Continue</span>
-                <Icon name="ArrowRight" size={18} color="#ffffff" />
-              </span>
-            }
+            text="Continue"
+            icon={<Icon name="ArrowRight" size={18} color="#ffffff" />}
+            iconPosition="right"
           />
         </div>
       )}
@@ -415,22 +415,19 @@ export default function Profile() {
         {step1Errors.photo && <span className="field-error">{step1Errors.photo}</span>}
       </div>
 
-      <div className="profile-field-group">
-        <label className="field-label">Full name</label>
-        <input
-          type="text"
-          className={`profile-text-input w-100 ${step1Errors.fullName ? "input-error" : ""}`}
-          placeholder="Enter your full name"
-          value={fullName}
-          onChange={(e) => {
-            const val = e.target.value;
-            setFullName(val);
-            sessionStorage.setItem("ind_fullName", val);
-            setStep1Errors((p) => ({ ...p, fullName: "" }));
-          }}
-        />
-        {step1Errors.fullName && <span className="field-error">{step1Errors.fullName}</span>}
-      </div>
+      <TextInput
+        containerClassName="profile-field-group"
+        label="Full name"
+        placeholder="Enter your full name"
+        value={fullName}
+        error={step1Errors.fullName}
+        onChange={(e) => {
+          const val = e.target.value;
+          setFullName(val);
+          sessionStorage.setItem("ind_fullName", val);
+          setStep1Errors((p) => ({ ...p, fullName: "" }));
+        }}
+      />
 
       <div className="profile-field-group">
         <div className="custom-dropdown-container w-100">
@@ -501,22 +498,19 @@ export default function Profile() {
         <p className="section-subtitle text-secondary">Tell us about your professional background</p>
       </div>
 
-      <div className="profile-field-group">
-        <label className="field-label">Headline</label>
-        <input
-          type="text"
-          className={`profile-text-input w-100 ${step2Errors.headline ? "input-error" : ""}`}
-          placeholder="e.g. UI/UX Designer"
-          value={headline}
-          onChange={(e) => {
-            const val = e.target.value;
-            setHeadline(val);
-            sessionStorage.setItem("ind_headline", val);
-            setStep2Errors((p) => ({ ...p, headline: "" }));
-          }}
-        />
-        {step2Errors.headline && <span className="field-error">{step2Errors.headline}</span>}
-      </div>
+      <TextInput
+        containerClassName="profile-field-group"
+        label="Headline"
+        placeholder="e.g. UI/UX Designer"
+        value={headline}
+        error={step2Errors.headline}
+        onChange={(e) => {
+          const val = e.target.value;
+          setHeadline(val);
+          sessionStorage.setItem("ind_headline", val);
+          setStep2Errors((p) => ({ ...p, headline: "" }));
+        }}
+      />
 
       <div className="profile-field-group">
         <label className="field-label">Bio</label>
@@ -601,56 +595,47 @@ export default function Profile() {
         <p className="section-subtitle text-secondary">Add your skills and expertise</p>
       </div>
 
-      <div className="profile-field-group">
-        <label className="field-label">Skills</label>
-        <input
-          type="text"
-          className={`profile-text-input w-100 ${step3Errors.skills ? "input-error" : ""}`}
-          placeholder="Add skills"
-          value={skills}
-          onChange={(e) => {
-            const val = e.target.value;
-            setSkills(val);
-            sessionStorage.setItem("ind_skills", val);
-            setStep3Errors((p) => ({ ...p, skills: "" }));
-          }}
-        />
-        {step3Errors.skills && <span className="field-error">{step3Errors.skills}</span>}
-      </div>
+      <TextInput
+        containerClassName="profile-field-group"
+        label="Skills"
+        placeholder="Add skills"
+        value={skills}
+        error={step3Errors.skills}
+        onChange={(e) => {
+          const val = e.target.value;
+          setSkills(val);
+          sessionStorage.setItem("ind_skills", val);
+          setStep3Errors((p) => ({ ...p, skills: "" }));
+        }}
+      />
 
-      <div className="profile-field-group">
-        <label className="field-label">Tools</label>
-        <input
-          type="text"
-          className={`profile-text-input w-100 ${step3Errors.tools ? "input-error" : ""}`}
-          placeholder="Add tools"
-          value={tools}
-          onChange={(e) => {
-            const val = e.target.value;
-            setTools(val);
-            sessionStorage.setItem("ind_tools", val);
-            setStep3Errors((p) => ({ ...p, tools: "" }));
-          }}
-        />
-        {step3Errors.tools && <span className="field-error">{step3Errors.tools}</span>}
-      </div>
+      <TextInput
+        containerClassName="profile-field-group"
+        label="Tools"
+        placeholder="Add tools"
+        value={tools}
+        error={step3Errors.tools}
+        onChange={(e) => {
+          const val = e.target.value;
+          setTools(val);
+          sessionStorage.setItem("ind_tools", val);
+          setStep3Errors((p) => ({ ...p, tools: "" }));
+        }}
+      />
 
-      <div className="profile-field-group">
-        <label className="field-label">Categories</label>
-        <input
-          type="text"
-          className={`profile-text-input w-100 ${step3Errors.categories ? "input-error" : ""}`}
-          placeholder="Add categories"
-          value={categories}
-          onChange={(e) => {
-            const val = e.target.value;
-            setCategories(val);
-            sessionStorage.setItem("ind_categories", val);
-            setStep3Errors((p) => ({ ...p, categories: "" }));
-          }}
-        />
-        {step3Errors.categories && <span className="field-error">{step3Errors.categories}</span>}
-      </div>
+      <TextInput
+        containerClassName="profile-field-group"
+        label="Categories"
+        placeholder="Add categories"
+        value={categories}
+        error={step3Errors.categories}
+        onChange={(e) => {
+          const val = e.target.value;
+          setCategories(val);
+          sessionStorage.setItem("ind_categories", val);
+          setStep3Errors((p) => ({ ...p, categories: "" }));
+        }}
+      />
 
       {renderActionButtons(isStep3Complete, handleStep3Cancel)}
     </form>
@@ -663,56 +648,50 @@ export default function Profile() {
         <p className="section-subtitle text-secondary">Add your portfolio and social links</p>
       </div>
 
-      <div className="profile-field-group">
-        <label className="field-label">Portfolio website</label>
-        <input
-          type="text"
-          className={`profile-text-input w-100 ${step4Errors.portfolioUrl ? "input-error" : ""}`}
-          placeholder="Enter URL"
-          value={portfolioUrl}
-          onChange={(e) => {
-            const val = e.target.value;
-            setPortfolioUrl(val);
-            sessionStorage.setItem("ind_portfolioUrl", val);
-            setStep4Errors((p) => ({ ...p, portfolioUrl: "" }));
-          }}
-        />
-        {step4Errors.portfolioUrl && <span className="field-error">{step4Errors.portfolioUrl}</span>}
-      </div>
+      <TextInput
+        containerClassName="profile-field-group"
+        label="Portfolio website"
+        type="url"
+        placeholder="Enter URL"
+        value={portfolioUrl}
+        error={step4Errors.portfolioUrl}
+        onChange={(e) => {
+          const val = e.target.value;
+          setPortfolioUrl(val);
+          sessionStorage.setItem("ind_portfolioUrl", val);
+          setStep4Errors((p) => ({ ...p, portfolioUrl: "" }));
+        }}
+      />
 
-      <div className="profile-field-group">
-        <label className="field-label">Github</label>
-        <input
-          type="text"
-          className={`profile-text-input w-100 ${step4Errors.githubUrl ? "input-error" : ""}`}
-          placeholder="Enter URL"
-          value={githubUrl}
-          onChange={(e) => {
-            const val = e.target.value;
-            setGithubUrl(val);
-            sessionStorage.setItem("ind_githubUrl", val);
-            setStep4Errors((p) => ({ ...p, githubUrl: "" }));
-          }}
-        />
-        {step4Errors.githubUrl && <span className="field-error">{step4Errors.githubUrl}</span>}
-      </div>
+      <TextInput
+        containerClassName="profile-field-group"
+        label="Github"
+        type="url"
+        placeholder="Enter URL"
+        value={githubUrl}
+        error={step4Errors.githubUrl}
+        onChange={(e) => {
+          const val = e.target.value;
+          setGithubUrl(val);
+          sessionStorage.setItem("ind_githubUrl", val);
+          setStep4Errors((p) => ({ ...p, githubUrl: "" }));
+        }}
+      />
 
-      <div className="profile-field-group">
-        <label className="field-label">Linkedin</label>
-        <input
-          type="text"
-          className={`profile-text-input w-100 ${step4Errors.linkedinUrl ? "input-error" : ""}`}
-          placeholder="Enter URL"
-          value={linkedinUrl}
-          onChange={(e) => {
-            const val = e.target.value;
-            setLinkedinUrl(val);
-            sessionStorage.setItem("ind_linkedinUrl", val);
-            setStep4Errors((p) => ({ ...p, linkedinUrl: "" }));
-          }}
-        />
-        {step4Errors.linkedinUrl && <span className="field-error">{step4Errors.linkedinUrl}</span>}
-      </div>
+      <TextInput
+        containerClassName="profile-field-group"
+        label="Linkedin"
+        type="url"
+        placeholder="Enter URL"
+        value={linkedinUrl}
+        error={step4Errors.linkedinUrl}
+        onChange={(e) => {
+          const val = e.target.value;
+          setLinkedinUrl(val);
+          sessionStorage.setItem("ind_linkedinUrl", val);
+          setStep4Errors((p) => ({ ...p, linkedinUrl: "" }));
+        }}
+      />
 
       <div className="profile-field-group">
         <label className="field-label">Resume</label>
@@ -771,7 +750,7 @@ export default function Profile() {
         <div className="continue-btn-wrapper">
           <PrimaryButton
             type="submit"
-            text={<span className="btn-content text-white justify-content-center fw-bold">Submit</span>}
+            text="Submit"
           />
         </div>
       </div>
