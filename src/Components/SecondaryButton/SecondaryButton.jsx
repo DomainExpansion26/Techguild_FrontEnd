@@ -1,25 +1,35 @@
-﻿import React from "react";
+import React from "react";
 import "./secondary.css";
 
-const handleDefault = () => alert("Sending again!");
-
 const SecondaryButton = ({
-  text = "Send again",
-  onClick = handleDefault,
+  text,
+  children,
+  onClick,
   type = "button",
   disabled = false,
-  children,
+  className = "",
+  style = {},
+  icon,
+  iconPosition = "left",
+  ...props
 }) => {
+  const content = text || children;
+
   return (
     <button
-      className="secondary-btn"
+      className={`secondary-btn ${className}`.trim()}
       type={type}
       onClick={onClick}
       disabled={disabled}
+      style={style}
+      {...props}
     >
-      {text || children}
+      {icon && iconPosition === "left" && <span className="btn-icon left-icon">{icon}</span>}
+      {content}
+      {icon && iconPosition === "right" && <span className="btn-icon right-icon">{icon}</span>}
     </button>
   );
 };
 
 export default SecondaryButton;
+

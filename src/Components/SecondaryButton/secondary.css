@@ -1,4 +1,4 @@
-﻿
+
 .secondary-btn {
   background-color: #ffffff;
   color: #1a1a1a;
@@ -12,6 +12,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
