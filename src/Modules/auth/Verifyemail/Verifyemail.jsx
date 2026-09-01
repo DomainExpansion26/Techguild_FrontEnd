@@ -1,5 +1,6 @@
 import SignupCard from "../../../Components/SignupCard/SignupCard";
 import PrimaryButton from "../../../Components/Button/Primarybutton";
+import SecondaryButton from "../../../Components/SecondaryButton/SecondaryButton";
 import img2 from "../../../assets/img2.png";
 import userIcon from "../../../assets/icons/user.svg";
 import mailCommentIcon from "../../../assets/mail-comment.png";
@@ -54,12 +55,10 @@ export default function VerifyEmail() {
           </p>
 
           <div className="verify-buttons">
-            <button
-              className="secondary-btn"
+            <SecondaryButton
+              text="Send Again"
               onClick={handleResend}
-            >
-              Send Again
-            </button>
+            />
 
             <PrimaryButton
               text="Go to Gmail Inbox"
