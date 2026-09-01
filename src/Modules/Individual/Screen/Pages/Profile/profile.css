@@ -826,6 +826,8 @@
   font-size: clamp(12.5px, 0.85vw, 15.5px);
   cursor: pointer;
   transition: background-color 0.2s ease;
+  width: auto !important;
+  margin-top: 0 !important;
 }
 
 .completion-cta-btn:hover {
