@@ -6,3 +6,4 @@ export { default as TipBannerCard } from './TipBannerCard';
 export { default as GuideCard } from './GuideCard';
 export { default as StepsCard } from './StepsCard';
 export { default as ChipsCard } from './ChipsCard';
+export { default as GuildCard } from './GuildCard';
