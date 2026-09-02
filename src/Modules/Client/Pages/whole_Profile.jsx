@@ -1,7 +1,34 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Navbar, Cards, Header } from "@/Components";
+import { Navbar, Cards, Header, PrimaryButton } from "@/Components";
 import Icon from "@/Components/icons/Icon";
+// =============================================================================
+// CARD COMPONENTS USED IN WHOLE PROFILE:
+//
+// 1. Cards (variant="base" / BaseCard) -> Imported from "@/Components"
+//    - Card 1:  Top Banner & Identity Container (.wp-top-section-card)
+//    - Card 2:  About Me (Empty) / About Company (Populated) (.wp-about-me-card / .wp-card)
+//    - Card 3:  Hiring Interests (.wp-card)
+//    - Card 4:  Company Details Metadata (.wp-card.gray-card)
+//    - Card 5:  Active Quests (.wp-card)
+//    - Card 6:  Freelancer Reviews (.wp-card)
+//    - Card 7:  Company Links & Documents (.wp-card)
+//    - Card 8:  Profile Completion Checklist & Progress (.wp-card)
+//    - Card 9:  Recent Activity Timeline (.wp-card)
+//    - Card 10: Hiring Statistics Grid (.wp-card.gray-card)
+//    - Card 11: Quick Actions List (.wp-card.gray-card)
+//    - Card 12: Trust Journey Gamified Progression (.wp-card.wp-trust-card)
+//
+// 2. GuildCard -> Imported from "@/Components/Cards/variants"
+//    - Card 1.1: Official company Guild Card badge & rank (.wp-identity-right)
+//
+// 3. EmptyStateCard -> Imported from "@/Components/Cards/variants"
+//    - Card 9:  Recent Activity empty fallback ("No recent activity")
+// =============================================================================
+import {
+  EmptyStateCard,
+  GuildCard,
+} from "@/Components/Cards/variants";
 import "@/Modules/Individual/Screen/Pages/DashBoard/dashboard.css";
 import "./whole_Profile.css";
 
@@ -24,8 +51,7 @@ const company = {
     memberSince: "July 2026",
     rank: "F",
   },
-  about:
-    "We build scalable SaaS products for healthcare and fintech. Our mission is to create innovative digital solutions that help businesses grow and make a meaningful impact. \n\nWe are currently hiring talented professionals to join our passionate team and build the future together.",
+  about: "",
   hiringInterests: [
     "UI/UX Design",
     "Web Development",
@@ -44,20 +70,11 @@ const company = {
     { iconName: "Hash", label: "Projects Posted", value: "46" },
     { iconName: "MapPin", label: "Location", value: "Pune, India" },
   ],
-  activeQuests: [
-    { title: "Website Redesign", sub: "5 Applicants • ₹60K – ₹90K", status: "Open" },
-    { title: "React Developer", sub: "7 Applicants • ₹80K – ₹1.2L", status: "Open" },
-    { title: "Flutter App Development", sub: "3 Applicants • ₹70K – ₹1L", status: "Open" },
-    { title: "Backend API Development", sub: "4 Applicants • ₹50K – ₹90K", status: "Open" },
-  ],
+  activeQuests: [],
   rating: {
-    score: 4.8,
-    reviews: 124,
-    breakdown: [
-      { label: "Excellent client", pct: 82 },
-      { label: "Clear requirements", pct: 90 },
-      { label: "Quick payments", pct: 88 },
-    ],
+    score: 0,
+    reviews: 0,
+    breakdown: [],
   },
   links: [
     { iconName: "Globe", label: "Website", value: "nexorasolutions.com", action: "external", tone: "blue" },
@@ -82,12 +99,12 @@ const company = {
   ],
   //hiringStats
   hiringStats: [
-    { iconName: "Building2", tone: "blue", value: "42", label: "Projects Posted" },
-    { iconName: "Layers", tone: "green", value: "31", label: "Projects Completed" },
-    { iconName: "Users", tone: "purple", value: "95", label: "Freelancers Hired" },
-    { iconName: "Star", tone: "yellow", value: "4.8", label: "Average Rating" },
-    { iconName: "Clock", tone: "teal", value: "2 hrs", label: "Response Time" },
-    { iconName: "TrendingUp", tone: "mint", value: "96%", label: "Success Rate" },
+    { iconName: "Building2", bg: "#eff6ff", tone: "blue", value: "42", label: "Projects Posted" },
+    { iconName: "Layers", bg: "#f0fdf4", tone: "green", value: "31", label: "Projects Completed" },
+    { iconName: "Users", bg: "#faf5ff", tone: "purple", value: "95", label: "Freelancers Hired" },
+    { iconName: "Star", bg: "#fffbeb", tone: "orange", value: "4.8", label: "Average Rating" },
+    { iconName: "Clock", bg: "#ecfeff", tone: "cyan", value: "2 hrs", label: "Response Time" },
+    { iconName: "TrendingUp", bg: "#f0fdf4", tone: "emerald", value: "96%", label: "Success Rate" },
   ],
   quickActions: [
     { iconName: "Plus", label: "Create New Quest" },
@@ -119,8 +136,12 @@ const clientNavItems = [
   { id: "help-support", label: "Help & Support", icon: "CircleQuestionMark", path: "/client-help-support" },
 ];
 
-const whole_Profile = () => {
+const WholeProfile = () => {
   const navigate = useNavigate();
+  const completedCount = company.checklist.filter((c) => c.done).length;
+  const completionPct = company.checklist.length
+    ? Math.round((completedCount / company.checklist.length) * 100)
+    : 0;
 
   return (
     <div className="dashboard-layout client-profile-page wp-page-root">
@@ -130,7 +151,8 @@ const whole_Profile = () => {
         <Header />
 
         <div className="wp-scroll-area">
-          <div className="wp-top-section-card">
+          {/* Top Banner & Profile Identity */}
+          <Cards variant="base" className="wp-top-section-card" padding="0">
             <div className="wp-banner">
               <label className="wp-banner-upload">
                 <div className="wp-banner-upload-icon-wrap">
@@ -185,155 +207,108 @@ const whole_Profile = () => {
                 </div>
               </div>
 
+              {/* Guild Card Badge */}
               <div className="wp-identity-right">
-                <div className="wp-guild-card">
-
-                  {/* HEADER */}
-                  <div className="wp-guild-card-header">
-                    <div className="wp-guild-card-logo">
-                      <span className="logo-tech">Tech</span>
-                      <span className="logo-guild">Guild</span>
-                    </div>
-                    <span className="wp-guild-card-label">GUILD CARD</span>
-                  </div>
-
-                  {/* MAIN CONTENT */}
-                  <div className="wp-guild-card-body">
-
-                    {/* NS LOGO */}
-                    <div className="wp-guild-mark-wrap">
-                      <div className="wp-guild-mark">
-                        {company.guildCard.logoInitials}
-                      </div>
-
-                      <span className="wp-guild-mark-check" aria-label="Verified">
-                        <Icon name="Check" size={11} color="#ffffff" strokeWidth={3} />
-                      </span>
-                    </div>
-
-                    {/* COMPANY INFORMATION */}
-                    <div className="wp-guild-card-info">
-                      <div className="wp-guild-card-name">
-                        {company.name}
-                      </div>
-
-                      <div className="wp-guild-card-category">
-                        {company.guildCard.category}
-                      </div>
-
-                      <div className="wp-guild-card-stars">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <Icon
-                            name="Star"
-                            key={i}
-                            size={12}
-                            fill={
-                              i < company.guildCard.starRating
-                                ? "#ffce4a"
-                                : "none"
-                            }
-                            color={
-                              i < company.guildCard.starRating
-                                ? "#ffce4a"
-                                : "#5c6bb0"
-                            }
-                          />
-                        ))}
-                      </div>
-
-                      <span className="wp-guild-card-verified">VERIFIED CLIENT</span>
-
-                      <div className="wp-guild-card-line">
-                        <Icon name="MapPin" size={11} />
-                        {company.guildCard.location}
-                      </div>
-
-                      <div className="wp-guild-card-line">
-                        <Icon name="Globe" size={11} />
-                        {company.guildCard.website}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* CSS SHIELD BACKGROUND */}
-                  <div className="wp-guild-card-shield" aria-hidden="true">
-                    <span className="wp-shield-back-shape"></span>
-                    <span className="wp-shield-front-shape"></span>
-                    <span className="wp-shield-rank">
-                      {company.guildCard.rank}
-                    </span>
-                  </div>
-
-                  {/* FOOTER */}
-                  <div className="wp-guild-card-footer">
-                    <div>
-                      <span className="wp-guild-card-footlabel">
-                        GUILD ID
-                      </span>
-                      <span className="wp-guild-card-footvalue">
-                        {company.guildCard.guildId}
-                      </span>
-                    </div>
-
-                    <div className="wp-guild-card-footright">
-                      <span className="wp-guild-card-footlabel">
-                        MEMBER SINCE
-                      </span>
-                      <span className="wp-guild-card-footvalue">
-                        {company.guildCard.memberSince}
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                <GuildCard
+                  name={company.name}
+                  guildCard={company.guildCard}
+                />
               </div>
             </div>
-          </div>
+          </Cards>
 
           <div className="wp-grid cols-2">
-            <Cards className="wp-card" padding="0">
-              <div className="wp-card-inner">
-                <div className="wp-card-head">
-                  <h3 className="wp-card-title">About Company</h3>
-                  <button className="wp-link-btn">
-                    <Icon name="Pencil" size={14} /> Edit
+            {/* About Me / About Company */}
+            {!company.about ? (
+              <Cards variant="base" className="wp-card wp-about-me-card" padding="0">
+                <div className="wp-card-inner wp-about-me-inner">
+                  <div className="wp-card-head">
+                    <h3 className="wp-card-title wp-about-me-title">About Me</h3>
+                  </div>
+                  <div className="wp-about-me-body">
+                    <div className="wp-about-me-icon-box">
+                      <Icon name="User" size={24} strokeWidth={1.8} />
+                    </div>
+                    <h4 className="wp-about-me-heading">
+                      Tell Freelancers and Agencies about yourself
+                    </h4>
+                    <p className="wp-about-me-desc">
+                      Tell freelancers and agencies about your business, goals, and expectations to attract the right professionals for your projects.
+                    </p>
+                    <PrimaryButton
+                      className="wp-about-me-btn"
+                      onClick={() => navigate("/client-settings")}
+                    >
+                      + Add About Me
+                    </PrimaryButton>
+                  </div>
+                </div>
+              </Cards>
+            ) : (
+              <Cards
+                variant="base"
+                className="wp-card"
+                padding="0"
+              >
+                <div className="wp-card-inner">
+                  <div className="wp-card-head">
+                    <h3 className="wp-card-title">About Company</h3>
+                    <button className="wp-link-btn" onClick={() => navigate("/client-settings")} type="button">
+                      <Icon name="Pencil" size={14} /> Edit
+                    </button>
+                  </div>
+                  <p className="wp-about-text">
+                    {company.about.split("\n\n").map((line, i) => (
+                      <React.Fragment key={i}>
+                        {line}
+                        <br />
+                        <br />
+                      </React.Fragment>
+                    ))}
+                  </p>
+                  <button className="wp-readmore" onClick={() => navigate("/client-settings")} type="button">
+                    Read More <Icon name="ChevronRight" size={14} />
                   </button>
                 </div>
-                <p className="wp-about-text">
-                  {company.about.split("\n\n").map((line, i) => (
-                    <React.Fragment key={i}>
-                      {line}
-                      <br />
-                      <br />
-                    </React.Fragment>
-                  ))}
-                </p>
-                <button className="wp-readmore">Read More <Icon name="ChevronRight" size={14} /></button>
-              </div>
-            </Cards>
+              </Cards>
+            )}
 
-            <Cards className="wp-card" padding="0">
+            {/* Hiring Interests */}
+            <Cards variant="base" className="wp-card" padding="0">
               <div className="wp-card-inner">
                 <div className="wp-card-head">
                   <h3 className="wp-card-title">Hiring Interests</h3>
-                  <button className="wp-link-btn">
-                    <Icon name="Pencil" size={14} /> Edit
+                  <button
+                    className="wp-link-btn"
+                    onClick={() => navigate("/client-settings")}
+                    type="button"
+                  >
+                    <Icon name="Pencil" size={13} /> Edit
                   </button>
                 </div>
-                <div className="wp-tag-row">
+                <div className="wp-chips-wrap">
                   {company.hiringInterests.map((tag) => (
-                    <span className="wp-tag" key={tag}>
+                    <button
+                      key={tag}
+                      type="button"
+                      className="wp-chip-item"
+                      onClick={() => navigate("/client-settings")}
+                    >
                       {tag}
-                    </span>
+                    </button>
                   ))}
                 </div>
               </div>
             </Cards>
           </div>
 
-          {/* EXACT MATCH SECTIONS START HERE */}
           <div className="wp-grid cols-3 wp-highlight-cards">
-            {/* COMPANY DETAILS */}
-            <Cards className="wp-card gray-card" padding="0">
+            {/* Company Details */}
+            <Cards
+              variant="base"
+              className="wp-card gray-card"
+              padding="0"
+            >
               <div className="wp-card-inner">
                 <div className="wp-card-head">
                   <h3 className="wp-card-title">Company Details</h3>
@@ -352,96 +327,174 @@ const whole_Profile = () => {
               </div>
             </Cards>
 
-            {/* ACTIVE QUESTS */}
-            <Cards className="wp-card gray-card" padding="0">
-              <div className="wp-card-inner">
-                <div className="wp-card-head">
-                  <h3 className="wp-card-title">
-                    Active Quests <span className="wp-title-sub">(Hiring Now)</span>
-                  </h3>
-                  <button className="wp-link-btn">View All</button>
-                </div>
-                <div className="wp-quest-list">
-                  {company.activeQuests.map((q) => (
-                    <div className="wp-quest-row" key={q.title}>
-                      <span className="wp-quest-icon">
-                        <Icon name="Briefcase" size={16} />
-                      </span>
-                      <div className="wp-quest-info">
-                        <p className="wp-quest-title">{q.title}</p>
-                        <p className="wp-quest-sub">{q.sub}</p>
-                      </div>
-                      <span className="wp-quest-status">{q.status}</span>
+            {/* Active Quests */}
+            {company.activeQuests.length === 0 ? (
+              <Cards variant="base" className="wp-card" padding="0">
+                <div className="wp-card-inner">
+                  <div className="wp-card-head">
+                    <h3 className="wp-card-title">Active Quests</h3>
+                    <button
+                      className="wp-link-btn"
+                      onClick={() => navigate("/client-quest-board")}
+                      type="button"
+                    >
+                      View All
+                    </button>
+                  </div>
+                  <div className="wp-empty-card-body">
+                    <div className="wp-empty-icon-box">
+                      <Icon name="Briefcase" size={32} />
                     </div>
-                  ))}
-                </div>
-              </div>
-            </Cards>
-
-            {/* FREELANCER REVIEWS */}
-            <Cards className="wp-card gray-card" padding="0">
-              <div className="wp-card-inner">
-                <div className="wp-card-head">
-                  <h3 className="wp-card-title">Freelancer Reviews</h3>
-                  <button className="wp-link-btn">View All</button>
-                </div>
-
-                <div className="wp-rating-big">
-                  <span className="wp-rating-number">{company.rating.score}</span>
-                  <div className="wp-rating-col">
-                    <span className="wp-rating-stars" aria-label="5 out of 5 stars">
-                      <span className="wp-review-star">★</span>
-                      <span className="wp-review-star">★</span>
-                      <span className="wp-review-star">★</span>
-                      <span className="wp-review-star">★</span>
-                      <span className="wp-review-star">★</span>
-                    </span>
-                    <p className="wp-rating-count">{company.rating.reviews} Reviews</p>
+                    <h4 className="wp-empty-heading">No active quests.</h4>
+                    <p className="wp-empty-desc">
+                      You haven't posted any projects yet. Post a quest and get applications from freelancers and agencies.
+                    </p>
+                    <PrimaryButton
+                      className="wp-primary-cta-btn"
+                      onClick={() => navigate("/client-quest-board")}
+                    >
+                      + Post a Quest
+                    </PrimaryButton>
                   </div>
                 </div>
-
-                <div className="wp-review-bars">
-                  {company.rating.breakdown.map((b) => (
-                    <div className="wp-bar-row" key={b.label}>
-                      <div className="wp-bar-top">
-                        <span className="wp-bar-label">{b.label}</span>
-                        <span className="wp-bar-pct">{b.pct}%</span>
+              </Cards>
+            ) : (
+              <Cards variant="base" className="wp-card gray-card" padding="0">
+                <div className="wp-card-inner">
+                  <div className="wp-card-head">
+                    <h3 className="wp-card-title">
+                      Active Quests <span className="wp-title-sub">(Hiring Now)</span>
+                    </h3>
+                    <button className="wp-link-btn" type="button" onClick={() => navigate("/client-quest-board")}>
+                      View All
+                    </button>
+                  </div>
+                  <div className="wp-quest-list">
+                    {company.activeQuests.map((q) => (
+                      <div className="wp-quest-row" key={q.title}>
+                        <span className="wp-quest-icon">
+                          <Icon name="Briefcase" size={16} />
+                        </span>
+                        <div className="wp-quest-info">
+                          <p className="wp-quest-title">{q.title}</p>
+                          <p className="wp-quest-sub">{q.sub}</p>
+                        </div>
+                        <span className="wp-quest-status">{q.status}</span>
                       </div>
-                      <span className="wp-bar-track">
-                        <span className="wp-bar-fill" style={{ width: `${b.pct}%` }} />
-                      </span>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
+              </Cards>
+            )}
 
-                <button className="wp-see-reviews">See all reviews <Icon name="ChevronRight" size={14} /></button>
-              </div>
-            </Cards>
+            {/* Freelancer Reviews */}
+            {!company.rating || company.rating.reviews === 0 ? (
+              <Cards variant="base" className="wp-card" padding="0">
+                <div className="wp-card-inner">
+                  <div className="wp-card-head">
+                    <h3 className="wp-card-title">Freelancer Reviews</h3>
+                    <button
+                      className="wp-link-btn"
+                      onClick={() => navigate("/client-company-reputation")}
+                      type="button"
+                    >
+                      View All
+                    </button>
+                  </div>
+                  <div className="wp-empty-card-body">
+                    <div className="wp-empty-icon-box">
+                      <Icon name="Star" size={32} />
+                    </div>
+                    <h4 className="wp-empty-heading">No reviews yet.</h4>
+                    <p className="wp-empty-desc">
+                      Complete your first project to start receiving client reviews.
+                    </p>
+                  </div>
+                </div>
+              </Cards>
+            ) : (
+              <Cards variant="base" className="wp-card gray-card" padding="0">
+                <div className="wp-card-inner">
+                  <div className="wp-card-head">
+                    <h3 className="wp-card-title">Freelancer Reviews</h3>
+                    <button className="wp-link-btn" type="button" onClick={() => navigate("/client-company-reputation")}>
+                      View All
+                    </button>
+                  </div>
+
+                  <div className="wp-rating-big">
+                    <span className="wp-rating-number">{company.rating.score}</span>
+                    <div className="wp-rating-col">
+                      <span className="wp-rating-stars" aria-label="5 out of 5 stars">
+                        <span className="wp-review-star">★</span>
+                        <span className="wp-review-star">★</span>
+                        <span className="wp-review-star">★</span>
+                        <span className="wp-review-star">★</span>
+                        <span className="wp-review-star">★</span>
+                      </span>
+                      <p className="wp-rating-count">{company.rating.reviews} Reviews</p>
+                    </div>
+                  </div>
+
+                  <div className="wp-review-bars">
+                    {company.rating.breakdown.map((b) => (
+                      <div className="wp-bar-row" key={b.label}>
+                        <div className="wp-bar-top">
+                          <span className="wp-bar-label">{b.label}</span>
+                          <span className="wp-bar-pct">{b.pct}%</span>
+                        </div>
+                        <span className="wp-bar-track">
+                          <span className="wp-bar-fill" style={{ width: `${b.pct}%` }} />
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <button className="wp-see-reviews" type="button" onClick={() => navigate("/client-company-reputation")}>
+                    See all reviews <Icon name="ChevronRight" size={14} />
+                  </button>
+                </div>
+              </Cards>
+            )}
           </div>
-          {/* EXACT MATCH SECTIONS END HERE */}
 
           <div className="wp-grid cols-3">
-            <Cards className="wp-card" padding="0">
+            {/* Company Links */}
+            <Cards
+              variant="base"
+              className="wp-card"
+              padding="0"
+            >
               <div className="wp-card-inner">
                 <div className="wp-card-head">
                   <h3 className="wp-card-title">Company Links</h3>
-                  <button className="wp-link-btn">
-                    <Icon name="Pencil" size={14} /> Edit
+                  <button
+                    className="wp-link-btn"
+                    onClick={() => navigate("/client-settings")}
+                    type="button"
+                  >
+                    <Icon name="Pencil" size={13} color="#103CA4" /> Edit
                   </button>
                 </div>
                 <div className="wp-link-list">
                   {company.links.map((l) => (
                     <div className="wp-link-row" key={l.label}>
-                      <span className={`wp-link-icon ${l.tone || ""}`}>
-                        <Icon name={l.iconName} size={17} />
-                      </span>
-                      <span className="wp-link-label">{l.label}</span>
+                      <div className="wp-link-left">
+                        <span className={`wp-link-icon-bare ${l.tone}`}>
+                          <Icon name={l.iconName} size={18} />
+                        </span>
+                        <span className="wp-link-label">{l.label}</span>
+                      </div>
                       <span className="wp-link-name">{l.value}</span>
-                      <button className="wp-link-action" aria-label={l.action}>
+                      <button
+                        type="button"
+                        className="wp-link-action"
+                        aria-label={l.action}
+                      >
                         {l.action === "download" ? (
-                          <Icon name="Download" size={15} />
+                          <Icon name="Download" size={16} color="#94a3b8" />
                         ) : (
-                          <Icon name="ExternalLink" size={15} />
+                          <Icon name="ExternalLink" size={16} color="#94a3b8" />
                         )}
                       </button>
                     </div>
@@ -450,23 +503,37 @@ const whole_Profile = () => {
               </div>
             </Cards>
 
-            <Cards className="wp-card" padding="0">
+            {/* Profile Completion */}
+            <Cards
+              variant="base"
+              className="wp-card"
+              padding="0"
+            >
               <div className="wp-card-inner">
                 <div className="wp-card-head">
                   <h3 className="wp-card-title">Profile Completion</h3>
-                  <span className="wp-progress-pct">100%</span>
+                  <span className="wp-progress-pct">{completionPct}%</span>
                 </div>
                 <div className="wp-progress-track">
-                  <div className="wp-progress-fill" style={{ width: "100%" }} />
+                  <div
+                    className="wp-progress-fill"
+                    style={{ width: `${completionPct}%` }}
+                  />
                 </div>
                 <div className="wp-checklist">
                   {company.checklist.map((c) => (
                     <div className="wp-checklist-row" key={c.label}>
                       <span className="wp-checklist-left">
-                        {c.done ? <Icon name="CheckCircle2" size={16} /> : <Icon name="Circle" size={16} />}
-                        {c.label}
+                        {c.done ? (
+                          <Icon name="CheckCircle2" size={16} className="wp-check-icon-done" />
+                        ) : (
+                          <Icon name="Circle" size={16} className="wp-check-icon-pending" />
+                        )}
+                        <span className={c.done ? "wp-check-label-done" : "wp-check-label-pending"}>
+                          {c.label}
+                        </span>
                       </span>
-                      <span className="wp-checklist-status">
+                      <span className={`wp-checklist-status ${c.done ? "completed" : "pending"}`}>
                         {c.done ? "Completed" : "Pending"}
                       </span>
                     </div>
@@ -475,41 +542,61 @@ const whole_Profile = () => {
               </div>
             </Cards>
 
-            <Cards className="wp-card" padding="0">
-              <div className="wp-card-inner">
-                <div className="wp-card-head">
-                  <h3 className="wp-card-title">Recent Activity</h3>
-                  <button className="wp-link-btn">
-                    View All <Icon name="ChevronRight" size={14} />
-                  </button>
+            {/* Recent Activity */}
+            {company.recentActivity.length === 0 ? (
+              <EmptyStateCard
+                headerTitle="Recent Activity"
+                icon="Clock9"
+                title="No recent activity"
+                description="Your activity will appear here."
+                delay="0.18s"
+              />
+            ) : (
+              <Cards
+                variant="base"
+                className="wp-card"
+                padding="0"
+              >
+                <div className="wp-card-inner">
+                  <div className="wp-card-head">
+                    <h3 className="wp-card-title">Recent Activity</h3>
+                    <button
+                      className="wp-link-btn"
+                      onClick={() => navigate("/client-notifications")}
+                      type="button"
+                    >
+                      View All <Icon name="ChevronRight" size={14} />
+                    </button>
+                  </div>
+                  <div className="wp-activity-list">
+                    {company.recentActivity.map((a, i) => (
+                      <div className="wp-activity-row" key={i}>
+                        <span className="wp-activity-icon">
+                          <Icon name={a.iconName} size={15} />
+                        </span>
+                        <span className="wp-activity-text">{a.text}</span>
+                        <span className="wp-activity-time">{a.time}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="wp-activity-list">
-                  {company.recentActivity.map((a, i) => (
-                    <div className="wp-activity-row" key={i}>
-                      <span className="wp-activity-icon">
-                        <Icon name={a.iconName} size={14} />
-                      </span>
-                      <span className="wp-activity-text">{a.text}</span>
-                      <span className="wp-activity-time">{a.time}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Cards>
+              </Cards>
+            )}
           </div>
 
           <div className="wp-grid cols-2">
-            <Cards className="wp-card gray-card" padding="0">
-              <div className="wp-card-inner">
+            {/* Hiring Statistics */}
+            <Cards variant="base" className="wp-card gray-card" padding="0">
+              <div className="wp-card-inner stat-padding">
                 <div className="wp-card-head">
                   <h3 className="wp-card-title">Hiring Statistics</h3>
                 </div>
                 <div className="wp-stat-grid">
                   {company.hiringStats.map((s) => (
-                    <div className="wp-stat-item" key={s.label}>
-                      <span className={`wp-stat-icon ${s.tone}`}>
-                        <Icon name={s.iconName} size={18} />
-                      </span>
+                    <div className="wp-stat-card" key={s.label}>
+                      <div className={`wp-stat-icon-wrap ${s.tone}`}>
+                        <Icon name={s.iconName} size={20} />
+                      </div>
                       <span className="wp-stat-value">{s.value}</span>
                       <span className="wp-stat-label">{s.label}</span>
                     </div>
@@ -518,21 +605,25 @@ const whole_Profile = () => {
               </div>
             </Cards>
 
-            {/* QUICK ACTIONS SECTION */}
-            <Cards className="wp-card gray-card" padding="0">
-              <div className="wp-card-inner">
+            {/* Quick Actions */}
+            <Cards variant="base" className="wp-card gray-card" padding="0">
+              <div className="wp-card-inner stat-padding">
                 <div className="wp-card-head">
                   <h3 className="wp-card-title">Quick Actions</h3>
-                  <button className="wp-link-btn" onClick={() => navigate("/client-profile")}>
+                  <button
+                    className="wp-link-btn"
+                    onClick={() => navigate("/client-profile")}
+                    type="button"
+                  >
                     <Icon name="Pencil" size={14} color="#103CA4" /> Edit
                   </button>
                 </div>
                 <div className="wp-action-list">
                   {company.quickActions.map((a) => (
                     <button
-                      className="wp-action-row"
                       key={a.label}
                       type="button"
+                      className="wp-action-btn"
                       onClick={() => {
                         if (a.label === "Edit Profile") navigate("/client-profile");
                         else if (a.label === "Verify Company") navigate("/client-verification-hub");
@@ -540,10 +631,12 @@ const whole_Profile = () => {
                         else if (a.label === "Manage Applications") navigate("/client-applications");
                       }}
                     >
-                      <span className="wp-action-icon">
-                        <Icon name={a.iconName} size={18} color="#103CA4" strokeWidth={2} />
-                      </span>
-                      <span className="wp-action-label">{a.label}</span>
+                      <div className="wp-action-left">
+                        <div className="wp-action-icon-wrap">
+                          <Icon name={a.iconName} size={16} />
+                        </div>
+                        <span className="wp-action-text">{a.label}</span>
+                      </div>
                       <Icon name="ChevronRight" size={16} className="wp-action-chevron" />
                     </button>
                   ))}
@@ -552,11 +645,12 @@ const whole_Profile = () => {
             </Cards>
           </div>
 
-          <Cards className="wp-card wp-trust-card" padding="0">
+          {/* Trust Journey */}
+          <Cards variant="base" className="wp-card wp-trust-card" padding="0">
             <div className="wp-card-inner">
               <div className="wp-card-head">
                 <h3 className="wp-card-title">Trust Journey</h3>
-                <button className="wp-link-btn">
+                <button className="wp-link-btn" type="button">
                   View all <Icon name="ChevronRight" size={14} />
                 </button>
               </div>
@@ -566,8 +660,9 @@ const whole_Profile = () => {
                   <div className="wp-trust-nodes">
                     {company.trustJourney.ranks.map((rank, i) => (
                       <div
-                        className={`wp-trust-node ${i === company.trustJourney.currentIndex ? "active" : ""
-                          }`}
+                        className={`wp-trust-node ${
+                          i === company.trustJourney.currentIndex ? "active" : ""
+                        }`}
                         key={rank}
                       >
                         <span className="wp-trust-circle">{rank}</span>
@@ -586,7 +681,7 @@ const whole_Profile = () => {
                           12,
                           (company.trustJourney.currentIndex /
                             (company.trustJourney.ranks.length - 1)) *
-                          100
+                            100
                         )}%`,
                       }}
                     />
@@ -610,4 +705,4 @@ const whole_Profile = () => {
     </div>
   );
 };
-export default whole_Profile;
+export default WholeProfile;
