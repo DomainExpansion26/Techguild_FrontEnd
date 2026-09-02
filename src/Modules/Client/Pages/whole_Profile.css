@@ -60,7 +60,7 @@ body,
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   width: 100%;
-  padding-bottom: clamp(28px, 3vw, 48px);
+  padding-bottom: 0;
 }
 
 /* -----------------------------------------------------
@@ -320,8 +320,8 @@ body,
 ------------------------------------------------------ */
 .wp-identity-right {
   margin-top: 18px;
-  flex: 0 1 clamp(280px, 38vw, 542px);
-  width: clamp(280px, 38vw, 542px);
+  flex: 0 0 530px;
+  width: 530px;
   max-width: 100%;
   min-width: 0;
 }
@@ -667,10 +667,11 @@ body,
   margin-left: 4px;
 }
 
-.wp-link-btn {
+.wp-link-btn,
+.trust-card-link {
   border: none;
   background: none;
-  color: #103CA4;
+  color: #103CA4 !important;
   font-size: clamp(11px, .9vw, 13px);
   font-weight: 600;
   cursor: pointer;
@@ -681,6 +682,20 @@ body,
   padding: 4px;
   border-radius: 8px;
   flex-shrink: 0;
+  text-decoration: none;
+}
+
+.wp-link-btn svg,
+.wp-link-btn svg path,
+.wp-link-btn path,
+.trust-card-link svg,
+.trust-card-link svg path,
+.trust-card-link path,
+.chips-card-element a svg,
+.chips-card-element a svg path,
+.chips-card-element a path {
+  color: #103CA4 !important;
+  stroke: #103CA4 !important;
 }
 
 .wp-about-text {
@@ -718,6 +733,100 @@ body,
   color: #4b5160;
   border: 1px solid #eef1f6;
   box-shadow: 0 1px 2px rgba(16, 24, 40, 0.02);
+}
+
+/* Chips list for Hiring Interests */
+.wp-chips-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 8px;
+  align-items: center;
+}
+
+.wp-chip-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 50rem;
+  border: 1px solid #e5e7eb;
+  background-color: rgba(255, 255, 255, 0.7);
+  color: #374151;
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.wp-chip-item:hover {
+  background-color: #103ca4;
+  color: #ffffff;
+  border-color: #103ca4;
+}
+
+/* Empty state card body (Active Quests & Freelancer Reviews) */
+.wp-empty-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 0;
+  gap: 8px;
+}
+
+.wp-empty-icon-box {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #cbd5e1;
+  margin-bottom: 2px;
+}
+
+.wp-empty-icon-box svg,
+.wp-empty-icon-box svg path,
+.wp-empty-icon-box path {
+  color: #cbd5e1 !important;
+  stroke: #cbd5e1 !important;
+}
+
+.wp-empty-heading {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #103CA4;
+  margin: 0;
+}
+
+.wp-empty-desc {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin: 0;
+  max-width: 320px;
+  line-height: 1.45;
+}
+
+.wp-primary-cta-btn {
+  width: auto !important;
+  height: auto !important;
+  background-color: #0b38a8;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.wp-primary-cta-btn:hover {
+  background-color: #082977;
 }
 
 /* Company details */
@@ -770,6 +879,79 @@ body,
   font-weight: 700;
   line-height: 1.3;
   overflow-wrap: anywhere;
+}
+
+/* Empty state cards (Active Quests & Freelancer Reviews) */
+.wp-page-root .activity-card-element {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #eef1f6;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.015);
+  min-height: 240px;
+}
+
+.wp-page-root .activity-card-inner {
+  padding: clamp(14px, 1.9vw, 27px) clamp(12px, 1.7vw, 22px);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.wp-page-root .activity-card-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: clamp(12px, 1.4vw, 20px);
+}
+
+.wp-page-root .activity-card-title {
+  font-size: clamp(14px, 1.15vw, 17px);
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.wp-page-root .activity-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.wp-page-root .activity-card-text-main {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #103CA4;
+  margin: 0;
+}
+
+.wp-page-root .activity-card-text-sub {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin: 0;
+  max-width: 320px;
+  line-height: 1.45;
+}
+
+.wp-page-root .quests-card-btn {
+  background-color: #0b38a8;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.wp-page-root .quests-card-btn:hover {
+  background-color: #082977;
 }
 
 /* Active quests */
@@ -951,220 +1133,241 @@ body,
 .wp-link-list {
   display: flex;
   flex-direction: column;
-  gap: clamp(14px, 1.6vw, 22px);
+  gap: 12px;
+  flex: 1;
+  justify-content: space-around;
 }
 
 .wp-link-row {
-  display: grid;
-  grid-template-columns: auto minmax(70px, 82px) minmax(0, 1fr) auto;
-  align-items: center;
-  gap: clamp(8px, 1vw, 14px);
-  font-size: clamp(11px, .9vw, 14px);
-}
-
-.wp-link-icon {
-  width: 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 0;
+  background: transparent;
+  border: none;
+}
+
+.wp-link-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 130px;
+  width: 130px;
   flex-shrink: 0;
-  background: none;
 }
 
-.wp-link-icon svg {
-  width: 17px !important;
-  height: 17px !important;
-  stroke-width: 1.8 !important;
+.wp-link-icon-bare {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
-.wp-link-icon.blue,
-.wp-link-icon.blue svg,
-.wp-link-icon.blue svg * {
-  color: #164bb5 !important;
-  stroke: #164bb5 !important;
-  fill: none !important;
+.wp-link-icon-bare.blue,
+.wp-link-icon-bare.blue svg,
+.wp-link-icon-bare.blue path {
+  color: #1d4ed8 !important;
+  stroke: #1d4ed8 !important;
 }
 
-.wp-link-icon.linkedin,
-.wp-link-icon.linkedin svg,
-.wp-link-icon.linkedin svg * {
-  color: #0b83bf !important;
-  stroke: #0b83bf !important;
-  fill: none !important;
+.wp-link-icon-bare.linkedin,
+.wp-link-icon-bare.linkedin svg,
+.wp-link-icon-bare.linkedin path {
+  color: #0077b5 !important;
+  stroke: #0077b5 !important;
 }
 
-.wp-link-icon.github,
-.wp-link-icon.github svg,
-.wp-link-icon.github svg * {
-  color: #30343b !important;
-  stroke: #30343b !important;
-  fill: none !important;
+.wp-link-icon-bare.github,
+.wp-link-icon-bare.github svg,
+.wp-link-icon-bare.github path {
+  color: #1e293b !important;
+  stroke: #1e293b !important;
+  fill: #1e293b !important;
 }
 
-.wp-link-icon.red,
-.wp-link-icon.red svg,
-.wp-link-icon.red svg * {
-  color: #ff4a4a !important;
-  stroke: #ff4a4a !important;
-  fill: none !important;
+.wp-link-icon-bare.red,
+.wp-link-icon-bare.red svg,
+.wp-link-icon-bare.red path {
+  color: #ef4444 !important;
+  stroke: #ef4444 !important;
 }
 
-.wp-link-icon.gray,
-.wp-link-icon.gray svg,
-.wp-link-icon.gray svg * {
-  color: #6f7d91 !important;
-  stroke: #6f7d91 !important;
-  fill: none !important;
+.wp-link-icon-bare.gray,
+.wp-link-icon-bare.gray svg,
+.wp-link-icon-bare.gray path {
+  color: #64748b !important;
+  stroke: #64748b !important;
 }
 
 .wp-link-label {
-  color: #77859a;
-  font-weight: 700;
-  line-height: 1.2;
-  min-width: 0;
-}
-
-.wp-link-name {
-  color: #4f5c6f;
+  font-size: 0.85rem;
   font-weight: 500;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: #334155;
   white-space: nowrap;
 }
 
+.wp-link-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.83rem;
+  color: #475569;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
 .wp-link-action {
-  width: 20px;
-  padding: 0;
-  color: #7c8798 !important;
   background: none;
   border: none;
+  color: #94a3b8;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 4px;
   flex-shrink: 0;
+  transition: color 0.15s ease;
 }
 
-.wp-link-action svg,
-.wp-link-action svg * {
-  width: 16px !important;
-  height: 16px !important;
-  stroke-width: 1.8 !important;
-  fill: none !important;
+.wp-link-action:hover {
+  color: #103ca4;
 }
 
 /* Profile completion */
 .wp-progress-pct {
-  font-size: clamp(15px, 1.4vw, 18px);
-  font-weight: 800;
+  font-size: 0.9rem;
+  font-weight: 700;
   color: #16a34a;
 }
 
 .wp-progress-track {
   width: 100%;
-  height: 8px;
+  height: 6px;
+  background-color: #e2e8f0;
   border-radius: 999px;
-  background: #e5e9f0;
   overflow: hidden;
-  margin: 0 0 20px;
+  margin-bottom: 16px;
 }
 
 .wp-progress-fill {
+  width: 100%;
   height: 100%;
+  background-color: #22c55e;
   border-radius: 999px;
-  background: #22c55e;
 }
 
 .wp-checklist {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
+  flex: 1;
+  justify-content: space-around;
 }
 
 .wp-checklist-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: clamp(11px, .9vw, 13px);
-  gap: 8px;
+  font-size: 0.84rem;
+  color: #334155;
 }
 
 .wp-checklist-left {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #4f5b6f;
-  min-width: 0;
+  font-weight: 500;
 }
 
-.wp-checklist-left svg,
-.wp-checklist-left svg * {
-  color: #22c55e !important;
-  stroke: #22c55e !important;
-  fill: none !important;
+.wp-check-icon-done,
+.wp-check-icon-done svg,
+.wp-check-icon-done svg path,
+.wp-check-icon-done path {
+  color: #16a34a !important;
+  stroke: #16a34a !important;
 }
 
-.wp-checklist-left svg {
-  width: 16px !important;
-  height: 16px !important;
-  stroke-width: 2.25 !important;
-  flex-shrink: 0;
+.wp-check-icon-pending,
+.wp-check-icon-pending svg,
+.wp-check-icon-pending svg path,
+.wp-check-icon-pending path {
+  color: #94a3b8 !important;
+  stroke: #94a3b8 !important;
+}
+
+.wp-check-label-done {
+  color: #1e293b;
+}
+
+.wp-check-label-pending {
+  color: #64748b;
 }
 
 .wp-checklist-status {
-  color: #16a34a;
+  font-size: 0.78rem;
   font-weight: 600;
-  font-size: clamp(11px, .9vw, 12.5px);
-  flex-shrink: 0;
+}
+
+.wp-checklist-status.completed {
+  color: #16a34a;
+}
+
+.wp-checklist-status.pending {
+  color: #94a3b8;
 }
 
 /* Recent activity */
 .wp-activity-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
+  flex: 1;
+  justify-content: space-around;
 }
 
 .wp-activity-row {
   display: flex;
-  align-items: flex-start;
-  gap: clamp(8px, .95vw, 12px);
-  font-size: clamp(11px, .9vw, 13px);
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82rem;
+  color: #334155;
 }
 
 .wp-activity-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 10px;
-  background: #f0fdf4;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background-color: #f0fdf4;
+  color: #16a34a;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  margin-top: 1px;
 }
 
 .wp-activity-icon svg,
-.wp-activity-icon svg * {
-  width: 18px !important;
-  height: 18px !important;
+.wp-activity-icon svg path,
+.wp-activity-icon path {
   color: #16a34a !important;
   stroke: #16a34a !important;
-  fill: none !important;
 }
 
 .wp-activity-text {
   flex: 1;
   min-width: 0;
-  color: #1f2430;
-  font-weight: 500;
-  line-height: 1.4;
-  overflow-wrap: anywhere;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #334155;
 }
 
 .wp-activity-time {
-  color: #a0a5b5;
-  font-size: clamp(10px, .83vw, 12px);
+  font-size: 0.74rem;
+  color: #94a3b8;
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -1172,188 +1375,160 @@ body,
 /* Hiring statistics */
 .wp-stat-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(12px, 1.25vw, 18px);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+  flex: 1;
+  align-content: space-between;
 }
 
-.wp-stat-item {
+.wp-stat-card {
+  background-color: rgba(255, 255, 255, 0.6);
+  border: 1px solid #f1f5f9;
+  border-radius: 14px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  min-width: 0;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 6px;
+  min-height: 105px;
 }
 
-.wp-stat-icon {
-  width: clamp(34px, 2.9vw, 42px);
-  height: clamp(34px, 2.9vw, 42px);
-  border-radius: 12px;
+.wp-stat-icon-wrap {
+  width: 24px;
+  height: 24px;
+  background: transparent !important;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-shrink: 0;
+  margin-bottom: 2px;
 }
 
-.wp-stat-icon svg {
-  width: 20px !important;
-  height: 20px !important;
-  stroke-width: 2.1 !important;
+.wp-stat-icon-wrap.blue svg,
+.wp-stat-icon-wrap.blue svg path,
+.wp-stat-icon-wrap.blue path {
+  color: #2563eb !important;
+  stroke: #2563eb !important;
 }
 
-.wp-stat-icon.blue {
-  background: #edf3ff;
-  color: #1757c2 !important;
-}
-
-.wp-stat-icon.green {
-  background: #effbf3;
-  color: #12a054 !important;
-}
-
-.wp-stat-icon.purple {
-  background: #f3edff;
-  color: #8b55f7 !important;
-}
-
-.wp-stat-icon.yellow {
-  background: #fff5df;
-  color: #f59e0b !important;
-}
-
-.wp-stat-icon.teal {
-  background: #eafcff;
-  color: #0998bf !important;
-}
-
-.wp-stat-icon.mint {
-  background: #effbf3;
-  color: #16a34a !important;
-}
-
-.wp-stat-icon.blue svg,
-.wp-stat-icon.blue svg * {
-  color: #1757c2 !important;
-  stroke: #1757c2 !important;
-  fill: none !important;
-}
-
-.wp-stat-icon.green svg,
-.wp-stat-icon.green svg * {
-  color: #12a054 !important;
-  stroke: #12a054 !important;
-  fill: none !important;
-}
-
-.wp-stat-icon.purple svg,
-.wp-stat-icon.purple svg * {
-  color: #8b55f7 !important;
-  stroke: #8b55f7 !important;
-  fill: none !important;
-}
-
-.wp-stat-icon.yellow svg,
-.wp-stat-icon.yellow svg * {
-  color: #f59e0b !important;
-  stroke: #f59e0b !important;
-  fill: none !important;
-}
-
-.wp-stat-icon.teal svg,
-.wp-stat-icon.teal svg * {
-  color: #0998bf !important;
-  stroke: #0998bf !important;
-  fill: none !important;
-}
-
-.wp-stat-icon.mint svg,
-.wp-stat-icon.mint svg * {
+.wp-stat-icon-wrap.green svg,
+.wp-stat-icon-wrap.green svg path,
+.wp-stat-icon-wrap.green path {
   color: #16a34a !important;
   stroke: #16a34a !important;
-  fill: none !important;
+}
+
+.wp-stat-icon-wrap.purple svg,
+.wp-stat-icon-wrap.purple svg path,
+.wp-stat-icon-wrap.purple path {
+  color: #9333ea !important;
+  stroke: #9333ea !important;
+}
+
+.wp-stat-icon-wrap.orange svg,
+.wp-stat-icon-wrap.orange svg path,
+.wp-stat-icon-wrap.orange path {
+  color: #f59e0b !important;
+  stroke: #f59e0b !important;
+}
+
+.wp-stat-icon-wrap.cyan svg,
+.wp-stat-icon-wrap.cyan svg path,
+.wp-stat-icon-wrap.cyan path {
+  color: #06b6d4 !important;
+  stroke: #06b6d4 !important;
+}
+
+.wp-stat-icon-wrap.emerald svg,
+.wp-stat-icon-wrap.emerald svg path,
+.wp-stat-icon-wrap.emerald path {
+  color: #10b981 !important;
+  stroke: #10b981 !important;
 }
 
 .wp-stat-value {
-  font-size: clamp(17px, 1.55vw, 22px);
-  font-weight: 800;
-  color: #12162b;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.1;
 }
 
 .wp-stat-label {
-  font-size: clamp(10px, .83vw, 12px);
-  color: #8a90a2;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 /* Quick actions */
 .wp-action-list {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 10px;
+  width: 100%;
+  flex: 1;
+  justify-content: space-around;
 }
 
-.wp-action-row {
+.wp-action-btn {
   display: flex;
   align-items: center;
-  gap: clamp(10px, 1.1vw, 16px);
-  min-height: clamp(52px, 5.25vw, 76px);
-  padding: 12px 0;
-  border-bottom: 1px solid #dfe3e9;
-  cursor: pointer;
-  background: none;
-  border-left: none;
-  border-right: none;
-  border-top: none;
+  justify-content: space-between;
   width: 100%;
+  padding: 4px 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
   text-align: left;
 }
 
-.wp-action-row:last-child {
-  border-bottom: none;
-  padding-bottom: 4px;
+.wp-action-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.wp-action-icon {
-  width: clamp(34px, 3.05vw, 44px);
-  height: clamp(34px, 3.05vw, 44px);
-  border-radius: 12px;
-  background: #edf4ff;
+.wp-action-icon-wrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: #eff6ff;
+  color: #103ca4;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.wp-action-icon svg,
-.wp-action-icon svg * {
-  color: #1551b7 !important;
-  stroke: #1551b7 !important;
-  fill: none !important;
+.wp-action-icon-wrap svg,
+.wp-action-icon-wrap svg path,
+.wp-action-icon-wrap path {
+  color: #103ca4 !important;
+  stroke: #103ca4 !important;
 }
 
-.wp-action-icon svg {
-  width: 20px !important;
-  height: 20px !important;
-  stroke-width: 2 !important;
+.wp-action-text {
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: #1e293b;
+  transition: color 0.15s ease;
 }
 
-.wp-action-label {
-  font-size: clamp(12px, 1.1vw, 16px);
-  color: #242936;
-  font-weight: 600;
-  min-width: 0;
-  overflow-wrap: anywhere;
+.wp-action-btn:hover .wp-action-text {
+  color: #103ca4;
 }
 
 .wp-action-chevron {
-  width: 18px;
-  height: 18px;
-  color: #aeb7c5 !important;
-  stroke: #aeb7c5 !important;
-  margin-left: auto;
+  color: #cbd5e1;
   flex-shrink: 0;
 }
 
 /* Trust journey */
 .wp-trust-card {
-  padding-bottom: 8px;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .wp-trust-scroll-wrapper {
@@ -1480,16 +1655,36 @@ body,
   }
 }
 
-@media (max-width: 1099px) and (min-width: 768px) {
+@media (max-width: 1099px) {
+  .wp-page-root .wp-identity-layout,
   .wp-identity-layout {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 20px !important;
   }
 
+  .wp-page-root .wp-identity-left,
+  .wp-identity-left {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .wp-page-root .wp-identity-right,
   .wp-identity-right {
-    width: min(100%, 542px);
-    max-width: 100%;
-    align-self: flex-start;
+    width: 100% !important;
+    max-width: 530px !important;
+    flex: 0 1 auto !important;
+    margin-top: 0 !important;
+    align-self: flex-start !important;
+  }
+
+  .wp-page-root .wp-identity-right .guild-card-variant-root,
+  .wp-identity-right .guild-card-variant-root {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: unset !important;
+    aspect-ratio: 530 / 275.6 !important;
   }
 }
 
@@ -1527,17 +1722,35 @@ body,
     padding: 12px 12px 32px;
   }
 
+  .wp-page-root .wp-identity-layout,
   .wp-identity-layout {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 0 16px 18px;
-    gap: 18px;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 0 16px 18px !important;
+    gap: 18px !important;
   }
 
+  .wp-page-root .wp-identity-left,
+  .wp-identity-left {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .wp-page-root .wp-identity-right,
   .wp-identity-right {
-    width: 100%;
-    max-width: 100%;
-    margin-top: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-top: 0 !important;
+    flex: 0 1 auto !important;
+  }
+
+  .wp-page-root .wp-identity-right .guild-card-variant-root,
+  .wp-identity-right .guild-card-variant-root {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: unset !important;
+    aspect-ratio: 530 / 275.6 !important;
   }
 
   .wp-guild-card {
@@ -1557,14 +1770,9 @@ body,
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .wp-link-row {
-    grid-template-columns: 20px minmax(64px, 76px) minmax(0, 1fr) 20px;
-  }
-
-  .wp-link-name {
-    white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
+  .wp-link-left {
+    min-width: 110px;
+    width: 110px;
   }
 
   .wp-trust-scroll-inner {
@@ -1602,9 +1810,9 @@ body,
     grid-template-columns: 1fr;
   }
 
-  .wp-link-row {
-    grid-template-columns: 18px minmax(56px, 68px) minmax(0, 1fr) 18px;
-    gap: 6px;
+  .wp-link-left {
+    min-width: 90px;
+    width: 90px;
   }
 }
 
@@ -1747,7 +1955,7 @@ body,
   }
 
   .wp-page-root .wp-scroll-area {
-    padding-bottom: 30px;
+    padding-bottom: 0;
   }
 
   /* Bottom sections become compact too. */
@@ -1955,4 +2163,104 @@ body,
     height: 24px;
     font-size: 8px;
   }
+}
+
+/* =========================================================
+   ABOUT ME CARD (EXACT MATCH TO DESIGN SCREENSHOT)
+   ========================================================= */
+.wp-card.wp-about-me-card {
+  background: #ffffff;
+  border: 1px solid #eef1f6;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  min-height: 240px;
+}
+
+.wp-about-me-inner {
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.wp-about-me-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #103CA4;
+  margin: 0;
+  text-align: left;
+}
+
+.wp-about-me-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px 0 4px;
+}
+
+.wp-about-me-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  margin-bottom: 14px;
+  flex-shrink: 0;
+}
+
+.wp-about-me-icon-box svg,
+.wp-about-me-icon-box svg * {
+  width: 22px !important;
+  height: 22px !important;
+  color: #94a3b8 !important;
+  stroke: #94a3b8 !important;
+  stroke-width: 1.8 !important;
+  fill: none !important;
+}
+
+.wp-about-me-heading {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #103CA4;
+  margin: 0 0 8px;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.wp-about-me-desc {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0 0 18px;
+  line-height: 1.5;
+  max-width: 440px;
+  text-align: center;
+}
+
+.wp-about-me-btn {
+  width: auto !important;
+  height: auto !important;
+  background-color: #0b38a8;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.wp-about-me-btn:hover {
+  background-color: #082977;
 }
