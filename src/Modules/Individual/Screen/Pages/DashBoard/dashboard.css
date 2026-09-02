@@ -380,19 +380,12 @@
 }
 
 .quests-card-btn {
-  background-color: #103ca4;
-  color: #ffffff;
-  border: none;
-  border-radius: 10px;
-  padding: clamp(7px, 0.8vh, 14px) clamp(18px, 2.0vw, 38px);
-  font-size: clamp(0.78rem, 0.88vw, 1.08rem);
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.quests-card-btn:hover {
-  background-color: #0c2b7a;
+  width: auto !important;
+  min-width: 150px;
+  height: 42px;
+  padding: 0 clamp(18px, 2.0vw, 36px) !important;
+  font-size: clamp(0.85rem, 0.9vw, 1rem) !important;
+  margin-top: 4px;
 }
 
 .tip-banner-card {
@@ -411,8 +404,15 @@
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in {
@@ -420,19 +420,51 @@
 }
 
 @media (min-width: 768px) and (max-height: 800px) {
-  .dashboard-layout { padding: 12px; gap: 12px; }
-  .main-workspace { gap: 12px; }
-  .dashboard-content { grid-template-rows: 2.5fr 1.8fr 1.9fr auto; gap: 12px; }
-  .db-row-banner, .db-row-metrics, .db-row-activity { gap: 12px; }
-  .metric-card-element { padding: 10px 14px !important; }
-  .trust-card-element  { padding: 10px 14px !important; }
-  .activity-card-element { padding: 12px 14px !important; }
-  .quests-card-element   { padding: 12px 14px !important; }
+  .dashboard-layout {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .main-workspace {
+    gap: 12px;
+  }
+
+  .dashboard-content {
+    grid-template-rows: 2.5fr 1.8fr 1.9fr auto;
+    gap: 12px;
+  }
+
+  .db-row-banner,
+  .db-row-metrics,
+  .db-row-activity {
+    gap: 12px;
+  }
+
+  .metric-card-element {
+    padding: 10px 14px !important;
+  }
+
+  .trust-card-element {
+    padding: 10px 14px !important;
+  }
+
+  .activity-card-element {
+    padding: 12px 14px !important;
+  }
+
+  .quests-card-element {
+    padding: 12px 14px !important;
+  }
 }
 
 @media (max-width: 991px) and (min-width: 768px) {
-  .db-row-banner { grid-template-columns: 1.6fr 1fr; }
-  .db-row-metrics { grid-template-columns: repeat(2, 1fr); }
+  .db-row-banner {
+    grid-template-columns: 1.6fr 1fr;
+  }
+
+  .db-row-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 767px) {
@@ -498,15 +530,49 @@
     min-height: min-content;
   }
 
-  .db-row-banner .db-card-fill:first-child { flex: 1; height: 100%; min-height: 160px; }
-  .db-row-banner .db-card-fill:last-child  { flex: 1; height: 100%; min-height: 150px; }
-  .db-row-metrics .db-card-fill  { height: 100%; min-height: 90px; }
-  .db-row-activity .db-card-fill { flex: 1; height: 100%; min-height: 150px; }
+  .db-row-banner .db-card-fill:first-child {
+    flex: 1;
+    height: 100%;
+    min-height: 160px;
+  }
 
-  .metric-card-inner { justify-content: space-between; gap: 6px; height: 100%; }
-  .trust-card-inner  { justify-content: space-between; height: 100%; }
-  .activity-card-inner { justify-content: space-between; height: 100%; }
-  .quests-card-inner { justify-content: space-between; height: 100%; }
+  .db-row-banner .db-card-fill:last-child {
+    flex: 1;
+    height: 100%;
+    min-height: 150px;
+  }
+
+  .db-row-metrics .db-card-fill {
+    height: 100%;
+    min-height: 90px;
+  }
+
+  .db-row-activity .db-card-fill {
+    flex: 1;
+    height: 100%;
+    min-height: 150px;
+  }
+
+  .metric-card-inner {
+    justify-content: space-between;
+    gap: 6px;
+    height: 100%;
+  }
+
+  .trust-card-inner {
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .activity-card-inner {
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .quests-card-inner {
+    justify-content: space-between;
+    height: 100%;
+  }
 
   .header-card {
     background: transparent !important;

@@ -4,7 +4,7 @@
   border: none;
   background: #103CA4;
   color: white;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
@@ -13,24 +13,31 @@
   justify-content: center;
   gap: 8px;
   transition: all 0.2s ease;
-  margin-top: 4px;
 }
 
-.primary-btn:hover {
+.primary-btn:hover:not(:disabled) {
   background: #0c3188;
   color: white;
-  box-shadow: 0 6px 18px rgba(12, 49, 136, 0.35);
+  box-shadow: none;
   transform: none;
 }
 
-.primary-btn:active {
+.primary-btn:active:not(:disabled) {
   background: #092363;
   transform: none;
 }
 
 .primary-btn:disabled {
-  background: #93C5FD;
+  background: #103CA4;
+  color: white;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
+}
+
+.primary-btn:disabled:hover {
+  background: #103CA4;
+  color: white;
+  box-shadow: none;
+  transform: none;
 }

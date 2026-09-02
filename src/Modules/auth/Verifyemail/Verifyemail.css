@@ -151,42 +151,13 @@
   align-items: center;
 }
 
-.secondary-btn,
-.verify-buttons .primary-btn {
-  height: 44px;
-  margin-top: 0 !important;
-  border-radius: 8px;
-  font-size: 13.5px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.secondary-btn {
+.verify-buttons .secondary-btn {
   flex: 1;
-  border: 1px solid #D0D0D0;
-  background: #EFEFEF;
-  color: #111111;
-}
-
-.secondary-btn:hover {
-  background: #E5E5E5;
 }
 
 .verify-buttons .primary-btn {
   flex: 1.4;
   width: auto;
-  border: none;
-  color: white;
-  background: #103CA4;
-  box-shadow: 0 4px 14px rgba(16, 60, 164, 0.25);
-  transition: all 0.25s ease;
-}
-
-.verify-buttons .primary-btn:hover {
-  background: #0c3188;
-  box-shadow: 0 6px 18px rgba(12, 49, 136, 0.35);
-  transform: none;
 }
 
 .footer-text {
