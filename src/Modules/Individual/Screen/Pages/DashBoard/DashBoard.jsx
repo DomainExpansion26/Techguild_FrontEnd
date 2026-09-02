@@ -96,7 +96,7 @@ export default function DashBoard() {
             variant="tip"
             message="Tip: Freelancers who complete their profiles and get verified are 5x more likely to get hired."
             actionText="Complete Your Profile >"
-            actionHref="#complete-profile"
+            actionHref="/profile"
             delay="0.36s"
           />
         </div>

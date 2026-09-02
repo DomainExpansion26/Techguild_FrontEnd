@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Camera, Zap, Briefcase, ShieldCheck } from "lucide-react";
 import img3 from "@/assets/img3.jpg";
 import "./welcome-banner.css";
@@ -8,6 +9,7 @@ export default function WelcomeBanner({
   subtitle = "Complete your profile to stand out",
   desc = "Finish these steps to improve your chances of getting hired.",
   actionText = "Complete profile",
+  onActionClick,
   steps = [
     { icon: <Camera size={13} strokeWidth={2.5} />, text: "Basic Information" },
     { icon: <Zap size={13} strokeWidth={2.5} />, text: "Add Skills" },
@@ -16,17 +18,23 @@ export default function WelcomeBanner({
   ],
   progressText = "0 of 4 steps completed"
 }) {
+  const navigate = useNavigate();
+
+  const handleActionClick = () => {
+    if (onActionClick) {
+      onActionClick();
+    } else {
+      navigate("/profile");
+    }
+  };
+
   return (
     <div
-      className="welcome-banner-card w-100 p-3 px-md-4 py-md-3 border rounded-3 position-relative overflow-hidden d-flex flex-column justify-content-between animate-fade-in"
+      className="welcome-banner-card animate-fade-in"
       style={{
         backgroundImage: `url(${img3})`,
-        width: "100%",
-        height: "100%",
-        minHeight: "160px",
-        borderColor: "#E5E7EB",
         backgroundSize: "cover",
-        backgroundPosition: "center"
+        backgroundPosition: "center",
       }}
     >
       <div className="welcome-banner-overlay position-absolute top-0 start-0 w-100 h-100"></div>
@@ -39,7 +47,11 @@ export default function WelcomeBanner({
             <h3 className="welcome-banner-subtitle">{subtitle}</h3>
             <p className="welcome-banner-desc">{desc}</p>
           </div>
-          <button className="btn btn-light btn-complete-profile">
+          <button
+            type="button"
+            className="btn btn-light btn-complete-profile"
+            onClick={handleActionClick}
+          >
             {actionText}
           </button>
         </div>
