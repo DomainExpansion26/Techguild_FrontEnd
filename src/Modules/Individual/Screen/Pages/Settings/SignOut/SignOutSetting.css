@@ -40,20 +40,23 @@
 
 .signout-icon-wrap {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 156px;
   height: 156px;
+  background-color: #103ca4;
+  border-radius: 50%;
 }
 
 .signout-icon-wrap .icon-person {
-  position: absolute;
-  top: 7px;
-  left: 7px;
   display: block;
+  color: #ffffff !important;
 }
 
 .signout-icon-wrap .icon-person path {
-  stroke: #d12027;
+  stroke: #ffffff !important;
+  fill: none !important;
 }
 
 .icon-arrow-badge {
@@ -95,8 +98,16 @@
   gap: 20px;
 }
 
-.btn-custom-cancel,
-.btn-custom-confirm {
+/* ===========================================================
+   BUTTONS
+   Cancel uses SecondaryButton component: override .secondary-btn
+   inherited styles via scoped selector (specificity beats
+   secondary.css / Verifyemail.css). Confirm uses PrimaryButton
+   component: override .primary-btn inherited styles via scoped
+   selector (.signout-actions .btn-custom-confirm beats
+   Primarybutton.css).
+   =========================================================== */
+.signout-actions .cancel-btn {
   width: 258px !important;
   height: 58px !important;
   padding: 12px 30px !important;
@@ -105,26 +116,48 @@
   font-weight: 600 !important;
   font-size: 16px !important;
   line-height: 20px !important;
+  background-color: #e0e7ff !important;
+  color: #103ca4 !important;
+  flex: none !important;
 }
 
-.btn-custom-cancel {
-  background-color: #e0e7ff !important;
+.signout-actions .cancel-btn:hover {
+  background-color: #c7d2fe !important;
   color: #103ca4 !important;
 }
 
-.btn-custom-cancel:hover {
-  background-color: #c7d2fe !important;
-}
-
-.btn-custom-confirm {
+.signout-actions .btn-custom-confirm {
+  width: 258px !important;
+  height: 58px !important;
+  padding: 12px 30px !important;
+  border-radius: 10px !important;
+  border: none !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  line-height: 20px !important;
   background-color: #103ca4 !important;
   color: white !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  margin-top: 0 !important;
+  box-shadow: none !important;
 }
 
-.btn-custom-confirm:hover {
+.signout-actions .btn-custom-confirm:hover {
   background-color: #0d3184 !important;
+  color: white !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.signout-actions .btn-custom-confirm:active {
+  background-color: #0d3184 !important;
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 .dashboard-layout.signout-container{
-  gap: 30px;
+  gap: 12px;
 }

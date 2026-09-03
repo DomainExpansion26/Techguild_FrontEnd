@@ -1,9 +1,19 @@
 // Modules/Individual/Screen/Pages/Settings/BillingPayments/BillingPayments.jsx
-import { DashboardLayout, Cards } from "@/Components";
+import { useState } from "react";
+import {
+  DashboardLayout,
+  Cards,
+  SecondaryButton,
+  TextInput,
+} from "@/Components";
 import "../settings.css";
 import "./BillingPayments.css";
 
 export default function BillingPayments() {
+  const [payoutMethod, setPayoutMethod] = useState("SBI — ••••••4821");
+  const [payoutSchedule, setPayoutSchedule] = useState("");
+  const [taxId, setTaxId] = useState("29AABCU9603R1ZM");
+
   return (
     <DashboardLayout
       containerClass="settings-layout-collapsed-nav billing-payments-layout"
@@ -22,6 +32,7 @@ export default function BillingPayments() {
               SECTION 1: PAYOUT SETTINGS
               =========================================================== */}
           <Cards
+            variant="base"
             className="settings-section billing-settings-section"
             padding="32px"
           >
@@ -41,21 +52,23 @@ export default function BillingPayments() {
                 </p>
               </div>
               <div>
-                <div className="d-flex align-items-center gap-3">
-                  <div className="payout-method-container flex-grow-1">
-                    <div className="bank-badge-sbi">Bank</div>
-                    <span className="fw-bold small">SBI — ••••••4821</span>
-                    <span className="text-success small fw-bold ms-auto">
-                      Primary
-                    </span>
-                  </div>
-                  <button type="button" className="settings-btn-secondary">
-                    Change
-                  </button>
+                <div className="d-flex align-items-center gap-3 payout-method-row">
+                  <TextInput
+                    type="text"
+                    className="payout-method-container"
+                    containerClassName="payout-method-wrap"
+                    leftIcon={<span className="bank-badge-sbi">Bank</span>}
+                    rightIcon={
+                      <span className="text-success small fw-bold">
+                        Primary
+                      </span>
+                    }
+                    value={payoutMethod}
+                    onChange={(e) => setPayoutMethod(e.target.value)}
+                  />
+                  <SecondaryButton text="Change" />
                 </div>
               </div>
-
-              <div className="settings-divider" />
 
               {/* Payout Schedule */}
               <div className="settings-label">
@@ -64,16 +77,16 @@ export default function BillingPayments() {
                   How often earnings are transferred
                 </p>
               </div>
-              <div>
-                <input
+              <div className="settings-input-narrow">
+                <TextInput
                   type="text"
                   className="settings-input"
                   placeholder="Select schedule"
+                  value={payoutSchedule}
+                  onChange={(e) => setPayoutSchedule(e.target.value)}
                 />
               </div>
-
-              <div className="settings-divider" />
-
+              
               {/* GST / Tax ID */}
               <div className="settings-label">
                 <div>GST / Tax ID</div>
@@ -81,11 +94,12 @@ export default function BillingPayments() {
                   Required for invoicing above ₹5L
                 </p>
               </div>
-              <div>
-                <input
+              <div className="settings-input-narrow">
+                <TextInput
                   type="text"
                   className="settings-input"
-                  defaultValue="29AABCU9603R1ZM"
+                  value={taxId}
+                  onChange={(e) => setTaxId(e.target.value)}
                 />
               </div>
             </div>
@@ -95,6 +109,7 @@ export default function BillingPayments() {
               SECTION 2: BILLING HISTORY
               =========================================================== */}
           <Cards
+            variant="base"
             className="settings-section billing-settings-section"
             padding="32px"
           >
