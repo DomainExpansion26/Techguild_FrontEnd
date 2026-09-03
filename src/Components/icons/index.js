@@ -66,6 +66,10 @@ import UserPlus from "../../assets/icons/user-plus.svg?react";
 import ClipboardList from "../../assets/icons/clipboard-list.svg?react";
 import Download from "../../assets/icons/download.svg?react";
 import ExternalLink from "../../assets/icons/external-link.svg?react";
+import Palette from "../../assets/icons/palette.svg?react";
+import Tag from "../../assets/icons/tag.svg?react";
+import LifeBuoy from "../../assets/icons/life-buoy.svg?react";
+import FolderOpen from "../../assets/icons/folder-open.svg?react";
 
 export {
   ArrowLeft,
@@ -137,5 +141,9 @@ export {
   ClipboardList,
   Download,
   ExternalLink,
+  Palette,
+  Tag,
+  LifeBuoy,
+  FolderOpen,
 };
 
