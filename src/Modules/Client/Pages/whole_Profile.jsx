@@ -237,7 +237,7 @@ const WholeProfile = () => {
                     </p>
                     <PrimaryButton
                       className="wp-about-me-btn"
-                      onClick={() => navigate("/client-settings")}
+                      type="button"
                     >
                       + Add About Me
                     </PrimaryButton>
@@ -253,7 +253,7 @@ const WholeProfile = () => {
                 <div className="wp-card-inner">
                   <div className="wp-card-head">
                     <h3 className="wp-card-title">About Company</h3>
-                    <button className="wp-link-btn" onClick={() => navigate("/client-settings")} type="button">
+                    <button className="wp-link-btn" type="button">
                       <Icon name="Pencil" size={14} /> Edit
                     </button>
                   </div>
@@ -266,7 +266,7 @@ const WholeProfile = () => {
                       </React.Fragment>
                     ))}
                   </p>
-                  <button className="wp-readmore" onClick={() => navigate("/client-settings")} type="button">
+                  <button className="wp-readmore" type="button">
                     Read More <Icon name="ChevronRight" size={14} />
                   </button>
                 </div>
@@ -280,7 +280,6 @@ const WholeProfile = () => {
                   <h3 className="wp-card-title">Hiring Interests</h3>
                   <button
                     className="wp-link-btn"
-                    onClick={() => navigate("/client-settings")}
                     type="button"
                   >
                     <Icon name="Pencil" size={13} /> Edit
@@ -292,7 +291,6 @@ const WholeProfile = () => {
                       key={tag}
                       type="button"
                       className="wp-chip-item"
-                      onClick={() => navigate("/client-settings")}
                     >
                       {tag}
                     </button>
@@ -335,7 +333,6 @@ const WholeProfile = () => {
                     <h3 className="wp-card-title">Active Quests</h3>
                     <button
                       className="wp-link-btn"
-                      onClick={() => navigate("/client-quest-board")}
                       type="button"
                     >
                       View All
@@ -351,7 +348,7 @@ const WholeProfile = () => {
                     </p>
                     <PrimaryButton
                       className="wp-primary-cta-btn"
-                      onClick={() => navigate("/client-quest-board")}
+                      type="button"
                     >
                       + Post a Quest
                     </PrimaryButton>
@@ -365,7 +362,7 @@ const WholeProfile = () => {
                     <h3 className="wp-card-title">
                       Active Quests <span className="wp-title-sub">(Hiring Now)</span>
                     </h3>
-                    <button className="wp-link-btn" type="button" onClick={() => navigate("/client-quest-board")}>
+                    <button className="wp-link-btn" type="button">
                       View All
                     </button>
                   </div>
@@ -395,7 +392,6 @@ const WholeProfile = () => {
                     <h3 className="wp-card-title">Freelancer Reviews</h3>
                     <button
                       className="wp-link-btn"
-                      onClick={() => navigate("/client-company-reputation")}
                       type="button"
                     >
                       View All
@@ -417,7 +413,7 @@ const WholeProfile = () => {
                 <div className="wp-card-inner">
                   <div className="wp-card-head">
                     <h3 className="wp-card-title">Freelancer Reviews</h3>
-                    <button className="wp-link-btn" type="button" onClick={() => navigate("/client-company-reputation")}>
+                    <button className="wp-link-btn" type="button">
                       View All
                     </button>
                   </div>
@@ -450,7 +446,7 @@ const WholeProfile = () => {
                     ))}
                   </div>
 
-                  <button className="wp-see-reviews" type="button" onClick={() => navigate("/client-company-reputation")}>
+                  <button className="wp-see-reviews" type="button">
                     See all reviews <Icon name="ChevronRight" size={14} />
                   </button>
                 </div>
@@ -470,7 +466,6 @@ const WholeProfile = () => {
                   <h3 className="wp-card-title">Company Links</h3>
                   <button
                     className="wp-link-btn"
-                    onClick={() => navigate("/client-settings")}
                     type="button"
                   >
                     <Icon name="Pencil" size={13} color="#103CA4" /> Edit
@@ -562,7 +557,6 @@ const WholeProfile = () => {
                     <h3 className="wp-card-title">Recent Activity</h3>
                     <button
                       className="wp-link-btn"
-                      onClick={() => navigate("/client-notifications")}
                       type="button"
                     >
                       View All <Icon name="ChevronRight" size={14} />
@@ -612,7 +606,6 @@ const WholeProfile = () => {
                   <h3 className="wp-card-title">Quick Actions</h3>
                   <button
                     className="wp-link-btn"
-                    onClick={() => navigate("/client-profile")}
                     type="button"
                   >
                     <Icon name="Pencil" size={14} color="#103CA4" /> Edit
@@ -624,12 +617,6 @@ const WholeProfile = () => {
                       key={a.label}
                       type="button"
                       className="wp-action-btn"
-                      onClick={() => {
-                        if (a.label === "Edit Profile") navigate("/client-profile");
-                        else if (a.label === "Verify Company") navigate("/client-verification-hub");
-                        else if (a.label === "Create New Quest") navigate("/client-quest-board");
-                        else if (a.label === "Manage Applications") navigate("/client-applications");
-                      }}
                     >
                       <div className="wp-action-left">
                         <div className="wp-action-icon-wrap">
