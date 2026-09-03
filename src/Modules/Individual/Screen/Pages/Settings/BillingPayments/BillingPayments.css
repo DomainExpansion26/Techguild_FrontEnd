@@ -14,34 +14,12 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
 }
 
 /* ===========================================================
-   Layout (matches ProfileSetting alignment)
+   Payout method box matches the .settings-input metrics
    =========================================================== */
-
-/* ===========================================================
-   Layout gap (moved out of the inline style on DashboardLayout)
-   =========================================================== */
-.dashboard-layout.billing-payments-layout {
-  gap: 30px;
-}
-
-.billing-settings-container {
-  max-width: none;
-  gap: 24px;
-  padding-bottom: 24px;
-}
-
-.billing-settings-section {
-  gap: 28px;
-}
-
-.billing-settings-section .settings-section-header {
-  width: 100%;
-}
-
-/* Payout method box matches the .settings-input metrics */
 .payout-method-container {
   display: flex;
   flex-wrap: wrap;
@@ -55,11 +33,115 @@
 }
 
 /* ===========================================================
+   Keep the TextInput wrapper aligned to the original box
+   =========================================================== */
+.payout-method-wrap {
+  flex: 1;
+  min-width: 0;
+}
+
+.payout-method-row {
+  width: 100%;
+  max-width: 351px;
+  margin-left: auto;
+}
+
+.payout-method-row .payout-method-wrap {
+  min-width: 0;
+}
+
+.payout-method-wrap .text-input-wrapper {
+  height: 40px;
+  border-radius: 10px;
+}
+
+.payout-method-wrap .text-input-field {
+  font-weight: 700;
+  padding-left: 0;
+}
+
+.payout-method-wrap .text-input-icon.left-icon {
+  padding-left: 0;
+}
+
+.payout-method-wrap .text-input-icon.right-icon {
+  padding-right: 0;
+}
+
+/* =========================================================
+   Narrow right-aligned inputs (Payout Schedule, GST / Tax ID)
+   ========================================================= */
+.billing-settings-section .settings-input-narrow {
+  width: 100%;
+  max-width: 351px;
+  margin-left: auto;
+}
+
+.billing-settings-section .settings-input-narrow .text-input-group,
+.billing-settings-section .settings-input-narrow .text-input-wrapper {
+  width: 100%;
+}
+
+/* ===========================================================
+   Layout (matches ProfileSetting alignment)
+   =========================================================== */
+
+/* ===========================================================
+   Layout gap (moved out of the inline style on DashboardLayout)
+   =========================================================== */
+.dashboard-layout.billing-payments-layout {
+  gap: 12px;
+}
+
+.billing-settings-container {
+  max-width: none;
+  gap: 12px;
+  padding-bottom: 0;
+}
+
+.billing-settings-section {
+  gap: 28px;
+}
+
+.billing-settings-section .settings-section-header {
+  width: 100%;
+}
+
+/* ===========================================================
+   Buttons (override Verifyemail.css .secondary-btn)
+   =========================================================== */
+
+.billing-settings-section .secondary-btn {
+  flex: none;
+  height: auto;
+  padding: 8px 24px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+.billing-settings-section .secondary-btn:hover {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+  color: #212529;
+}
+
+.billing-settings-section .secondary-btn:active {
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+/* ===========================================================
    Responsive tweaks for mobile
    =========================================================== */
 @media (max-width: 768px) {
   .billing-settings-container {
-    gap: 20px;
+    gap: 12px;
   }
 
   .bank-badge-sbi {

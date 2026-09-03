@@ -1,5 +1,5 @@
 // Modules/Individual/Screen/Pages/Settings/DeactivateAccount/DeactivateAccount.jsx
-import { DashboardLayout, Cards } from "@/Components";
+import { DashboardLayout, Cards, SecondaryButton } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import "../settings.css";
 import "./DeactivateAccount.css";
@@ -24,6 +24,7 @@ export default function DeactivateAccount() {
               Figma: #FEF2F2 @ 60%, border #FECACA
               =========================================================== */}
           <Cards
+            variant="base"
             className="settings-section card-danger-custom deactivate-settings-section"
             padding="32px"
           >
@@ -38,9 +39,10 @@ export default function DeactivateAccount() {
               <p className="deactivate-note mb-0">
                 Your profile will be hidden from clients and search results.
               </p>
-              <button type="button" className="btn-deactivate-outline">
-                Deactivate Account
-              </button>
+              <SecondaryButton
+                text="Deactivate Account"
+                className="deactivate-outline-btn"
+              />
             </div>
           </Cards>
 
@@ -48,6 +50,7 @@ export default function DeactivateAccount() {
               CARD 2: DELETE ACCOUNT
               =========================================================== */}
           <Cards
+            variant="base"
             className="settings-section card-danger-custom deactivate-settings-section"
             padding="32px"
           >
@@ -74,9 +77,10 @@ export default function DeactivateAccount() {
                   cannot be recovered.
                 </p>
               </div>
-              <button type="button" className="btn-delete-account">
-                Delete My Account
-              </button>
+              <SecondaryButton
+                text="Delete My Account"
+                className="delete-account-btn"
+              />
             </div>
           </Cards>
         </div>
