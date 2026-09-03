@@ -61,6 +61,15 @@ body,
   -webkit-overflow-scrolling: touch;
   width: 100%;
   padding-bottom: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.wp-page-root .wp-scroll-area::-webkit-scrollbar,
+.wp-scroll-area::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 /* -----------------------------------------------------
@@ -130,7 +139,7 @@ body,
 .wp-identity-layout {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: stretch;
   flex-direction: row;
   padding: 0 clamp(12px, 2.2vw, 32px) clamp(14px, 2vw, 32px);
   gap: clamp(12px, 2vw, 32px);
@@ -319,11 +328,16 @@ body,
    GUILD CARD (right column)
 ------------------------------------------------------ */
 .wp-identity-right {
-  margin-top: 18px;
+  margin: auto 0;
+  align-self: center;
+  transform: translateY(16px);
   flex: 0 0 530px;
   width: 530px;
   max-width: 100%;
   min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .wp-guild-card {
@@ -1674,7 +1688,8 @@ body,
     width: 100% !important;
     max-width: 530px !important;
     flex: 0 1 auto !important;
-    margin-top: 0 !important;
+    margin-top: 16px !important;
+    transform: none !important;
     align-self: flex-start !important;
   }
 
@@ -1740,7 +1755,8 @@ body,
   .wp-identity-right {
     width: 100% !important;
     max-width: 100% !important;
-    margin-top: 0 !important;
+    margin-top: 16px !important;
+    transform: none !important;
     flex: 0 1 auto !important;
   }
 
