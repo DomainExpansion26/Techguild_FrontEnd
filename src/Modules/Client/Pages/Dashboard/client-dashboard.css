@@ -1,162 +1,875 @@
-.client-db-grid {
+/* =========================================================
+   CLIENT DASHBOARD
+   ========================================================= */
+
+
+/* =========================================================
+   DASHBOARD CONTENT
+   ========================================================= */
+
+.dashboard-content {
+  width: 100%;
+  min-width: 0;
+  flex: 1;
+  min-height: 0;
+
+  padding: 0 0 0 0;
+
+  box-sizing: border-box;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  /* Hide scrollbar but keep scrolling */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  gap: 0;
+  row-gap: 0;
+}
+
+.dashboard-content::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* =========================================================
+   TOP SECTION
+   Welcome Banner + Trust Points
+   ========================================================= */
+
+.dashboard-top-section {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
-  margin-top: 20px;
-}
 
-.client-db-main-col {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
+  grid-template-columns: minmax(0, 2.65fr) minmax(180px, 0.9fr);
 
-.client-db-sidebar-col {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* Card titles */
-.card-header-title {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #111827;
-  margin-bottom: 15px;
-}
-
-.card-header-flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.card-link-text {
-  font-size: 0.75rem;
-  color: #103ca4;
-  font-weight: 500;
-  text-decoration: none;
-}
-
-/* How it works */
-.hiw-empty-icon {
-  width: 40px;
-  height: 40px;
-  background-color: #F3F4F6;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 15px;
-}
-
-.hiw-empty-text {
-  text-align: center;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #111827;
-  margin-bottom: 5px;
-}
-.hiw-empty-subtext {
-  text-align: center;
-  font-size: 0.8rem;
-  color: #6B7280;
-  margin-bottom: 20px;
-  padding: 0 20px;
-}
-.hiw-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-.hiw-step {
-  display: flex;
   gap: 12px;
-}
-.hiw-step-num {
-  width: 24px;
-  height: 24px;
-  background-color: #103ca4;
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.75rem;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-.hiw-step-title {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #111827;
-  margin-bottom: 2px;
-}
-.hiw-step-desc {
-  font-size: 0.75rem;
-  color: #6B7280;
+
+  width: 100%;
+  max-width: none;
+
+  height: 242px;
+
+  /* EXACT 12px before main cards */
+  margin-bottom: 12px;
+
+  align-items: stretch;
+  align-self: stretch;
 }
 
-/* Quest Overview Grid */
-.quest-overview-grid {
+
+.welcome-banner-wrapper,
+.trust-points-wrapper {
+  width: 100%;
+  min-width: 0;
+
+  height: 242px !important;
+  min-height: 242px !important;
+  max-height: 242px !important;
+}
+
+.welcome-banner-wrapper > *,
+.trust-points-wrapper > * {
+  width: 100% !important;
+
+  height: 242px !important;
+  min-height: 242px !important;
+  max-height: 242px !important;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   MAIN CARDS
+   Posting Quest + How It Works + Recent Activity
+   ========================================================= */
+
+.dashboard-main-cards {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
-.qo-metric-card {
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
-  padding: 12px;
-  background: white;
-}
-.qo-metric-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 10px;
-}
-.qo-metric-title {
-  font-size: 0.75rem;
-  color: #6B7280;
-  font-weight: 500;
-}
-.qo-metric-icon {
-  color: #9CA3AF;
-}
-.qo-metric-value {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #111827;
-  margin-bottom: 5px;
-}
-.qo-metric-sub {
-  font-size: 0.7rem;
-  color: #9CA3AF;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 12px;
+
+  width: 100%;
+  max-width: none;
+
+  height: 291px;
+
+  margin-top: 0;
+  margin-bottom: 0px;
+
+  align-items: stretch;
+  align-self: stretch;
 }
 
-/* Category Tags */
-.category-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+.posting-card-wrapper,
+.how-it-works-wrapper,
+.recent-activity-wrapper {
+  width: 100%;
+  min-width: 0;
+
+  height: 291px !important;
+  min-height: 291px !important;
+  max-height: 291px !important;
 }
-.category-tag {
-  display: inline-flex;
+
+.posting-card-wrapper > *,
+.how-it-works-wrapper > *,
+.recent-activity-wrapper > * {
+  width: 100% !important;
+
+  height: 291px !important;
+  min-height: 291px !important;
+  max-height: 291px !important;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   QUEST OVERVIEW SECTION
+   Left = Overview
+   Right = Payout + Need Help
+   ========================================================= */
+
+.quest-overview-section {
+  display: grid;
+
+  /* LEFT = 2 cards worth, RIGHT = 1 card worth */
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+
+  gap: 12px;
+
+  width: 100%;
+  max-width: none;
+  
+  margin-top: 17px;
+  margin-bottom: 12px;
+
+  align-items: start;
+  align-self: stretch;
+}
+
+
+/* =========================================================
+   LEFT SIDE
+   Quest Overview + 4 Cards + Get Started
+   ========================================================= */
+
+.quest-overview-left {
+  width: 100%;
+  min-width: 0;
+}
+
+
+/* =========================================================
+   QUEST OVERVIEW HEADER
+   ========================================================= */
+
+.section-heading {
+  display: flex;
+
   align-items: center;
-  gap: 5px;
-  padding: 6px 12px;
-  background-color: #fff;
-  border: 1px solid #E5E7EB;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  color: #374151;
-  font-weight: 500;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 20px;
+
+  /* Heading → Overview cards = 12px */
+  margin-bottom: 12px;
 }
 
-/* Shared utility */
-.text-muted-sm {
-  font-size: 0.8rem;
-  color: #6B7280;
-  line-height: 1.4;
+.section-heading h2 {
+  margin: 0;
+
+  font-size: 10px;
+  line-height: 14px;
+  font-weight: 700;
+
+  color: #18233a;
+}
+
+.overview-filter {
+  padding: 0;
+  margin: 0;
+
+  border: 0;
+  outline: none;
+
+  background: transparent;
+
+  color: #103ca4;
+
+  font-size: 9px;
+  line-height: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   FOUR OVERVIEW CARDS
+   ========================================================= */
+
+.quest-overview-cards {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  /* Card ↔ Card = 12px */
+  gap: 12px;
+
+  width: 100%;
+
+  height: 142px;
+}
+
+.overview-card-wrapper {
+  width: 100%;
+  min-width: 0;
+
+  height: 142px !important;
+  min-height: 142px !important;
+  max-height: 142px !important;
+}
+
+.overview-card-wrapper > * {
+  width: 100% !important;
+
+  height: 142px !important;
+  min-height: 142px !important;
+  max-height: 142px !important;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   GET STARTED
+   ========================================================= */
+
+.get-started-wrapper {
+  width: 100%;
+  min-width: 0;
+
+  height: 178px;
+
+  /* Overview cards → Get Started = 12px */
+  margin-top: 12px;
+}
+
+.get-started-wrapper > * {
+  width: 100% !important;
+
+  height: 178px !important;
+  min-height: 178px !important;
+  max-height: 178px !important;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   RIGHT SIDE
+   Payout Guide + Need Help
+   ========================================================= */
+
+.quest-overview-right {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  /* Payout Guide → Need Help = 12px */
+  gap: 12px;
+  margin-top: -5px;
+}
+
+
+/* =========================================================
+   PAYOUT GUIDE
+   ========================================================= */
+
+.payout-guide-wrapper {
+  width: 100%;
+  min-width: 0;
+
+  height: 178px;
+}
+
+.payout-guide-wrapper > * {
+  width: 100% !important;
+
+  height: 178px !important;
+  min-height: 178px !important;
+  max-height: 178px !important;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   NEED HELP
+   ========================================================= */
+
+.need-help-wrapper {
+  width: 100%;
+  min-width: 0;
+
+  height: 178px;
+}
+
+.need-help-wrapper > * {
+  width: 100% !important;
+
+  height: 178px !important;
+  min-height: 178px !important;
+  max-height: 178px !important;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   TIP BANNER
+   ========================================================= */
+
+.dashboard-tip-section {
+  width: 100%;
+  max-width: none;
+
+  height: 42px;
+
+  /* Gap is created by quest-overview-section margin-bottom */
+  margin: 0;
+
+  box-sizing: border-box;
+
+  align-self: stretch;
+}
+
+.dashboard-tip-section > * {
+  width: 100% !important;
+
+  height: 100%;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+/* =========================================================
+   LARGE TABLET / SMALL LAPTOP
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+  .dashboard-content {
+    padding-right: 12px;
+  }
+
+  .dashboard-top-section {
+    grid-template-columns:
+      minmax(0, 2.2fr)
+      minmax(180px, 1fr);
+
+    gap: 12px;
+  }
+
+  .dashboard-main-cards,
+  .quest-overview-cards {
+    gap: 12px;
+  }
+
+  .quest-overview-section {
+    grid-template-columns:
+      minmax(0, 2fr)
+      minmax(0, 1fr);
+
+    column-gap: 12px;
+    row-gap: 12px;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .dashboard-top-section {
+    grid-template-columns: 1fr;
+
+    height: auto;
+    gap: 12px;
+  }
+
+  .welcome-banner-wrapper,
+  .trust-points-wrapper {
+    height: 150px !important;
+    min-height: 150px !important;
+    max-height: 150px !important;
+  }
+
+  .welcome-banner-wrapper > *,
+  .trust-points-wrapper > * {
+    height: 150px !important;
+    min-height: 150px !important;
+    max-height: 150px !important;
+  }
+
+
+  /* MAIN CARDS */
+
+  .dashboard-main-cards {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    height: auto;
+    gap: 12px;
+  }
+
+  .posting-card-wrapper,
+  .how-it-works-wrapper,
+  .recent-activity-wrapper {
+    height: 190px !important;
+    min-height: 190px !important;
+    max-height: 190px !important;
+  }
+
+  .posting-card-wrapper > *,
+  .how-it-works-wrapper > *,
+  .recent-activity-wrapper > * {
+    height: 190px !important;
+    min-height: 190px !important;
+    max-height: 190px !important;
+  }
+
+
+  /* QUEST OVERVIEW */
+
+  .quest-overview-section {
+    grid-template-columns: 1fr;
+
+    width: 100%;
+    gap: 12px;
+  }
+
+  .quest-overview-left,
+  .quest-overview-right {
+    width: 100%;
+  }
+
+
+  /* FOUR OVERVIEW CARDS */
+
+  .quest-overview-cards {
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr));
+
+    gap: 12px;
+  }
+
+
+  /* GET STARTED */
+
+  .get-started-wrapper {
+    height: 180px !important;
+    min-height: 180px !important;
+    max-height: 180px !important;
+
+    margin-top: 12px;
+  }
+
+  .get-started-wrapper > * {
+    height: 180px !important;
+    min-height: 180px !important;
+    max-height: 180px !important;
+  }
+
+
+  /* RIGHT SIDE */
+
+  .quest-overview-right {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+
+    margin-top: 0;
+  }
+
+  .payout-guide-wrapper,
+  .need-help-wrapper {
+    height: 178px;
+  }
+
+  .payout-guide-wrapper > *,
+  .need-help-wrapper > * {
+    height: 178px !important;
+    min-height: 178px !important;
+    max-height: 178px !important;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .dashboard-content {
+    width: 100%;
+    padding: 14px 12px 14px 14px;
+
+    /*
+     * DashboardLayout handles the page scrolling
+     * on mobile, so don't create a second scrollbar.
+     */
+    overflow: visible;
+  }
+
+
+  /* =======================================================
+     TOP SECTION
+     ======================================================= */
+
+  .dashboard-top-section {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: auto;
+
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .welcome-banner-wrapper,
+  .trust-points-wrapper {
+    width: 100%;
+
+    height: 180px !important;
+    min-height: 180px !important;
+    max-height: 180px !important;
+  }
+
+  .welcome-banner-wrapper > *,
+  .trust-points-wrapper > * {
+    width: 100% !important;
+
+    height: 180px !important;
+    min-height: 180px !important;
+    max-height: 180px !important;
+  }
+
+
+  /* =======================================================
+     MAIN CARDS
+     ======================================================= */
+
+  .dashboard-main-cards {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: auto;
+
+    gap: 12px;
+  }
+
+  .posting-card-wrapper,
+  .how-it-works-wrapper,
+  .recent-activity-wrapper {
+    width: 100%;
+
+    height: 191px !important;
+    min-height: 191px !important;
+    max-height: 191px !important;
+  }
+
+  .posting-card-wrapper > *,
+  .how-it-works-wrapper > *,
+  .recent-activity-wrapper > * {
+    width: 100% !important;
+
+    height: 191px !important;
+    min-height: 191px !important;
+    max-height: 191px !important;
+  }
+
+
+  /* =======================================================
+     QUEST OVERVIEW
+     ======================================================= */
+
+  .quest-overview-section {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
+    gap: 12px;
+
+    margin-top: 17px;
+    margin-bottom: 12px;
+  }
+
+  .quest-overview-left {
+    width: 100%;
+  }
+
+
+  /* =======================================================
+     QUEST OVERVIEW HEADER
+     ======================================================= */
+
+  .section-heading {
+    width: 100%;
+    height: auto;
+
+    min-height: 20px;
+
+    margin-bottom: 12px;
+  }
+
+
+  /* =======================================================
+     FOUR OVERVIEW CARDS
+     ======================================================= */
+
+  .quest-overview-cards {
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    width: 100%;
+    height: auto;
+
+    gap: 12px;
+  }
+
+  .overview-card-wrapper {
+    width: 100%;
+
+    height: 142px !important;
+    min-height: 142px !important;
+    max-height: 142px !important;
+  }
+
+  .overview-card-wrapper > * {
+    width: 100% !important;
+
+    height: 142px !important;
+    min-height: 142px !important;
+    max-height: 142px !important;
+  }
+
+
+  /* =======================================================
+     GET STARTED
+     ======================================================= */
+
+  .get-started-wrapper {
+    width: 100%;
+
+    height: auto !important;
+    min-height: 180px !important;
+    max-height: none !important;
+
+    margin-top: 12px;
+  }
+
+  .get-started-wrapper > * {
+    width: 100% !important;
+
+    height: auto !important;
+    min-height: 180px !important;
+    max-height: none !important;
+  }
+
+
+  /* =======================================================
+     PAYOUT + NEED HELP
+     ======================================================= */
+
+  .quest-overview-right {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
+    gap: 12px;
+
+    margin-top: 0;
+  }
+
+  .payout-guide-wrapper,
+  .need-help-wrapper {
+    width: 100%;
+
+    height: 178px !important;
+    min-height: 178px !important;
+    max-height: 178px !important;
+  }
+
+  .payout-guide-wrapper > *,
+  .need-help-wrapper > * {
+    width: 100% !important;
+
+    height: 178px !important;
+    min-height: 178px !important;
+    max-height: 178px !important;
+  }
+
+
+  /* =======================================================
+     TIP BANNER
+     ======================================================= */
+
+  .dashboard-tip-section {
+    width: 100%;
+
+    height: auto;
+    min-height: 42px;
+
+    margin: 0;
+  }
+
+  .dashboard-tip-section > * {
+    width: 100% !important;
+
+    height: auto;
+    min-height: 42px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .dashboard-content {
+    padding: 12px 10px 12px 10px;
+  }
+
+
+  /* TOP CARDS */
+
+  .welcome-banner-wrapper,
+  .trust-points-wrapper {
+    height: 165px !important;
+    min-height: 165px !important;
+    max-height: 165px !important;
+  }
+
+  .welcome-banner-wrapper > *,
+  .trust-points-wrapper > * {
+    height: 165px !important;
+    min-height: 165px !important;
+    max-height: 165px !important;
+  }
+
+
+  /* MAIN CARDS */
+
+  .posting-card-wrapper,
+  .how-it-works-wrapper,
+  .recent-activity-wrapper {
+    height: 185px !important;
+    min-height: 185px !important;
+    max-height: 185px !important;
+  }
+
+  .posting-card-wrapper > *,
+  .how-it-works-wrapper > *,
+  .recent-activity-wrapper > * {
+    height: 185px !important;
+    min-height: 185px !important;
+    max-height: 185px !important;
+  }
+
+
+  /* OVERVIEW CARDS */
+
+  .quest-overview-cards {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .overview-card-wrapper {
+    height: 125px !important;
+    min-height: 125px !important;
+    max-height: 125px !important;
+  }
+
+  .overview-card-wrapper > * {
+    height: 125px !important;
+    min-height: 125px !important;
+    max-height: 125px !important;
+  }
+
+
+  /* GET STARTED */
+
+  .get-started-wrapper {
+    min-height: 170px !important;
+  }
+
+  .get-started-wrapper > * {
+    min-height: 170px !important;
+  }
+
+
+  /* PAYOUT + NEED HELP */
+
+  .payout-guide-wrapper,
+  .need-help-wrapper {
+    height: 170px !important;
+    min-height: 170px !important;
+    max-height: 170px !important;
+  }
+
+  .payout-guide-wrapper > *,
+  .need-help-wrapper > * {
+    height: 170px !important;
+    min-height: 170px !important;
+    max-height: 170px !important;
+  }
+
+
+  /* TIP */
+
+  .dashboard-tip-section {
+    min-height: 48px;
+  }
+
+  .dashboard-tip-section > * {
+    min-height: 48px;
+  }
+}
+
+/* ==================================================================================== */
+.client-dashboard-workspace {
+  gap: 0;
+}
+
+.client-dashboard-workspace > :first-child {
+  margin-bottom: 12px;
 }
