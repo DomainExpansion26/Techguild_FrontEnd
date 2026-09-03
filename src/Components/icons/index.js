@@ -48,6 +48,7 @@ import Monitor from "../../assets/icons/monitor.svg?react";
 import Smartphone from "../../assets/icons/smartphone.svg?react";
 import TriangleAlert from "../../assets/icons/triangle-alert.svg?react";
 import Upload from "../../assets/icons/upload.svg?react";
+import CircleUserRound from "../../assets/icons/circle-user-round.svg?react";
 
 import Pencil from "../../assets/icons/pencil.svg?react";
 import MoreHorizontal from "../../assets/icons/more-horizontal.svg?react";
@@ -119,6 +120,7 @@ export {
   Smartphone,
   TriangleAlert,
   Upload,
+  CircleUserRound,
   Pencil,
   MoreHorizontal,
   MapPin,

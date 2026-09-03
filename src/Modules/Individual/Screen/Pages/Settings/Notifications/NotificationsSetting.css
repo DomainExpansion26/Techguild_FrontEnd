@@ -9,13 +9,13 @@
    Layout gap (moved out of the inline style on DashboardLayout)
    =========================================================== */
 .dashboard-layout.notifications-layout {
-  gap: 30px;
+  gap: 12px;
 }
 
 .notifications-settings-container {
   max-width: none;
-  gap: 20px;
-  padding-bottom: 24px;
+  gap: 12px;
+  padding-bottom: 0;
 
   font-family: "SF Pro", "Inter", system-ui, sans-serif;
 }
@@ -145,7 +145,7 @@
    =========================================================== */
 @media (max-width: 768px) {
   .notifications-settings-container {
-    gap: 20px;
+    gap: 12px;
   }
 
   .notifications-settings-section {

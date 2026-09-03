@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# docs
+docs/*
+.opencode/*
+AGENTS.md 
+opencode.json
