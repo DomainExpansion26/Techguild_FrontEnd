@@ -1,6 +1,7 @@
 import React from 'react';
 import BaseCard from './BaseCard';
 import Icon from '@/Components/icons/Icon';
+import PrimaryButton from '@/Components/Button/Primarybutton';
 
 function renderIcon(icon, defaultSize = 20, className = '') {
   if (!icon) return null;
@@ -58,13 +59,11 @@ export default function EmptyStateCard({
             {displayTitle && <h4 className="activity-card-text-main">{displayTitle}</h4>}
             {displayDesc && <p className="activity-card-text-sub">{displayDesc}</p>}
             {buttonText && (
-              <button
-                type="button"
+              <PrimaryButton
                 className={buttonClassName}
                 onClick={onButtonClick}
-              >
-                {buttonText}
-              </button>
+                text={buttonText}
+              />
             )}
             {linkText && (
               <a href={linkHref} onClick={onLinkClick} className="trust-card-link">
@@ -89,13 +88,11 @@ export default function EmptyStateCard({
         {displayTitle && <h4 className="quests-card-text-main">{displayTitle}</h4>}
         {displayDesc && <p className="quests-card-text-sub">{displayDesc}</p>}
         {buttonText && (
-          <button
-            type="button"
+          <PrimaryButton
             className={buttonClassName}
             onClick={onButtonClick}
-          >
-            {buttonText}
-          </button>
+            text={buttonText}
+          />
         )}
         {linkText && (
           <a href={linkHref} onClick={onLinkClick} className="trust-card-link">

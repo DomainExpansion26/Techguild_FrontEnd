@@ -2,19 +2,20 @@ import React from 'react';
 import BaseCard from './BaseCard';
 import Icon from '@/Components/icons/Icon';
 
-function renderIcon(icon, defaultSize = 14) {
+function renderIcon(icon, defaultSize = 14, iconColor = '#FF9D3B') {
   if (!icon) return null;
   if (React.isValidElement(icon)) {
     return icon;
   }
   if (typeof icon === 'string') {
-    return <Icon name={icon} size={defaultSize} color="#D97706" style={{ flexShrink: 0 }} />;
+    return <Icon name={icon} size={defaultSize} color={iconColor} stroke={iconColor} style={{ flexShrink: 0 }} />;
   }
   return null;
 }
 
 export default function TipBannerCard({
   icon = 'Lightbulb',
+  iconColor = '#FF9D3B',
   message,
   text,
   children,
@@ -47,7 +48,7 @@ export default function TipBannerCard({
     >
       <div className="tip-banner-inner">
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          {renderIcon(icon, 14)}
+          {renderIcon(icon, 14, iconColor)}
           <span style={{ fontSize: '0.75rem', fontWeight: 500, color: '#92400E' }}>
             {displayMsg}
           </span>

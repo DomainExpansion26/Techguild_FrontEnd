@@ -3,10 +3,19 @@
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   transition: all 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 10px !important;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding: clamp(14px, 1.5vh, 20px) clamp(16px, 1.8vw, 28px) !important;
 }
 
 .welcome-banner-overlay {
-  background: linear-gradient(90deg, rgba(10, 25, 50, 0.35) 0%, rgba(10, 25, 50, 0.2) 50%, rgba(10, 25, 50, 0.05) 100%);
+  background: linear-gradient(90deg, rgba(10, 25, 50, 0.4) 0%, rgba(10, 25, 50, 0.25) 50%, rgba(10, 25, 50, 0.08) 100%);
   z-index: 1;
 }
 
@@ -15,10 +24,10 @@
   z-index: 2;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   height: 100%;
   width: 100%;
-  gap: 0;
+  gap: clamp(10px, 1.2vh, 16px);
 }
 
 .welcome-banner-info-section {
@@ -27,7 +36,8 @@
   align-items: flex-start;
   justify-content: space-between;
   width: 100%;
-  gap: 12px;
+  gap: 16px;
+  margin: 0;
 }
 
 .welcome-banner-info-text {
@@ -37,7 +47,7 @@
 }
 
 .welcome-banner-title {
-  font-size: 1.45rem;
+  font-size: clamp(1.2rem, 1.4vw, 1.45rem);
   font-weight: 700;
   color: #ffffff;
   margin: 0;
@@ -46,7 +56,7 @@
 }
 
 .welcome-banner-subtitle {
-  font-size: 0.88rem;
+  font-size: clamp(0.8rem, 0.88vw, 0.9rem);
   font-weight: 600;
   color: #ffffff;
   margin: 0;
@@ -54,9 +64,9 @@
 }
 
 .welcome-banner-desc {
-  font-size: 0.72rem;
+  font-size: clamp(0.68rem, 0.72vw, 0.76rem);
   font-weight: 400;
-  color: #ffffff !important;
+  color: rgba(255, 255, 255, 0.9) !important;
   opacity: 1 !important;
   margin: 0;
   line-height: 1.3;
@@ -71,62 +81,68 @@
   background-color: #ffffff !important;
   color: #103ca4 !important;
   border: none !important;
-  border-radius: clamp(8px, 0.7vw, 12px) !important;
+  border-radius: 8px !important;
   font-weight: 600 !important;
-  font-size: clamp(0.72rem, 0.85vw, 1.05rem) !important;
-  padding: clamp(7px, 0.7vh, 13px) clamp(14px, 1.4vw, 28px) !important;
+  font-size: clamp(0.72rem, 0.8vw, 0.88rem) !important;
+  padding: clamp(7px, 0.8vh, 10px) clamp(14px, 1.2vw, 22px) !important;
   transition: all 0.2s ease !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
   z-index: 10 !important;
   white-space: nowrap !important;
+  cursor: pointer !important;
+  transform: none !important;
 }
 
 .btn-complete-profile:hover {
-  background-color: #f8f9fa !important;
-  transform: translateY(-1.5px) !important;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25) !important;
+  background-color: #f1f5f9 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2) !important;
 }
 
 .btn-complete-profile:active {
-  transform: translateY(0) !important;
+  transform: none !important;
 }
 
 .welcome-banner-progress-section {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
+  width: 100%;
+  margin: 0;
 }
 
 .progress-bar-container {
   width: 100%;
-  height: 5px;
+  height: 4px;
   background-color: #ffffff !important;
   border-radius: 100px;
 }
 
 .progress-text {
-  font-size: 0.75rem;
+  font-size: clamp(0.7rem, 0.75vw, 0.78rem);
   font-weight: 500;
   color: #ffffff;
-  line-height: 1;
+  line-height: 1.2;
+  margin: 0;
 }
 
 .welcome-banner-steps {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 24px;
+  gap: clamp(12px, 1.6vw, 24px);
+  margin: 0;
 }
 
 .step-item {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
+  flex-shrink: 0;
 }
 
 .step-icon-circle {
-  width: 24px;
-  height: 24px;
+  width: clamp(20px, 1.6vw, 24px);
+  height: clamp(20px, 1.6vw, 24px);
   background-color: #ffffff !important;
   border: 2px solid #D1D5DB !important;
   border-radius: 50%;
@@ -139,9 +155,10 @@
 }
 
 .step-text {
-  font-size: 0.76rem;
+  font-size: clamp(0.72rem, 0.76vw, 0.8rem);
   font-weight: 500;
   color: #ffffff;
+  white-space: nowrap;
 }
 
 .animate-fade-in {
@@ -160,17 +177,37 @@
   }
 }
 
+@media (max-width: 991px) and (min-width: 768px) {
+  .welcome-banner-steps {
+    gap: 12px 16px;
+  }
+  
+  .welcome-banner-title {
+    font-size: 1.25rem;
+  }
+}
+
 @media (max-width: 767px) {
+  .welcome-banner-card {
+    padding: 14px 16px !important;
+  }
+
   .welcome-banner-info-section {
     flex-direction: row !important;
     align-items: flex-start !important;
     justify-content: space-between !important;
     gap: 10px;
+    margin: 0 !important;
+  }
+
+  .welcome-banner-progress-section {
+    gap: 6px !important;
   }
 
   .welcome-banner-info-text {
     flex: 1;
     min-width: 0;
+    gap: 3px;
   }
 
   .btn-complete-profile {
@@ -183,11 +220,49 @@
     font-size: 1.15rem;
   }
 
+  .welcome-banner-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .welcome-banner-desc {
+    font-size: 0.68rem;
+  }
+
   .welcome-banner-steps {
-    gap: 10px;
+    gap: 8px 14px;
   }
 
   .step-text {
     font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-banner-card {
+    padding: 12px 14px !important;
+  }
+
+  .welcome-banner-title {
+    font-size: 1.05rem;
+  }
+
+  .welcome-banner-subtitle {
+    font-size: 0.76rem;
+  }
+
+  .welcome-banner-desc {
+    font-size: 0.65rem;
+  }
+
+  .welcome-banner-steps {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 10px;
+    width: 100%;
+  }
+
+  .step-text {
+    font-size: 0.68rem;
+    white-space: normal;
   }
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { DashboardLayout, Cards, PrimaryButton, SecondaryButton, TextInput } from "@/Components";
+import { DashboardLayout, Cards, PrimaryButton, SecondaryButton, TextInput, ScrollArea, Stepper } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import "./profile.css";
 
@@ -22,23 +22,47 @@ const slugStepMap = {
   "completed": 6
 };
 
-const clearDraftStorage = () => {
-  sessionStorage.removeItem("ind_profilePhotoName");
-  sessionStorage.removeItem("ind_fullName");
-  sessionStorage.removeItem("ind_country");
-  sessionStorage.removeItem("ind_timeZone");
-  sessionStorage.removeItem("ind_headline");
-  sessionStorage.removeItem("ind_bio");
-  sessionStorage.removeItem("ind_experience");
-  sessionStorage.removeItem("ind_availability");
-  sessionStorage.removeItem("ind_skills");
-  sessionStorage.removeItem("ind_tools");
-  sessionStorage.removeItem("ind_categories");
-  sessionStorage.removeItem("ind_portfolioUrl");
-  sessionStorage.removeItem("ind_githubUrl");
-  sessionStorage.removeItem("ind_linkedinUrl");
-  sessionStorage.removeItem("ind_resumeFileName");
+const initialFormData = {
+  profilePhoto: null,
+  profilePhotoName: "",
+  fullName: "",
+  country: "",
+  timeZone: "",
+  headline: "",
+  bio: "",
+  experience: "",
+  availability: "",
+  skills: "",
+  tools: "",
+  categories: "",
+  portfolioUrl: "",
+  githubUrl: "",
+  linkedinUrl: "",
+  resumeFile: null,
+  resumeFileName: "",
 };
+
+const getInitialFormData = () => {
+  const data = { ...initialFormData };
+  Object.keys(data).forEach((key) => {
+    const saved = sessionStorage.getItem(`ind_${key}`);
+    if (saved !== null) data[key] = saved;
+  });
+  return data;
+};
+
+const clearDraftStorage = () => {
+  Object.keys(sessionStorage)
+    .filter((key) => key.startsWith("ind_") && key !== "ind_profile_submitted")
+    .forEach((key) => sessionStorage.removeItem(key));
+};
+
+const COMPLETION_MILESTONES = [
+  { id: 1, title: "Email Verified", points: 10, completed: true },
+  { id: 2, title: "Profile Completed", points: 20, completed: true },
+  { id: 3, title: "Identity Verified", points: 40, completed: false },
+  { id: 4, title: "First Project/ Proposal", points: 30, completed: false },
+];
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -46,63 +70,28 @@ export default function Profile() {
 
   const [currentStep, setCurrentStep] = useState(1);
   const [isEditingFromReview, setIsEditingFromReview] = useState(false);
-  const [snapshot, setSnapshot] = useState({});
+  const [snapshot, setSnapshot] = useState(null);
 
-  const [profilePhoto, setProfilePhoto] = useState(null);
-  const [profilePhotoName, setProfilePhotoName] = useState(() => sessionStorage.getItem("ind_profilePhotoName") || "");
-  const [fullName, setFullName] = useState(() => sessionStorage.getItem("ind_fullName") || "");
-  const [country, setCountry] = useState(() => sessionStorage.getItem("ind_country") || "");
-  const [timeZone, setTimeZone] = useState(() => sessionStorage.getItem("ind_timeZone") || "");
-  const [step1Errors, setStep1Errors] = useState({});
-
-  const [headline, setHeadline] = useState(() => sessionStorage.getItem("ind_headline") || "");
-  const [bio, setBio] = useState(() => sessionStorage.getItem("ind_bio") || "");
-  const [experience, setExperience] = useState(() => sessionStorage.getItem("ind_experience") || "");
-  const [availability, setAvailability] = useState(() => sessionStorage.getItem("ind_availability") || "");
-  const [step2Errors, setStep2Errors] = useState({});
-
-  const [skills, setSkills] = useState(() => sessionStorage.getItem("ind_skills") || "");
-  const [tools, setTools] = useState(() => sessionStorage.getItem("ind_tools") || "");
-  const [categories, setCategories] = useState(() => sessionStorage.getItem("ind_categories") || "");
-  const [step3Errors, setStep3Errors] = useState({});
-
-  const [portfolioUrl, setPortfolioUrl] = useState(() => sessionStorage.getItem("ind_portfolioUrl") || "");
-  const [githubUrl, setGithubUrl] = useState(() => sessionStorage.getItem("ind_githubUrl") || "");
-  const [linkedinUrl, setLinkedinUrl] = useState(() => sessionStorage.getItem("ind_linkedinUrl") || "");
-  const [resumeFile, setResumeFile] = useState(null);
-  const [resumeFileName, setResumeFileName] = useState(() => sessionStorage.getItem("ind_resumeFileName") || "");
-  const [step4Errors, setStep4Errors] = useState({});
-
+  const [formData, setFormData] = useState(getInitialFormData);
+  const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(() => sessionStorage.getItem("ind_profile_submitted") === "true");
 
-  const resetFormState = () => {
-    setProfilePhoto(null);
-    setProfilePhotoName("");
-    setFullName("");
-    setCountry("");
-    setTimeZone("");
-    setStep1Errors({});
+  const cardInnerRef = useRef(null);
 
-    setHeadline("");
-    setBio("");
-    setExperience("");
-    setAvailability("");
-    setStep2Errors({});
-
-    setSkills("");
-    setTools("");
-    setCategories("");
-    setStep3Errors({});
-
-    setPortfolioUrl("");
-    setGithubUrl("");
-    setLinkedinUrl("");
-    setResumeFile(null);
-    setResumeFileName("");
-    setStep4Errors({});
+  const updateField = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (typeof value === "string") {
+      sessionStorage.setItem(`ind_${field}`, value);
+    }
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: "" }));
+    }
   };
 
-  const cardInnerRef = useRef(null);
+  const resetFormState = () => {
+    setFormData(initialFormData);
+    setErrors({});
+  };
 
   useEffect(() => {
     if (cardInnerRef.current) {
@@ -151,11 +140,12 @@ export default function Profile() {
     { number: 5, label: "Review and Submit", active: currentStep === 5 },
   ];
 
-  const formatFileName = (name) => {
+  const formatFileName = (name, maxWords = 3) => {
     if (!name) return "";
     const cleanName = name.trim();
-    if (cleanName.length > 3) {
-      return `${cleanName.slice(0, 3)}...`;
+    const words = cleanName.split(/\s+/);
+    if (words.length > maxWords) {
+      return `${words.slice(0, maxWords).join(" ")}...`;
     }
     return cleanName;
   };
@@ -163,171 +153,97 @@ export default function Profile() {
   const handlePhotoUpload = (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      setProfilePhoto(file);
-      setProfilePhotoName(file.name);
+      setFormData((prev) => ({
+        ...prev,
+        profilePhoto: file,
+        profilePhotoName: file.name,
+      }));
       sessionStorage.setItem("ind_profilePhotoName", file.name);
-      setStep1Errors((prev) => ({ ...prev, photo: "" }));
+      setErrors((prev) => ({ ...prev, photo: "" }));
     }
   };
 
   const handleResumeUpload = (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      setResumeFile(file);
-      setResumeFileName(file.name);
+      setFormData((prev) => ({
+        ...prev,
+        resumeFile: file,
+        resumeFileName: file.name,
+      }));
       sessionStorage.setItem("ind_resumeFileName", file.name);
-      setStep4Errors((prev) => ({ ...prev, resumeFile: "" }));
+      setErrors((prev) => ({ ...prev, resumeFile: "" }));
     }
   };
 
-  const isStep1Complete = (profilePhoto !== null || profilePhotoName !== "") && fullName.trim() !== "" && country !== "" && timeZone !== "";
-  const isStep2Complete = headline.trim() !== "" && bio.trim() !== "" && experience !== "" && availability !== "";
-  const isStep3Complete = skills.trim() !== "" && tools.trim() !== "" && categories.trim() !== "";
-  const isStep4Complete = portfolioUrl.trim() !== "" || githubUrl.trim() !== "" || linkedinUrl.trim() !== "" || resumeFile !== null || resumeFileName !== "";
+  const isStep1Complete = (formData.profilePhoto !== null || formData.profilePhotoName !== "") && formData.fullName.trim() !== "" && formData.country !== "" && formData.timeZone !== "";
+  const isStep2Complete = formData.headline.trim() !== "" && formData.bio.trim() !== "" && formData.experience !== "" && formData.availability !== "";
+  const isStep3Complete = formData.skills.trim() !== "" && formData.tools.trim() !== "" && formData.categories.trim() !== "";
+  const isStep4Complete = formData.portfolioUrl.trim() !== "" || formData.githubUrl.trim() !== "" || formData.linkedinUrl.trim() !== "" || formData.resumeFile !== null || formData.resumeFileName !== "";
+
+  const handleCancel = () => {
+    if (snapshot) {
+      setFormData(snapshot);
+      Object.keys(snapshot).forEach((key) => {
+        if (typeof snapshot[key] === "string") {
+          sessionStorage.setItem(`ind_${key}`, snapshot[key]);
+        }
+      });
+    }
+    setErrors({});
+    setIsEditingFromReview(false);
+    goToStep(5);
+  };
 
   const handleStep1Continue = (e) => {
     e.preventDefault();
-    const errors = {};
-    if (!profilePhoto && !profilePhotoName) errors.photo = "Profile picture is required";
-    if (!fullName.trim()) errors.fullName = "Full name is required";
-    if (!country) errors.country = "Country is required";
-    if (!timeZone) errors.timeZone = "Time zone is required";
-    if (Object.keys(errors).length > 0) { setStep1Errors(errors); return; }
-    setStep1Errors({});
-    sessionStorage.setItem("ind_fullName", fullName);
-    sessionStorage.setItem("ind_country", country);
-    sessionStorage.setItem("ind_timeZone", timeZone);
-    if (profilePhotoName) sessionStorage.setItem("ind_profilePhotoName", profilePhotoName);
+    const newErrors = {};
+    if (!formData.profilePhoto && !formData.profilePhotoName) newErrors.photo = "Profile picture is required";
+    if (!formData.fullName.trim()) newErrors.fullName = "Full name is required";
+    if (!formData.country) newErrors.country = "Country is required";
+    if (!formData.timeZone) newErrors.timeZone = "Time zone is required";
+    if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return; }
+    setErrors({});
     if (isEditingFromReview) { setIsEditingFromReview(false); goToStep(5); } else { goToStep(2); }
-  };
-
-  const handleStep1Cancel = () => {
-    const pPhoto = snapshot.profilePhoto ?? profilePhoto;
-    const pPhotoName = snapshot.profilePhotoName ?? profilePhotoName;
-    const fName = snapshot.fullName ?? fullName;
-    const ctry = snapshot.country ?? country;
-    const tz = snapshot.timeZone ?? timeZone;
-
-    setProfilePhoto(pPhoto);
-    setProfilePhotoName(pPhotoName);
-    setFullName(fName);
-    setCountry(ctry);
-    setTimeZone(tz);
-
-    sessionStorage.setItem("ind_fullName", fName);
-    sessionStorage.setItem("ind_country", ctry);
-    sessionStorage.setItem("ind_timeZone", tz);
-    sessionStorage.setItem("ind_profilePhotoName", pPhotoName);
-
-    setStep1Errors({});
-    setIsEditingFromReview(false);
-    goToStep(5);
   };
 
   const handleStep2Continue = (e) => {
     e.preventDefault();
-    const errors = {};
-    if (!headline.trim()) errors.headline = "Headline is required";
-    if (!bio.trim()) errors.bio = "Bio is required";
-    if (!experience) errors.experience = "Experience level is required";
-    if (!availability) errors.availability = "Availability is required";
-    if (Object.keys(errors).length > 0) { setStep2Errors(errors); return; }
-    setStep2Errors({});
+    const newErrors = {};
+    if (!formData.headline.trim()) newErrors.headline = "Headline is required";
+    if (!formData.bio.trim()) newErrors.bio = "Bio is required";
+    if (!formData.experience) newErrors.experience = "Experience level is required";
+    if (!formData.availability) newErrors.availability = "Availability is required";
+    if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return; }
+    setErrors({});
     if (isEditingFromReview) { setIsEditingFromReview(false); goToStep(5); } else { goToStep(3); }
-  };
-
-  const handleStep2Cancel = () => {
-    const hd = snapshot.headline ?? headline;
-    const b = snapshot.bio ?? bio;
-    const exp = snapshot.experience ?? experience;
-    const avail = snapshot.availability ?? availability;
-
-    setHeadline(hd);
-    setBio(b);
-    setExperience(exp);
-    setAvailability(avail);
-
-    sessionStorage.setItem("ind_headline", hd);
-    sessionStorage.setItem("ind_bio", b);
-    sessionStorage.setItem("ind_experience", exp);
-    sessionStorage.setItem("ind_availability", avail);
-
-    setStep2Errors({});
-    setIsEditingFromReview(false);
-    goToStep(5);
   };
 
   const handleStep3Continue = (e) => {
     e.preventDefault();
-    const errors = {};
-    if (!skills.trim()) errors.skills = "Skills are required";
-    if (!tools.trim()) errors.tools = "Tools are required";
-    if (!categories.trim()) errors.categories = "Categories are required";
-    if (Object.keys(errors).length > 0) { setStep3Errors(errors); return; }
-    setStep3Errors({});
+    const newErrors = {};
+    if (!formData.skills.trim()) newErrors.skills = "Skills are required";
+    if (!formData.tools.trim()) newErrors.tools = "Tools are required";
+    if (!formData.categories.trim()) newErrors.categories = "Categories are required";
+    if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return; }
+    setErrors({});
     if (isEditingFromReview) { setIsEditingFromReview(false); goToStep(5); } else { goToStep(4); }
-  };
-
-  const handleStep3Cancel = () => {
-    const sk = snapshot.skills ?? skills;
-    const tl = snapshot.tools ?? tools;
-    const cat = snapshot.categories ?? categories;
-
-    setSkills(sk);
-    setTools(tl);
-    setCategories(cat);
-
-    sessionStorage.setItem("ind_skills", sk);
-    sessionStorage.setItem("ind_tools", tl);
-    sessionStorage.setItem("ind_categories", cat);
-
-    setStep3Errors({});
-    setIsEditingFromReview(false);
-    goToStep(5);
   };
 
   const handleStep4Continue = (e) => {
     e.preventDefault();
-    const errors = {};
-    if (!portfolioUrl.trim()) errors.portfolioUrl = "Portfolio URL is required";
-    if (!githubUrl.trim()) errors.githubUrl = "Github URL is required";
-    if (!linkedinUrl.trim()) errors.linkedinUrl = "Linkedin URL is required";
-    if (!resumeFile && !resumeFileName) errors.resumeFile = "Resume PDF is required";
-    if (Object.keys(errors).length > 0) { setStep4Errors(errors); return; }
-    setStep4Errors({});
+    const newErrors = {};
+    if (!formData.portfolioUrl.trim()) newErrors.portfolioUrl = "Portfolio URL is required";
+    if (!formData.githubUrl.trim()) newErrors.githubUrl = "Github URL is required";
+    if (!formData.linkedinUrl.trim()) newErrors.linkedinUrl = "Linkedin URL is required";
+    if (!formData.resumeFile && !formData.resumeFileName) newErrors.resumeFile = "Resume PDF is required";
+    if (Object.keys(newErrors).length > 0) { setErrors(newErrors); return; }
+    setErrors({});
     if (isEditingFromReview) { setIsEditingFromReview(false); goToStep(5); } else { goToStep(5); }
   };
 
-  const handleStep4Cancel = () => {
-    const pUrl = snapshot.portfolioUrl ?? portfolioUrl;
-    const ghUrl = snapshot.githubUrl ?? githubUrl;
-    const liUrl = snapshot.linkedinUrl ?? linkedinUrl;
-    const rFile = snapshot.resumeFile ?? resumeFile;
-    const rFileName = snapshot.resumeFileName ?? resumeFileName;
-
-    setPortfolioUrl(pUrl);
-    setGithubUrl(ghUrl);
-    setLinkedinUrl(liUrl);
-    setResumeFile(rFile);
-    setResumeFileName(rFileName);
-
-    sessionStorage.setItem("ind_portfolioUrl", pUrl);
-    sessionStorage.setItem("ind_githubUrl", ghUrl);
-    sessionStorage.setItem("ind_linkedinUrl", liUrl);
-    sessionStorage.setItem("ind_resumeFileName", rFileName);
-
-    setStep4Errors({});
-    setIsEditingFromReview(false);
-    goToStep(5);
-  };
-
   const goToEditStep = (stepNum) => {
-    setSnapshot({
-      profilePhoto, profilePhotoName, fullName, country, timeZone,
-      headline, bio, experience, availability,
-      skills, tools, categories,
-      portfolioUrl, githubUrl, linkedinUrl, resumeFile, resumeFileName,
-    });
+    setSnapshot({ ...formData });
     setIsEditingFromReview(true);
     goToStep(stepNum);
   };
@@ -339,42 +255,18 @@ export default function Profile() {
     goToStep(6);
   };
 
-  const renderStepper = () => {
-    const progressWidth = `${((currentStep - 1) / (steps.length - 1)) * 100}%`;
-    return (
-      <div className="profile-stepper-container flex-shrink-0 w-100 position-relative">
-        <div className="profile-stepper position-relative d-flex align-items-start justify-content-between w-100">
-          <div className="stepper-track-line position-absolute">
-            <div className="stepper-active-line" style={{ width: progressWidth }}></div>
-          </div>
-          {steps.map((step) => (
-            <div
-              key={step.number}
-              className={`stepper-item d-flex flex-column align-items-center position-relative ${step.number <= currentStep ? "active" : ""}`}
-              style={{ cursor: "default", pointerEvents: "none" }}
-            >
-              <div className="stepper-circle d-flex align-items-center justify-content-center">
-                {step.number}
-              </div>
-              <span className="stepper-label">{step.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  };
-
-  const renderActionButtons = (isComplete, onCancel) => (
-    <div className="profile-form-actions d-flex justify-content-end flex-shrink-0 gap-2">
+  const renderActionButtons = (isComplete) => (
+    <div className="profile-form-actions d-flex justify-content-end flex-shrink-0 gap-3">
       {isEditingFromReview ? (
         <>
-          <SecondaryButton
-            type="button"
-            className="profile-cancel-btn"
-            onClick={onCancel}
-            text="Cancel"
-          />
-          <div className="continue-btn-wrapper">
+          <div className="profile-btn-wrapper">
+            <SecondaryButton
+              type="button"
+              onClick={handleCancel}
+              text="Cancel"
+            />
+          </div>
+          <div className="profile-btn-wrapper">
             <PrimaryButton
               type="submit"
               disabled={!isComplete}
@@ -383,7 +275,7 @@ export default function Profile() {
           </div>
         </>
       ) : (
-        <div className="continue-btn-wrapper">
+        <div className="profile-btn-wrapper">
           <PrimaryButton
             type="submit"
             disabled={!isComplete}
@@ -407,41 +299,30 @@ export default function Profile() {
         <label className="field-label">Profile picture</label>
         <div className="upload-btn-wrapper d-flex align-items-center gap-3">
           <label htmlFor="profile-photo-input" className="upload-photo-btn d-inline-flex align-items-center justify-content-center text-white gap-2" style={{ cursor: "pointer" }}>
-            <span>{profilePhoto ? formatFileName(profilePhoto.name) : (formatFileName(profilePhotoName) || "Upload photo")}</span>
-            <Icon name={profilePhoto || profilePhotoName ? "Check" : "Upload"} size={16} color="#ffffff" />
+            <span>{formData.profilePhoto ? formatFileName(formData.profilePhoto.name) : (formatFileName(formData.profilePhotoName) || "Upload photo")}</span>
+            <Icon name={formData.profilePhoto || formData.profilePhotoName ? "Check" : "Upload"} size={16} color="#ffffff" />
           </label>
           <input id="profile-photo-input" type="file" accept="image/*" style={{ display: "none" }} onChange={handlePhotoUpload} />
         </div>
-        {step1Errors.photo && <span className="field-error">{step1Errors.photo}</span>}
+        {errors.photo && <span className="field-error">{errors.photo}</span>}
       </div>
 
       <TextInput
-        containerClassName="profile-field-group"
         label="Full name"
         placeholder="Enter your full name"
-        value={fullName}
-        error={step1Errors.fullName}
-        onChange={(e) => {
-          const val = e.target.value;
-          setFullName(val);
-          sessionStorage.setItem("ind_fullName", val);
-          setStep1Errors((p) => ({ ...p, fullName: "" }));
-        }}
+        value={formData.fullName}
+        error={errors.fullName}
+        onChange={(e) => updateField("fullName", e.target.value)}
       />
 
       <div className="profile-field-group">
         <div className="custom-dropdown-container w-100">
           <label className="field-label">Country</label>
-          <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step1Errors.country ? "dropdown-error" : ""}`}>
+          <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${errors.country ? "dropdown-error" : ""}`}>
             <select
               className="custom-dropdown-select w-100 h-100"
-              value={country}
-              onChange={(e) => {
-                const val = e.target.value;
-                setCountry(val);
-                sessionStorage.setItem("ind_country", val);
-                setStep1Errors((p) => ({ ...p, country: "" }));
-              }}
+              value={formData.country}
+              onChange={(e) => updateField("country", e.target.value)}
             >
               <option value="" disabled hidden>Select your country</option>
               <option value="India">India</option>
@@ -455,23 +336,18 @@ export default function Profile() {
             </select>
             <Icon name="ChevronDown" size={18} className="dropdown-chevron-icon position-absolute" />
           </div>
-          {step1Errors.country && <span className="field-error">{step1Errors.country}</span>}
+          {errors.country && <span className="field-error">{errors.country}</span>}
         </div>
       </div>
 
       <div className="profile-field-group">
         <div className="custom-dropdown-container w-100">
           <label className="field-label">Time Zone</label>
-          <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step1Errors.timeZone ? "dropdown-error" : ""}`}>
+          <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${errors.timeZone ? "dropdown-error" : ""}`}>
             <select
               className="custom-dropdown-select w-100 h-100"
-              value={timeZone}
-              onChange={(e) => {
-                const val = e.target.value;
-                setTimeZone(val);
-                sessionStorage.setItem("ind_timeZone", val);
-                setStep1Errors((p) => ({ ...p, timeZone: "" }));
-              }}
+              value={formData.timeZone}
+              onChange={(e) => updateField("timeZone", e.target.value)}
             >
               <option value="" disabled hidden>Select your time zone</option>
               <option value="(UTC+05:30) India Standard Time">(UTC+05:30) India Standard Time</option>
@@ -483,11 +359,11 @@ export default function Profile() {
             </select>
             <Icon name="ChevronDown" size={18} className="dropdown-chevron-icon position-absolute" />
           </div>
-          {step1Errors.timeZone && <span className="field-error">{step1Errors.timeZone}</span>}
+          {errors.timeZone && <span className="field-error">{errors.timeZone}</span>}
         </div>
       </div>
 
-      {renderActionButtons(isStep1Complete, handleStep1Cancel)}
+      {renderActionButtons(isStep1Complete)}
     </form>
   );
 
@@ -499,52 +375,36 @@ export default function Profile() {
       </div>
 
       <TextInput
-        containerClassName="profile-field-group"
         label="Headline"
         placeholder="e.g. UI/UX Designer"
-        value={headline}
-        error={step2Errors.headline}
-        onChange={(e) => {
-          const val = e.target.value;
-          setHeadline(val);
-          sessionStorage.setItem("ind_headline", val);
-          setStep2Errors((p) => ({ ...p, headline: "" }));
-        }}
+        value={formData.headline}
+        error={errors.headline}
+        onChange={(e) => updateField("headline", e.target.value)}
       />
 
       <div className="profile-field-group">
         <label className="field-label">Bio</label>
-        <div className={`bio-textarea-wrapper w-100 ${step2Errors.bio ? "input-error" : ""}`}>
+        <div className={`bio-textarea-wrapper w-100 ${errors.bio ? "input-error" : ""}`}>
           <textarea
             className="bio-textarea"
             placeholder="Write a short bio about yourself"
             maxLength={300}
-            value={bio}
-            onChange={(e) => {
-              const val = e.target.value;
-              setBio(val);
-              sessionStorage.setItem("ind_bio", val);
-              setStep2Errors((p) => ({ ...p, bio: "" }));
-            }}
+            value={formData.bio}
+            onChange={(e) => updateField("bio", e.target.value)}
           />
-          <span className="bio-char-count">{bio.length}/300</span>
+          <span className="bio-char-count">{formData.bio.length}/300</span>
         </div>
-        {step2Errors.bio && <span className="field-error">{step2Errors.bio}</span>}
+        {errors.bio && <span className="field-error">{errors.bio}</span>}
       </div>
 
       <div className="profile-field-group">
         <div className="custom-dropdown-container w-100">
           <label className="field-label">Experience Level</label>
-          <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step2Errors.experience ? "dropdown-error" : ""}`}>
+          <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${errors.experience ? "dropdown-error" : ""}`}>
             <select
               className="custom-dropdown-select w-100 h-100"
-              value={experience}
-              onChange={(e) => {
-                const val = e.target.value;
-                setExperience(val);
-                sessionStorage.setItem("ind_experience", val);
-                setStep2Errors((p) => ({ ...p, experience: "" }));
-              }}
+              value={formData.experience}
+              onChange={(e) => updateField("experience", e.target.value)}
             >
               <option value="" disabled hidden>Select experience level</option>
               <option value="entry">Entry Level (0-2 years)</option>
@@ -554,23 +414,18 @@ export default function Profile() {
             </select>
             <Icon name="ChevronDown" size={18} className="dropdown-chevron-icon position-absolute" />
           </div>
-          {step2Errors.experience && <span className="field-error">{step2Errors.experience}</span>}
+          {errors.experience && <span className="field-error">{errors.experience}</span>}
         </div>
       </div>
 
       <div className="profile-field-group">
         <div className="custom-dropdown-container w-100">
           <label className="field-label">Availability</label>
-          <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${step2Errors.availability ? "dropdown-error" : ""}`}>
+          <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${errors.availability ? "dropdown-error" : ""}`}>
             <select
               className="custom-dropdown-select w-100 h-100"
-              value={availability}
-              onChange={(e) => {
-                const val = e.target.value;
-                setAvailability(val);
-                sessionStorage.setItem("ind_availability", val);
-                setStep2Errors((p) => ({ ...p, availability: "" }));
-              }}
+              value={formData.availability}
+              onChange={(e) => updateField("availability", e.target.value)}
             >
               <option value="" disabled hidden>Select availability</option>
               <option value="full-time">Full-time (40 hrs/week)</option>
@@ -580,11 +435,11 @@ export default function Profile() {
             </select>
             <Icon name="ChevronDown" size={18} className="dropdown-chevron-icon position-absolute" />
           </div>
-          {step2Errors.availability && <span className="field-error">{step2Errors.availability}</span>}
+          {errors.availability && <span className="field-error">{errors.availability}</span>}
         </div>
       </div>
 
-      {renderActionButtons(isStep2Complete, handleStep2Cancel)}
+      {renderActionButtons(isStep2Complete)}
     </form>
   );
 
@@ -596,48 +451,30 @@ export default function Profile() {
       </div>
 
       <TextInput
-        containerClassName="profile-field-group"
         label="Skills"
         placeholder="Add skills"
-        value={skills}
-        error={step3Errors.skills}
-        onChange={(e) => {
-          const val = e.target.value;
-          setSkills(val);
-          sessionStorage.setItem("ind_skills", val);
-          setStep3Errors((p) => ({ ...p, skills: "" }));
-        }}
+        value={formData.skills}
+        error={errors.skills}
+        onChange={(e) => updateField("skills", e.target.value)}
       />
 
       <TextInput
-        containerClassName="profile-field-group"
         label="Tools"
         placeholder="Add tools"
-        value={tools}
-        error={step3Errors.tools}
-        onChange={(e) => {
-          const val = e.target.value;
-          setTools(val);
-          sessionStorage.setItem("ind_tools", val);
-          setStep3Errors((p) => ({ ...p, tools: "" }));
-        }}
+        value={formData.tools}
+        error={errors.tools}
+        onChange={(e) => updateField("tools", e.target.value)}
       />
 
       <TextInput
-        containerClassName="profile-field-group"
         label="Categories"
         placeholder="Add categories"
-        value={categories}
-        error={step3Errors.categories}
-        onChange={(e) => {
-          const val = e.target.value;
-          setCategories(val);
-          sessionStorage.setItem("ind_categories", val);
-          setStep3Errors((p) => ({ ...p, categories: "" }));
-        }}
+        value={formData.categories}
+        error={errors.categories}
+        onChange={(e) => updateField("categories", e.target.value)}
       />
 
-      {renderActionButtons(isStep3Complete, handleStep3Cancel)}
+      {renderActionButtons(isStep3Complete)}
     </form>
   );
 
@@ -649,59 +486,41 @@ export default function Profile() {
       </div>
 
       <TextInput
-        containerClassName="profile-field-group"
         label="Portfolio website"
         type="url"
         placeholder="Enter URL"
-        value={portfolioUrl}
-        error={step4Errors.portfolioUrl}
-        onChange={(e) => {
-          const val = e.target.value;
-          setPortfolioUrl(val);
-          sessionStorage.setItem("ind_portfolioUrl", val);
-          setStep4Errors((p) => ({ ...p, portfolioUrl: "" }));
-        }}
+        value={formData.portfolioUrl}
+        error={errors.portfolioUrl}
+        onChange={(e) => updateField("portfolioUrl", e.target.value)}
       />
 
       <TextInput
-        containerClassName="profile-field-group"
         label="Github"
         type="url"
         placeholder="Enter URL"
-        value={githubUrl}
-        error={step4Errors.githubUrl}
-        onChange={(e) => {
-          const val = e.target.value;
-          setGithubUrl(val);
-          sessionStorage.setItem("ind_githubUrl", val);
-          setStep4Errors((p) => ({ ...p, githubUrl: "" }));
-        }}
+        value={formData.githubUrl}
+        error={errors.githubUrl}
+        onChange={(e) => updateField("githubUrl", e.target.value)}
       />
 
       <TextInput
-        containerClassName="profile-field-group"
         label="Linkedin"
         type="url"
         placeholder="Enter URL"
-        value={linkedinUrl}
-        error={step4Errors.linkedinUrl}
-        onChange={(e) => {
-          const val = e.target.value;
-          setLinkedinUrl(val);
-          sessionStorage.setItem("ind_linkedinUrl", val);
-          setStep4Errors((p) => ({ ...p, linkedinUrl: "" }));
-        }}
+        value={formData.linkedinUrl}
+        error={errors.linkedinUrl}
+        onChange={(e) => updateField("linkedinUrl", e.target.value)}
       />
 
       <div className="profile-field-group">
         <label className="field-label">Resume</label>
         <label
           htmlFor="resume-file-input"
-          className={`profile-file-upload-box d-flex align-items-center justify-content-between w-100 ${step4Errors.resumeFile ? "input-error" : ""}`}
+          className={`profile-file-upload-box d-flex align-items-center justify-content-between w-100 ${errors.resumeFile ? "input-error" : ""}`}
           style={{ cursor: "pointer" }}
         >
-          <span className={`file-upload-text ${(resumeFile || resumeFileName) ? "text-dark" : "text-placeholder"}`}>
-            {resumeFile ? resumeFile.name : (resumeFileName || "Upload PDF")}
+          <span className={`file-upload-text ${(formData.resumeFile || formData.resumeFileName) ? "text-dark" : "text-placeholder"}`}>
+            {formData.resumeFile ? formData.resumeFile.name : (formData.resumeFileName || "Upload PDF")}
           </span>
           <Icon name="Upload" size={18} className="upload-icon-right" />
         </label>
@@ -712,10 +531,10 @@ export default function Profile() {
           style={{ display: "none" }}
           onChange={handleResumeUpload}
         />
-        {step4Errors.resumeFile && <span className="field-error">{step4Errors.resumeFile}</span>}
+        {errors.resumeFile && <span className="field-error">{errors.resumeFile}</span>}
       </div>
 
-      {renderActionButtons(isStep4Complete, handleStep4Cancel)}
+      {renderActionButtons(isStep4Complete)}
     </form>
   );
 
@@ -747,7 +566,7 @@ export default function Profile() {
       </div>
 
       <div className="profile-form-actions d-flex justify-content-end flex-shrink-0">
-        <div className="continue-btn-wrapper">
+        <div className="profile-btn-wrapper">
           <PrimaryButton
             type="submit"
             text="Submit"
@@ -757,91 +576,78 @@ export default function Profile() {
     </form>
   );
 
-  const renderCompletionScreen = () => (
-    <div className="completion-screen-wrapper d-flex flex-column align-items-center h-100 w-100 py-1">
-      <div className="w-100 d-flex justify-content-start flex-shrink-0 mb-1">
-        <button
-          type="button"
-          className="completion-back-btn"
-          onClick={() => navigate("/whole-profile")}
-          aria-label="Go back"
-        >
-          <Icon name="ArrowLeft" size={24} color="#103CA4" />
-        </button>
-      </div>
+  const renderCompletionScreen = () => {
+    const completedIndex = COMPLETION_MILESTONES.findLastIndex((m) => m.completed);
+    const progressWidth = `${(completedIndex / (COMPLETION_MILESTONES.length - 1)) * 100}%`;
 
-      <div className="d-flex flex-column align-items-center w-100 my-auto">
-        <div className="completion-avatar-circle d-flex align-items-center justify-content-center mb-3">
-          <Icon name="User2" size={44} color="#103CA4" />
-        </div>
-
-        <h1 className="completion-main-title fw-bold text-center mb-3">
-          Profile Setup Completed<br />Successfully !
-        </h1>
-
-        <div className="completion-reward-banner text-start mb-4 w-100">
-          <h3 className="reward-banner-title fw-bold mb-1">Profile Completed</h3>
-          <p className="reward-banner-subtitle mb-0">You have earned +20 trust points!</p>
-        </div>
-
-        <div className="completion-stepper-container position-relative w-100 mb-4">
-          <div className="completion-stepper position-relative d-flex align-items-start justify-content-between w-100">
-            <div className="completion-track-line position-absolute">
-              <div className="completion-active-line" style={{ width: "33.33%" }}></div>
-            </div>
-
-            <div className="completion-step-item d-flex flex-column align-items-center">
-              <div className="completion-circle active d-flex align-items-center justify-content-center">
-                <span className="dot-white"></span>
-              </div>
-              <span className="completion-step-title fw-bold text-dark mt-2">Email Verified</span>
-              <span className="completion-step-points fw-bold text-primary">+10 Trust Points</span>
-            </div>
-
-            <div className="completion-step-item d-flex flex-column align-items-center">
-              <div className="completion-circle active d-flex align-items-center justify-content-center">
-                <span className="dot-white"></span>
-              </div>
-              <span className="completion-step-title fw-bold text-dark mt-2">Profile Completed</span>
-              <span className="completion-step-points fw-bold text-primary">+20 Trust Points</span>
-            </div>
-
-            <div className="completion-step-item d-flex flex-column align-items-center">
-              <div className="completion-circle locked d-flex align-items-center justify-content-center">
-                <Icon name="Lock" size={16} color="#9ca3af" />
-              </div>
-              <span className="completion-step-title text-muted mt-2">Identity Verified</span>
-              <span className="completion-step-points text-muted">+40 Trust Points</span>
-            </div>
-
-            <div className="completion-step-item d-flex flex-column align-items-center">
-              <div className="completion-circle locked d-flex align-items-center justify-content-center">
-                <Icon name="Lock" size={16} color="#9ca3af" />
-              </div>
-              <span className="completion-step-title text-muted mt-2">First Project/ Proposal</span>
-              <span className="completion-step-points text-muted">+30 Trust Points</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="completion-cta-wrapper d-flex justify-content-center mt-2">
+    return (
+      <div className="completion-screen-wrapper d-flex flex-column align-items-center h-100 w-100 py-1">
+        <div className="w-100 d-flex justify-content-start flex-shrink-0 mb-1">
           <button
             type="button"
-            className="completion-cta-btn border-0 text-white fw-bold d-inline-flex align-items-center justify-content-center"
-            onClick={() => navigate("/verification")}
+            className="completion-back-btn"
+            onClick={() => navigate("/whole-profile")}
+            aria-label="Go back"
           >
-            Continue to Verify Identity
+            <Icon name="ArrowLeft" size={24} color="#103CA4" />
           </button>
         </div>
+
+        <div className="d-flex flex-column align-items-center w-100 my-auto">
+          <div className="completion-avatar-circle d-flex align-items-center justify-content-center mb-3">
+            <Icon name="User2" size={44} color="#103CA4" />
+          </div>
+
+          <h1 className="completion-main-title fw-bold text-center mb-3">
+            Profile Setup Completed<br />Successfully !
+          </h1>
+
+          <div className="completion-reward-banner text-start mb-4 w-100">
+            <h3 className="reward-banner-title fw-bold mb-1">Profile Completed</h3>
+            <p className="reward-banner-subtitle mb-0">You have earned +20 trust points!</p>
+          </div>
+
+          <div className="completion-stepper-container position-relative w-100 mb-4">
+            <div className="completion-stepper position-relative d-flex align-items-start justify-content-between w-100">
+              <div className="completion-track-line position-absolute">
+                <div className="completion-active-line" style={{ width: progressWidth }}></div>
+              </div>
+
+              {COMPLETION_MILESTONES.map((item) => (
+                <div key={item.id} className="completion-step-item d-flex flex-column align-items-center">
+                  <div className={`completion-circle ${item.completed ? "active" : "locked"} d-flex align-items-center justify-content-center`}>
+                    {item.completed ? <span className="dot-white"></span> : <Icon name="Lock" size={16} color="#9ca3af" />}
+                  </div>
+                  <span className={`completion-step-title mt-2 ${item.completed ? "fw-bold text-dark" : "text-muted"}`}>
+                    {item.title}
+                  </span>
+                  <span className={`completion-step-points ${item.completed ? "fw-bold text-primary" : "text-muted"}`}>
+                    +{item.points} Trust Points
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="completion-cta-wrapper d-flex justify-content-center mt-2">
+            <button
+              type="button"
+              className="completion-cta-btn border-0 text-white fw-bold d-inline-flex align-items-center justify-content-center"
+              onClick={() => navigate("/verification")}
+            >
+              Continue to Verify Identity
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <DashboardLayout>
       <div className="profile-page-wrapper flex-grow-1 min-vh-0 d-flex flex-column w-100">
         <Cards className="profile-main-card flex-grow-1 h-100 d-flex flex-column overflow-hidden w-100" padding="0">
-          <div ref={cardInnerRef} className="profile-card-inner d-flex flex-column h-100">
+          <ScrollArea ref={cardInnerRef} className="profile-card-inner d-flex flex-column h-100">
             {isSubmitted ? (
               renderCompletionScreen()
             ) : (
@@ -860,7 +666,7 @@ export default function Profile() {
                   <h1 className="profile-main-title fw-bold">Complete Your Profile</h1>
                   <p className="profile-main-subtitle text-secondary">Lets build your profile step by step.</p>
                 </div>
-                {renderStepper()}
+                <Stepper steps={steps} currentStep={currentStep} className="profile-stepper-container" />
                 {currentStep === 1 && renderStep1()}
                 {currentStep === 2 && renderStep2()}
                 {currentStep === 3 && renderStep3()}
@@ -868,7 +674,7 @@ export default function Profile() {
                 {currentStep === 5 && renderStep5()}
               </>
             )}
-          </div>
+          </ScrollArea>
         </Cards>
       </div>
     </DashboardLayout>
