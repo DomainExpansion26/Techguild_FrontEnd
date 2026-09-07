@@ -34,6 +34,7 @@
 }
 
 .privacy-settings-section .secondary-btn {
+  width: fit-content;
   flex: none;
   height: auto;
   padding: 8px 24px;
@@ -47,13 +48,13 @@
   color: #212529;
 }
 
-.privacy-settings-section .secondary-btn:hover {
+.privacy-settings-section .secondary-btn:hover:not(:disabled) {
   background-color: #f8f9fa;
   border-color: #dee2e6;
   color: #212529;
 }
 
-.privacy-settings-section .secondary-btn:active {
+.privacy-settings-section .secondary-btn:active:not(:disabled) {
   background-color: #e9ecef;
   border-color: #dee2e6;
 }
