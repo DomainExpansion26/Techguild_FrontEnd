@@ -70,6 +70,7 @@
    =========================================================== */
 
 .account-security-section .secondary-btn {
+  width: fit-content;
   flex: none;
   height: auto;
   padding: 8px 24px;
@@ -83,13 +84,13 @@
   color: #212529;
 }
 
-.account-security-section .secondary-btn:hover {
+.account-security-section .secondary-btn:hover:not(:disabled) {
   background-color: #f8f9fa;
   border-color: #dee2e6;
   color: #212529;
 }
 
-.account-security-section .secondary-btn:active {
+.account-security-section .secondary-btn:active:not(:disabled) {
   background-color: #e9ecef;
   border-color: #dee2e6;
 }
@@ -185,12 +186,12 @@
   height: auto;
   margin-top: 0;
 }
-.account-security-section .account-security-primary-button:hover {
+.account-security-section .account-security-primary-button:hover:not(:disabled) {
   background: #0c2b7a;
   box-shadow: none;
   transform: none;
 }
-.account-security-section .account-security-primary-button:active {
+.account-security-section .account-security-primary-button:active:not(:disabled) {
   background: #0c2b7a;
   transform: none;
   box-shadow: none;

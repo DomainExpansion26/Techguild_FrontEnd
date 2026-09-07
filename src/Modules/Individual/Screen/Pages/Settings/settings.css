@@ -199,6 +199,10 @@
    FORM GRID
    ========================================================= */
 
+.settings-container .secondary-btn, .settings-container .primary-btn {
+  width: auto;
+}
+
 .settings-form-grid {
   display: grid;
 
@@ -208,6 +212,10 @@
   column-gap: 32px;
 
   width: 100%;
+}
+
+.settings-container .secondary-btn, .settings-container .primary-btn {
+  width: auto;
 }
 
 .settings-form-grid.align-center {
@@ -424,11 +432,11 @@
   margin-top: 0;
 }
 
-.settings-section .settings-btn-primary:hover {
+.settings-section .settings-btn-primary:hover:not(:disabled) {
   background-color: #0c2b7a;
 }
 
-.settings-section .settings-btn-primary:active {
+.settings-section .settings-btn-primary:active:not(:disabled) {
   transform: translateY(1px);
 }
 
@@ -459,7 +467,7 @@
   flex: none;
 }
 
-.settings-section .settings-btn-secondary:hover {
+.settings-section .settings-btn-secondary:hover:not(:disabled) {
   background-color: #eff3ff;
   border-color: #d5dcf7;
 }
@@ -538,6 +546,10 @@
 
     padding-bottom: 0;
   }
+
+.settings-container .secondary-btn, .settings-container .primary-btn {
+  width: auto;
+}
 
   .settings-form-grid {
     grid-template-columns: 1fr;
