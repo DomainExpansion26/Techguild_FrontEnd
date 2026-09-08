@@ -9,8 +9,13 @@ import {
   GuideCard,
   StepsCard,
   ChipsCard,
+  GuildCard,
 } from './variants';
 
+/**
+ * Universal Card / Cards Component
+ * Supports all design angles, layout requirements, variants, and compound structures.
+ */
 function Cards({
   variant,
   children,
@@ -50,13 +55,29 @@ function Cards({
     case 'categories':
       return <ChipsCard {...props} />;
 
+    case 'guild':
+      return <GuildCard {...props} />;
+
     case 'base':
+    case 'default':
     default:
-      return <BaseCard {...props}>{children}</BaseCard>;
+      return <BaseCard variant={variant} {...props}>{children}</BaseCard>;
   }
 }
 
-// Compound component attachments
+// Compound component attachments (Structural Subcomponents)
+Cards.Header = BaseCard.Header;
+Cards.Title = BaseCard.Title;
+Cards.Subtitle = BaseCard.Subtitle;
+Cards.Body = BaseCard.Body;
+Cards.Footer = BaseCard.Footer;
+Cards.Divider = BaseCard.Divider;
+Cards.Media = BaseCard.Media;
+Cards.Image = BaseCard.Media;
+Cards.Badge = BaseCard.Badge;
+Cards.Section = BaseCard.Section;
+
+// Compound component attachments (Specialized Variants)
 Cards.Base = BaseCard;
 Cards.Metric = MetricCard;
 Cards.Trust = TrustCard;
@@ -65,5 +86,9 @@ Cards.Tip = TipBannerCard;
 Cards.Guide = GuideCard;
 Cards.Steps = StepsCard;
 Cards.Chips = ChipsCard;
+Cards.Guild = GuildCard;
+
+// Alias export for singular "Card"
+export const Card = Cards;
 
 export default Cards;

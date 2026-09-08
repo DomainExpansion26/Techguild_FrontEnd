@@ -4,7 +4,7 @@
   left: 80px;
   top: 50%;
   transform: translateY(-50%);
-  width: 430px;
+  width: 440px;
   z-index: 10;
   display: flex;
   flex-direction: column;
@@ -13,15 +13,19 @@
 
 /* ===== Glass Card ===== */
 .signup-card {
-  width: 430px;
-  height: 530px;
-  padding: 24px 28px 14px 28px;
-  background: rgba(255, 255, 255, 0.48);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-  border-radius: 10px;
+  width: 440px;
+  min-height: 520px;
+  height: auto;
+  max-height: 94vh;
+  padding: 24px 28px 20px 28px;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
   box-sizing: border-box;
-  overflow: visible;
+  overflow-y: auto;
 }
 
 /* ===== Footer text outside card ===== */
@@ -58,65 +62,28 @@
 
   .signup-card {
     width: 100%;
-    height: 520px;
-    padding: 20px 22px 14px 22px;
+    padding: 20px 20px 14px 20px;
   }
 }
 
-/* ===== Mobile ===== */
+/* ===== Mobile adjustments ===== */
 @media (max-width: 767px) {
   .auth-card-wrapper {
-    position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    width: 90% !important;
-    max-width: 410px !important;
-    margin: 0 !important;
-    z-index: 100 !important;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 0 16px;
   }
 
   .signup-card {
-    width: 100% !important;
-    height: auto !important;
-    max-height: 94vh !important;
-    overflow-y: auto !important;
-    padding: 22px 20px 16px 20px !important;
-    background: rgba(255, 255, 255, 0.65) !important;
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.8) !important;
-    border-radius: 18px !important;
-    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.12) !important;
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
   }
-}
-
-@media (max-width: 480px) {
-  .auth-card-wrapper {
-    width: 92% !important;
-  }
-
-  .signup-card {
-    padding: 20px 16px 14px 16px !important;
-    border-radius: 16px !important;
-  }
-}
-
-/* ===== Input Placeholder styling ===== */
-.signup-card input::placeholder {
-  color: #B3B3B3 !important;
-  opacity: 1 !important;
-}
-
-.signup-card input::-webkit-input-placeholder {
-  color: #B3B3B3 !important;
-}
-
-.signup-card input::-moz-placeholder {
-  color: #B3B3B3 !important;
-  opacity: 1 !important;
-}
-
-.signup-card input:-ms-input-placeholder {
-  color: #B3B3B3 !important;
 }

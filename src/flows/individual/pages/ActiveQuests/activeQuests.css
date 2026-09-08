@@ -1,0 +1,146 @@
+/* ==========================================================================
+   Active Quests & Contracts Workroom (Figma Aligned)
+   ========================================================================== */
+
+.active-quests-page {
+  padding: 32px 40px;
+  max-width: 1380px;
+  margin: 0 auto;
+  min-height: calc(100vh - 80px);
+}
+
+.active-quests-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.active-quests-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.active-quests-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.contracts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.contract-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 24px 28px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.contract-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.contract-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.contract-client-meta {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.contract-value-badge {
+  background: #eff6ff;
+  color: #103ca4;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #bfdbfe;
+}
+
+.contract-milestones-section {
+  margin-top: 16px;
+}
+
+.milestones-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+
+.milestone-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 10px;
+}
+
+.milestone-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 2px;
+}
+
+.milestone-amount {
+  font-size: 13px;
+  color: #059669;
+  font-weight: 600;
+}
+
+.milestone-status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.milestone-status.completed {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.milestone-status.in_progress,
+.milestone-status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.submit-work-btn {
+  background: #103ca4;
+  color: #ffffff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.submit-work-btn:hover {
+  background: #0d2f82;
+}

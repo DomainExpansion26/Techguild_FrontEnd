@@ -1,4 +1,15 @@
-export { default as BaseCard } from './BaseCard';
+export {
+  default as BaseCard,
+  CardHeader,
+  CardTitle,
+  CardSubtitle,
+  CardBody,
+  CardFooter,
+  CardDivider,
+  CardMedia,
+  CardBadge,
+  CardSection,
+} from './BaseCard';
 export { default as MetricCard } from './MetricCard';
 export { default as TrustCard } from './TrustCard';
 export { default as EmptyStateCard } from './EmptyStateCard';

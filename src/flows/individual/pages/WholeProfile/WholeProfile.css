@@ -1,0 +1,86 @@
+.whole-profile-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.whole-profile-hero-card {
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+}
+
+.whole-profile-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #103ca4;
+  color: #ffffff;
+  font-size: 32px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(16, 60, 164, 0.15);
+}
+
+.whole-profile-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.whole-profile-headline {
+  font-size: 15px;
+  color: #4b5563;
+  margin-top: 2px;
+}
+
+.section-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.section-desc {
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.skill-pill {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: #eff6ff;
+  color: #1e40af;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid #dbeafe;
+}
+
+.tool-pill {
+  background: #f3f4f6;
+  color: #374151;
+  border-color: #e5e7eb;
+}
+
+.profile-link-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #2563eb;
+  font-size: 13.5px;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+.profile-link-item:hover {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1d4ed8;
+}

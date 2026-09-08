@@ -1,11 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Camera, Zap, Briefcase, ShieldCheck } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 import img3 from "@/assets/img3.jpg";
 import "./welcome-banner.css";
 
 export default function WelcomeBanner({
-  title = "Welcome to TechGuild, Arjun!",
+  title,
   subtitle = "Complete your profile to stand out",
   desc = "Finish these steps to improve your chances of getting hired.",
   actionText = "Complete profile",
@@ -19,6 +20,12 @@ export default function WelcomeBanner({
   progressText = "0 of 4 steps completed"
 }) {
   const navigate = useNavigate();
+  const { user } = useAuth();
+
+  const firstName = user?.name
+    ? user.name.split(" ")[0]
+    : (user?.first_name || (user?.email ? user.email.split("@")[0] : ""));
+  const resolvedTitle = title || (firstName ? `Welcome to TechGuild, ${firstName}!` : "Welcome to TechGuild!");
 
   const handleActionClick = () => {
     if (onActionClick) {
@@ -43,7 +50,7 @@ export default function WelcomeBanner({
 
         <div className="welcome-banner-info-section">
           <div className="welcome-banner-info-text">
-            <h2 className="welcome-banner-title">{title}</h2>
+            <h2 className="welcome-banner-title">{resolvedTitle}</h2>
             <h3 className="welcome-banner-subtitle">{subtitle}</h3>
             <p className="welcome-banner-desc">{desc}</p>
           </div>

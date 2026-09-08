@@ -12,7 +12,7 @@ export { default as Divider } from "./Divider/Divider";
 export { default as Toggle } from "./Toggle/Toggle";
 export { default as SignupCard } from "./SignupCard/SignupCard";
 export { default as Navbar } from "./Navbar/Navbar";
-export { default as Cards } from "./Cards/cards";
+export { default as Cards, Card } from "./Cards/cards";
 export { default as WelcomeBanner } from "./WelcomeBanner/WelcomeBanner";
 export { default as Charts } from "./Charts/Charts";
 export { default as Tables } from "./Tables/tables";
@@ -23,4 +23,4 @@ export { default as Header } from "./Header/Header";
 export { default as DashboardLayout } from "./Common/DashboardLayout/DashboardLayout";
 export { default as ScrollArea } from "./ScrollArea/ScrollArea";
 export { default as Stepper } from "./Stepper/Stepper";
-
+export * from "./feedback";

@@ -1,57 +1,58 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Icon from "@/Components/icons/Icon";
+import { useAuth } from "@/context/AuthContext";
+import {
+  INDIVIDUAL_MENU_ITEMS,
+  CLIENT_MENU_ITEMS,
+  AGENCY_MENU_ITEMS,
+  ADMIN_MENU_ITEMS,
+  SETTINGS_SUBMENU_ITEMS,
+} from "@/constants/navigation";
 import "./navbar.css";
 
-export const defaultMenuItems = [
-  { id: "dashboard",        label: "Dashboard",           icon: "LayoutDashboard",    path: "/dashboard" },
-  { id: "profile",          label: "Profile (Guild Card)",icon: "User",               path: "/profile" },
-  { id: "quest-board",      label: "Quest Board",         icon: "Files",              path: "/quest-board" },
-  { id: "communication",    label: "Communication",       icon: "MessageSquareMore",  path: "/communication" },
-  { id: "task-management", label: "Task Management",     icon: "NotebookText",       path: "/task-management" },
-  { id: "analytics",        label: "Analytics",           icon: "BarChart3",          path: "/analytics" },
-  { id: "finance",          label: "Finance",             icon: "IndianRupee",        path: "/finance" },
-  { id: "party-formation", label: "Party Formation",     icon: "Group",              path: "/party-formation" },
-  { id: "guild-hall",       label: "Guild Hall",          icon: "Building2",          path: "/guild-hall" },
-  { id: "subscription",     label: "Subscription",        icon: "Star",               path: "/subscription" },
-  { id: "verification",     label: "Verification",        icon: "Verified",           path: "/verification" },
-  { id: "settings",         label: "Settings",            icon: "Settings",           path: "/settings" },
-  { id: "help-support",     label: "Help & Support",      icon: "CircleQuestionMark", path: "/help-support" },
-];
-
-export const clientMenuItems = [
-  { id: "dashboard",        label: "Dashboard",           icon: "LayoutDashboard",    path: "/client-dashboard" },
-  { id: "profile",          label: "Profile (Guild Card)",icon: "User",               path: "/client-profile" },
-  { id: "quest-board",      label: "Quest Board",         icon: "Files",              path: "/client-quest-board" },
-  { id: "communication",    label: "Communication",       icon: "MessageSquareMore",  path: "/client-applications" },
-  { id: "task-management", label: "Task Management",     icon: "NotebookText",       path: "/client-active-quests" },
-  { id: "analytics",        label: "Analytics",           icon: "BarChart3",          path: "/client-company-reputation" },
-  { id: "finance",          label: "Finance",             icon: "IndianRupee",        path: "/client-payouts" },
-  { id: "guild-hall",       label: "Guild Hall",          icon: "Building2",          path: "/client-notifications" },
-  { id: "subscription",     label: "Subscription",        icon: "Star",               path: "/client-verification-hub" },
-  { id: "verification",     label: "Verification",        icon: "Verified",           path: "/client-verification-hub" },
-  { id: "settings",         label: "Settings",            icon: "Settings",           path: "/client-settings" },
-  { id: "help-support",     label: "Help & Support",      icon: "CircleQuestionMark", path: "/client-help-support" },
-];
-
-export const settingsSubMenuItems = [
-  { id: "profile",            label: "Profile",             icon: "User",       path: "/settings/profile",            clientPath: "/client-settings/profile" },
-  { id: "account-security",  label: "Account & Security",  icon: "Shield",     path: "/settings/account-security",   clientPath: "/client-settings/account-security" },
-  { id: "notifications",     label: "Notifications",       icon: "Bell",       path: "/settings/notifications",      clientPath: "/client-settings/notifications" },
-  { id: "privacy",           label: "Privacy",             icon: "Eye",        path: "/settings/privacy",            clientPath: "/client-settings/privacy" },
-  { id: "billing-payments",  label: "Billing & Payments",  icon: "CreditCard", path: "/settings/billing-payments",   clientPath: "/client-settings/billing-payments" },
-  { id: "deactivate-account",label: "Deactivate Account",  icon: "Trash",      path: "/settings/deactivate-account", clientPath: "/client-settings/deactivate-account" },
-  { id: "sign-out",          label: "Sign Out",            icon: "LogOut",     path: "/settings/sign-out",           clientPath: "/client-settings/sign-out", isDanger: true },
-];
+export const defaultMenuItems = INDIVIDUAL_MENU_ITEMS;
+export const clientMenuItems = CLIENT_MENU_ITEMS;
+export const agencyMenuItems = AGENCY_MENU_ITEMS;
+export const adminMenuItems = ADMIN_MENU_ITEMS;
+export const settingsSubMenuItems = SETTINGS_SUBMENU_ITEMS;
 
 export default function Navbar({ items, userRole, activeSettingsTab, onSelectSettingsTab }) {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const currentPath = location.pathname;
-  const isClientFlow = userRole === "Client" || currentPath.startsWith("/client");
-  const menuItems = items || (isClientFlow ? clientMenuItems : defaultMenuItems);
 
-  const isSettingsPath = currentPath.startsWith("/settings") || currentPath.startsWith("/client-settings");
+  const displayName = user?.name || (user?.first_name ? `${user.first_name} ${user.last_name || ""}`.trim() : null) || user?.email?.split("@")[0] || "User";
+  const displayAvatar = user?.avatar || displayName.charAt(0).toUpperCase();
+
+  const isAdminFlow = userRole === "admin" || userRole === "Admin" || currentPath.startsWith("/admin");
+  const isAgencyFlow = userRole === "agency" || userRole === "Agency" || currentPath.startsWith("/agency");
+  const isClientFlow = userRole === "client" || userRole === "Client" || currentPath.startsWith("/client");
+
+  const resolvedMenuItems = isAdminFlow
+    ? adminMenuItems
+    : isAgencyFlow
+    ? agencyMenuItems
+    : isClientFlow
+    ? clientMenuItems
+    : defaultMenuItems;
+
+  const menuItems = items || resolvedMenuItems;
+
+  const roleLabel = isAdminFlow
+    ? "Administrator"
+    : isAgencyFlow
+    ? "Agency"
+    : isClientFlow
+    ? "Client"
+    : "Freelancer";
+
+  const isSettingsPath = currentPath.startsWith("/settings") ||
+    currentPath.startsWith("/client-settings") ||
+    currentPath.startsWith("/agency/settings") ||
+    currentPath.startsWith("/admin/settings");
+
   const [isSettingsMode, setIsSettingsMode] = useState(isSettingsPath);
   const [currentTab, setCurrentTab] = useState(activeSettingsTab || "profile");
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -61,7 +62,7 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
       setIsSettingsMode(true);
       const pathParts = currentPath.split("/").filter(Boolean);
       if (pathParts.length >= 2) {
-        setCurrentTab(pathParts[1]);
+        setCurrentTab(pathParts[pathParts.length - 1]);
       } else {
         setCurrentTab("profile");
       }
@@ -121,7 +122,13 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
         <div className="mobile-header-actions d-flex align-items-center gap-2">
           <button type="button" className="icon-btn"><Icon name="Bell" size={20} /></button>
           <button type="button" className="icon-btn"><Icon name="Mail" size={20} /></button>
-          <div className="header-avatar">A</div>
+          <div
+            className="header-avatar"
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate(isClientFlow ? "/client-settings/profile" : "/settings/profile")}
+          >
+            {displayAvatar}
+          </div>
         </div>
       </div>
 
@@ -162,11 +169,16 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
                 </ul>
               </div>
 
-              <div className="sidebar-footer">
-                <div className="sidebar-avatar">A</div>
+              <div
+                className="sidebar-footer"
+                style={{ cursor: "pointer" }}
+                title="View Profile & Settings"
+                onClick={() => navigate(isClientFlow ? "/client-settings/profile" : "/settings/profile")}
+              >
+                <div className="sidebar-avatar">{displayAvatar}</div>
                 <div className="sidebar-user-info">
-                  <span className="sidebar-username">Arjun Mehta</span>
-                  <span className="sidebar-role">{isClientFlow ? "Client" : "Freelancer"}</span>
+                  <span className="sidebar-username">{displayName}</span>
+                  <span className="sidebar-role">{roleLabel}</span>
                 </div>
               </div>
             </>
@@ -250,7 +262,16 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
                   <Icon name="X" size={18} color="#111827" />
                 </button>
               </div>
-              <div className="header-avatar ms-auto">A</div>
+              <div
+                className="header-avatar ms-auto"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setIsMobileOpen(false);
+                  navigate(isClientFlow ? "/client-settings/profile" : "/settings/profile");
+                }}
+              >
+                {displayAvatar}
+              </div>
             </div>
 
             {/* Drawer Menu List */}
@@ -314,12 +335,19 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
           </div>
 
           {/* Drawer Footer User Card */}
-          <div className="mobile-drawer-footer d-flex align-items-center justify-content-between flex-shrink-0">
+          <div
+            className="mobile-drawer-footer d-flex align-items-center justify-content-between flex-shrink-0"
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              setIsMobileOpen(false);
+              navigate(isClientFlow ? "/client-settings/profile" : "/settings/profile");
+            }}
+          >
             <div className="d-flex align-items-center gap-2">
-              <div className="sidebar-avatar">A</div>
+              <div className="sidebar-avatar">{displayAvatar}</div>
               <div className="sidebar-user-info">
-                <span className="sidebar-username">Arjun Mehta</span>
-                <span className="sidebar-role">{isClientFlow ? "Client" : "Freelancer"}</span>
+                <span className="sidebar-username">{displayName}</span>
+                <span className="sidebar-role">{roleLabel}</span>
               </div>
             </div>
             <Icon name="ChevronRight" size={18} color="#6b7280" />

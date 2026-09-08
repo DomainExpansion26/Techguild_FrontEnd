@@ -1,0 +1,150 @@
+/* ==========================================================================
+   Proposals & Applications Tracker (Figma Aligned)
+   ========================================================================== */
+
+.proposals-page {
+  padding: 32px 40px;
+  max-width: 1380px;
+  margin: 0 auto;
+  min-height: calc(100vh - 80px);
+}
+
+.proposals-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.proposals-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.proposals-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.proposals-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 24px;
+}
+
+.proposals-tab-btn {
+  background: none;
+  border: none;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.proposals-tab-btn:hover {
+  color: #103ca4;
+}
+
+.proposals-tab-btn.active {
+  color: #103ca4;
+  border-bottom-color: #103ca4;
+}
+
+.proposals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.proposal-item-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: box-shadow 0.2s;
+}
+
+.proposal-item-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.proposal-info {
+  flex: 1;
+}
+
+.proposal-quest-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.proposal-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.proposal-status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.proposal-status-badge.submitted,
+.proposal-status-badge.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.proposal-status-badge.shortlisted {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.proposal-status-badge.accepted {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.proposal-status-badge.rejected,
+.proposal-status-badge.withdrawn {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.proposal-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.withdraw-btn {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  color: #ef4444;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.withdraw-btn:hover {
+  background: #fef2f2;
+  border-color: #fca5a5;
+}

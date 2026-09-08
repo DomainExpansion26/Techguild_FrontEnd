@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  techguild-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: https://techguild-backend.onrender.com
+    container_name: techguild_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    environment:
+      - NODE_ENV=production

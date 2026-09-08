@@ -1,15 +1,263 @@
-/* Cards Core Styles */
-.tg-card,
-.card:not(.welcome-banner-card):not(.tip-banner-card),
-.card.shadow-sm:not(.welcome-banner-card):not(.tip-banner-card) {
-  background: rgba(255, 255, 255, 0.50) !important;
-  background-color: rgba(255, 255, 255, 0.50) !important;
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  border: 1px solid #E5E7EB !important;
-  box-shadow: 4px 4px 8px 0px rgba(16, 60, 164, 0.35) !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* ==========================================================================
+   TechGuild Universal Card Design System (cards.css)
+   Clean, modern, fully polymorphic, versatile card styles
+   ========================================================================== */
+
+/* Base Universal Card Container */
+.tg-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-width: 0;
+  word-wrap: break-word;
+  background-clip: border-box;
+  background-color: var(--tg-card-bg, #ffffff);
+  color: var(--tg-card-color, #1e293b);
+  border: var(--tg-card-border, 1px solid #e5e7eb);
+  border-radius: var(--tg-card-radius, 12px);
+  box-shadow: var(--tg-card-shadow, 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05));
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease,
+              background-color 0.2s ease;
+  overflow: hidden;
 }
+
+/* ==========================================================================
+   Card Variants
+   ========================================================================== */
+
+/* 1. Elevated (floating depth) */
+.tg-card--elevated {
+  box-shadow: 0 10px 25px -5px rgba(16, 60, 164, 0.08), 0 8px 10px -6px rgba(16, 60, 164, 0.05);
+  border-color: #e2e8f0;
+}
+
+/* 2. Flat (clean, modern minimalism) */
+.tg-card--flat {
+  box-shadow: none;
+  border: 1px solid #e5e7eb;
+}
+
+/* 3. Outlined (high contrast border) */
+.tg-card--outlined {
+  box-shadow: none;
+  border: 1.5px solid #cbd5e1;
+}
+
+/* 4. Glass / Translucent */
+.tg-card--glass {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 8px 30px 0 rgba(16, 60, 164, 0.07);
+}
+
+/* 5. Gradient (TechGuild Navy Accent) */
+.tg-card--gradient {
+  background: linear-gradient(135deg, #092055 0%, #103ca4 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 12px 30px rgba(16, 60, 164, 0.22);
+}
+.tg-card--gradient .tg-card-subtitle {
+  color: rgba(255, 255, 255, 0.75);
+}
+.tg-card--gradient .tg-card-divider {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* 6. Ghost (transparent structural container) */
+.tg-card--ghost {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   Interactivity & States
+   ========================================================================== */
+
+/* Hoverable Lift & Shadow Boost */
+.tg-card--hoverable:hover,
+.tg-card--interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px -4px rgba(16, 60, 164, 0.12), 0 10px 10px -5px rgba(16, 60, 164, 0.04);
+  border-color: #93c5fd;
+}
+
+/* Clickable / Button-like Accessibility */
+.tg-card--clickable {
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+}
+.tg-card--clickable:focus-visible {
+  ring: 2px solid #103ca4;
+  outline: 2px solid #103ca4;
+  outline-offset: 2px;
+}
+.tg-card--clickable:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 60, 164, 0.08);
+}
+
+/* Disabled State */
+.tg-card--disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  filter: grayscale(20%);
+}
+
+/* Loading Overlay */
+.tg-card--loading {
+  pointer-events: none;
+  user-select: none;
+}
+.tg-card-loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+.tg-card-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #103ca4;
+  border-radius: 50%;
+  animation: tgCardSpin 0.75s linear infinite;
+}
+@keyframes tgCardSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   Card Subcomponents
+   ========================================================================== */
+
+/* Card Header */
+.tg-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: var(--tg-card-header-padding, 18px 24px);
+  border-bottom: 1px solid #f1f5f9;
+  box-sizing: border-box;
+}
+.tg-card-header-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+/* Card Title */
+.tg-card-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: inherit;
+  letter-spacing: -0.01em;
+}
+
+/* Card Subtitle */
+.tg-card-subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+/* Card Actions / Extra Slot */
+.tg-card-extra {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Card Body */
+.tg-card-body {
+  flex: 1 1 auto;
+  padding: var(--tg-card-body-padding, 24px);
+  box-sizing: border-box;
+}
+
+/* Card Footer */
+.tg-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: var(--tg-card-footer-padding, 16px 24px);
+  border-top: 1px solid #f1f5f9;
+  background-color: var(--tg-card-footer-bg, rgba(248, 250, 252, 0.6));
+  box-sizing: border-box;
+}
+
+/* Card Divider */
+.tg-card-divider {
+  width: 100%;
+  height: 1px;
+  background-color: #f1f5f9;
+  margin: 0;
+  border: none;
+}
+
+/* Card Badge */
+.tg-card-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 10;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  line-height: 1;
+  background-color: #103ca4;
+  color: #ffffff;
+}
+
+/* Card Media / Image Cover */
+.tg-card-media {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: #f8fafc;
+}
+.tg-card-media-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.tg-card--hoverable:hover .tg-card-media-img {
+  transform: scale(1.03);
+}
+
+/* Card Inner Section */
+.tg-card-section {
+  padding: 16px 24px;
+  border-bottom: 1px solid #f1f5f9;
+}
+.tg-card-section:last-child {
+  border-bottom: none;
+}
+
+/* ==========================================================================
+   Legacy Variants & Utilities (Retained for 100% Backward Compatibility)
+   ========================================================================== */
 
 .tip-banner-card {
   background-color: #FFFBEB !important;

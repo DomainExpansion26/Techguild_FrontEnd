@@ -1,0 +1,25 @@
+import React from "react";
+import { DashboardLayout, Cards } from "@/Components";
+import Icon from "@/Components/icons/Icon";
+import "./messages.css";
+
+export default function Messages() {
+  return (
+    <DashboardLayout>
+      <div className="dashboard-content d-flex align-items-center justify-content-center p-4" style={{ height: "calc(100% - 70px)" }}>
+        <Cards className="text-center p-5" style={{ maxWidth: "480px" }}>
+          <div className="mb-3 d-inline-flex p-3 rounded-circle bg-light text-primary">
+            <Icon name="Mail" size={32} />
+          </div>
+          <h2 style={{ fontSize: "20px", color: "#111827", fontWeight: "700", marginBottom: "8px" }}>
+            Direct Client Messages
+          </h2>
+          <p style={{ fontSize: "14px", color: "#6b7280", lineHeight: "1.6", marginBottom: "0" }}>
+            You have no active message conversations. When clients contact you regarding your proposals or contracts, live chats will appear here.
+          </p>
+        </Cards>
+      </div>
+    </DashboardLayout>
+  );
+}
+

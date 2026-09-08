@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "@/Components/Navbar/Navbar";
 import Header from "@/Components/Header/Header";
+import { useAuth } from "@/context/AuthContext";
 import dashboardBg from "@/assets/dashboard.bg.png";
 import "./dashboard-layout.css";
 
@@ -24,6 +25,9 @@ export default function DashboardLayout({
   containerClass = "",
   style = {},
 }) {
+  const { user } = useAuth();
+  const displayName = user?.name || (user?.first_name ? `${user.first_name} ${user.last_name || ""}`.trim() : null) || user?.email || "U";
+  const resolvedAvatar = avatarInitial || user?.avatar || displayName.charAt(0).toUpperCase();
   return (
     <div
       className={`dashboard-layout ${containerClass}`}
@@ -45,7 +49,7 @@ export default function DashboardLayout({
               searchValue={searchValue}
               onSearchChange={onSearchChange}
               onSearchSubmit={onSearchSubmit}
-              avatarInitial={avatarInitial}
+              avatarInitial={resolvedAvatar}
               onBellClick={onBellClick}
               onMailClick={onMailClick}
               onAvatarClick={onAvatarClick}
