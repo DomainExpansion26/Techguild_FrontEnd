@@ -188,7 +188,7 @@
 .section-heading h2 {
   margin: 0;
 
-  font-size: 10px;
+  font-size: 14px;
   line-height: 14px;
   font-weight: 700;
 
@@ -206,7 +206,7 @@
 
   color: #103ca4;
 
-  font-size: 9px;
+  font-size: 12px;
   line-height: 14px;
   font-weight: 500;
 
@@ -523,8 +523,29 @@
     max-height: 178px !important;
   }
 }
+/* =========================================================
+   TABLET SHRINK — USE OUTER PAGE SCROLL
+   601px - 767px
+   ========================================================= */
 
+@media (max-width: 767px) and (min-width: 601px) {
 
+  .dashboard-content {
+    flex: none;
+    min-height: auto;
+    height: auto;
+
+    overflow-y: hidden;
+    overflow-x: hidden;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .dashboard-content::-webkit-scrollbar {
+    display: none;
+  }
+}
 /* =========================================================
    MOBILE
    ========================================================= */
