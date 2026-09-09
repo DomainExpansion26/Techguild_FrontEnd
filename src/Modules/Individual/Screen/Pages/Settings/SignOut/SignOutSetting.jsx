@@ -1,11 +1,11 @@
 import React from "react";
-import { DashboardLayout } from "@/Components";
+import { DashboardLayout, PrimaryButton, SecondaryButton } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import "./SignOutSetting.css";
 
 export default function SignOutSetting() {
   return (
-    <DashboardLayout containerClass="signout-container" activeSettingsTab="sign-out">
+    <DashboardLayout containerClass="settings-layout-collapsed-nav signout-container" activeSettingsTab="sign-out">
       <div
         className="dashboard-content"
         style={{
@@ -28,12 +28,7 @@ export default function SignOutSetting() {
           {/* Icon Section */}
           <div className="signout-icon-section">
             <div className="signout-icon-wrap">
-              {/* Red person icon */}
-              <Icon name="User" size={132} color="#D12027" strokeWidth={1.5} className="icon-person" />
-              {/* Green arrow badge positioned over it */}
-              <span className="icon-arrow-badge">
-                <Icon name="ArrowRight" size={20} color="#FFFFFF" strokeWidth={2.5} className="icon-arrow" />
-              </span>
+              <Icon name="CircleUserRound" size={120} className="icon-person" />
             </div>
           </div>
 
@@ -44,8 +39,8 @@ export default function SignOutSetting() {
 
           {/* Buttons */}
           <div className="signout-actions">
-            <button className="btn btn-custom-cancel">Cancel</button>
-            <button className="btn btn-custom-confirm">Confirm Sign Out</button>
+            <SecondaryButton text="Cancel" className="cancel-btn" />
+            <PrimaryButton text="Confirm Sign Out" className="btn-custom-confirm" />
           </div>
         </div>
       </div>

@@ -1,24 +1,19 @@
-import { DashboardLayout, Cards, Toggle } from "@/Components";
+import {
+  DashboardLayout,
+  Cards,
+  Toggle,
+  TextInput,
+  PrimaryButton,
+  SecondaryButton,
+} from "@/Components";
 import "../settings.css";
 import "./ProfileSetting.css";
-
-function Field({ label, hint, children, className = "" }) {
-  return (
-    <>
-      <div className={`settings-label ${className}`}>
-        <div>{label}</div>
-        {hint && <p className="settings-caption">{hint}</p>}
-      </div>
-      <div>{children}</div>
-    </>
-  );
-}
 
 export default function ProfileSetting() {
   return (
     <DashboardLayout
       activeSettingsTab="profile"
-      containerClass="profile-settings-layout"
+      containerClass="settings-layout-collapsed-nav profile-settings-layout"
     >
       <div className="settings-scroll-area">
         <div className="settings-container profile-settings-container">
@@ -29,6 +24,7 @@ export default function ProfileSetting() {
             </p>
           </header>
           <Cards
+            variant="base"
             className="settings-section profile-settings-section"
             padding="32px"
           >
@@ -39,7 +35,20 @@ export default function ProfileSetting() {
               </p>
             </div>
             <div className="settings-form-grid">
-              <Field label="Profile Photo" className="pt-2">
+              <div className="settings-label">
+                <div>Full Name</div>
+              </div>
+              <div>
+                <TextInput
+                  id="fullName"
+                  defaultValue="Arjun Mehta"
+                  placeholder="Full Name"
+                />
+              </div>
+              <div className="settings-label pt-2">
+                <div>Profile Photo</div>
+              </div>
+              <div>
                 <div className="settings-photo-container">
                   <div
                     className="settings-avatar-large"
@@ -48,86 +57,100 @@ export default function ProfileSetting() {
                     AM
                   </div>
                   <div className="settings-photo-actions">
-                    <button type="button" className="profile-upload-button">
-                      Upload Photo
-                    </button>
+                    <SecondaryButton text="Upload Photo" />
                     <button type="button" className="profile-remove-button">
                       Remove
                     </button>
                   </div>
                 </div>
-              </Field>
-              <div className="settings-divider" />
-              <Field label="Full Name">
-                <input
-                  className="settings-input"
-                  id="fullName"
-                  defaultValue="Arjun Mehta"
+              </div>
+              <div className="settings-label">
+                <div>Bio</div>
+                <p className="settings-caption">Shown on your public profile</p>
+              </div>
+              <div>
+                <TextInput
+                  id="bio"
+                  className="profile-bio-input"
+                  inputClassName="profile-bio-input-field"
                 />
-              </Field>
-              <div className="settings-divider" />
-              <Field label="Username" hint="techguild.com/u/arjunmehta">
-                <input
-                  className="settings-input"
-                  id="username"
-                  defaultValue="arjunmehta"
-                />
-              </Field>
-              <div className="settings-divider" />
-              <Field label="Professional Headline">
-                <input
-                  className="settings-input"
+              </div>
+              <div className="settings-label">
+                <div>Professional Headline</div>
+              </div>
+              <div>
+                <TextInput
                   id="headline"
                   defaultValue="Full Stack Developer · React, Node.js, TypeScript"
+                  placeholder="Professional Headline"
                 />
-              </Field>
-              <div className="settings-divider" />
-              <Field label="Location">
-                <input
-                  className="settings-input"
-                  id="location"
-                  defaultValue="Pune, India"
+              </div>
+              <div className="settings-label">
+                <div>Username</div>
+                <p className="settings-caption">techguild.com/u/arjunmehta</p>
+              </div>
+              <div>
+                <TextInput
+                  id="username"
+                  defaultValue="arjunmehta"
+                  placeholder="Username"
                 />
-              </Field>
-              <div className="settings-divider" />
-              <Field label="Timezone">
-                <input className="settings-input" id="timezone" />
-              </Field>
-              <div className="settings-divider" />
-              <Field label="Languages" hint="Languages you can communicate in">
-                <input
-                  className="settings-input"
+              </div>
+              <div className="settings-label">
+                <div>Languages</div>
+                <p className="settings-caption">
+                  Languages you can communicate in
+                </p>
+              </div>
+              <div>
+                <TextInput
                   id="languages"
                   defaultValue="English, Hindi"
+                  placeholder="Languages"
                 />
-              </Field>
-              <div className="settings-divider" />
-              <Field label="Bio" hint="Shown on your public profile">
-                <textarea
-                  className="settings-input settings-textarea"
-                  id="bio"
-                  rows="3"
+              </div>
+              <div className="settings-label">
+                <div>Location</div>
+              </div>
+              <div>
+                <TextInput
+                  id="location"
+                  defaultValue="Pune, India"
+                  placeholder="Location"
                 />
-              </Field>
-              <div className="settings-divider" />
-              <Field label="Website / Portfolio">
-                <input
-                  className="settings-input"
+              </div>
+              <div className="settings-label">
+                <div>Timezone</div>
+              </div>
+              <div>
+                <TextInput id="timezone" placeholder="Timezone" />
+              </div>
+              <div className="settings-label">
+                <div>Website / Portfolio</div>
+              </div>
+              <div>
+                <TextInput
                   id="website"
                   defaultValue="https://arjunmehta.dev"
+                  placeholder="Website / Portfolio"
                 />
-              </Field>
+              </div>
             </div>
             <div className="settings-actions">
-              <button type="button" className="settings-btn-secondary">
-                Cancel
-              </button>
-              <button type="button" className="settings-btn-primary">
-                Save Changes
-              </button>
+              <SecondaryButton
+                text="Cancel"
+                className="settings-btn-secondary"
+                onClick={() => {}}
+              />
+              <PrimaryButton
+                text="Save Changes"
+                className="settings-btn-primary"
+                onClick={() => {}}
+              />
             </div>
           </Cards>
           <Cards
+            variant="base"
             className="settings-section profile-settings-section availability-section"
             padding="32px"
           >
@@ -138,24 +161,26 @@ export default function ProfileSetting() {
               </p>
             </div>
             <div className="settings-form-grid align-center">
-              <Field label="Availability Status">
+              <div className="settings-label">
+                <div>Availability Status</div>
+              </div>
+              <div>
                 <div className="settings-toggle-container">
-                  <Toggle
-                    active
-                    size="lg"
-                    ariaLabel="Available for work"
-                  />
+                  <Toggle active size="lg" ariaLabel="Available for work" />
                   <span className="settings-status-text available">
                     Available for Work
                   </span>
                 </div>
-              </Field>
-              <Field
-                label="Hours per Week"
-                hint="How many hours you can commit"
-              >
-                <input className="settings-input" id="hours" />
-              </Field>
+              </div>
+              <div className="settings-label">
+                <div>Hours per Week</div>
+                <p className="settings-caption">
+                  How many hours you can commit
+                </p>
+              </div>
+              <div>
+                <TextInput id="hours" placeholder="Hours per Week" />
+              </div>
             </div>
           </Cards>
         </div>
