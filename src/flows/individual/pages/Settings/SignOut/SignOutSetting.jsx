@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { DashboardLayout } from "@/Components";
+import { DashboardLayout, PrimaryButton, SecondaryButton } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import { useAuth } from "@/context/AuthContext";
 import { showSnackbar } from "@/store";
@@ -69,21 +69,10 @@ export default function SignOutSetting() {
 
           {/* Buttons */}
           <div className="signout-actions">
-            <button
-              type="button"
-              className="btn btn-custom-cancel"
-              onClick={handleCancel}
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              className="btn btn-custom-confirm"
-              onClick={handleConfirmSignOut}
-            >
-              Confirm Sign Out
-            </button>
+            <SecondaryButton text="Cancel" className="cancel-btn" onClick={handleCancel} />
+            <PrimaryButton text="Confirm Sign Out" className="btn-custom-confirm" onClick={handleConfirmSignOut} />
           </div>
+
         </div>
       </div>
     </DashboardLayout>
