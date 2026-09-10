@@ -18,8 +18,11 @@ export default function ProfileSetting() {
   const dispatch = useDispatch();
   const { user, updateUser } = useAuth();
   const fileInputRef = useRef(null);
+  // Tracks fields the user has typed in, so a slow API response on
+  // fresh reload never clobbers their keystrokes.
+  const touchedRef = useRef(new Set());
+  const markTouched = (key) => touchedRef.current.add(key);
 
-  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
@@ -36,52 +39,96 @@ export default function ProfileSetting() {
   const [isAvailable, setIsAvailable] = useState(true);
   const [hoursPerWeek, setHoursPerWeek] = useState("40");
 
-  // Fetch live profile from backend API
-  const fetchProfileData = async () => {
-    setLoading(true);
+  // Fetch live profile from backend API.
+  // Skips fields the user already edited (unless force=true, e.g. Cancel),
+  // so a late response on fresh reload can't wipe typed input.
+  // NOTE: inputs are intentionally never disabled while loading, so the
+  // form is always interactive even if the API is slow or fails.
+  const fetchProfileData = async (force = false) => {
+    const apply = (key, setter, value) => {
+      if (value === undefined || value === null || value === "") return;
+      if (force || !touchedRef.current.has(key)) setter(value);
+    };
+
     try {
       const res = await profileApi.getProfile();
       const profile = res?.individual || res?.data?.individual || res || {};
 
       if (profile) {
-        if (profile.headline) setHeadline(profile.headline);
-        if (profile.bio) setBio(profile.bio);
-        if (profile.portfolio_url) setWebsite(profile.portfolio_url);
-        if (profile.avatar_url) setAvatarUrl(profile.avatar_url);
-        if (profile.timezone) setTimezone(profile.timezone);
-        if (profile.preferred_language) setLanguages(profile.preferred_language);
-        if (profile.availability) {
+        apply("headline", setHeadline, profile.headline);
+        apply("bio", setBio, profile.bio);
+        apply("website", setWebsite, profile.portfolio_url);
+        apply("avatarUrl", setAvatarUrl, profile.avatar_url);
+        apply("timezone", setTimezone, profile.timezone);
+        apply("languages", setLanguages, profile.preferred_language);
+        if (
+          profile.availability &&
+          (force || !touchedRef.current.has("isAvailable"))
+        ) {
           setIsAvailable(profile.availability !== "unavailable");
         }
-        if (profile.hours_per_week) setHoursPerWeek(String(profile.hours_per_week));
+        if (
+          profile.hours_per_week !== undefined &&
+          profile.hours_per_week !== null &&
+          String(profile.hours_per_week) !== "" &&
+          (force || !touchedRef.current.has("hoursPerWeek"))
+        ) {
+          setHoursPerWeek(String(profile.hours_per_week));
+        }
 
         const cityCountry = [profile.city, profile.country].filter(Boolean).join(", ");
-        if (cityCountry) setLocation(cityCountry);
+        apply("location", setLocation, cityCountry);
       }
 
       const initialName =
         user?.name ||
         (user?.first_name ? `${user.first_name} ${user.last_name || ""}`.trim() : "") ||
         (user?.email ? user.email.split("@")[0] : "");
-      setFullName(initialName);
-      setUsername(user?.username || (user?.email ? user.email.split("@")[0] : ""));
+      apply("fullName", setFullName, initialName);
+      apply(
+        "username",
+        setUsername,
+        user?.username || (user?.email ? user.email.split("@")[0] : "")
+      );
     } catch (err) {
       console.warn("Could not fetch profile from API, using auth session:", err);
       const initialName =
         user?.name ||
         (user?.first_name ? `${user.first_name} ${user.last_name || ""}`.trim() : "") ||
         (user?.email ? user.email.split("@")[0] : "");
-      setFullName(initialName);
-      setUsername(user?.username || (user?.email ? user.email.split("@")[0] : ""));
-    } finally {
-      setLoading(false);
+      apply("fullName", setFullName, initialName);
+      apply(
+        "username",
+        setUsername,
+        user?.username || (user?.email ? user.email.split("@")[0] : "")
+      );
     }
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchProfileData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Auth session can resolve after mount on fresh reload — fill name /
+  // username then, unless the user already typed something.
+  useEffect(() => {
+    if (!user) return;
+    if (!touchedRef.current.has("fullName")) {
+      const initialName =
+        user?.name ||
+        (user?.first_name ? `${user.first_name} ${user.last_name || ""}`.trim() : "") ||
+        (user?.email ? user.email.split("@")[0] : "");
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      if (initialName) setFullName(initialName);
+    }
+    if (!touchedRef.current.has("username")) {
+      const initialUsername =
+        user?.username || (user?.email ? user.email.split("@")[0] : "");
+      if (initialUsername) setUsername(initialUsername);
+    }
+  }, [user]);
 
   const handlePhotoUpload = async (e) => {
     const file = e.target.files?.[0];
@@ -176,7 +223,10 @@ export default function ProfileSetting() {
   };
 
   const handleCancel = () => {
-    fetchProfileData();
+    // Revert counts as an explicit reset: clear typed-field guards and
+    // force-fill from the API.
+    touchedRef.current.clear();
+    fetchProfileData(true);
     dispatch(showSnackbar({ message: "Changes reverted.", type: "info" }));
   };
 
@@ -221,9 +271,11 @@ export default function ProfileSetting() {
                 <TextInput
                   id="fullName"
                   value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
+                  onChange={(e) => {
+                    markTouched("fullName");
+                    setFullName(e.target.value);
+                  }}
                   placeholder="Full Name"
-                  disabled={loading}
                 />
               </div>
               <div className="settings-label pt-2">
@@ -280,9 +332,11 @@ export default function ProfileSetting() {
                   className="profile-bio-input"
                   inputClassName="profile-bio-input-field"
                   value={bio}
-                  onChange={(e) => setBio(e.target.value)}
+                  onChange={(e) => {
+                    markTouched("bio");
+                    setBio(e.target.value);
+                  }}
                   placeholder="Tell clients and guild members about your experience and skills..."
-                  disabled={loading}
                 />
               </div>
               <div className="settings-label">
@@ -292,9 +346,11 @@ export default function ProfileSetting() {
                 <TextInput
                   id="headline"
                   value={headline}
-                  onChange={(e) => setHeadline(e.target.value)}
+                  onChange={(e) => {
+                    markTouched("headline");
+                    setHeadline(e.target.value);
+                  }}
                   placeholder="Professional Headline"
-                  disabled={loading}
                 />
               </div>
               <div className="settings-label">
@@ -305,9 +361,11 @@ export default function ProfileSetting() {
                 <TextInput
                   id="username"
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => {
+                    markTouched("username");
+                    setUsername(e.target.value);
+                  }}
                   placeholder="Username"
-                  disabled={loading}
                 />
               </div>
               <div className="settings-label">
@@ -318,9 +376,11 @@ export default function ProfileSetting() {
                 <TextInput
                   id="languages"
                   value={languages}
-                  onChange={(e) => setLanguages(e.target.value)}
+                  onChange={(e) => {
+                    markTouched("languages");
+                    setLanguages(e.target.value);
+                  }}
                   placeholder="Languages"
-                  disabled={loading}
                 />
               </div>
               <div className="settings-label">
@@ -330,9 +390,11 @@ export default function ProfileSetting() {
                 <TextInput
                   id="location"
                   value={location}
-                  onChange={(e) => setLocation(e.target.value)}
+                  onChange={(e) => {
+                    markTouched("location");
+                    setLocation(e.target.value);
+                  }}
                   placeholder="Location"
-                  disabled={loading}
                 />
               </div>
               <div className="settings-label">
@@ -342,9 +404,11 @@ export default function ProfileSetting() {
                 <TextInput
                   id="timezone"
                   value={timezone}
-                  onChange={(e) => setTimezone(e.target.value)}
+                  onChange={(e) => {
+                    markTouched("timezone");
+                    setTimezone(e.target.value);
+                  }}
                   placeholder="Timezone"
-                  disabled={loading}
                 />
               </div>
               <div className="settings-label">
@@ -354,9 +418,11 @@ export default function ProfileSetting() {
                 <TextInput
                   id="website"
                   value={website}
-                  onChange={(e) => setWebsite(e.target.value)}
+                  onChange={(e) => {
+                    markTouched("website");
+                    setWebsite(e.target.value);
+                  }}
                   placeholder="Website / Portfolio"
-                  disabled={loading}
                 />
               </div>
             </div>
@@ -396,7 +462,10 @@ export default function ProfileSetting() {
                     active={isAvailable}
                     size="lg"
                     ariaLabel="Available for work"
-                    onClick={() => setIsAvailable((prev) => !prev)}
+                    onClick={() => {
+                      markTouched("isAvailable");
+                      setIsAvailable((prev) => !prev);
+                    }}
                   />
                   <span className="settings-status-text available">
                     {isAvailable ? "Available for Work" : "Currently Unavailable"}
@@ -411,7 +480,10 @@ export default function ProfileSetting() {
                 <TextInput
                   id="hours"
                   value={hoursPerWeek}
-                  onChange={(e) => setHoursPerWeek(e.target.value)}
+                  onChange={(e) => {
+                    markTouched("hoursPerWeek");
+                    setHoursPerWeek(e.target.value);
+                  }}
                   placeholder="Hours per Week"
                 />
               </div>
