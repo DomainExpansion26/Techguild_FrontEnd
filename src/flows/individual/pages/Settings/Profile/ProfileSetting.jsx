@@ -1,24 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { DashboardLayout, Cards, Toggle } from "@/Components";
+import {
+  DashboardLayout,
+  Cards,
+  Toggle,
+  TextInput,
+  PrimaryButton,
+  SecondaryButton,
+} from "@/Components";
 import { useAuth } from "@/context/AuthContext";
 import { profileApi } from "@/features/profile/api/profileApi";
 import { showSnackbar } from "@/store";
-import Icon from "@/Components/icons/Icon";
 import "../settings.css";
 import "./ProfileSetting.css";
-
-function Field({ label, hint, children, className = "" }) {
-  return (
-    <>
-      <div className={`settings-label ${className}`}>
-        <div>{label}</div>
-        {hint && <p className="settings-caption">{hint}</p>}
-      </div>
-      <div>{children}</div>
-    </>
-  );
-}
 
 export default function ProfileSetting() {
   const dispatch = useDispatch();
@@ -59,17 +53,24 @@ export default function ProfileSetting() {
         if (profile.availability) {
           setIsAvailable(profile.availability !== "unavailable");
         }
+        if (profile.hours_per_week) setHoursPerWeek(String(profile.hours_per_week));
 
         const cityCountry = [profile.city, profile.country].filter(Boolean).join(", ");
         if (cityCountry) setLocation(cityCountry);
       }
 
-      const initialName = user?.name || (user?.first_name ? `${user.first_name} ${user.last_name || ""}`.trim() : "") || (user?.email ? user.email.split("@")[0] : "");
+      const initialName =
+        user?.name ||
+        (user?.first_name ? `${user.first_name} ${user.last_name || ""}`.trim() : "") ||
+        (user?.email ? user.email.split("@")[0] : "");
       setFullName(initialName);
       setUsername(user?.username || (user?.email ? user.email.split("@")[0] : ""));
     } catch (err) {
       console.warn("Could not fetch profile from API, using auth session:", err);
-      const initialName = user?.name || (user?.first_name ? `${user.first_name} ${user.last_name || ""}`.trim() : "") || (user?.email ? user.email.split("@")[0] : "");
+      const initialName =
+        user?.name ||
+        (user?.first_name ? `${user.first_name} ${user.last_name || ""}`.trim() : "") ||
+        (user?.email ? user.email.split("@")[0] : "");
       setFullName(initialName);
       setUsername(user?.username || (user?.email ? user.email.split("@")[0] : ""));
     } finally {
@@ -79,6 +80,7 @@ export default function ProfileSetting() {
 
   useEffect(() => {
     fetchProfileData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handlePhotoUpload = async (e) => {
@@ -101,6 +103,8 @@ export default function ProfileSetting() {
       dispatch(showSnackbar({ message: "Avatar preview updated.", type: "info" }));
     } finally {
       setUploadingPhoto(false);
+      // reset input so the same file can be picked again
+      if (e.target) e.target.value = "";
     }
   };
 
@@ -120,16 +124,19 @@ export default function ProfileSetting() {
     try {
       const [city = "", country = ""] = location.split(",").map((s) => s.trim());
 
-      await profileApi.saveIndividualProfile({
-        headline,
-        bio,
-        portfolio_url: website,
-        timezone,
-        preferred_language: languages,
-        city,
-        country,
-        availability: isAvailable ? "available" : "unavailable",
-      }, true);
+      await profileApi.saveIndividualProfile(
+        {
+          headline,
+          bio,
+          portfolio_url: website,
+          timezone,
+          preferred_language: languages,
+          city,
+          country,
+          availability: isAvailable ? "available" : "unavailable",
+        },
+        true
+      );
 
       // Update auth context so headers, navbar, and layouts immediately show the live name & details
       updateUser({
@@ -141,10 +148,12 @@ export default function ProfileSetting() {
         avatar: avatarUrl || (fullName ? fullName.charAt(0).toUpperCase() : "U"),
       });
 
-      dispatch(showSnackbar({
-        message: "Profile updated and saved to API successfully!",
-        type: "success",
-      }));
+      dispatch(
+        showSnackbar({
+          message: "Profile updated and saved to API successfully!",
+          type: "success",
+        })
+      );
     } catch (err) {
       console.error("Save profile error:", err);
       // Still update local context so user experience is not blocked
@@ -155,10 +164,12 @@ export default function ProfileSetting() {
         location,
         timezone,
       });
-      dispatch(showSnackbar({
-        message: err?.message || "Profile updated locally.",
-        type: "info",
-      }));
+      dispatch(
+        showSnackbar({
+          message: err?.message || "Profile updated locally.",
+          type: "info",
+        })
+      );
     } finally {
       setSaving(false);
     }
@@ -170,24 +181,29 @@ export default function ProfileSetting() {
   };
 
   const initials = fullName
-    ? fullName.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase()
+    ? fullName
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .slice(0, 2)
+        .toUpperCase()
     : "U";
 
   return (
     <DashboardLayout
       activeSettingsTab="profile"
-      containerClass="profile-settings-layout"
+      containerClass="settings-layout-collapsed-nav profile-settings-layout"
     >
       <div className="settings-scroll-area">
         <div className="settings-container profile-settings-container">
           <header className="settings-header">
-            <h1 className="settings-page-title">Profile Settings</h1>
+            <h1 className="settings-page-title">Profile</h1>
             <p className="settings-page-subtitle">
-              Manage your personal information, headline, and availability received live from TechGuild API.
+              Control how you appear to clients and collaborators on TechGuild.
             </p>
           </header>
-
           <Cards
+            variant="base"
             className="settings-section profile-settings-section"
             padding="32px"
           >
@@ -197,14 +213,37 @@ export default function ProfileSetting() {
                 Update your name, headline, and public-facing details.
               </p>
             </div>
-
             <div className="settings-form-grid">
-              <Field label="Profile Photo" className="pt-2">
+              <div className="settings-label">
+                <div>Full Name</div>
+              </div>
+              <div>
+                <TextInput
+                  id="fullName"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  placeholder="Full Name"
+                  disabled={loading}
+                />
+              </div>
+              <div className="settings-label pt-2">
+                <div>Profile Photo</div>
+              </div>
+              <div>
                 <div className="settings-photo-container">
                   <div
                     className="settings-avatar-large"
                     aria-label={fullName || "User Profile"}
-                    style={avatarUrl ? { backgroundImage: `url(${avatarUrl})`, backgroundSize: "cover", color: "transparent" } : {}}
+                    style={
+                      avatarUrl
+                        ? {
+                            backgroundImage: `url(${avatarUrl})`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            color: "transparent",
+                          }
+                        : {}
+                    }
                   >
                     {!avatarUrl && initials}
                   </div>
@@ -216,138 +255,128 @@ export default function ProfileSetting() {
                     onChange={handlePhotoUpload}
                   />
                   <div className="settings-photo-actions">
-                    <button
-                      type="button"
-                      className="profile-upload-button"
+                    <SecondaryButton
+                      text={uploadingPhoto ? "Uploading..." : "Upload Photo"}
                       disabled={uploadingPhoto}
                       onClick={() => fileInputRef.current?.click()}
+                    />
+                    <button
+                      type="button"
+                      className="profile-remove-button"
+                      onClick={handleRemovePhoto}
                     >
-                      {uploadingPhoto ? "Uploading..." : "Upload Photo"}
+                      Remove
                     </button>
-                    {avatarUrl && (
-                      <button
-                        type="button"
-                        className="profile-remove-button"
-                        onClick={handleRemovePhoto}
-                      >
-                        Remove
-                      </button>
-                    )}
                   </div>
                 </div>
-              </Field>
-
-              <div className="settings-divider" />
-              <Field label="Full Name">
-                <input
-                  className="settings-input"
-                  id="fullName"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Enter your full name"
-                />
-              </Field>
-
-              <div className="settings-divider" />
-              <Field label="Username" hint={`techguild.com/u/${username || "username"}`}>
-                <input
-                  className="settings-input"
-                  id="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="yourusername"
-                />
-              </Field>
-
-              <div className="settings-divider" />
-              <Field label="Professional Headline">
-                <input
-                  className="settings-input"
-                  id="headline"
-                  value={headline}
-                  onChange={(e) => setHeadline(e.target.value)}
-                  placeholder="e.g. Senior Full-Stack Engineer · React, Go, Node.js"
-                />
-              </Field>
-
-              <div className="settings-divider" />
-              <Field label="Location">
-                <input
-                  className="settings-input"
-                  id="location"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  placeholder="e.g. Mumbai, India"
-                />
-              </Field>
-
-              <div className="settings-divider" />
-              <Field label="Timezone">
-                <input
-                  className="settings-input"
-                  id="timezone"
-                  value={timezone}
-                  onChange={(e) => setTimezone(e.target.value)}
-                  placeholder="e.g. Asia/Kolkata (UTC+05:30)"
-                />
-              </Field>
-
-              <div className="settings-divider" />
-              <Field label="Languages" hint="Languages you can communicate in">
-                <input
-                  className="settings-input"
-                  id="languages"
-                  value={languages}
-                  onChange={(e) => setLanguages(e.target.value)}
-                  placeholder="e.g. English, Hindi"
-                />
-              </Field>
-
-              <div className="settings-divider" />
-              <Field label="Bio" hint="Shown on your public profile">
-                <textarea
-                  className="settings-input settings-textarea"
+              </div>
+              <div className="settings-label">
+                <div>Bio</div>
+                <p className="settings-caption">Shown on your public profile</p>
+              </div>
+              <div>
+                <TextInput
                   id="bio"
-                  rows="3"
+                  className="profile-bio-input"
+                  inputClassName="profile-bio-input-field"
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
                   placeholder="Tell clients and guild members about your experience and skills..."
+                  disabled={loading}
                 />
-              </Field>
-
-              <div className="settings-divider" />
-              <Field label="Website / Portfolio">
-                <input
-                  className="settings-input"
+              </div>
+              <div className="settings-label">
+                <div>Professional Headline</div>
+              </div>
+              <div>
+                <TextInput
+                  id="headline"
+                  value={headline}
+                  onChange={(e) => setHeadline(e.target.value)}
+                  placeholder="Professional Headline"
+                  disabled={loading}
+                />
+              </div>
+              <div className="settings-label">
+                <div>Username</div>
+                <p className="settings-caption">techguild.com/u/{username || "username"}</p>
+              </div>
+              <div>
+                <TextInput
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Username"
+                  disabled={loading}
+                />
+              </div>
+              <div className="settings-label">
+                <div>Languages</div>
+                <p className="settings-caption">Languages you can communicate in</p>
+              </div>
+              <div>
+                <TextInput
+                  id="languages"
+                  value={languages}
+                  onChange={(e) => setLanguages(e.target.value)}
+                  placeholder="Languages"
+                  disabled={loading}
+                />
+              </div>
+              <div className="settings-label">
+                <div>Location</div>
+              </div>
+              <div>
+                <TextInput
+                  id="location"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  placeholder="Location"
+                  disabled={loading}
+                />
+              </div>
+              <div className="settings-label">
+                <div>Timezone</div>
+              </div>
+              <div>
+                <TextInput
+                  id="timezone"
+                  value={timezone}
+                  onChange={(e) => setTimezone(e.target.value)}
+                  placeholder="Timezone"
+                  disabled={loading}
+                />
+              </div>
+              <div className="settings-label">
+                <div>Website / Portfolio</div>
+              </div>
+              <div>
+                <TextInput
                   id="website"
                   value={website}
                   onChange={(e) => setWebsite(e.target.value)}
-                  placeholder="https://yourportfolio.dev"
+                  placeholder="Website / Portfolio"
+                  disabled={loading}
                 />
-              </Field>
+              </div>
             </div>
-
             <div className="settings-actions">
-              <button
-                type="button"
+              <SecondaryButton
+                text="Cancel"
                 className="settings-btn-secondary"
                 onClick={handleCancel}
                 disabled={saving}
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
+              />
+              <PrimaryButton
+                text={saving ? "Saving..." : "Save Changes"}
                 className="settings-btn-primary"
                 onClick={handleSaveChanges}
                 disabled={saving}
-              >
-                {saving ? "Saving Changes..." : "Save Changes"}
-              </button>
+              />
             </div>
           </Cards>
-
           <Cards
+            variant="base"
             className="settings-section profile-settings-section availability-section"
             padding="32px"
           >
@@ -357,50 +386,35 @@ export default function ProfileSetting() {
                 Let clients know when you are open to new work.
               </p>
             </div>
-
             <div className="settings-form-grid align-center">
-              <Field label="Availability Status">
-                <div className="settings-toggle-container d-flex align-items-center gap-3">
-                  <button
-                    type="button"
-                    className="border-0 bg-transparent p-0"
+              <div className="settings-label">
+                <div>Availability Status</div>
+              </div>
+              <div>
+                <div className="settings-toggle-container">
+                  <Toggle
+                    active={isAvailable}
+                    size="lg"
+                    ariaLabel="Available for work"
                     onClick={() => setIsAvailable((prev) => !prev)}
-                  >
-                    <Toggle
-                      active={isAvailable}
-                      size="lg"
-                      ariaLabel="Available for work"
-                    />
-                  </button>
-                  <span className={`settings-status-text ${isAvailable ? "available" : "text-muted"}`}>
+                  />
+                  <span className="settings-status-text available">
                     {isAvailable ? "Available for Work" : "Currently Unavailable"}
                   </span>
                 </div>
-              </Field>
-
-              <Field
-                label="Hours per Week"
-                hint="How many hours you can commit"
-              >
-                <input
-                  className="settings-input"
+              </div>
+              <div className="settings-label">
+                <div>Hours per Week</div>
+                <p className="settings-caption">How many hours you can commit</p>
+              </div>
+              <div>
+                <TextInput
                   id="hours"
                   value={hoursPerWeek}
                   onChange={(e) => setHoursPerWeek(e.target.value)}
-                  placeholder="e.g. 40"
+                  placeholder="Hours per Week"
                 />
-              </Field>
-            </div>
-
-            <div className="settings-actions mt-4">
-              <button
-                type="button"
-                className="settings-btn-primary"
-                onClick={handleSaveChanges}
-                disabled={saving}
-              >
-                {saving ? "Saving..." : "Save Availability"}
-              </button>
+              </div>
             </div>
           </Cards>
         </div>
@@ -408,4 +422,3 @@ export default function ProfileSetting() {
     </DashboardLayout>
   );
 }
-

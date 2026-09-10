@@ -2,13 +2,13 @@
    Layout gap (moved out of the inline style on DashboardLayout)
    =========================================================== */
 .dashboard-layout.profile-settings-layout {
-  gap: 30px;
+  gap: 12px;
 }
 
 .profile-settings-container {
   max-width: none;
-  gap: 24px;
-  padding-bottom: 24px;
+  gap: 12px;
+  padding-bottom: 0;
 }
 
 .profile-settings-section {
@@ -19,27 +19,136 @@
   row-gap: 18px;
 }
 
-.profile-settings-section .settings-divider {
-  margin: 0;
+/* ===========================================================
+   Bio textarea-style input
+   =========================================================== */
+
+.profile-bio-input {
+  align-items: flex-start;
+  height: auto;
+  min-height: 100px;
+  padding-top: 13px;
+}
+
+.profile-bio-input-field {
+  height: auto;
+  line-height: 1.5;
+}
+
+/* ===========================================================
+   Actions row — Figma: row / gap 8px / justify flex-end (38px btns)
+   Scoped here so other settings tabs are unaffected.
+   =========================================================== */
+
+.profile-settings-section .settings-actions {
+  gap: 8px;
+}
+
+/* ===========================================================
+   Action buttons — Figma ground truth (MCP):
+   Cancel: 38px / 8px 18px / #fff / 1px #e5e7eb / radius 7px /
+           13px-500 #374151
+   Save:   38px / 8px 18px / #103ca4 / radius 7px / 13px-600 #fff
+   Fixes: base .primary-btn/.secondary-btn are width:100% +
+   height:46px, and settings.css only sets height:40px with no
+   width override — so without this, Save stretches full-width.
+   =========================================================== */
+
+.profile-settings-section .settings-actions .secondary-btn,
+.profile-settings-section .settings-actions .primary-btn {
+  width: fit-content;
+  flex: none;
+  height: 38px;
+  padding: 8px 18px;
+  font-size: 13px;
+  line-height: 1.5;
+  border-radius: 7px;
+  box-shadow: none;
+  white-space: nowrap;
+}
+
+.profile-settings-section .settings-actions .secondary-btn {
+  font-weight: 500;
+  border: 1px solid #e5e7eb;
+  background-color: #ffffff;
+  color: #374151;
+}
+
+.profile-settings-section .settings-actions .secondary-btn:hover:not(:disabled) {
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+  color: #374151;
+}
+
+.profile-settings-section .settings-actions .secondary-btn:active:not(:disabled) {
+  background-color: #f8f9fa;
+  border-color: #e5e7eb;
+}
+
+.profile-settings-section .settings-actions .primary-btn {
+  font-weight: 600;
+  border: 0;
+  background-color: #103ca4;
+  color: #ffffff;
+}
+
+/* ===========================================================
+   Photo row — Figma: row / gap 14px / justify flex-start
+   Upload: 6px 14px / #fff / 1px #e5e7eb / radius 7px /
+           12px-500 #374151
+   Remove: text-only, 12px-500 #9ca3af
+   =========================================================== */
+
+.profile-settings-section .settings-photo-actions {
+  gap: 14px;
+}
+
+.profile-settings-section .settings-photo-actions .secondary-btn {
+  width: fit-content;
+  flex: none;
+  height: auto;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  border: 1px solid #e5e7eb;
+  border-radius: 7px;
+  box-shadow: none;
+  background-color: #ffffff;
+  color: #374151;
+  white-space: nowrap;
+}
+
+.profile-settings-section .settings-photo-actions .secondary-btn:hover:not(:disabled) {
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+  color: #374151;
+}
+
+.profile-settings-section .settings-photo-actions .secondary-btn:active:not(:disabled) {
+  background-color: #f8f9fa;
+  border-color: #e5e7eb;
 }
 
 .profile-upload-button,
 .profile-remove-button {
-  height: 34px;
-  border-radius: 10px;
-  font-size: 13px;
+  border-radius: 7px;
+  font-size: 12px;
   font-weight: 500;
+  line-height: 1.5;
   cursor: pointer;
 }
 
 .profile-upload-button {
-  padding: 0 14px;
-  color: #273449;
-  background: rgba(255, 255, 255, 0.82);
+  height: auto;
+  padding: 6px 14px;
+  color: #374151;
+  background: #ffffff;
   border: 1px solid #e5e7eb;
 }
 
 .profile-remove-button {
+  height: auto;
   padding: 0;
   color: #9ca3af;
   background: transparent;
@@ -61,7 +170,7 @@
 
 @media (max-width: 768px) {
   .profile-settings-container {
-    gap: 20px;
+    gap: 12px;
   }
 
   .profile-settings-section .settings-form-grid {
