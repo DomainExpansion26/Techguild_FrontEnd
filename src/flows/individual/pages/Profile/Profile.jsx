@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { DashboardLayout, Cards, PrimaryButton, SecondaryButton, TextInput, ScrollArea, Stepper } from "@/Components";
+import { DashboardLayout, Cards, PrimaryButton, SecondaryButton, TextInput, Stepper } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import { profileApi } from "@/features/profile/api/profileApi";
 import "./profile.css";
@@ -691,7 +691,7 @@ export default function Profile() {
     <DashboardLayout>
       <div className="profile-page-wrapper flex-grow-1 min-vh-0 d-flex flex-column w-100">
         <Cards className="profile-main-card flex-grow-1 h-100 d-flex flex-column overflow-hidden w-100" padding="0">
-          <ScrollArea ref={cardInnerRef} className="profile-card-inner d-flex flex-column h-100">
+          <div ref={cardInnerRef} className="profile-card-inner d-flex flex-column h-100">
             {isSubmitted ? (
               renderCompletionScreen()
             ) : (
@@ -718,7 +718,7 @@ export default function Profile() {
                 {currentStep === 5 && renderStep5()}
               </>
             )}
-          </ScrollArea>
+          </div>
         </Cards>
       </div>
     </DashboardLayout>

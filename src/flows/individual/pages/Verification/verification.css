@@ -14,27 +14,17 @@
   flex: 1;
   min-height: 0;
   height: 100%;
-  overflow-y: auto;
-  padding-right: 12px;
-  padding-bottom: 12px;
+  width: 100%;
+  overflow: visible;
+  padding: 0;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
 .verification-workspace::-webkit-scrollbar {
-  width: 4px;
-}
-
-.verification-workspace::-webkit-scrollbar-track {
-  background: transparent;
-  margin: 220px 0;
-}
-
-.verification-workspace::-webkit-scrollbar-thumb {
-  background-color: rgba(16, 60, 164, 0.3);
-  border-radius: 10px;
-}
-
-.verification-workspace::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(16, 60, 164, 0.6);
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 .verification-back-arrow {
@@ -67,8 +57,8 @@
   font-size: clamp(20px, 1.8vw, 26px);
   font-weight: 700;
   color: #0f172a;
-  margin: 0 0 16px 12px !important;
-  padding-left: 2px;
+  margin: 0 0 16px 0 !important;
+  padding-left: 0;
   text-align: left;
   flex-shrink: 0;
 }
@@ -142,32 +132,35 @@
 /* Main Verification Card */
 .verification-main-card {
   flex: 1;
-  min-height: fit-content;
+  min-height: 0;
+  height: 100%;
   width: 100%;
   border-radius: 10px !important;
-  background: rgba(255, 255, 255, 0.65) !important;
-  background-color: rgba(255, 255, 255, 0.65) !important;
-  backdrop-filter: blur(2px) !important;
-  -webkit-backdrop-filter: blur(2px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.8) !important;
-  box-shadow: 4px 4px 8px 0px rgba(16, 60, 164, 0.35) !important;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .verification-card-inner {
   flex: 1;
-  min-height: fit-content;
+  min-height: 0;
+  height: 100%;
+  width: 100%;
   padding: clamp(24px, 3vw, 48px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow: visible !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
 .verification-card-inner::-webkit-scrollbar {
-  display: none;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 /* Intro Screen */

@@ -4,7 +4,9 @@
    ========================================================================== */
 
 /* Base Universal Card Container */
-.tg-card {
+.tg-card,
+.card:not(.welcome-banner-card):not(.tip-banner-card):not(.tg-card--gradient):not(.tg-card--ghost),
+.card.shadow-sm:not(.welcome-banner-card):not(.tip-banner-card):not(.tg-card--gradient):not(.tg-card--ghost) {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -12,15 +14,18 @@
   min-width: 0;
   word-wrap: break-word;
   background-clip: border-box;
-  background-color: var(--tg-card-bg, #ffffff);
+  background: var(--tg-card-bg, rgba(255, 255, 255, 0.50)) !important;
+  background-color: var(--tg-card-bg, rgba(255, 255, 255, 0.50)) !important;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   color: var(--tg-card-color, #1e293b);
-  border: var(--tg-card-border, 1px solid #e5e7eb);
+  border: var(--tg-card-border, 1px solid #e5e7eb) !important;
   border-radius: var(--tg-card-radius, 12px);
-  box-shadow: var(--tg-card-shadow, 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05));
+  box-shadow: var(--tg-card-shadow, 4px 4px 8px 0px rgba(16, 60, 164, 0.35)) !important;
   transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.2s ease,
-              background-color 0.2s ease;
+    box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s ease,
+    background-color 0.2s ease;
   overflow: hidden;
 }
 
@@ -62,9 +67,11 @@
   border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 12px 30px rgba(16, 60, 164, 0.22);
 }
+
 .tg-card--gradient .tg-card-subtitle {
   color: rgba(255, 255, 255, 0.75);
 }
+
 .tg-card--gradient .tg-card-divider {
   background-color: rgba(255, 255, 255, 0.12);
 }
@@ -94,11 +101,12 @@
   user-select: none;
   outline: none;
 }
+
 .tg-card--clickable:focus-visible {
-  ring: 2px solid #103ca4;
   outline: 2px solid #103ca4;
   outline-offset: 2px;
 }
+
 .tg-card--clickable:active {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(16, 60, 164, 0.08);
@@ -116,6 +124,7 @@
   pointer-events: none;
   user-select: none;
 }
+
 .tg-card-loading-overlay {
   position: absolute;
   inset: 0;
@@ -126,6 +135,7 @@
   justify-content: center;
   z-index: 20;
 }
+
 .tg-card-spinner {
   width: 28px;
   height: 28px;
@@ -134,8 +144,11 @@
   border-radius: 50%;
   animation: tgCardSpin 0.75s linear infinite;
 }
+
 @keyframes tgCardSpin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ==========================================================================
@@ -152,6 +165,7 @@
   border-bottom: 1px solid #f1f5f9;
   box-sizing: border-box;
 }
+
 .tg-card-header-content {
   display: flex;
   flex-direction: column;
@@ -235,6 +249,7 @@
   overflow: hidden;
   background-color: #f8fafc;
 }
+
 .tg-card-media-img {
   width: 100%;
   height: 100%;
@@ -242,6 +257,7 @@
   display: block;
   transition: transform 0.35s ease;
 }
+
 .tg-card--hoverable:hover .tg-card-media-img {
   transform: scale(1.03);
 }
@@ -251,6 +267,7 @@
   padding: 16px 24px;
   border-bottom: 1px solid #f1f5f9;
 }
+
 .tg-card-section:last-child {
   border-bottom: none;
 }
@@ -281,6 +298,7 @@
     opacity: 0;
     transform: translateY(8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
