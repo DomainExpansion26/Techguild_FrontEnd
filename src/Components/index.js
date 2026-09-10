@@ -21,6 +21,5 @@ export { default as Ui } from "./Ui/ui";
 export { default as SearchBar } from "./SearchBar/SearchBar";
 export { default as Header } from "./Header/Header";
 export { default as DashboardLayout } from "./Common/DashboardLayout/DashboardLayout";
-export { default as ScrollArea } from "./ScrollArea/ScrollArea";
 export { default as Stepper } from "./Stepper/Stepper";
 export * from "./feedback";
