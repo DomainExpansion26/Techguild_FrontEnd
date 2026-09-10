@@ -71,6 +71,7 @@ export default function Notifications() {
           {/* Cards Loop */}
           {sections.map((section, sIdx) => (
             <Cards
+              variant="base"
               key={sIdx}
               className="settings-section notifications-settings-section"
               padding="24px 28px"
