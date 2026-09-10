@@ -10,7 +10,7 @@ import "./client-dashboard.css";
 export default function Dashboard() {
   return (
     <DashboardLayout mainWorkspaceClass="client-dashboard-workspace">
-      <div className="dashboard-content">
+      <div className="client-dashboard-content">
 
         {/* TOP SECTION
             Welcome Banner + Trust Points*/}
@@ -47,7 +47,7 @@ export default function Dashboard() {
               title="You haven't posted any Quests yet."
               description="Post your Quests to receive applications from top agencies and freelancers."
               buttonText="+ Post Your First Quest"
-              onButtonClick={() => {}}
+              onButtonClick={() => { }}
             />
           </div>
 
