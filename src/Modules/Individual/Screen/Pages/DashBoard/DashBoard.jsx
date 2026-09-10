@@ -36,7 +36,7 @@ const metricsData = [
 export default function DashBoard() {
   return (
     <DashboardLayout>
-      <div className="dashboard-content">
+      <div className="individual-dashboard-content">
         {/* Welcome Banner Row */}
         <div className="db-row-banner">
           <WelcomeBanner />
