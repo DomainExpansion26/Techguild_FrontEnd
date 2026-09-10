@@ -35,7 +35,7 @@ export default function SignOutSetting() {
   const displayRole = user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : "Freelancer";
 
   return (
-    <DashboardLayout containerClass="signout-container" activeSettingsTab="sign-out">
+    <DashboardLayout containerClass="settings-layout-collapsed-nav signout-container" activeSettingsTab="sign-out">
       <div
         className="dashboard-content"
         style={{
@@ -58,12 +58,7 @@ export default function SignOutSetting() {
           {/* Icon Section */}
           <div className="signout-icon-section">
             <div className="signout-icon-wrap">
-              {/* Red person icon */}
-              <Icon name="User" size={132} color="#D12027" strokeWidth={1.5} className="icon-person" />
-              {/* Green arrow badge positioned over it */}
-              <span className="icon-arrow-badge">
-                <Icon name="ArrowRight" size={20} color="#FFFFFF" strokeWidth={2.5} className="icon-arrow" />
-              </span>
+              <Icon name="CircleUserRound" size={120} className="icon-person" />
             </div>
           </div>
 
