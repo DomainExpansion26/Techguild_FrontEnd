@@ -1,6 +1,7 @@
 // Modules/Individual/Screen/Pages/Settings/Privacy/Privacy.jsx
 import { useState } from "react";
-import { DashboardLayout, Cards, Toggle } from "@/Components";
+import { DashboardLayout, Cards, Toggle, SecondaryButton } from "@/Components";
+import { Download } from "@/Components/icons";
 import "../settings.css";
 import "./PrivacySetting.css"; // page‑specific styles
 
@@ -29,6 +30,7 @@ export default function Privacy() {
               SECTION 1: PROFILE VISIBILITY
               =========================================================== */}
           <Cards
+            variant="base"
             className="settings-section privacy-settings-section"
             padding="32px"
           >
@@ -47,12 +49,10 @@ export default function Privacy() {
                   Who can view your profile
                 </div>
               </div>
-              <button
-                type="button"
-                className="btn btn-light border rounded-3 px-4 py-2 shadow-sm"
-              >
-                Select
-              </button>
+              <SecondaryButton
+                text="Select"
+                className="primary-secondary-btn"
+              />
             </div>
 
             {/* Show earnings on profile */}
@@ -116,6 +116,7 @@ export default function Privacy() {
               SECTION 2: DATA & PRIVACY
               =========================================================== */}
           <Cards
+            variant="base"
             className="settings-section privacy-settings-section"
             padding="32px"
           >
@@ -127,7 +128,7 @@ export default function Privacy() {
             </div>
 
             {/* Analytics & usage data */}
-            <div className="d-flex justify-content-between align-items-center py-3 border-bottom">
+            <div className="d-flex justify-content-between align-items-center py-1">
               <div>
                 <div className="fw-bold small">Analytics & usage data</div>
                 <div className="text-muted small">
@@ -141,7 +142,7 @@ export default function Privacy() {
             </div>
 
             {/* Personalised recommendations */}
-            <div className="d-flex justify-content-between align-items-center py-3 border-bottom">
+            <div className="d-flex justify-content-between align-items-center py-1">
               <div>
                 <div className="fw-bold small">
                   Personalised recommendations
@@ -158,13 +159,11 @@ export default function Privacy() {
 
             {/* Download My Data Button */}
             <div className="pt-3">
-              <button
-                type="button"
-                className="btn btn-light border rounded-3 px-4 py-2 shadow-sm"
-              >
-                {/* Using standard bootstrap icon to avoid breaking your build again */}
-                <i className="bi bi-download me-2"></i> Download My Data
-              </button>
+              <SecondaryButton
+                icon={<Download color={"Black"} width={14} height={14} />}
+                text="Download My Data"
+                iconPosition="left"
+              />
             </div>
           </Cards>
         </div>
