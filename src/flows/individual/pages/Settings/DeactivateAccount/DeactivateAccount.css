@@ -3,9 +3,20 @@
 /* ===========================================================
    OVERRIDE BASE Cards.css COMPONENT STYLES
    Figma: fill #FEF2F2 @ 60%, border #FECACA, radius 10, p 24/28
-   Specificity beats the !important in cards.css ((0,6,0) > (0,5,0))
+   WHY this shape (do not simplify without re-checking cards.css):
+   1. BaseCard renders `card tg-card` — no `shadow-sm` — so the original
+      `.card.shadow-sm.card-danger-custom` selector never matched and the red
+      tint silently never applied (same trap as the AccountSecurity cream).
+   2. The shared glass rule (`.card:not(...)` x4 in cards.css) is 0,5,0 with
+      !important. This selector is 0,6,0, so it wins outright with no reliance
+      on import order — AND it sets the `--tg-card-*` hooks the glass rule
+      itself reads via var(), so the glass fallbacks can never apply.
    =========================================================== */
-.settings-scroll-area .settings-container .card.shadow-sm.card-danger-custom {
+.settings-scroll-area .settings-container.deactivate-settings-container .card.tg-card.card-danger-custom {
+  --tg-card-bg: rgba(254, 242, 242, 0.6);
+  --tg-card-border: 1px solid #fecaca;
+  --tg-card-radius: 10px;
+  --tg-card-shadow: none;
   background: rgba(254, 242, 242, 0.6) !important;
   background-color: rgba(254, 242, 242, 0.6) !important;
   border: 1px solid #fecaca !important;
@@ -28,13 +39,13 @@
    Layout gap (moved out of the inline style on DashboardLayout)
    =========================================================== */
 .dashboard-layout.deactivate-account-layout {
-  gap: 30px;
+  gap: 12px;
 }
 
 .deactivate-settings-container {
   max-width: none;
-  gap: 24px;
-  padding-bottom: 24px;
+  gap: 12px;
+  padding-bottom: 0;
 }
 
 .deactivate-settings-section .settings-section-header {
@@ -70,32 +81,41 @@
    BUTTONS
    Outline: white bg, border #FECACA, text #DC2626
    Solid: bg #DC2626, white text — both r10, p 8/18, semibold 13
+   Uses SecondaryButton component + page-level override for
+   .secondary-btn (specificity beats Verifyemail.css)
    =========================================================== */
-.btn-deactivate-outline,
-.btn-delete-account {
+.deactivate-settings-section .deactivate-outline-btn {
   padding: 8px 18px;
   border-radius: 10px;
   font-size: 13px;
   line-height: 20px;
   font-weight: 600;
   white-space: nowrap;
-}
-.btn-deactivate-outline {
   background-color: #ffffff;
   color: #dc2626;
   border: 1px solid #fecaca;
+  flex: none;
+  width: fit-content;
 }
-.btn-deactivate-outline:hover {
+.deactivate-settings-section .deactivate-outline-btn:hover:not(:disabled) {
   background-color: #fef2f2;
   color: #b91c1c;
   border-color: #fecaca;
 }
-.btn-delete-account {
+.deactivate-settings-section .delete-account-btn {
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 600;
+  white-space: nowrap;
   background-color: #dc2626;
   color: #ffffff;
   border: 1px solid #dc2626;
+  flex: none;
+  width: fit-content;
 }
-.btn-delete-account:hover {
+.deactivate-settings-section .delete-account-btn:hover:not(:disabled) {
   background-color: #b91c1c;
   border-color: #b91c1c;
   color: #ffffff;
@@ -106,15 +126,15 @@
    =========================================================== */
 @media (max-width: 767px) {
   .deactivate-settings-container {
-    gap: 20px;
+    gap: 12px;
   }
 
   .deactivate-card-row {
     flex-direction: column;
     align-items: flex-start;
   }
-  .btn-deactivate-outline,
-  .btn-delete-account {
+  .deactivate-settings-section .deactivate-outline-btn,
+  .deactivate-settings-section .delete-account-btn {
     width: 100%;
   }
 }
