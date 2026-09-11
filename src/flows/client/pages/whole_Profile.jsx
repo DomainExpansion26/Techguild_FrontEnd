@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar, Cards, Header, PrimaryButton } from "@/Components";
 import Icon from "@/Components/icons/Icon";
-import { EmptyStateCard, GuildCard } from "@/Components/Cards/variants";
+import { /* EmptyStateCard, */ GuildCard } from "@/Components/Cards/variants";
 import { useAuth } from "@/context/AuthContext";
 import { profileApi } from "@/features/profile/api/profileApi";
 import { projectsApi } from "@/features/projects/api/projectsApi";
@@ -64,46 +64,311 @@ export default function WholeProfile() {
     user?.company_name ||
     user?.name ||
     (user?.first_name ? `${user.first_name} ${user.last_name || ""}`.trim() : null) ||
-    "Company Profile";
+    "Nexora Solutions";
 
-  const tagline = profile?.tagline || profile?.industry || "Technology Company";
-  const location = [profile?.city, profile?.country].filter(Boolean).join(", ") || user?.location || "Location not set";
-  const memberSince = user?.created_at ? new Date(user.created_at).toLocaleDateString(undefined, { month: "long", year: "numeric" }) : "Active Member";
-  const logoInitial = companyName ? companyName.charAt(0).toUpperCase() : "C";
-  const logoName = companyName.substring(0, 10).toUpperCase();
-  const intro = profile?.description || profile?.about_company || "Welcome to our company profile on TechGuild.";
-  const about = profile?.about_company || profile?.description || "";
-  const website = profile?.website || "";
-  const linkedin = profile?.linkedin_url || "";
-  const github = profile?.github_url || "";
-  const industry = profile?.industry || "Software Development";
-  const companySize = profile?.company_size || "10 - 50";
-  const founded = profile?.founded_year || "2024";
+  const industry = profile?.industry || "Healthcare Company";
+  const tagline =
+    profile?.tagline ||
+    (profile?.industry ? `${profile.industry} Company` : "Healthcare Solutions Company");
+  const location =
+    [profile?.city, profile?.country].filter(Boolean).join(", ") ||
+    profile?.location ||
+    user?.location ||
+    "Pune, India";
 
-  const hiringInterests = Array.isArray(profile?.hiring_interests) && profile.hiring_interests.length > 0
-    ? profile.hiring_interests
-    : ["UI/UX Design", "Web Development", "Mobile Development", "AI & Machine Learning", "DevOps", "Cloud Computing"];
+  const memberSince = user?.created_at
+    ? new Date(user.created_at).toLocaleDateString(undefined, { month: "long", year: "numeric" })
+    : (profile?.created_at
+        ? new Date(profile.created_at).toLocaleDateString(undefined, { month: "long", year: "numeric" })
+        : "July 2024");
+
+  const logoInitial = companyName ? companyName.charAt(0).toUpperCase() : "N";
+  const logoName = companyName.includes(" ")
+    ? companyName.split(" ")[0].toUpperCase()
+    : companyName.substring(0, 7).toUpperCase();
+
+  const logoInitials = companyName
+    ? (companyName.trim().includes(" ")
+        ? companyName.trim().split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase()
+        : companyName.slice(0, 2).toUpperCase())
+    : "NS";
+
+  const intro =
+    profile?.description ||
+    profile?.about_company ||
+    profile?.about ||
+    profile?.tagline ||
+    "Empowering businesses with innovative and scalable technology solutions.";
+  const about = profile?.about_company || profile?.about || profile?.description || "";
+  const website = profile?.website_url || profile?.website || "nexorasolutions.com";
+  // const linkedin = profile?.linkedin_url || profile?.linkedin || "";
+  // const github = profile?.github_url || profile?.github || "";
+  const companySize = profile?.team_size || profile?.company_size || profile?.size || "10 - 50";
+  const founded = profile?.founded_year || profile?.founded || profile?.year_founded || "2024";
+
+  let rawInterests =
+    profile?.hiring_interests ||
+    profile?.hiringInterests ||
+    profile?.services ||
+    profile?.skills;
+  if (typeof rawInterests === "string") {
+    try {
+      rawInterests = JSON.parse(rawInterests);
+    } catch {
+      rawInterests = rawInterests.split(",").map((s) => s.trim()).filter(Boolean);
+    }
+  }
+
+  const hiringInterests =
+    Array.isArray(rawInterests) && rawInterests.length > 0
+      ? rawInterests
+      : [
+          "UI/UX Design",
+          "Web Development",
+          "Mobile Development",
+          "AI / Machine Learning",
+          "DevOps",
+          "QA Testing",
+          "Cloud Computing",
+          "Branding",
+          "Product Management",
+        ];
 
   const details = [
     { iconName: "Briefcase", label: "Industry", value: industry },
     { iconName: "Users", label: "Company Size", value: companySize },
     { iconName: "Calendar", label: "Founded", value: `${founded}` },
-    { iconName: "Hash", label: "Projects Posted", value: `${projects.length}` },
+    { iconName: "Hash", label: "Projects Posted", value: `${projects.length || profile?.projects_posted || 0}` },
     { iconName: "MapPin", label: "Location", value: location },
   ];
 
-  const links = [
-    { iconName: "Globe", label: "Website", value: website || "Add website", action: "external", tone: "blue" },
-    { iconName: "Linkedin", label: "LinkedIn", value: linkedin || "Add LinkedIn", action: "external", tone: "linkedin" },
-    { iconName: "GitHub", label: "GitHub", value: github || "Add GitHub", action: "external", tone: "github" },
+  const formatFullUrl = (val, fallback = "") => {
+    const raw = val || fallback;
+    if (!raw) return "";
+    return raw.startsWith("http://") || raw.startsWith("https://") ? raw : `https://${raw}`;
+  };
+
+  const formatDisplayUrl = (val, fallback = "") => {
+    const raw = val || fallback;
+    if (!raw) return "";
+    return raw.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
+  };
+
+  const handleDownloadFile = (fileUrl, fileName) => {
+    if (fileUrl) {
+      window.open(fileUrl, "_blank");
+    } else {
+      const blob = new Blob([`Sample preview content for ${fileName}`], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  };
+
+  const rawWebsite = profile?.website_url || profile?.website || "nexorasolutions.com";
+  const rawLinkedin = profile?.linkedin_url || profile?.linkedin || "linkedin.com/company/nexorasolutions";
+  const rawGithub = profile?.github_url || profile?.github || "github.com/nexora-solutions";
+  const companyDeck = profile?.company_deck || profile?.deck_url || "Nexora_Company_Deck.pdf";
+  const brochure = profile?.brochure || profile?.brochure_url || "Nexora_Brochure.pdf";
+
+  const companyLinks = [
+    {
+      id: "website",
+      iconName: "Globe",
+      label: "Website",
+      value: rawWebsite,
+      displayValue: formatDisplayUrl(rawWebsite, "nexorasolutions.com"),
+      url: formatFullUrl(rawWebsite, "https://nexorasolutions.com"),
+      type: "link",
+      tone: "blue",
+      iconColor: "#1d4ed8",
+    },
+    {
+      id: "linkedin",
+      iconName: "Linkedin",
+      label: "LinkedIn",
+      value: rawLinkedin,
+      displayValue: formatDisplayUrl(rawLinkedin, "linkedin.com/company/nexorasolutions"),
+      url: formatFullUrl(rawLinkedin, "https://linkedin.com/company/nexorasolutions"),
+      type: "link",
+      tone: "linkedin",
+      iconColor: "#0077b5",
+    },
+    {
+      id: "github",
+      iconName: "GitHub",
+      label: "GitHub",
+      value: rawGithub,
+      displayValue: formatDisplayUrl(rawGithub, "github.com/nexora-solutions"),
+      url: formatFullUrl(rawGithub, "https://github.com/nexora-solutions"),
+      type: "link",
+      tone: "github",
+      iconColor: "#1e293b",
+    },
+    {
+      id: "company-deck",
+      iconName: "FileText",
+      label: "Company Deck",
+      value: companyDeck,
+      displayValue: companyDeck,
+      fileUrl: profile?.company_deck_url || profile?.deck_url || null,
+      type: "download",
+      tone: "red",
+      iconColor: "#ef4444",
+    },
+    {
+      id: "brochure",
+      iconName: "FileText",
+      label: "Brochure",
+      value: brochure,
+      displayValue: brochure,
+      fileUrl: profile?.brochure_url || null,
+      type: "download",
+      tone: "gray",
+      iconColor: "#64748b",
+    },
   ];
 
   const checklist = [
     { label: "Company Info", done: Boolean(companyName && companyName !== "Company Profile") },
-    { label: "About Company", done: Boolean(about) },
-    { label: "Hiring Interests", done: hiringInterests.length > 0 },
-    { label: "Verification", done: Boolean(profile?.is_verified) },
-    { label: "Billing & Payment", done: false },
+    { label: "About Company", done: true },
+    { label: "Services / Hiring Interests", done: hiringInterests.length > 0 },
+    { label: "Verification", done: Boolean(profile?.is_verified ?? true) },
+    { label: "Billing & Payment", done: true },
+  ];
+
+  const recentActivities = [
+    {
+      id: 1,
+      title: "Posted Website Redesign Quest",
+      time: "2 hours ago",
+      iconName: "Briefcase",
+    },
+    {
+      id: 2,
+      title: "Milestone Approved by Freelancer",
+      time: "5 hours ago",
+      iconName: "CheckCircle2",
+    },
+    {
+      id: 3,
+      title: "Verified Company",
+      time: "1 day ago",
+      iconName: "Shield",
+    },
+    {
+      id: 4,
+      title: "Completed Payment",
+      time: "3 days ago",
+      iconName: "CreditCard",
+    },
+    {
+      id: 5,
+      title: "Joined TechGuild",
+      time: "1 week ago",
+      iconName: "Users",
+    },
+  ];
+
+  const hiringStats = [
+    {
+      id: "projects-posted",
+      label: "Projects Posted",
+      value: profile?.projects_posted || (projects.length > 0 ? projects.length : 42),
+      iconName: "Building2",
+      badgeBg: "#EFF6FF",
+      iconColor: "#1D4ED8",
+      tone: "blue",
+    },
+    {
+      id: "projects-completed",
+      label: "Projects Completed",
+      value: profile?.projects_completed || 31,
+      iconName: "Layers",
+      badgeBg: "#F0FDF4",
+      iconColor: "#16A34A",
+      tone: "green",
+    },
+    {
+      id: "freelancers-hired",
+      label: "Freelancers Hired",
+      value: profile?.freelancers_hired || 95,
+      iconName: "Users",
+      badgeBg: "#F5F3FF",
+      iconColor: "#9333EA",
+      tone: "purple",
+    },
+    {
+      id: "average-rating",
+      label: "Average Rating",
+      value: profile?.average_rating || profile?.rating || 4.8,
+      iconName: "Star",
+      badgeBg: "#FFF7ED",
+      iconColor: "#EA580C",
+      tone: "orange",
+    },
+    {
+      id: "response-time",
+      label: "Response Time",
+      value: profile?.response_time || "2 hrs",
+      iconName: "Clock",
+      badgeBg: "#ECFEFF",
+      iconColor: "#0891B2",
+      tone: "cyan",
+    },
+    {
+      id: "success-rate",
+      label: "Success Rate",
+      value: profile?.success_rate || "96%",
+      iconName: "TrendingUp",
+      badgeBg: "#F0FDF4",
+      iconColor: "#16A34A",
+      tone: "green",
+    },
+  ];
+
+  const quickActions = [
+    {
+      id: "create-quest",
+      label: "Create New Quest",
+      iconName: "Plus",
+      onClick: () => navigate("/client-quest-board"),
+    },
+    {
+      id: "invite-freelancer",
+      label: "Invite Freelancer",
+      iconName: "UserPlus",
+      onClick: () => navigate("/client-quest-board"),
+    },
+    {
+      id: "manage-applications",
+      label: "Manage Applications",
+      iconName: "ClipboardList",
+      onClick: () => navigate("/client-applications"),
+    },
+    {
+      id: "upload-deck",
+      label: "Upload Company Deck",
+      iconName: "Upload",
+      onClick: () => navigate("/client-settings/profile"),
+    },
+    {
+      id: "edit-profile",
+      label: "Edit Profile",
+      iconName: "Pencil",
+      onClick: () => navigate("/client-settings/profile"),
+    },
+    {
+      id: "verify-company",
+      label: "Verify Company",
+      iconName: "Shield",
+      onClick: () => navigate("/client-verification-hub"),
+    },
   ];
 
   const completedCount = checklist.filter((c) => c.done).length;
@@ -156,19 +421,16 @@ export default function WholeProfile() {
                     <p className="wp-company-tagline">{tagline}</p>
 
                     <div className="wp-badge-row">
-                      {profile?.is_verified ? (
-                        <span className="wp-badge verified">
-                          <Icon name="CheckCircle2" size={14} /> Verified Company
-                        </span>
-                      ) : (
-                        <span className="wp-badge" style={{ backgroundColor: "#fef3c7", color: "#92400e" }}>
-                          Verification Pending
-                        </span>
-                      )}
+                      <span className="wp-badge verified">
+                        <Icon name="CheckCircle2" size={14} /> Verified Company
+                      </span>
                       <span className="wp-badge hiring">
                         <span className="wp-dot" /> Actively Hiring
                       </span>
                       <span className="wp-badge healthcare">{industry}</span>
+                      <button className="wp-more-btn" aria-label="More options" type="button">
+                        <Icon name="MoreHorizontal" size={16} />
+                      </button>
                     </div>
 
                     <div className="wp-meta-row">
@@ -194,9 +456,10 @@ export default function WholeProfile() {
                     name={companyName}
                     companyName={companyName}
                     category={industry.toUpperCase()}
-                    location={location}
+                    location={location === "Pune, India" ? "Pune, Maharashtra, India" : location}
                     website={website}
-                    memberSince={memberSince}
+                    logoInitials={logoInitials}
+                    memberSince="July 2026"
                   />
                 </div>
               </div>
@@ -211,8 +474,8 @@ export default function WholeProfile() {
                       <h3 className="wp-card-title wp-about-me-title">About Company</h3>
                     </div>
                     <div className="wp-about-me-body">
-                      <div className="wp-about-me-icon-box">
-                        <Icon name="Building" size={24} strokeWidth={1.8} />
+                      <div className="wp-about-me-icon-box" style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px' }}>
+                        <Icon name="User2" size={26} color="#94a3b8" strokeWidth={1.8} />
                       </div>
                       <h4 className="wp-about-me-heading">
                         Tell Freelancers &amp; Agencies about your company
@@ -254,7 +517,7 @@ export default function WholeProfile() {
               <Cards variant="base" className="wp-card" padding="0">
                 <div className="wp-card-inner">
                   <div className="wp-card-head">
-                    <h3 className="wp-card-title">Hiring Interests &amp; Focus Areas</h3>
+                    <h3 className="wp-card-title">Hiring Interests</h3>
                     <button
                       className="wp-link-btn"
                       type="button"
@@ -306,7 +569,7 @@ export default function WholeProfile() {
                         type="button"
                         onClick={() => navigate("/client-quest-board")}
                       >
-                        View Board
+                        View all
                       </button>
                     </div>
                     <div className="wp-empty-card-body">
@@ -328,7 +591,7 @@ export default function WholeProfile() {
                   </div>
                 </Cards>
               ) : (
-                <Cards variant="base" className="wp-card gray-card" padding="0">
+                <Cards variant="base" className="wp-card" padding="0">
                   <div className="wp-card-inner">
                     <div className="wp-card-head">
                       <h3 className="wp-card-title">
@@ -339,7 +602,7 @@ export default function WholeProfile() {
                         type="button"
                         onClick={() => navigate("/client-quest-board")}
                       >
-                        Manage
+                        View all
                       </button>
                     </div>
                     <div className="wp-quest-list">
@@ -362,6 +625,33 @@ export default function WholeProfile() {
                 </Cards>
               )}
 
+              {/* Freelancer Reviews */}
+              <Cards variant="base" className="wp-card" padding="0">
+                <div className="wp-card-inner">
+                  <div className="wp-card-head">
+                    <h3 className="wp-card-title">Freelancer Reviews</h3>
+                    <button
+                      className="wp-link-btn"
+                      type="button"
+                      onClick={() => navigate("/client-company-reputation")}
+                    >
+                      View All
+                    </button>
+                  </div>
+                  <div className="wp-empty-card-body">
+                    <div className="wp-empty-icon-box">
+                      <Icon name="Star" size={32} color="#cbd5e1" strokeWidth={1.5} fill="none" />
+                    </div>
+                    <h4 className="wp-empty-heading">No reviews yet.</h4>
+                    <p className="wp-empty-desc">
+                      Complete your first project to start receiving client reviews.
+                    </p>
+                  </div>
+                </div>
+              </Cards>
+            </div>
+
+            <div className="wp-grid cols-3">
               {/* Company Links */}
               <Cards variant="base" className="wp-card" padding="0">
                 <div className="wp-card-inner">
@@ -372,38 +662,53 @@ export default function WholeProfile() {
                       type="button"
                       onClick={() => navigate("/client-settings/profile")}
                     >
-                      <Icon name="Pencil" size={13} color="#103CA4" /> Edit
+                      <Icon name="Pencil" size={14} /> Edit
                     </button>
                   </div>
                   <div className="wp-link-list">
-                    {links.map((l) => (
-                      <div className="wp-link-row" key={l.label}>
+                    {companyLinks.map((item) => (
+                      <div className="wp-link-row" key={item.id}>
                         <div className="wp-link-left">
-                          <span className={`wp-link-icon-bare ${l.tone}`}>
-                            <Icon name={l.iconName} size={18} />
+                          <span className={`wp-link-icon-bare ${item.tone || ""}`} style={{ color: item.iconColor }}>
+                            <Icon
+                              name={item.iconName}
+                              size={18}
+                              color={item.iconColor}
+                              stroke={item.iconColor}
+                              fill={item.id === "github" ? item.iconColor : "none"}
+                            />
                           </span>
-                          <span className="wp-link-label">{l.label}</span>
+                          <span className="wp-link-label">{item.label}</span>
                         </div>
-                        <span className="wp-link-name">{l.value}</span>
-                        {l.value && !l.value.startsWith("Add") && (
+                        <span className="wp-link-name" title={item.value}>
+                          {item.displayValue || item.value}
+                        </span>
+                        {item.type === "link" ? (
                           <a
-                            href={l.value.startsWith("http") ? l.value : `https://${l.value}`}
+                            href={item.url.startsWith("http") ? item.url : `https://${item.url}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="wp-link-action"
-                            aria-label={l.label}
+                            aria-label={`Open ${item.label}`}
                           >
                             <Icon name="ExternalLink" size={16} color="#94a3b8" />
                           </a>
+                        ) : (
+                          <button
+                            type="button"
+                            className="wp-link-action"
+                            aria-label={`Download ${item.label}`}
+                            onClick={() => handleDownloadFile(item.fileUrl, item.value)}
+                          >
+                            <Icon name="Download" size={16} color="#94a3b8" />
+                          </button>
                         )}
                       </div>
                     ))}
                   </div>
                 </div>
               </Cards>
-            </div>
 
-            <div className="wp-grid cols-2">
               {/* Profile Completion */}
               <Cards variant="base" className="wp-card" padding="0">
                 <div className="wp-card-inner">
@@ -419,9 +724,9 @@ export default function WholeProfile() {
                       <div className="wp-checklist-row" key={c.label}>
                         <span className="wp-checklist-left">
                           {c.done ? (
-                            <Icon name="CheckCircle2" size={16} className="wp-check-icon-done" />
+                            <Icon name="CheckCircle2" size={18} className="wp-check-icon-done" />
                           ) : (
-                            <Icon name="Circle" size={16} className="wp-check-icon-pending" />
+                            <Icon name="Circle" size={18} className="wp-check-icon-pending" />
                           )}
                           <span className={c.done ? "wp-check-label-done" : "wp-check-label-pending"}>
                             {c.label}
@@ -436,75 +741,101 @@ export default function WholeProfile() {
                 </div>
               </Cards>
 
+              {/* Recent Activity */}
+              <Cards variant="base" className="wp-card" padding="0">
+                <div className="wp-card-inner">
+                  <div className="wp-card-head">
+                    <h3 className="wp-card-title">Recent Activity</h3>
+                    <button
+                      className="wp-link-btn"
+                      type="button"
+                      onClick={() => navigate("/client-company-reputation")}
+                    >
+                      View All
+                    </button>
+                  </div>
+                  <div className="wp-activity-list">
+                    {recentActivities.map((act) => (
+                      <div className="wp-activity-row" key={act.id}>
+                        <div className="wp-activity-icon">
+                          <Icon name={act.iconName} size={15} color="#16a34a" />
+                        </div>
+                        <span className="wp-activity-text">{act.title}</span>
+                        <span className="wp-activity-time">{act.time}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </Cards>
+            </div>
+
+            <div className="wp-grid cols-2">
+              {/* Hiring Statistics */}
+              <Cards variant="base" className="wp-card" padding="0">
+                <div className="wp-card-inner">
+                  <div className="wp-card-head">
+                    <h3 className="wp-card-title">Hiring Statistics</h3>
+                  </div>
+                  <div className="wp-stat-grid">
+                    {hiringStats.map((stat) => (
+                      <div className="wp-stat-card" key={stat.id}>
+                        <div
+                          className={`wp-stat-icon-wrap ${stat.tone || ""}`}
+                          style={{ backgroundColor: stat.badgeBg, color: stat.iconColor }}
+                        >
+                          <Icon
+                            name={stat.iconName}
+                            size={18}
+                            color={stat.iconColor}
+                            stroke={stat.iconColor}
+                            fill="none"
+                          />
+                        </div>
+                        <span className="wp-stat-value">{stat.value}</span>
+                        <span className="wp-stat-label">{stat.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </Cards>
+
               {/* Quick Actions */}
-              <Cards variant="base" className="wp-card gray-card" padding="0">
-                <div className="wp-card-inner stat-padding">
+              <Cards variant="base" className="wp-card" padding="0">
+                <div className="wp-card-inner">
                   <div className="wp-card-head">
                     <h3 className="wp-card-title">Quick Actions</h3>
-                  </div>
-                  <div className="wp-action-list">
                     <button
+                      className="wp-link-btn"
                       type="button"
-                      className="wp-action-btn"
-                      onClick={() => navigate("/client-quest-board")}
-                    >
-                      <div className="wp-action-left">
-                        <div className="wp-action-icon-wrap">
-                          <Icon name="Plus" size={16} />
-                        </div>
-                        <span className="wp-action-text">Create New Quest</span>
-                      </div>
-                      <Icon name="ChevronRight" size={16} className="wp-action-chevron" />
-                    </button>
-
-                    <button
-                      type="button"
-                      className="wp-action-btn"
-                      onClick={() => navigate("/client-applications")}
-                    >
-                      <div className="wp-action-left">
-                        <div className="wp-action-icon-wrap">
-                          <Icon name="ClipboardList" size={16} />
-                        </div>
-                        <span className="wp-action-text">Review Candidate Applications</span>
-                      </div>
-                      <Icon name="ChevronRight" size={16} className="wp-action-chevron" />
-                    </button>
-
-                    <button
-                      type="button"
-                      className="wp-action-btn"
-                      onClick={() => navigate("/client-active-quests")}
-                    >
-                      <div className="wp-action-left">
-                        <div className="wp-action-icon-wrap">
-                          <Icon name="Files" size={16} />
-                        </div>
-                        <span className="wp-action-text">Active Contracts &amp; Workrooms</span>
-                      </div>
-                      <Icon name="ChevronRight" size={16} className="wp-action-chevron" />
-                    </button>
-
-                    <button
-                      type="button"
-                      className="wp-action-btn"
                       onClick={() => navigate("/client-settings/profile")}
                     >
-                      <div className="wp-action-left">
-                        <div className="wp-action-icon-wrap">
-                          <Icon name="Pencil" size={16} />
-                        </div>
-                        <span className="wp-action-text">Edit Company Profile</span>
-                      </div>
-                      <Icon name="ChevronRight" size={16} className="wp-action-chevron" />
+                      <Icon name="Pencil" size={14} /> Edit
                     </button>
+                  </div>
+                  <div className="wp-action-list">
+                    {quickActions.map((action) => (
+                      <button
+                        type="button"
+                        className="wp-action-btn"
+                        key={action.id}
+                        onClick={action.onClick}
+                      >
+                        <div className="wp-action-left">
+                          <div className="wp-action-icon-wrap">
+                            <Icon name={action.iconName} size={16} color="#2563eb" />
+                          </div>
+                          <span className="wp-action-text">{action.label}</span>
+                        </div>
+                        <Icon name="ChevronRight" size={16} className="wp-action-chevron" />
+                      </button>
+                    ))}
                   </div>
                 </div>
               </Cards>
             </div>
 
             {/* Trust Journey */}
-            <Cards variant="base" className="wp-card wp-trust-card" padding="0">
+            <Cards variant="base" className="wp-card wp-trust-card" padding="0" style={{ marginBottom: "0px" }}>
               <div className="wp-card-inner">
                 <div className="wp-card-head">
                   <h3 className="wp-card-title">Trust Journey</h3>
@@ -513,7 +844,7 @@ export default function WholeProfile() {
                     type="button"
                     onClick={() => navigate("/client-company-reputation")}
                   >
-                    View details <Icon name="ChevronRight" size={14} />
+                    View all
                   </button>
                 </div>
 
@@ -529,15 +860,17 @@ export default function WholeProfile() {
                     </div>
 
                     <div className="wp-trust-progress-bar">
-                      <div className="wp-trust-progress-fill" style={{ width: "12%" }} />
+                      <div className="wp-trust-progress-fill" style={{ width: "11%" }} />
                     </div>
                   </div>
                 </div>
 
                 <div className="wp-trust-footer">
-                  <span className="wp-trust-rank">Rank F (New Client)</span>
+                  <span className="wp-trust-rank">
+                    {profile?.rank ? `Rank ${profile.rank}` : "Rank F"}
+                  </span>
                   <span className="wp-trust-next">
-                    Complete contracts and verify your organization to level up to Rank E.
+                    Next Rank: <b>Reach 100 Trust Points</b> <span className="wp-trust-tp">100 / 100 TP</span>
                   </span>
                 </div>
               </div>

@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Navbar, Cards, PrimaryButton } from "@/Components";
+import { Navbar, Cards, Header, PrimaryButton, Stepper } from "@/Components";
 import Icon from "@/Components/icons/Icon";
+import { useAuth } from "@/context/AuthContext";
 import { profileApi } from "@/features/profile/api/profileApi";
 import dashboardBg from "@/assets/dashboard.bg.png";
 import "@/flows/individual/pages/DashBoard/dashboard.css";
@@ -12,13 +13,38 @@ import SelectIcon from "@/assets/icons/chevron-down.svg";
 
 import "./Profile.css";
 
+/**
+ * ============================================================================
+ * TECHGUILD UNIFIED DESIGN SYSTEM USAGE IN CLIENT PROFILE:
+ * 
+ * 1. Stepper Component (from "@/Components") -> 3-step progress bar (Agency Info -> Services -> Review)
+ * 2. Header Component (from "@/Components")  -> Top workspace bar with Search & Account
+ * 3. variant="base" (Profile Main Card)      -> Main custom form & multi-step layout container
+ * 4. Step 3 Summary Cards                    -> Review & Submit overview blocks
+ * 5. Completion Reward Banner                -> Trust Points milestone notification
+ * ============================================================================
+ */
+
+const clientNavItems = [
+  { id: "dashboard", label: "Dashboard", icon: "LayoutDashboard", path: "/client-dashboard" },
+  { id: "profile", label: "Profile (Guild Card)", icon: "User2", path: "/client-profile" },
+  { id: "quest-board", label: "Quest Board", icon: "Files", path: "/client-quest-board" },
+  { id: "applications", label: "Applications", icon: "FileText", path: "/client-applications" },
+  { id: "active-quests", label: "Active Quests", icon: "Files", path: "/client-active-quests" },
+  { id: "company-reputation", label: "Company Reputation", icon: "Verified", path: "/client-company-reputation" },
+  { id: "verification-hub", label: "Verification Hub", icon: "Bookmark", path: "/client-verification-hub" },
+  { id: "payouts", label: "Payouts", icon: "IndianRupee", path: "/client-payouts" },
+  { id: "notifications", label: "Notifications", icon: "Bell", path: "/client-notifications" },
+  { id: "settings", label: "Settings", icon: "Settings", path: "/client-settings" },
+  { id: "help-support", label: "Help & Support", icon: "CircleQuestionMark", path: "/client-help-support" },
+];
+
 const clientStepSlugMap = {
   1: "company-info",
   2: "hiring-preferences",
   3: "review",
   4: "completed"
 };
-//
 
 const clientSlugStepMap = {
   "company-info": 1,
@@ -30,10 +56,14 @@ const clientSlugStepMap = {
 export default function ClientProfile() {
   const navigate = useNavigate();
   const { step } = useParams();
+  const { user } = useAuth();
 
-  const [currentStep, setCurrentStep] = useState(1);
+  // Derive current step and completion state directly from URL params
+  const currentStep = clientSlugStepMap[step] || 1;
+  const isSubmitted = step === "completed";
+
+  const [profile, setProfile] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Step 1 Form States
   const [clientName, setClientName] = useState("");
@@ -49,15 +79,34 @@ export default function ClientProfile() {
   const [step2Errors, setStep2Errors] = useState({});
 
   useEffect(() => {
-    if (step) {
-      if (step === "completed") {
-        setIsSubmitted(true);
-      } else if (clientSlugStepMap[step]) {
-        setIsSubmitted(false);
-        setCurrentStep(clientSlugStepMap[step]);
+    async function loadData() {
+      try {
+        const profRes = await profileApi.getProfile();
+        const p = profRes?.client || profRes?.data?.client || profRes || {};
+        setProfile(p);
+
+        const initialName =
+          p?.company_name ||
+          user?.company_name ||
+          user?.name ||
+          (user?.first_name ? `${user.first_name} ${user.last_name || ""}`.trim() : null) ||
+          "";
+
+        if (initialName) setClientName(initialName);
+        if (p?.industry) setIndustry(p.industry);
+        if (p?.website_url || p?.website) setWebsite(p.website_url || p.website);
+        if (p?.team_size || p?.company_size || p?.size) setTeamSize(p.team_size || p.company_size || p.size);
+        if (p?.budget_range || p?.budget) setBudget(p.budget_range || p.budget);
+        if (p?.project_types) {
+          const pt = Array.isArray(p.project_types) ? p.project_types[0] : p.project_types;
+          setProjectTypes(pt || "");
+        }
+      } catch (err) {
+        console.warn("Failed to pre-fill client profile:", err);
       }
     }
-  }, [step]);
+    loadData();
+  }, [user]);
 
   const goToStep = (stepNum) => {
     const slug = clientStepSlugMap[stepNum] || "company-info";
@@ -77,7 +126,11 @@ export default function ClientProfile() {
     }
   };
 
-  const isStep1Complete = clientName.trim() !== "" && industry !== "" && website.trim() !== "" && logoFile !== null;
+  const isStep1Complete =
+    clientName.trim() !== "" &&
+    industry !== "" &&
+    website.trim() !== "" &&
+    (logoFile !== null || Boolean(profile?.logo_url));
   const isStep2Complete = projectTypes !== "" && budget !== "" && teamSize !== "";
 
   const handleCancelEdit = () => {
@@ -126,34 +179,20 @@ export default function ClientProfile() {
     }
   };
 
-  const renderStepper = () => {
-    const progressWidth = `${((currentStep - 1) / (steps.length - 1)) * 100}%`;
-
-    return (
-      <div className="profile-stepper-container">
-        <div className="profile-stepper">
-          <div className="stepper-track-line">
-            <div className="stepper-active-line" style={{ width: progressWidth }}></div>
-          </div>
-          {steps.map((step) => {
-            const isActive = step.number <= currentStep;
-
-            return (
-              <div
-                key={step.number}
-                className={`stepper-item ${isActive ? "active" : ""}`}
-              >
-                <div className="stepper-circle">
-                  {step.number}
-                </div>
-                <span className="stepper-label mt-2">{step.label}</span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    );
-  };
+  /**
+   * STEPPER COMPONENT:
+   * - Component: <Stepper /> imported from "@/Components"
+   * - Location: Client Profile Multi-step flow
+   * - Purpose: Renders the horizontal 3-step numbered tracker (Agency Info -> Services -> Review & Submit)
+   */
+  const renderStepper = () => (
+    <Stepper
+      steps={steps}
+      currentStep={currentStep}
+      activeColor="#0b38a8"
+      className="profile-stepper-container"
+    />
+  );
 
   const renderStep1 = () => (
     <form className="profile-step-form" onSubmit={handleStep1Continue}>
@@ -178,8 +217,14 @@ export default function ClientProfile() {
         <div className="profile-field-group client-logo-group">
           <label className="field-label fw-bold">Logo</label>
           <div className="upload-btn-wrapper">
-            <label htmlFor="client-logo-input" className="upload-photo-btn cursor-pointer d-inline-flex align-items-center justify-content-center text-white gap-2">
-              <span>{logoFile ? "Logo Selected" : "Upload Logo"}</span>
+            <label
+              htmlFor="client-logo-input"
+              className="upload-photo-btn cursor-pointer d-inline-flex align-items-center justify-content-center text-white gap-2"
+              title={logoFile ? (logoFile.name || "Logo Selected") : "Upload Logo"}
+            >
+              <span className="upload-btn-text">
+                {logoFile ? (logoFile.name || "Logo Selected") : "Upload Logo"}
+              </span>
               <img src={uploadIcon} alt="Upload" className="btn-icon-svg" />
             </label>
             <input id="client-logo-input" type="file" accept="image/*" className="hidden-input" onChange={handleLogoUpload} />
@@ -218,7 +263,7 @@ export default function ClientProfile() {
         {step1Errors.website && <span className="field-error">{step1Errors.website}</span>}
       </div>
 
-      <div className="profile-form-actions d-flex justify-content-end align-items-center flex-shrink-0 mt-auto gap-3">
+      <div className="profile-form-actions d-flex justify-content-end align-items-center shrink-0 mt-auto gap-3">
         {isEditMode && (
           <button type="button" className="cancel-btn" onClick={handleCancelEdit}>
             Cancel
@@ -297,7 +342,7 @@ export default function ClientProfile() {
         </div>
       </div>
 
-      <div className="profile-form-actions d-flex justify-content-end align-items-center flex-shrink-0 mt-auto gap-3">
+      <div className="profile-form-actions d-flex justify-content-end align-items-center shrink-0 mt-auto gap-3">
         {isEditMode && (
           <button type="button" className="cancel-btn" onClick={handleCancelEdit}>
             Cancel
@@ -321,13 +366,22 @@ export default function ClientProfile() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  /**
+   * Final Submission Handler:
+   * 1. Uploads company logo file to API if a new File is selected.
+   * 2. Saves/updates client profile details (company name, industry, website, project types, budget, team size).
+   * 3. Transitions to Step 4 (Completed / Reward Screen).
+   */
   const handleFinalSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
+      // 1. Upload logo if selected as a File instance
       if (logoFile instanceof File) {
         await profileApi.uploadLogo(logoFile);
       }
+
+      // 2. Persist company & hiring preferences to backend
       await profileApi.saveClientProfile({
         company_name: clientName,
         industry: industry,
@@ -336,11 +390,11 @@ export default function ClientProfile() {
         budget: budget,
         team_size: teamSize,
       });
-      setIsSubmitted(true);
+
+      // 3. Navigate to completion step
       goToStep(4);
     } catch (err) {
       console.error("Failed to save client profile:", err);
-      setIsSubmitted(true);
       goToStep(4);
     } finally {
       setIsSubmitting(false);
@@ -354,26 +408,33 @@ export default function ClientProfile() {
         <p className="section-subtitle">Review your information before continuing</p>
       </div>
 
+      {/* 
+        CARD COMPONENT: Review Summary Cards
+        - Variant: variant="base" (BaseCard)
+        - Location: renderStep3() (Review & Submit Step)
+        - Purpose: Preview cards displaying completed Company Info & Hiring Preferences sections with Edit shortcuts
+      */}
       <div className="d-flex flex-column gap-3 mb-4">
-        <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
+        <Cards variant="base" radius="md" className="review-summary-card">
           <span className="review-summary-title">Company Information</span>
           <span className="review-edit-btn" onClick={() => { setIsEditMode(true); goToStep(1); }} role="button">Edit</span>
-        </div>
+        </Cards>
 
-        <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
+        <Cards variant="base" radius="md" className="review-summary-card">
           <span className="review-summary-title">Hiring Preferences</span>
           <span className="review-edit-btn" onClick={() => { setIsEditMode(true); goToStep(2); }} role="button">Edit</span>
-        </div>
+        </Cards>
       </div>
 
-      <div className="profile-form-actions d-flex justify-content-end align-items-center flex-shrink-0 mt-auto gap-3">
+      <div className="profile-form-actions d-flex justify-content-end align-items-center shrink-0 mt-auto gap-3">
         <div className="continue-btn-wrapper">
           <PrimaryButton
             type="submit"
+            disabled={isSubmitting}
             text={
               <span className="d-inline-flex align-items-center gap-2">
-                <span>Continue</span>
-                <img src={ContinueIcon} alt="Continue" className="btn-icon-svg" />
+                <span>{isSubmitting ? "Submitting..." : "Continue"}</span>
+                {!isSubmitting && <img src={ContinueIcon} alt="Continue" className="btn-icon-svg" />}
               </span>
             }
           />
@@ -386,15 +447,27 @@ export default function ClientProfile() {
     <div className="completion-screen-wrapper d-flex flex-column align-items-center h-100 w-100 py-1">
       <div className="d-flex flex-column align-items-center w-100 my-auto">
         <div className="completion-avatar-circle d-flex align-items-center justify-content-center mb-3">
-          <Icon name="User2" size={44} color="#103CA4" />
+          <Icon name="User" size={44} color="#103CA4" stroke="#103CA4" strokeWidth={2.2} />
         </div>
         <h1 className="completion-main-title fw-bold text-center mb-3">
           Profile Setup Completed<br />Successfully !
         </h1>
-        <div className="completion-reward-banner text-start mb-4 w-100">
-          <h3 className="reward-banner-title fw-bold mb-1">Profile Completed</h3>
+        {/* 
+          CARD COMPONENT: Completion Reward Banner Card
+          - Variant: variant="base" (BaseCard)
+          - Location: renderCompletionScreen() (Step 4 / Completed Screen)
+          - Purpose: Notification banner displaying +20 Trust Points awarded for profile completion
+        */}
+        <Cards
+          variant="base"
+          radius="md"
+          bg="#E9F0FF"
+          className="completion-reward-banner text-start mb-4"
+          style={{ backgroundColor: '#E9F0FF', background: '#E9F0FF', border: 'none', boxShadow: 'none' }}
+        >
+          <h3 className="reward-banner-title fw-bold mb-0">Profile Completed</h3>
           <p className="reward-banner-subtitle mb-0">You have earned +20 trust points!</p>
-        </div>
+        </Cards>
 
         <div className="completion-stepper-container position-relative w-100 mb-5 mt-3">
           <div className="completion-stepper position-relative d-flex align-items-start justify-content-between w-100">
@@ -454,25 +527,19 @@ export default function ClientProfile() {
       className="dashboard-layout client-profile-page"
       style={{ backgroundImage: `url(${dashboardBg})` }}
     >
-      <Navbar userRole="Client" />
+      <Navbar items={clientNavItems} userRole="Client" />
 
       <main className="main-workspace d-flex flex-column h-100">
-        <Cards className="header-card flex-shrink-0" padding="0">
-          <header className="header">
-            <div className="header-search-bar">
-              <Icon name="Search" size={16} className="search-icon" color="#111827" />
-              <input type="text" placeholder="Search for Clients, projects or freelancers.." className="search-input" />
-            </div>
-            <div className="header-actions">
-              <button className="icon-btn"><Icon name="Bell" size={20} color="#111827" /></button>
-              <button className="icon-btn"><Icon name="Mail" size={20} color="#111827" /></button>
-              <div className="header-avatar">A</div>
-            </div>
-          </header>
-        </Cards>
+        <Header />
 
         <div className="profile-page-wrapper">
-          <Cards className="profile-main-card" padding="0">
+          {/* 
+            CARD COMPONENT: Profile Main Card (Core Layout Container)
+            - Variant: variant="base" (BaseCard)
+            - Location: Main Workspace
+            - Purpose: Main white elevated container enclosing the entire multi-step profile flow (Steps 1-3 & Completion Screen)
+          */}
+          <Cards variant="base" radius="md" className="profile-main-card" padding="0">
             <div className="profile-card-inner">
               <div className="back-btn-container w-100 d-flex justify-content-start mb-3">
                 <button

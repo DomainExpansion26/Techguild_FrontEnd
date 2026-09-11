@@ -21,15 +21,25 @@ export default function GuildCard({
   ...props
 }) {
   const g = guildCard || {};
-  const displayName = name || companyName || g.name || g.companyName || 'Member';
-  const displayCategory = category || g.category || 'VERIFIED MEMBER';
-  const displayInitials = logoInitials || g.logoInitials || (displayName ? displayName.slice(0, 2).toUpperCase() : 'TG');
-  const displayStars = starRating !== undefined ? starRating : (g.starRating !== undefined ? g.starRating : 5);
-  const displayLocation = location || g.location || '';
-  const displayWebsite = website || g.website || '';
+  const displayName = name || companyName || g.name || g.companyName || 'Nexora Solutions';
+  const displayCategory = category || g.category || 'HEALTHCARE COMPANY';
+  const displayInitials =
+    logoInitials ||
+    g.logoInitials ||
+    (displayName
+      ? (displayName.trim().includes(' ')
+          ? displayName.trim().split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase()
+          : (displayName.toUpperCase().startsWith('NEX') ? 'NS' : displayName.slice(0, 2).toUpperCase()))
+      : 'NS');
+  const displayStars = starRating !== undefined ? starRating : (g.starRating !== undefined ? g.starRating : 4);
+  const displayLocation = location || g.location || 'Pune, Maharashtra, India';
+  const rawWebsite = website || g.website || 'nexorspvtlmt.com';
+  const displayWebsite = rawWebsite.startsWith('Website:')
+    ? rawWebsite
+    : (rawWebsite ? `Website: ${rawWebsite.replace(/^https?:\/\//, '').replace(/\/$/, '')}` : 'Website: nexorspvtlmt.com');
   const displayRank = rank || g.rank || 'F';
-  const displayGuildId = guildId || g.guildId || 'TG-VERIFIED';
-  const displayMemberSince = memberSince || g.memberSince || 'Active';
+  const displayGuildId = guildId || g.guildId || 'IND-MH-01-072026';
+  const displayMemberSince = memberSince || g.memberSince || 'July 2026';
 
   const combinedStyle = {
     ...(width ? { width, maxWidth: '100%' } : {}),
