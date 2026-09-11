@@ -292,6 +292,7 @@ export default function AccountSecurity() {
           </Cards>
 
           <Cards
+            variant="base"
             className="account-security-signout" padding="20px 28px">
             <div className="account-security-signout-content">
               <div>

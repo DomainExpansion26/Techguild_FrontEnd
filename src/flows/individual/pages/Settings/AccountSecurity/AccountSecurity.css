@@ -394,9 +394,18 @@
 }
 
 /* Cream background card for signout section (Figma: #FFFBEB @ 60%, border #FEF3C7, r10).
-   Selector is scoped + high-specificity so it beats the shared .card glass style in cards.css
-   without modifying that file (Cards always renders `card shadow-sm rounded-3`). */
-.settings-container .card.shadow-sm.rounded-3.account-security-signout {
+   WHY this shape (do not simplify without re-checking cards.css):
+   1. BaseCard renders `card tg-card` — no `shadow-sm`/`rounded-3` — so the original
+      `.card.shadow-sm.rounded-3` selector never matched anything.
+   2. The shared glass rule (`.card:not(...)` x4 in cards.css) has specificity 0,5,0
+      with !important, which beats a plain 0,4,0 override even with !important.
+   This rule wins twice: the `main...` selector below is 0,5,1 (beats 0,5,0), AND it
+   sets the `--tg-card-*` hooks the glass rule itself reads via var(), so the glass
+   fallbacks can never apply. */
+main.settings-container.account-security-container .card.tg-card.account-security-signout {
+  --tg-card-bg: rgba(255, 251, 235, 0.6);
+  --tg-card-border: 1px solid #fef3c7;
+  --tg-card-radius: 10px;
   background: rgba(255, 251, 235, 0.6) !important;
   background-color: rgba(255, 251, 235, 0.6) !important;
   backdrop-filter: blur(2px);
