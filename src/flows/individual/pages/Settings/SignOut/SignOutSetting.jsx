@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { DashboardLayout, PrimaryButton, SecondaryButton } from "@/Components";
-import Icon from "@/Components/icons/Icon";
 import { useAuth } from "@/context/AuthContext";
 import { showSnackbar } from "@/store";
 import authApi from "@/features/auth/api/authApi";
@@ -55,10 +54,16 @@ export default function SignOutSetting() {
           {/* Divider */}
           <hr className="custom-divider" />
 
-          {/* Icon Section */}
+          {/* Icon Section — Figma LogoutIllustration 164px:
+              #EFF6FF tile + #C7D7FD dashed inset + 57px navy avatar mark.
+              Pure-CSS approximation (no vector asset exported). */}
           <div className="signout-icon-section">
-            <div className="signout-icon-wrap">
-              <Icon name="CircleUserRound" size={120} className="icon-person" />
+            <div className="signout-illustration" role="img" aria-label="Sign out illustration">
+              <div className="signout-illustration-dash" />
+              <div className="signout-avatar">
+                <div className="signout-avatar-head" />
+                <div className="signout-avatar-body" />
+              </div>
             </div>
           </div>
 

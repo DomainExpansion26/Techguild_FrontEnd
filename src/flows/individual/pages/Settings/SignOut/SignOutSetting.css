@@ -21,15 +21,16 @@
 }
 
 .user-role {
+  font-weight: 600 !important;
   font-size: 16px !important;
   line-height: 24px !important;
-  color: #6b7280 !important;
+  color: rgba(15, 23, 42, 0.5) !important;
   text-align: left !important;
   margin-bottom: 0 !important;
 }
 
 .custom-divider {
-  border-top: 1px solid #e5e7eb !important;
+  border-top: 1px solid rgba(15, 23, 42, 0.15) !important;
   margin: 19px 0 0 !important;
   opacity: 1 !important;
 }
@@ -38,44 +39,57 @@
   margin-top: 20px;
 }
 
-.signout-icon-wrap {
+/* Figma LogoutIllustration 164px: #EFF6FF tile, #C7D7FD dashed inset,
+   57px navy avatar mark (pale-blue head + shoulders, clipped round).
+   Pure-CSS approximation — positions transcribed from frame 52:1495. */
+.signout-illustration {
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 156px;
-  height: 156px;
-  background-color: #103ca4;
+  display: inline-block;
+  width: 164px;
+  height: 164px;
+  background-color: #eff6ff;
   border-radius: 50%;
 }
 
-.signout-icon-wrap .icon-person {
-  display: block;
-  color: #ffffff !important;
+.signout-illustration-dash {
+  position: absolute;
+  left: 17px;
+  top: 17px;
+  width: 129px;
+  height: 129px;
+  border: 1.5px dashed #c7d7fd;
+  border-radius: 50%;
 }
 
-.signout-icon-wrap .icon-person path {
-  stroke: #ffffff !important;
-  fill: none !important;
+.signout-avatar {
+  position: absolute;
+  left: 53px;
+  top: 53px;
+  width: 57px;
+  height: 57px;
+  background-color: #103ca4;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
-.icon-arrow-badge {
-  position: absolute !important;
-  bottom: 17px !important;
-  right: 21px !important;
-  width: 38px !important;
-  height: 38px !important;
-  background-color: #12b76a !important;
-  border-radius: 50% !important;
-  border: none !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  z-index: 2 !important;
+.signout-avatar-head {
+  position: absolute;
+  left: 20px;
+  top: 10px;
+  width: 18px;
+  height: 18px;
+  background-color: #e1ebff;
+  border-radius: 50%;
 }
 
-.icon-arrow-badge .icon-arrow {
-  display: block;
+.signout-avatar-body {
+  position: absolute;
+  left: 9px;
+  top: 30px;
+  width: 41px;
+  height: 27px;
+  background-color: #e1ebff;
+  border-radius: 12px 12px 0 0;
 }
 
 .question-text {
@@ -116,7 +130,7 @@
   font-weight: 600 !important;
   font-size: 16px !important;
   line-height: 20px !important;
-  background-color: #e0e7ff !important;
+  background-color: #e1ebff !important;
   color: #103ca4 !important;
   flex: none !important;
 }
