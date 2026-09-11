@@ -1,7 +1,14 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Cards, DashboardLayout, Toggle } from "@/Components";
+import {
+  Cards,
+  DashboardLayout,
+  PrimaryButton,
+  SecondaryButton,
+  TextInput,
+  Toggle,
+} from "@/Components";
 import { useAuth } from "@/context/AuthContext";
 import { showSnackbar } from "@/store";
 import authApi from "@/features/auth/api/authApi";
@@ -16,33 +23,25 @@ import {
 } from "@/Components/icons";
 import "./AccountSecurity.css";
 
-function Field({ label, children, hint }) {
-  return (
-    <>
-      <div className="settings-label">
-        <div>{label}</div>
-        {hint && <p className="settings-caption">{hint}</p>}
-      </div>
-      <div className="account-security-field-control">{children}</div>
-    </>
-  );
-}
-
-function SectionHeader({ title, description }) {
-  return (
-    <div className="settings-section-header">
-      <h2 className="settings-section-title">{title}</h2>
-      <p className="settings-section-desc">{description}</p>
-    </div>
-  );
-}
-
 export default function AccountSecurity() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, logout } = useAuth();
   const [smsBackup, setSmsBackup] = useState(false);
+  const [email, setEmail] = useState(user?.email || "arjun.mehta@gmail.com");
+  const emailTouchedRef = useRef(false);
+  const [currentPassword, setCurrentPassword] = useState("MySecurePass123");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+
+  // Auth session can resolve after mount on fresh reload — fill the email
+  // then, unless the user already typed something.
+  useEffect(() => {
+    if (user?.email && !emailTouchedRef.current) {
+      setEmail(user.email);
+    }
+  }, [user?.email]);
 
   const handleSignOut = async () => {
     try {
@@ -77,7 +76,7 @@ export default function AccountSecurity() {
 
   return (
     <DashboardLayout
-      containerClass="account-security-layout"
+      containerClass="settings-layout-collapsed-nav account-security-layout"
       activeSettingsTab="account-security"
     >
       <div className="settings-scroll-area">
@@ -91,52 +90,61 @@ export default function AccountSecurity() {
           </header>
 
           <Cards
+            variant="base"
             className="settings-section account-security-section"
             padding="24px 28px"
           >
-            <SectionHeader
-              title="Email Address"
-              description="Your login email and where we send important notifications."
-            />
+            <div className="settings-section-header">
+              <h2 className="settings-section-title">Email Address</h2>
+              <p className="settings-section-desc">
+                Your login email and where we send important notifications.
+              </p>
+            </div>
             <div className="settings-form-grid account-security-grid">
-              <Field
-                label="Current Email"
-                hint={
+              <div className="settings-label">
+                <div>Current Email</div>
+                <p className="settings-caption">
                   <span className="account-security-verified">Verified</span>
-                }
-              >
+                </p>
+              </div>
+              <div className="account-security-field-control">
                 <div className="account-security-inline-control">
-                  <input
+                  <TextInput
+                    value={email}
+                    onChange={(e) => {
+                      emailTouchedRef.current = true;
+                      setEmail(e.target.value);
+                    }}
                     className="settings-input account-security-email-input"
-                    defaultValue={user?.email || ""}
-                    placeholder="your-email@example.com"
                   />
-                  <button
-                    type="button"
-                    className="account-security-secondary-button"
-                  >
-                    Change Email
-                  </button>
+                  <SecondaryButton text="Change Email" />
                 </div>
-              </Field>
+              </div>
             </div>
           </Cards>
 
           <Cards
+            variant="base"
             className="settings-section account-security-section"
             padding="24px 28px"
           >
-            <SectionHeader
-              title="Password"
-              description="Use a strong, unique password for your TechGuild account."
-            />
+            <div className="settings-section-header">
+              <h2 className="settings-section-title">Password</h2>
+              <p className="settings-section-desc">
+                Use a strong, unique password for your TechGuild account.
+              </p>
+            </div>
             <div className="settings-form-grid account-security-grid">
-              <Field label="Current Password">
+              <div className="settings-label">
+                <div>Current Password</div>
+              </div>
+              <div className="account-security-field-control">
                 <div className="account-security-password-input">
-                  <input
+                  <TextInput
                     type={showCurrentPassword ? "text" : "password"}
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
                     className="settings-input"
-                    placeholder="Enter current password"
                   />
                   <button
                     type="button"
@@ -158,31 +166,50 @@ export default function AccountSecurity() {
                     )}
                   </button>
                 </div>
-              </Field>
-              <div className="settings-divider" />
-              <Field label="New Password">
-                <input type="password" className="settings-input" />
-              </Field>
-              <div className="settings-divider" />
-              <Field label="Confirm Password">
-                <input type="password" className="settings-input" />
-              </Field>
+              </div>
+              <div className="settings-label">
+                <div>New Password</div>
+              </div>
+              <div className="account-security-field-control">
+                <TextInput
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="settings-input"
+                />
+              </div>
+              <div className="settings-label">
+                <div>Confirm Password</div>
+              </div>
+              <div className="account-security-field-control">
+                <TextInput
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="settings-input"
+                />
+              </div>
             </div>
             <div className="account-security-actions">
-              <button type="button" className="account-security-primary-button">
-                Update Password
-              </button>
+              <PrimaryButton
+                text="Update Password"
+                className="account-security-primary-button"
+                onClick={() => {}}
+              />
             </div>
           </Cards>
 
           <Cards
+            variant="base"
             className="settings-section account-security-section"
             padding="24px 28px"
           >
-            <SectionHeader
-              title="Two-Factor Authentication"
-              description="Add an extra layer of security to your account."
-            />
+            <div className="settings-section-header">
+              <h2 className="settings-section-title">Two-Factor Authentication</h2>
+              <p className="settings-section-desc">
+                Add an extra layer of security to your account.
+              </p>
+            </div>
             {/* Authenticator App Row */}
             <div className="account-security-setting-row">
               <div className="account-security-left-group">
@@ -197,12 +224,7 @@ export default function AccountSecurity() {
                 </span>
               </div>
               <div className="account-security-row-action">
-                <button
-                  type="button"
-                  className="account-security-secondary-button"
-                >
-                  Manage
-                </button>
+                <SecondaryButton text="Manage" />
               </div>
             </div>
 
@@ -220,24 +242,22 @@ export default function AccountSecurity() {
                 />
               </div>
               <div className="account-security-row-action">
-                <button
-                  type="button"
-                  className="account-security-secondary-button"
-                >
-                  Setup
-                </button>
+                <SecondaryButton text="Setup" />
               </div>
             </div>
           </Cards>
 
           <Cards
+            variant="base"
             className="settings-section account-security-section"
             padding="24px 28px"
           >
-            <SectionHeader
-              title="Active Sessions"
-              description="Devices currently logged in to your account."
-            />
+            <div className="settings-section-header">
+              <h2 className="settings-section-title">Active Sessions</h2>
+              <p className="settings-section-desc">
+                Devices currently logged in to your account.
+              </p>
+            </div>
             <div className="account-security-sessions">
               {sessions.map(
                 ({ device, detail, icon: SessionIcon, current }) => (
@@ -254,9 +274,10 @@ export default function AccountSecurity() {
                     {current ? (
                       <span className="account-security-current">Current</span>
                     ) : (
-                      <button type="button" className="account-security-revoke">
-                        Revoke
-                      </button>
+                      <SecondaryButton
+                        text="Revoke"
+                        className="account-security-revoke"
+                      />
                     )}
                   </div>
                 ),
@@ -270,19 +291,20 @@ export default function AccountSecurity() {
             </button>
           </Cards>
 
-          <Cards className="account-security-signout" padding="20px 28px">
+          <Cards
+            variant="base"
+            className="account-security-signout" padding="20px 28px">
             <div className="account-security-signout-content">
               <div>
                 <h2>Sign Out</h2>
                 <p>You will be signed out of this device immediately.</p>
               </div>
-              <button
-                type="button"
+              <SecondaryButton
+                text="Sign Out"
+                icon={<LogOut width={14} height={14} />}
                 className="account-security-signout-button"
                 onClick={handleSignOut}
-              >
-                <LogOut width={14} height={14} /> Sign Out
-              </button>
+              />
             </div>
           </Cards>
         </main>
@@ -290,4 +312,3 @@ export default function AccountSecurity() {
     </DashboardLayout>
   );
 }
-

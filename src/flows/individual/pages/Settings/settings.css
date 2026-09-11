@@ -69,30 +69,18 @@
 }
 
 
-/* Scrollbar */
+/* Scrollbar (hidden visual scrollbar while retaining scroll functionality) */
 
 .settings-scroll-area {
-  scrollbar-width: thin;
-  scrollbar-color: #e5e7eb transparent;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .settings-scroll-area::-webkit-scrollbar {
-  width: 4px;
+  display: none;
+  width: 0;
+  height: 0;
 }
-
-.settings-scroll-area::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.settings-scroll-area::-webkit-scrollbar-thumb {
-  background: #e5e7eb;
-  border-radius: 10px;
-}
-
-.settings-scroll-area::-webkit-scrollbar-thumb:hover {
-  background: #d1d5db;
-}
-
 
 /* =========================================================
    MAIN CONTAINER
@@ -105,7 +93,7 @@
   gap: 32px;
 
   width: 100%;
-  max-width: 900px;
+  max-width: none;
 
   margin: 0 auto;
 
@@ -114,6 +102,11 @@
   background: transparent;
 }
 
+/* Ensure the last card has no trailing space below it */
+.settings-container > *:last-child,
+.billing-settings-container > *:last-child {
+  margin-bottom: 0;
+}
 
 /* =========================================================
    PAGE HEADER
@@ -208,6 +201,10 @@
    FORM GRID
    ========================================================= */
 
+.settings-container .secondary-btn, .settings-container .primary-btn {
+  width: auto;
+}
+
 .settings-form-grid {
   display: grid;
 
@@ -219,10 +216,13 @@
   width: 100%;
 }
 
+.settings-container .secondary-btn, .settings-container .primary-btn {
+  width: auto;
+}
+
 .settings-form-grid.align-center {
   align-items: center;
 }
-
 
 /* =========================================================
    LABELS
@@ -421,88 +421,66 @@
    PRIMARY BUTTON
    ========================================================= */
 
-.settings-btn-primary {
+.settings-section .settings-btn-primary {
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
-
   gap: 8px;
-
   background-color: #103ca4;
-
   color: #ffffff;
-
   border: none;
-
   border-radius: 10px;
-
   padding: 0 20px;
-
-  height: 40px;
-
+  height: 38px;
   font-size: 14px;
-
   font-weight: 600;
-
   cursor: pointer;
-
   transition:
     background-color 0.2s ease,
     transform 0.1s ease;
+  width: auto;
+  margin-top: 0;
 }
 
-.settings-btn-primary:hover {
+.settings-section .settings-btn-primary:hover:not(:disabled) {
   background-color: #0c2b7a;
 }
 
-.settings-btn-primary:active {
+.settings-section .settings-btn-primary:active:not(:disabled) {
   transform: translateY(1px);
 }
-
 
 /* =========================================================
    SECONDARY BUTTON
    ========================================================= */
 
-.settings-btn-secondary {
+.settings-section .settings-btn-secondary {
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
-
   gap: 8px;
-
   background-color: transparent;
-
   color: #121c2a;
   background-color: #ffffff;
-
   border: 1px solid #e5e7eb;
-
   border-radius: 10px;
-
   padding: 0 20px;
-
-  height: 40px;
-
+  height: 38px;
   font-size: 14px;
-
   font-weight: 600;
-
   cursor: pointer;
-
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease;
+  width: auto;
+  margin-top: 0;
+  flex: none;
 }
 
-.settings-btn-secondary:hover {
+.settings-section .settings-btn-secondary:hover:not(:disabled) {
   background-color: #eff3ff;
-
   border-color: #d5dcf7;
 }
-
 
 /* =========================================================
    TEXT BUTTON
@@ -510,12 +488,9 @@
 
 .settings-btn-text {
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
-
   background-color: transparent;
-
   color: #6b7280;
 
   border: none;
@@ -536,7 +511,6 @@
 .settings-btn-text:hover {
   color: #121c2a;
 }
-
 
 /* =========================================================
    TOGGLE
@@ -566,13 +540,11 @@
   color: #059669;
 }
 
-
 /* =========================================================
    TABLET / MOBILE
    ========================================================= */
 
 @media (max-width: 768px) {
-
   .settings-scroll-area {
     overflow-x: hidden;
   }
@@ -582,8 +554,12 @@
 
     gap: 20px;
 
-    padding-bottom: 24px;
+    padding-bottom: 0;
   }
+
+.settings-container .secondary-btn, .settings-container .primary-btn {
+  width: auto;
+}
 
   .settings-form-grid {
     grid-template-columns: 1fr;

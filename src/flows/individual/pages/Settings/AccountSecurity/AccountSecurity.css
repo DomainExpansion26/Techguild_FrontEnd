@@ -2,13 +2,13 @@
    Layout gap (moved out of the inline style on DashboardLayout)
    =========================================================== */
 .dashboard-layout.account-security-layout {
-  gap: 30px;
+  gap: 12px;
 }
 
 .account-security-container {
   max-width: none;
-  gap: 24px;
-  padding-bottom: 24px;
+  gap: 12px;
+  padding-bottom: 0;
 }
 .account-security-section {
   gap: 20px;
@@ -65,6 +65,58 @@
   border-color: #d1d5db;
 }
 
+/* ===========================================================
+   Buttons (override Verifyemail.css .secondary-btn)
+   =========================================================== */
+
+.account-security-section .secondary-btn {
+  width: fit-content;
+  flex: none;
+  height: auto;
+  padding: 8px 24px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+.account-security-section .secondary-btn:hover:not(:disabled) {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+  color: #212529;
+}
+
+.account-security-section .secondary-btn:active:not(:disabled) {
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+/* Revoke button: keep red text + original secondary styling
+   (scoped so it beats .account-security-section .secondary-btn) */
+.account-security-section .account-security-revoke {
+  min-height: 34px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  gap: 8px;
+  white-space: nowrap;
+  color: #dc2626;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: none;
+}
+.account-security-section .account-security-revoke:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  color: #b91c1c;
+}
+
 .account-security-verified {
   display: inline-flex;
   align-items: center;
@@ -114,16 +166,35 @@
   display: flex;
   justify-content: flex-end;
 }
-.account-security-primary-button {
+.account-security-section .account-security-primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
   min-height: 36px;
   padding: 8px 18px;
   color: #ffffff;
   background: #103ca4;
   border: 0;
-  font-weight: 600;
+  width: auto;
+  height: auto;
+  margin-top: 0;
 }
-.account-security-primary-button:hover {
+.account-security-section .account-security-primary-button:hover:not(:disabled) {
   background: #0c2b7a;
+  box-shadow: none;
+  transform: none;
+}
+.account-security-section .account-security-primary-button:active:not(:disabled) {
+  background: #0c2b7a;
+  transform: none;
+  box-shadow: none;
 }
 
 .account-security-setting-row {
@@ -241,14 +312,20 @@
   border-color: #d1d5db;
 }
 
-/* 3. Keep "Sign out of all other sessions" as plain red text 
-   (since it also uses the .account-security-revoke class) */
-.account-security-signout-others {
+/* 3. Keep "Sign out of all other sessions" as plain red text
+   (since it also uses the .account-security-revoke class).
+   Scoped to match .account-security-section .account-security-revoke
+   specificity so the button styles can't win. */
+.account-security-section .account-security-signout-others {
+  display: block;
+  width: auto;
   margin-top: 14px;
+  margin-right: auto;
   font-size: 13px;
   font-weight: 600;
+  line-height: normal;
+  text-align: left;
   /* Override the button styles */
-  display: inline;
   min-height: auto;
   padding: 0;
   color: #dc2626;
@@ -257,7 +334,7 @@
   border-radius: 0;
   box-shadow: none;
 }
-.account-security-signout-others:hover {
+.account-security-section .account-security-signout-others:hover {
   background: transparent;
   border: 0;
   color: #b91c1c;
@@ -294,10 +371,41 @@
   font-weight: 600;
 }
 
+/* Sign Out button: preserve original styling
+   (scoped to beat global Verifyemail.css .secondary-btn flex:1) */
+.account-security-signout .secondary-btn.account-security-signout-button {
+  flex: none;
+  min-height: auto;
+  padding: 9px 18px;
+  color: #374151;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.account-security-signout .secondary-btn.account-security-signout-button:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  color: #374151;
+}
+
 /* Cream background card for signout section (Figma: #FFFBEB @ 60%, border #FEF3C7, r10).
-   Selector is scoped + high-specificity so it beats the shared .card glass style in cards.css
-   without modifying that file (Cards always renders `card shadow-sm rounded-3`). */
-.settings-container .card.shadow-sm.rounded-3.account-security-signout {
+   WHY this shape (do not simplify without re-checking cards.css):
+   1. BaseCard renders `card tg-card` — no `shadow-sm`/`rounded-3` — so the original
+      `.card.shadow-sm.rounded-3` selector never matched anything.
+   2. The shared glass rule (`.card:not(...)` x4 in cards.css) has specificity 0,5,0
+      with !important, which beats a plain 0,4,0 override even with !important.
+   This rule wins twice: the `main...` selector below is 0,5,1 (beats 0,5,0), AND it
+   sets the `--tg-card-*` hooks the glass rule itself reads via var(), so the glass
+   fallbacks can never apply. */
+main.settings-container.account-security-container .card.tg-card.account-security-signout {
+  --tg-card-bg: rgba(255, 251, 235, 0.6);
+  --tg-card-border: 1px solid #fef3c7;
+  --tg-card-radius: 10px;
   background: rgba(255, 251, 235, 0.6) !important;
   background-color: rgba(255, 251, 235, 0.6) !important;
   backdrop-filter: blur(2px);
@@ -309,7 +417,7 @@
 
 @media (max-width: 768px) {
   .account-security-container {
-    gap: 20px;
+    gap: 12px;
   }
   .account-security-inline-control,
   .account-security-setting-row,

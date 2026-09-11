@@ -2,13 +2,13 @@
    Layout gap (moved out of the inline style on DashboardLayout)
    =========================================================== */
 .dashboard-layout.profile-settings-layout {
-  gap: 30px;
+  gap: 12px;
 }
 
 .profile-settings-container {
   max-width: none;
-  gap: 24px;
-  padding-bottom: 24px;
+  gap: 12px;
+  padding-bottom: 0;
 }
 
 .profile-settings-section {
@@ -19,8 +19,82 @@
   row-gap: 18px;
 }
 
-.profile-settings-section .settings-divider {
-  margin: 0;
+/* ===========================================================
+   Bio textarea-style input
+   =========================================================== */
+
+.profile-bio-input {
+  align-items: flex-start;
+  height: auto;
+  min-height: 100px;
+  padding-top: 13px;
+}
+
+.profile-bio-input-field {
+  height: auto;
+  line-height: 1.5;
+}
+
+/* ===========================================================
+   Buttons — restored reference behaviour + missing Primary fix.
+   Reference CSS only overrode .secondary-btn, leaving
+   .primary-btn at width:100% / height:46px (base) vs height:40px
+   (settings.css) — same specificity, import-order dependent, so
+   Save Changes stretched full-width and pushed Cancel.
+   Fix mirrors the reference Secondary geometry for Primary.
+   =========================================================== */
+
+.profile-settings-section .secondary-btn {
+  width: fit-content;
+  flex: none;
+  height: auto;
+  padding: 8px 24px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+.profile-settings-section .secondary-btn:hover:not(:disabled) {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+  color: #212529;
+}
+
+.profile-settings-section .secondary-btn:active:not(:disabled) {
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+/* Primary companion: same box geometry as Secondary above,
+   primary colors from settings.css (.settings-btn-primary). */
+
+.profile-settings-section .primary-btn {
+  width: fit-content;
+  flex: none;
+  height: auto;
+  padding: 8px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  border: 0;
+  border-radius: 10px;
+  background-color: #103ca4;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.profile-settings-section .primary-btn:hover:not(:disabled) {
+  background-color: #0c2b7a;
+  color: #ffffff;
+}
+
+.profile-settings-section .primary-btn:active:not(:disabled) {
+  background-color: #0c2b7a;
 }
 
 .profile-upload-button,
@@ -61,7 +135,7 @@
 
 @media (max-width: 768px) {
   .profile-settings-container {
-    gap: 20px;
+    gap: 12px;
   }
 
   .profile-settings-section .settings-form-grid {

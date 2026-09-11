@@ -8,13 +8,13 @@
    Layout gap (moved out of the inline style on DashboardLayout)
    =========================================================== */
 .dashboard-layout.privacy-layout {
-  gap: 30px;
+  gap: 12px;
 }
 
 .privacy-settings-container {
   max-width: none;
-  gap: 24px;
-  padding-bottom: 24px;
+  gap: 12px;
+  padding-bottom: 0;
 }
 
 .privacy-settings-section {
@@ -33,8 +33,35 @@
   border-radius: 10px !important;
 }
 
+.privacy-settings-section .secondary-btn {
+  width: fit-content;
+  flex: none;
+  height: auto;
+  padding: 8px 24px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+.privacy-settings-section .secondary-btn:hover:not(:disabled) {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+  color: #212529;
+}
+
+.privacy-settings-section .secondary-btn:active:not(:disabled) {
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+
 @media (max-width: 768px) {
   .privacy-settings-container {
-    gap: 20px;
+    gap: 12px;
   }
 }
