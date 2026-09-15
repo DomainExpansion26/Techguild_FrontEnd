@@ -19,6 +19,7 @@ import {
   Eye,
   EyeOff,
   Laptop,
+  Lock,
   LogOut,
   Monitor,
   MonitorSpeaker,
@@ -71,6 +72,7 @@ export default function AccountSecurity() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, logout } = useAuth();
+  const twoFactorEnabled = Boolean(user?.two_factor_enabled);
   const [smsBackup, setSmsBackup] = useState(false);
   const [email, setEmail] = useState(user?.email || "arjun.mehta@gmail.com");
   const emailTouchedRef = useRef(false);
@@ -266,7 +268,15 @@ export default function AccountSecurity() {
                   <p>Use Google Authenticator or Authy</p>
                 </div>
                 <span className="account-security-enabled">
-                  <CircleCheck width={13} height={13} /> Enabled
+                  {twoFactorEnabled ? (
+                    <>
+                      <CircleCheck width={13} height={13} /> Enabled
+                    </>
+                  ) : (
+                    <>
+                      <Lock width={13} height={13} /> Not Enabled
+                    </>
+                  )}
                 </span>
               </div>
               <div className="account-security-row-action">
@@ -440,6 +450,7 @@ export default function AccountSecurity() {
       <AccountSecurity2FA
         open={manage2FAOpen}
         onClose={() => setManage2FAOpen(false)}
+        enabled={twoFactorEnabled}
       />
     </DashboardLayout>
   );

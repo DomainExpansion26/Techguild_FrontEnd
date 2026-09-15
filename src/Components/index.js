@@ -3,6 +3,7 @@ export { default as SecondaryButton } from "./SecondaryButton/SecondaryButton";
 export { default as TextInput } from "./Textinput/Textinput";
 export { default as LoadingButton } from "./LoadingButton/Loadingbutton";
 export { default as BasicModal } from "./Modals/BasicModal";
+export { default as OtpInput } from "./OTPInput/OtpInput";
 export { default as AuthHomeScreen } from "./Common/AuthHomeScreen/AuthHomeScreen";
 export { default as BrandLogo } from "./BrandLogo/BrandLogo";
 export { default as SocialButton } from "./SocialButton/SocialButton";
