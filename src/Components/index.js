@@ -22,4 +22,5 @@ export { default as SearchBar } from "./SearchBar/SearchBar";
 export { default as Header } from "./Header/Header";
 export { default as DashboardLayout } from "./Common/DashboardLayout/DashboardLayout";
 export { default as Stepper } from "./Stepper/Stepper";
+export { default as Popup } from "./Popup/Popup";
 export * from "./feedback";
