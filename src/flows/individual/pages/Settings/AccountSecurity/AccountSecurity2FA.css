@@ -1,0 +1,296 @@
+/* src/Modules/Individual/Screen/Pages/Settings/AccountSecurity/AccountSecurity2FA.css
+   Multi-step 2FA management popup (Figma "popups" flow) */
+
+/* Popup supplies the card padding (30px 38px); step 1 overrides it to 10px
+   via the `style` prop so the card matches the 833px Figma frame. */
+.as2fa-card {
+  padding: 0;
+}
+
+/* ---------- Step 1: Choose & Download ---------- */
+.as2fa-app-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  padding: 8px 0;
+}
+
+.as2fa-app-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5px;
+  width: 231px;
+  min-height: 73px;
+  padding: 0 11px;
+  text-align: left;
+  background: rgba(15, 23, 42, 0.05);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.as2fa-app-card:hover {
+  background: rgba(15, 23, 42, 0.08);
+}
+
+.as2fa-app-card--selected {
+  border-color: rgba(16, 60, 164, 0.75);
+  background: rgba(16, 60, 164, 0.05);
+}
+
+.as2fa-app-top {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.as2fa-app-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  color: #103ca4;
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 4px 4px rgba(16, 60, 164, 0.25);
+}
+
+.as2fa-app-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 12px;
+  font-weight: 700;
+  color: #103ca4;
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 4px 4px rgba(16, 60, 164, 0.25);
+}
+
+.as2fa-app-name {
+  color: #111827;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.as2fa-app-tagline {
+  color: rgba(17, 24, 39, 0.75);
+  font-size: 12px;
+  line-height: 20px;
+}
+
+/* ---------- Step 2: Scan barcode / QR code (Figma "Manage-2FA scan QR") ---------- */
+.as2fa-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  width: 100%;
+}
+
+/* Figma content stack gap: 29px */
+.as2fa-scan-body {
+  gap: 29px;
+}
+
+.as2fa-qr-frame {
+  width: 155px;
+  height: 154px;
+  margin: 0 auto;
+  padding: 8px;
+  background: #ffffff;
+  box-shadow: 0 0.8px 10.4px rgba(0, 0, 0, 0.2);
+}
+
+.as2fa-qr-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #111827;
+  background: #ffffff;
+}
+
+.as2fa-qr-note {
+  width: 476px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+  color: #111827;
+  font-size: 11px;
+  font-weight: 300;
+  line-height: 16px;
+  text-align: center;
+  background: #f6f5f3;
+  border: 1px solid rgba(17, 24, 39, 0.15);
+  border-radius: 10px;
+}
+
+/* ---------- Step 3: Enter code ---------- */
+.as2fa-verify-body {
+  gap: 16px;
+}
+
+.as2fa-otp {
+  display: flex;
+  gap: 16px;
+}
+
+.as2fa-otp-input {
+  width: 60px;
+  height: 56px;
+  padding: 10px 8px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #111827;
+  background: #ffffff;
+  border: 1px solid rgba(17, 24, 39, 0.15);
+  border-radius: 8px;
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.as2fa-otp-input::placeholder {
+  color: rgba(17, 24, 39, 0.5);
+}
+
+.as2fa-otp-sep {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 56px;
+  color: #132533;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+}
+
+.as2fa-otp-input:focus {
+  border-color: #103ca4;
+  box-shadow: 0 0 0 3px rgba(16, 60, 164, 0.15);
+}
+
+.as2fa-otp--error .as2fa-otp-input {
+  border-color: #f04438;
+}
+
+.as2fa-error {
+  width: 100%;
+  margin: 0;
+  color: #f04438;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
+}
+
+/* ---------- Success ---------- */
+.as2fa-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 20px 0;
+}
+
+.as2fa-success-icon {
+  color: #12b76a;
+}
+
+.as2fa-success-title {
+  margin: 0;
+  color: #111827;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 28px;
+  text-align: center;
+}
+
+/* ---------- Footer (Figma: 64px height, 8px radius) ---------- */
+.as2fa-footer {
+  gap: 16px;
+  padding-top: 20px;
+}
+
+.as2fa-footer-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.as2fa-footer-row .primary-btn,
+.as2fa-footer-row .secondary-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 64px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  border-radius: 8px;
+}
+
+.as2fa-footer-row .secondary-btn {
+  color: #103ca4;
+  background: rgba(16, 60, 164, 0.15);
+  border-color: transparent;
+}
+
+.as2fa-footer-row .secondary-btn:hover:not(:disabled) {
+  color: #103ca4;
+  background: rgba(16, 60, 164, 0.22);
+  border-color: transparent;
+}
+
+.as2fa-footer-row .primary-btn:disabled {
+  color: rgba(17, 24, 39, 0.15);
+  background: rgba(17, 24, 39, 0.07);
+}
+
+.as2fa-footer-btn {
+  width: 100%;
+  height: 64px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+}
+
+@media (max-width: 576px) {
+  .as2fa-app-card {
+    width: 100%;
+  }
+  .as2fa-otp {
+    gap: 8px;
+  }
+  .as2fa-otp-input {
+    width: 40px;
+    height: 48px;
+  }
+  .as2fa-otp-sep {
+    width: 16px;
+    height: 48px;
+  }
+  .as2fa-footer-row .primary-btn,
+  .as2fa-footer-row .secondary-btn,
+  .as2fa-footer-btn {
+    height: 56px;
+    font-size: 15px;
+  }
+}
