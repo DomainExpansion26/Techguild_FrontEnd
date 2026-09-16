@@ -66,6 +66,13 @@ import UserPlus from "../../assets/icons/user-plus.svg?react";
 import ClipboardList from "../../assets/icons/clipboard-list.svg?react";
 import Download from "../../assets/icons/download.svg?react";
 import ExternalLink from "../../assets/icons/external-link.svg?react";
+import ArrowDown from "../../assets/icons/arrow-down.svg?react";
+import ShieldAlert from "../../assets/icons/shield-alert.svg?react";
+import UserLock from "../../assets/icons/user-lock.svg?react";
+import MonitorSpeaker from "../../assets/icons/monitor-speaker.svg?react";
+import RectangleVertical from "../../assets/icons/rectangle-vertical.svg?react";
+import TvMinimal from "../../assets/icons/tv-minimal.svg?react";
+import QrCode from "../../assets/icons/qr-code.svg?react";
 import Palette from "../../assets/icons/palette.svg?react";
 import Tag from "../../assets/icons/tag.svg?react";
 import LifeBuoy from "../../assets/icons/life-buoy.svg?react";
@@ -141,6 +148,13 @@ export {
   ClipboardList,
   Download,
   ExternalLink,
+  ArrowDown,
+  ShieldAlert,
+  UserLock,
+  MonitorSpeaker,
+  RectangleVertical,
+  TvMinimal,
+  QrCode,
   Palette,
   Tag,
   LifeBuoy,
