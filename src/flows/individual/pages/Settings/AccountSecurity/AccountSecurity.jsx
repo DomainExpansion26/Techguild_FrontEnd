@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+// src/Modules/Individual/Screen/Pages/Settings/AccountSecurity/AccountSecurity.jsx
+import { useEffect, useRef, Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
@@ -13,20 +14,65 @@ import { useAuth } from "@/context/AuthContext";
 import { showSnackbar } from "@/store";
 import authApi from "@/features/auth/api/authApi";
 import {
+  ArrowDown,
   CircleCheck,
   Eye,
   EyeOff,
   Laptop,
+  Lock,
   LogOut,
   Monitor,
+  MonitorSpeaker,
+  RectangleVertical,
+  ShieldAlert,
   Smartphone,
+  TvMinimal,
+  UserLock,
 } from "@/Components/icons";
 import "./AccountSecurity.css";
+import AccountSecurity2FA from "./AccountSecurity2FA";
+
+const authenticatorSteps = [
+  "You link an authenticator app",
+  "Scan QR code",
+  "App generates 6-digit code",
+  "Enter code to verify",
+];
+
+const setupSteps = [
+  "Step 1 - Enable authenticator app",
+  "Step 2 - Scan QR within 1 min",
+  "Step 3 - Enter 6-digit code.",
+  "Step 4 - Backup codes saved.",
+  "Step 5 - Linked device generates codes for login.",
+];
+
+const downloadApps = [
+  "Google authenticator",
+  "Microsoft authenticator",
+  "Authy",
+  "Duo Mobile",
+];
+
+function LearnRow({ icon: Icon, title, children }) {
+  return (
+    <div className="account-security-learn-row">
+      <span className="account-security-learn-icon">
+        <Icon width={16} height={16} />
+      </span>
+      <div className="account-security-learn-text">
+        <div className="account-security-learn-title">{title}</div>
+        {children}
+      </div>
+    </div>
+  );
+}
 
 export default function AccountSecurity() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, logout } = useAuth();
+  const twoFactorEnabled = Boolean(user?.two_factor_enabled);
   const [smsBackup, setSmsBackup] = useState(false);
   const [email, setEmail] = useState(user?.email || "arjun.mehta@gmail.com");
   const emailTouchedRef = useRef(false);
@@ -55,6 +101,8 @@ export default function AccountSecurity() {
       navigate("/login");
     }
   };
+  const [learnMoreOpen, setLearnMoreOpen] = useState(false);
+  const [manage2FAOpen, setManage2FAOpen] = useState(false);
   const sessions = [
     {
       device: "MacBook Pro — Chrome",
@@ -220,12 +268,102 @@ export default function AccountSecurity() {
                   <p>Use Google Authenticator or Authy</p>
                 </div>
                 <span className="account-security-enabled">
-                  <CircleCheck width={13} height={13} /> Enabled
+                  {twoFactorEnabled ? (
+                    <>
+                      <CircleCheck width={13} height={13} /> Enabled
+                    </>
+                  ) : (
+                    <>
+                      <Lock width={13} height={13} /> Not Enabled
+                    </>
+                  )}
                 </span>
               </div>
               <div className="account-security-row-action">
-                <SecondaryButton text="Manage" />
+                <SecondaryButton
+                  text="Manage"
+                  onClick={() => setManage2FAOpen(true)}
+                />
               </div>
+            </div>
+
+            {/* Learn about 2FA dropdown (Figma Settings01 closed state) */}
+            <div className="account-security-learn-wrap">
+              <button
+                type="button"
+                className="account-security-learn-toggle"
+                aria-expanded={learnMoreOpen}
+                aria-controls="account-security-learn-content"
+                onClick={() => setLearnMoreOpen((open) => !open)}
+              >
+                <span>Learn about two factor authentication</span>
+                <ArrowDown
+                  width={20}
+                  height={20}
+                  className="account-security-learn-chevron"
+                />
+              </button>
+
+              {/* Expanded content (Figma Settings02 expanded state) */}
+              {learnMoreOpen && (
+                <div
+                  id="account-security-learn-content"
+                  className="account-security-learn-content"
+                >
+                  <LearnRow icon={ShieldAlert} title="What is 2FA?">
+                    <p>2FA adds an extra layer of security to your account.</p>
+                  </LearnRow>
+                  <LearnRow icon={UserLock} title="Why use 2FA?">
+                    <p>
+                      Protects your account even if your password is stolen.
+                    </p>
+                  </LearnRow>
+                  <LearnRow icon={MonitorSpeaker} title="How it works?">
+                    <div className="account-security-learn-steps">
+                      {authenticatorSteps.map((step, index) => (
+                        <Fragment key={step}>
+                          {index > 0 && (
+                            <span className="account-security-learn-arrow">
+                              &rarr;
+                            </span>
+                          )}
+                          <span>{step}</span>
+                        </Fragment>
+                      ))}
+                    </div>
+                  </LearnRow>
+                  <LearnRow icon={RectangleVertical} title="Apps you can use :">
+                    <p>
+                      Google authenticator, microsoft authenticator, authy, duo
+                      mobile
+                    </p>
+                  </LearnRow>
+                  <LearnRow icon={TvMinimal} title="Set-up Process :">
+                    <div className="account-security-learn-list">
+                      {setupSteps.map((step) => (
+                        <p key={step}>{step}</p>
+                      ))}
+                    </div>
+                  </LearnRow>
+                  <LearnRow
+                    icon={RectangleVertical}
+                    title="Download Authenticator Apps :"
+                  >
+                    <div className="account-security-learn-apps">
+                      {downloadApps.map((app) => (
+                        <span className="account-security-learn-app" key={app}>
+                          <span className="account-security-learn-app-icon">
+                            <Smartphone width={12} height={12} />
+                          </span>
+                          <span className="account-security-learn-app-name">
+                            {app}
+                          </span>
+                        </span>
+                      ))}
+                    </div>
+                  </LearnRow>
+                </div>
+              )}
             </div>
 
             {/* SMS Backup Row */}
@@ -309,6 +447,11 @@ export default function AccountSecurity() {
           </Cards>
         </main>
       </div>
+      <AccountSecurity2FA
+        open={manage2FAOpen}
+        onClose={() => setManage2FAOpen(false)}
+        enabled={twoFactorEnabled}
+      />
     </DashboardLayout>
   );
 }

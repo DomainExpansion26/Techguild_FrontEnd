@@ -12,6 +12,16 @@ export const ENDPOINTS = {
     RESEND_VERIFICATION: "/auth/resend-verification",
     VERIFY_EMAIL: "/auth/verify-email",
     ACCOUNT: "/auth/account",
+
+    // Two-factor authentication
+    TWO_FA: {
+      SETUP: "/auth/2fa/setup",
+      VERIFY_SETUP: "/auth/2fa/verify-setup",
+      VERIFY_LOGIN: "/auth/2fa/verify-login",
+      VERIFY_RECOVERY_CODE: "/auth/2fa/verify-recovery-code",
+      DISABLE: "/auth/2fa/disable",
+      REGENERATE_RECOVERY_CODES: "/auth/2fa/recovery-codes/regenerate",
+    },
   },
 
   // 2. OAuth
