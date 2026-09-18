@@ -13,7 +13,7 @@ export const ENDPOINTS = {
     VERIFY_EMAIL: "/auth/verify-email",
     ACCOUNT: "/auth/account",
 
-    // Two-factor authentication
+   // Two-factor authentication
     TWO_FA: {
       SETUP: "/auth/2fa/setup",
       VERIFY_SETUP: "/auth/2fa/verify-setup",
