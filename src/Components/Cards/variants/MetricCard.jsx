@@ -1,8 +1,9 @@
 import React from 'react';
 import BaseCard from './BaseCard';
 import Icon from '@/Components/icons/Icon';
+import { ICON_SIZES } from '@/constants/sizes';
 
-function renderIcon(icon, defaultSize = 16, defaultProps = {}) {
+function renderIcon(icon, defaultSize = ICON_SIZES.MD, defaultProps = {}) {
   if (!icon) return null;
   if (React.isValidElement(icon)) {
     return icon;

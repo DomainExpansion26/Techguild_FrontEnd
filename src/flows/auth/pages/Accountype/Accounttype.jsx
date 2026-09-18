@@ -9,6 +9,7 @@ import "./Accounttype.css";
 import authApi from "@/features/auth/api/authApi";
 import { useAuth } from "@/context/AuthContext";
 import { showSnackbar } from "@/store";
+import { APP_STRINGS, TOAST_MESSAGES, FORM_ERRORS } from "@/constants/string";
 
 export default function AccountType() {
   const navigate = useNavigate();
@@ -18,6 +19,9 @@ export default function AccountType() {
   const [selected, setSelected] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const STRINGS = APP_STRINGS.AUTH.ACCOUNT_TYPE;
+  const BRAND = APP_STRINGS.AUTH.HOME_SCREEN;
 
   const pendingUser = JSON.parse(localStorage.getItem("techguild_pending_user") || "{}");
   const email = location?.state?.email || pendingUser?.email || "";
@@ -30,40 +34,25 @@ export default function AccountType() {
 
   const accountTypes = [
     {
-      id: "individual",
-      title: "Individual",
+      id: STRINGS.TYPES.INDIVIDUAL.ID,
+      title: STRINGS.TYPES.INDIVIDUAL.TITLE,
       icon: <User width={28} height={28} />,
-      description:
-        "I am a freelancer or independent professional looking for projects and opportunities.",
-      points: [
-        "Work on exciting projects",
-        "Build your professional reputation",
-        "Grow your career",
-      ],
+      description: STRINGS.TYPES.INDIVIDUAL.DESCRIPTION,
+      points: STRINGS.TYPES.INDIVIDUAL.POINTS,
     },
     {
-      id: "agency",
-      title: "Agency",
+      id: STRINGS.TYPES.AGENCY.ID,
+      title: STRINGS.TYPES.AGENCY.TITLE,
       icon: <Building2 width={28} height={28} />,
-      description:
-        "I represent an agency or company providing professional services.",
-      points: [
-        "Manage your team",
-        "Find new clients",
-        "Scale your business",
-      ],
+      description: STRINGS.TYPES.AGENCY.DESCRIPTION,
+      points: STRINGS.TYPES.AGENCY.POINTS,
     },
     {
-      id: "client",
-      title: "Client",
+      id: STRINGS.TYPES.CLIENT.ID,
+      title: STRINGS.TYPES.CLIENT.TITLE,
       icon: <Briefcase width={28} height={28} />,
-      description:
-        "I am a business or individual looking to hire professionals for projects.",
-      points: [
-        "Post projects",
-        "Hire verified professionals",
-        "Get work done faster",
-      ],
+      description: STRINGS.TYPES.CLIENT.DESCRIPTION,
+      points: STRINGS.TYPES.CLIENT.POINTS,
     },
   ];
 
@@ -95,7 +84,7 @@ export default function AccountType() {
         }
 
         dispatch(showSnackbar({
-          message: `Welcome to TechGuild as a ${selected}!`,
+          message: TOAST_MESSAGES.AUTH.WELCOME_ROLE(selected),
           type: "success",
         }));
       }
@@ -111,8 +100,8 @@ export default function AccountType() {
       console.error("Account type selection error:", err);
       const isUnverified = err?.status === 400 || err?.message?.toLowerCase().includes("verify your email");
       const msg = isUnverified
-        ? "Please verify your email first before continuing. Check your inbox."
-        : (err?.message || "Failed to set account type. Please try again.");
+        ? TOAST_MESSAGES.AUTH.VERIFY_EMAIL_REQUIRED
+        : (err?.message || FORM_ERRORS.AUTH.ACCOUNT_TYPE_FAILED);
       setErrorMessage(msg);
       dispatch(showSnackbar({ message: msg, type: "error" }));
 
@@ -135,8 +124,8 @@ export default function AccountType() {
     >
       <header className="auth-header">
         <div className="auth-header-logo" onClick={() => navigate("/")}>
-          <span className="logo-tech">Tech</span>
-          <span className="logo-guild">Guild</span>
+          <span className="logo-tech">{BRAND.BRAND_TECH}</span>
+          <span className="logo-guild">{BRAND.BRAND_GUILD}</span>
         </div>
         <div className="auth-header-profile">
           <img src={userIcon} alt="Profile Icon" className="header-profile-icon" />
@@ -147,10 +136,10 @@ export default function AccountType() {
 
       <SignupCard>
         <div className="account-container">
-          <h2>Choose Your Account Type</h2>
+          <h2>{STRINGS.TITLE}</h2>
 
           <p className="subtitle">
-            Select the option that best describes you
+            {STRINGS.SUBTITLE}
           </p>
 
           {errorMessage && (
@@ -203,7 +192,7 @@ export default function AccountType() {
             disabled={!selected || loading}
             onClick={handleContinue}
           >
-            {loading ? "Processing..." : "Continue"}
+            {loading ? STRINGS.PROCESSING_BTN : STRINGS.CONTINUE_BTN}
           </button>
         </div>
       </SignupCard>
