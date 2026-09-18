@@ -2,22 +2,25 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Camera, Zap, Briefcase, ShieldCheck } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+import { APP_STRINGS } from "@/constants/string";
 import img3 from "@/assets/img3.jpg";
 import "./welcome-banner.css";
 
+const BANNER_STRINGS = APP_STRINGS.DASHBOARD.WELCOME_BANNER;
+
 export default function WelcomeBanner({
   title,
-  subtitle = "Complete your profile to stand out",
-  desc = "Finish these steps to improve your chances of getting hired.",
-  actionText = "Complete profile",
+  subtitle = BANNER_STRINGS.SUBTITLE,
+  desc = BANNER_STRINGS.DESCRIPTION,
+  actionText = BANNER_STRINGS.ACTION_BUTTON,
   onActionClick,
   steps = [
-    { icon: <Camera size={13} strokeWidth={2.5} />, text: "Basic Information" },
-    { icon: <Zap size={13} strokeWidth={2.5} />, text: "Add Skills" },
-    { icon: <Briefcase size={13} strokeWidth={2.5} />, text: "Add Portfolio" },
-    { icon: <ShieldCheck size={13} strokeWidth={2.5} />, text: "Verify Identity" },
+    { icon: <Camera size={13} strokeWidth={2.5} />, text: BANNER_STRINGS.STEP_BASIC_INFO },
+    { icon: <Zap size={13} strokeWidth={2.5} />, text: BANNER_STRINGS.STEP_SKILLS },
+    { icon: <Briefcase size={13} strokeWidth={2.5} />, text: BANNER_STRINGS.STEP_PORTFOLIO },
+    { icon: <ShieldCheck size={13} strokeWidth={2.5} />, text: BANNER_STRINGS.STEP_VERIFY },
   ],
-  progressText = "0 of 4 steps completed"
+  progressText = BANNER_STRINGS.PROGRESS_DEFAULT,
 }) {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -25,7 +28,8 @@ export default function WelcomeBanner({
   const firstName = user?.name
     ? user.name.split(" ")[0]
     : (user?.first_name || (user?.email ? user.email.split("@")[0] : ""));
-  const resolvedTitle = title || (firstName ? `Welcome to TechGuild, ${firstName}!` : "Welcome to TechGuild!");
+  const resolvedTitle =
+    title || (firstName ? `${BANNER_STRINGS.GREETING_PREFIX}, ${firstName}!` : `${BANNER_STRINGS.GREETING_PREFIX}!`);
 
   const handleActionClick = () => {
     if (onActionClick) {
@@ -47,7 +51,6 @@ export default function WelcomeBanner({
       <div className="welcome-banner-overlay position-absolute top-0 start-0 w-100 h-100"></div>
 
       <div className="welcome-banner-content">
-
         <div className="welcome-banner-info-section">
           <div className="welcome-banner-info-text">
             <h2 className="welcome-banner-title">{resolvedTitle}</h2>
@@ -84,9 +87,7 @@ export default function WelcomeBanner({
             </div>
           ))}
         </div>
-
       </div>
     </div>
   );
 }
-

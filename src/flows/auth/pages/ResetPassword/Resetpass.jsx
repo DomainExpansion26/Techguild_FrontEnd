@@ -10,8 +10,10 @@ import {
   SignupCard,
 } from "@/Components";
 import authApi from "@/features/auth/api/authApi";
+import { APP_STRINGS, FORM_ERRORS } from "@/constants/string";
 
 export default function ResetPass() {
+  const STRINGS = APP_STRINGS.AUTH.RESET_PASSWORD;
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token") || "";
 
@@ -28,12 +30,12 @@ export default function ResetPass() {
     setErrorMessage("");
 
     if (newPassword.length < 8) {
-      setErrorMessage("Password must be at least 8 characters long.");
+      setErrorMessage(FORM_ERRORS.AUTH.PASSWORD_MIN_LENGTH);
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      setErrorMessage("Passwords do not match.");
+      setErrorMessage(FORM_ERRORS.AUTH.PASSWORDS_MUST_MATCH);
       return;
     }
 
@@ -43,7 +45,7 @@ export default function ResetPass() {
       setIsSubmitted(true);
     } catch (err) {
       console.error("Reset password error:", err);
-      setErrorMessage(err?.message || "Failed to reset password. Link may be invalid or expired.");
+      setErrorMessage(err?.message || FORM_ERRORS.AUTH.RESET_FAILED);
     } finally {
       setLoading(false);
     }
@@ -61,11 +63,11 @@ export default function ResetPass() {
 
           {!isSubmitted && (
             <>
-              <h2>Reset Your Password</h2>
+              <h2>{STRINGS.TITLE}</h2>
               <p className="subtitle">
-                Enter your new password below.
+                {STRINGS.SUBTITLE_LINE1}
                 <br />
-                Make sure it's strong and unique.
+                {STRINGS.SUBTITLE_LINE2}
               </p>
             </>
           )}
@@ -87,7 +89,7 @@ export default function ResetPass() {
 
           {!isSubmitted ? (
             <form onSubmit={handleSubmit} style={{ width: "100%" }}>
-              <label htmlFor="new-password" style={{ fontWeight: 700, fontSize: '13px', color: '#111827', display: 'block', margin: '6px 0 5px 0' }}>New Password</label>
+              <label htmlFor="new-password" style={{ fontWeight: 700, fontSize: '13px', color: '#111827', display: 'block', margin: '6px 0 5px 0' }}>{STRINGS.NEW_PASSWORD_LABEL}</label>
               <div className="input-group rounded-3 overflow-hidden bg-white" style={{ marginBottom: '12px', border: '1px solid #B3B3B3' }}>
                 <span className="input-group-text bg-white border-0 d-flex align-items-center justify-content-center" style={{ padding: '0 10px', minWidth: '36px' }}>
                   <Lock width={16} height={16} />
@@ -96,7 +98,7 @@ export default function ResetPass() {
                   id="new-password"
                   type={showNewPassword ? "text" : "password"}
                   className="form-control border-0 shadow-none bg-white"
-                  placeholder="Enter new password"
+                  placeholder={STRINGS.NEW_PASSWORD_PLACEHOLDER}
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   required
@@ -112,7 +114,7 @@ export default function ResetPass() {
                 </button>
               </div>
 
-              <label htmlFor="confirm-password" style={{ fontWeight: 700, fontSize: '13px', color: '#111827', display: 'block', margin: '6px 0 5px 0' }}>Confirm Password</label>
+              <label htmlFor="confirm-password" style={{ fontWeight: 700, fontSize: '13px', color: '#111827', display: 'block', margin: '6px 0 5px 0' }}>{STRINGS.CONFIRM_PASSWORD_LABEL}</label>
               <div className="input-group rounded-3 overflow-hidden bg-white" style={{ marginBottom: '12px', border: '1px solid #B3B3B3' }}>
                 <span className="input-group-text bg-white border-0 d-flex align-items-center justify-content-center" style={{ padding: '0 10px', minWidth: '36px' }}>
                   <Lock width={16} height={16} />
@@ -121,7 +123,7 @@ export default function ResetPass() {
                   id="confirm-password"
                   type={showConfirmPassword ? "text" : "password"}
                   className="form-control border-0 shadow-none bg-white"
-                  placeholder="Confirm new password"
+                  placeholder={STRINGS.CONFIRM_PASSWORD_PLACEHOLDER}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
@@ -140,15 +142,15 @@ export default function ResetPass() {
               <div className="password-rules">
                 <div className={`rule ${newPassword.length >= 8 ? "valid" : ""}`}>
                   <Icon name="Check" size={12} className="rule-icon" />
-                  <span>Must be at least 8 characters</span>
+                  <span>{STRINGS.RULES.MIN_LENGTH}</span>
                 </div>
                 <div className={`rule ${/[A-Z]/.test(newPassword) ? "valid" : ""}`}>
                   <Icon name="Check" size={12} className="rule-icon" />
-                  <span>Must contain an uppercase letter</span>
+                  <span>{STRINGS.RULES.UPPERCASE}</span>
                 </div>
                 <div className={`rule ${/[0-9]/.test(newPassword) ? "valid" : ""}`}>
                   <Icon name="Check" size={12} className="rule-icon" />
-                  <span>Must contain a number</span>
+                  <span>{STRINGS.RULES.NUMBER}</span>
                 </div>
               </div>
 
@@ -157,12 +159,12 @@ export default function ResetPass() {
                 disabled={loading}
                 className="btn auth-primary-btn reset-btn"
               >
-                {loading ? "Updating..." : "Reset Password"}
+                {loading ? STRINGS.SUBMIT_BTN_LOADING : STRINGS.SUBMIT_BTN}
               </button>
 
               <div className="back-to-login">
                 <Link to="/login" className="back-link">
-                  Back to log in
+                  {STRINGS.BACK_TO_LOGIN}
                 </Link>
               </div>
             </form>
@@ -172,21 +174,21 @@ export default function ResetPass() {
                 <img src={TickIcon} alt="Success" className="tick-icon-img" />
               </div>
 
-              <h3>Password reset</h3>
+              <h3>{STRINGS.SUCCESS.TITLE}</h3>
 
               <p className="success-subtitle">
-                Your password has been successfully reset.
+                {STRINGS.SUCCESS.SUBTITLE_LINE1}
                 <br />
-                Click below to log in.
+                {STRINGS.SUCCESS.SUBTITLE_LINE2}
               </p>
 
               <Link to="/login" className="btn auth-primary-btn continue-btn">
-                Continue
+                {STRINGS.SUCCESS.CONTINUE_BTN}
               </Link>
 
               <div className="back-to-login">
                 <Link to="/login" className="back-link">
-                  Back to log in
+                  {STRINGS.BACK_TO_LOGIN}
                 </Link>
               </div>
             </div>

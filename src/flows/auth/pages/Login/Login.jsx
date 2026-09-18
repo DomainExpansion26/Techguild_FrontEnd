@@ -13,9 +13,12 @@ import profileApi from "@/features/profile/api/profileApi";
 import { useAuth } from "@/context/AuthContext";
 import { useDispatch } from "react-redux";
 import { showSnackbar } from "@/store";
+import { APP_STRINGS, TOAST_MESSAGES, FORM_ERRORS } from "@/constants/string";
 
 export default function Login() {
   const dispatch = useDispatch();
+  const STRINGS = APP_STRINGS.AUTH.LOGIN;
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
@@ -75,7 +78,7 @@ export default function Login() {
 
       dispatch(
         showSnackbar({
-          message: "Signed in successfully! Welcome back.",
+          message: TOAST_MESSAGES.AUTH.LOGIN_SUCCESS,
           type: "success",
         })
       );
@@ -92,8 +95,8 @@ export default function Login() {
       const isUnverified =
         err?.status === 401 && err?.message?.toLowerCase().includes("verify your email");
       const msg = isUnverified
-        ? "Please verify your email address first before logging in. Check your inbox."
-        : (err?.message || "Invalid email or password. Please try again.");
+        ? TOAST_MESSAGES.AUTH.VERIFY_EMAIL_REQUIRED
+        : (err?.message || FORM_ERRORS.AUTH.INVALID_CREDENTIALS);
       setErrorMessage(msg);
       dispatch(showSnackbar({ message: msg, type: "error" }));
 
@@ -124,8 +127,8 @@ export default function Login() {
           <form onSubmit={handleLogin} style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
             <BrandLogo />
 
-            <h2 style={{ fontWeight: 700, fontSize: '18px', color: '#111827', margin: '6px 0 1px 0' }}>Welcome back</h2>
-            <p style={{ color: '#79797D', fontSize: '13px', margin: '0 0 14px 0' }}>Log in to continue your journey.</p>
+            <h2 style={{ fontWeight: 700, fontSize: '18px', color: '#111827', margin: '6px 0 1px 0' }}>{STRINGS.TITLE}</h2>
+            <p style={{ color: '#79797D', fontSize: '13px', margin: '0 0 14px 0' }}>{STRINGS.SUBTITLE}</p>
 
             {errorMessage && (
               <div
@@ -150,7 +153,7 @@ export default function Login() {
               style={{ fontSize: '13px', padding: '8px 0', marginBottom: '10px' }}
             >
               <Google width={18} height={18} />
-              <span>Continue with Google</span>
+              <span>{STRINGS.GOOGLE_BTN}</span>
             </button>
             <button
               type="button"
@@ -159,17 +162,17 @@ export default function Login() {
               style={{ fontSize: '13px', padding: '8px 0', marginBottom: '0px' }}
             >
               <GitHub width={18} height={18} />
-              <span>Continue with GitHub</span>
+              <span>{STRINGS.GITHUB_BTN}</span>
             </button>
 
             <div style={{ display: 'flex', alignItems: 'center', margin: '8px 0 8px 0' }}>
               <div style={{ flex: 1, height: '1px', backgroundColor: '#B3B3B3' }}></div>
-              <span style={{ padding: '0 12px', fontSize: '11px', fontWeight: 600, color: '#4B5563', letterSpacing: '0.05em' }}>OR</span>
+              <span style={{ padding: '0 12px', fontSize: '11px', fontWeight: 600, color: '#4B5563', letterSpacing: '0.05em' }}>{STRINGS.DIVIDER_OR}</span>
               <div style={{ flex: 1, height: '1px', backgroundColor: '#B3B3B3' }}></div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <label htmlFor="login-email" style={{ fontWeight: 700, fontSize: '12.5px', color: '#111827', display: 'block', margin: '0 0 4px 0' }}>Email Address</label>
+              <label htmlFor="login-email" style={{ fontWeight: 700, fontSize: '12.5px', color: '#111827', display: 'block', margin: '0 0 4px 0' }}>{STRINGS.EMAIL_LABEL}</label>
               <div className="input-group rounded-3 overflow-hidden bg-white" style={{ height: '38px', minHeight: '38px', marginBottom: '10px', border: '1px solid #D1D5DB', flexShrink: 0 }}>
                 <span className="input-group-text bg-white border-0 d-flex align-items-center justify-content-center" style={{ padding: '0 10px', minWidth: '36px' }}>
                   <Mail width={16} height={16} color="#6A717D" />
@@ -178,7 +181,7 @@ export default function Login() {
                   id="login-email"
                   type="email"
                   className="form-control border-0 shadow-none bg-white h-100"
-                  placeholder="Enter your email"
+                  placeholder={STRINGS.EMAIL_PLACEHOLDER}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -186,7 +189,7 @@ export default function Login() {
                 />
               </div>
 
-              <label htmlFor="login-password" style={{ fontWeight: 700, fontSize: '12.5px', color: '#111827', display: 'block', margin: '0 0 4px 0' }}>Password</label>
+              <label htmlFor="login-password" style={{ fontWeight: 700, fontSize: '12.5px', color: '#111827', display: 'block', margin: '0 0 4px 0' }}>{STRINGS.PASSWORD_LABEL}</label>
               <div className="input-group rounded-3 overflow-hidden bg-white" style={{ height: '38px', minHeight: '38px', marginBottom: '12px', border: '1px solid #D1D5DB', flexShrink: 0 }}>
                 <span className="input-group-text bg-white border-0 d-flex align-items-center justify-content-center" style={{ padding: '0 10px', minWidth: '36px' }}>
                   <Lock width={16} height={16} />
@@ -195,7 +198,7 @@ export default function Login() {
                   id="login-password"
                   type={showPassword ? "text" : "password"}
                   className="form-control border-0 shadow-none bg-white h-100"
-                  placeholder="Enter your password"
+                  placeholder={STRINGS.PASSWORD_PLACEHOLDER}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -222,11 +225,11 @@ export default function Login() {
                     style={{ margin: 0 }}
                   />
                   <label htmlFor="rememberMe" className="cursor-pointer" style={{ fontWeight: 600, fontSize: '13px', color: '#111827', margin: 0 }}>
-                    Remember me
+                    {STRINGS.REMEMBER_ME}
                   </label>
                 </div>
                 <Link to="/forgot-password" style={{ color: '#103CA4', textDecoration: 'none', fontWeight: 600, fontSize: '13px' }}>
-                  Forgot Password ?
+                  {STRINGS.FORGOT_PASSWORD_LINK}
                 </Link>
               </div>
             </div>
@@ -236,12 +239,12 @@ export default function Login() {
               disabled={loading}
               className="btn auth-primary-btn"
             >
-              {loading ? "Logging in..." : "Log in"}
+              {loading ? STRINGS.SUBMIT_BTN_LOADING : STRINGS.SUBMIT_BTN}
             </button>
 
             <p style={{ textAlign: 'center', fontSize: '13px', color: '#000000', margin: 'auto 0 2px 0', fontWeight: 500 }}>
-              Dont have an account ?{" "}
-              <Link to="/signup" style={{ color: '#103CA4', textDecoration: 'none', fontWeight: 600 }}>Sign up</Link>
+              {STRINGS.FOOTER_PROMPT}{" "}
+              <Link to="/signup" style={{ color: '#103CA4', textDecoration: 'none', fontWeight: 600 }}>{STRINGS.FOOTER_LINK}</Link>
             </p>
           </form>
         </SignupCard>

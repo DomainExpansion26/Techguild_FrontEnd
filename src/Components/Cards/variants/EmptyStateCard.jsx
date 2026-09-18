@@ -2,8 +2,9 @@ import React from 'react';
 import BaseCard from './BaseCard';
 import Icon from '@/Components/icons/Icon';
 import PrimaryButton from '@/Components/Button/Primarybutton';
+import { ICON_SIZES } from '@/constants/sizes';
 
-function renderIcon(icon, defaultSize = 20, className = '') {
+function renderIcon(icon, defaultSize = ICON_SIZES.LG, className = '') {
   if (!icon) return null;
   if (React.isValidElement(icon)) {
     return React.cloneElement(icon, {
@@ -19,7 +20,7 @@ function renderIcon(icon, defaultSize = 20, className = '') {
 export default function EmptyStateCard({
   headerTitle,
   icon,
-  iconSize = 20,
+  iconSize = ICON_SIZES.LG,
   title,
   mainText,
   description,
