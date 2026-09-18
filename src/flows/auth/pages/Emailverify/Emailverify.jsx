@@ -7,8 +7,12 @@ import userIcon from "@/assets/icons/user.svg";
 import mailImage from "@/assets/mail.png";
 import "./Emailverify.css";
 import authApi from "@/features/auth/api/authApi";
+import { APP_STRINGS, FORM_ERRORS } from "@/constants/string";
 
 export default function EmailVerified() {
+  const STRINGS = APP_STRINGS.AUTH.EMAIL_VERIFIED;
+  const BRAND = APP_STRINGS.AUTH.HOME_SCREEN;
+
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
@@ -22,7 +26,7 @@ export default function EmailVerified() {
           await authApi.verifyEmail(token);
         } catch (err) {
           console.error("Verification error:", err);
-          setErrorMessage(err?.message || "Verification link is invalid or expired.");
+          setErrorMessage(err?.message || FORM_ERRORS.AUTH.VERIFY_FAILED || STRINGS.INVALID_TOKEN_ERROR);
         } finally {
           setIsVerifying(false);
         }
@@ -42,8 +46,8 @@ export default function EmailVerified() {
     >
       <header className="auth-header">
         <div className="auth-header-logo" onClick={() => navigate("/")}>
-          <span className="logo-tech">Tech</span>
-          <span className="logo-guild">Guild</span>
+          <span className="logo-tech">{BRAND.BRAND_TECH}</span>
+          <span className="logo-guild">{BRAND.BRAND_GUILD}</span>
         </div>
         <div className="auth-header-profile">
           <img src={userIcon} alt="Profile Icon" className="header-profile-icon" />
@@ -58,7 +62,7 @@ export default function EmailVerified() {
             <img src={mailImage} alt="Mail" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </div>
 
-          <h2>{isVerifying ? "Verifying your email..." : "Email Verified Successfully !"}</h2>
+          <h2>{isVerifying ? STRINGS.VERIFYING_TITLE : STRINGS.SUCCESS_TITLE}</h2>
 
           {errorMessage ? (
             <div
@@ -75,8 +79,8 @@ export default function EmailVerified() {
             </div>
           ) : (
             <div className="reward-card">
-              <h4>Email Verified</h4>
-              <p>You have earned +10 trust points!</p>
+              <h4>{STRINGS.REWARD_TITLE}</h4>
+              <p>{STRINGS.REWARD_SUBTITLE}</p>
             </div>
           )}
 
@@ -87,37 +91,37 @@ export default function EmailVerified() {
               <div className="circle">
                 <Check width={14} height={14} />
               </div>
-              <h5>Email Verified</h5>
-              <span>+10 Trust Points</span>
+              <h5>{STRINGS.STEPS.EMAIL_VERIFIED_TITLE}</h5>
+              <span>{STRINGS.STEPS.EMAIL_VERIFIED_POINTS}</span>
             </div>
 
             <div className="step">
               <div className="circle">
                 <Lock width={14} height={14} />
               </div>
-              <h5>Profile Completed</h5>
-              <span>+20 Trust Points</span>
+              <h5>{STRINGS.STEPS.PROFILE_COMPLETED_TITLE}</h5>
+              <span>{STRINGS.STEPS.PROFILE_COMPLETED_POINTS}</span>
             </div>
 
             <div className="step">
               <div className="circle">
                 <Lock width={14} height={14} />
               </div>
-              <h5>Identity Verified</h5>
-              <span>+40 Trust Points</span>
+              <h5>{STRINGS.STEPS.IDENTITY_VERIFIED_TITLE}</h5>
+              <span>{STRINGS.STEPS.IDENTITY_VERIFIED_POINTS}</span>
             </div>
 
             <div className="step">
               <div className="circle">
                 <Lock width={14} height={14} />
               </div>
-              <h5>First Project</h5>
-              <span>+30 Trust Points</span>
+              <h5>{STRINGS.STEPS.FIRST_PROJECT_TITLE}</h5>
+              <span>{STRINGS.STEPS.FIRST_PROJECT_POINTS}</span>
             </div>
           </div>
 
           <button className="continueBtn" onClick={handleContinue}>
-            Continue to account type
+            {STRINGS.CONTINUE_BTN}
           </button>
         </div>
       </SignupCard>

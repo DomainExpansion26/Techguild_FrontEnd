@@ -11,10 +11,12 @@ import {
 } from "@/Components";
 import authApi from "@/features/auth/api/authApi";
 import oauthApi from "@/features/auth/api/oauthApi";
+import { APP_STRINGS, TOAST_MESSAGES, FORM_ERRORS } from "@/constants/string";
 
 export default function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const STRINGS = APP_STRINGS.AUTH.SIGNUP;
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -28,22 +30,22 @@ export default function Signup() {
     e?.preventDefault();
 
     if (!firstName.trim() || !lastName.trim()) {
-      dispatch(showSnackbar({ message: "Please enter both First Name and Last Name.", type: "error" }));
+      dispatch(showSnackbar({ message: FORM_ERRORS.AUTH.NAME_REQUIRED, type: "error" }));
       return;
     }
 
     if (!email.trim() || !password.trim()) {
-      dispatch(showSnackbar({ message: "Please enter both Email and Password.", type: "error" }));
+      dispatch(showSnackbar({ message: FORM_ERRORS.AUTH.EMAIL_PASSWORD_REQUIRED, type: "error" }));
       return;
     }
 
     if (password.length < 8) {
-      dispatch(showSnackbar({ message: "Password must be at least 8 characters.", type: "warning" }));
+      dispatch(showSnackbar({ message: FORM_ERRORS.AUTH.PASSWORD_MIN_LENGTH, type: "warning" }));
       return;
     }
 
     if (!termsAccepted) {
-      dispatch(showSnackbar({ message: "Please accept the Terms of Service & Privacy Policy to continue.", type: "warning" }));
+      dispatch(showSnackbar({ message: FORM_ERRORS.AUTH.TERMS_REQUIRED, type: "warning" }));
       return;
     }
 
@@ -76,7 +78,7 @@ export default function Signup() {
         showSnackbar({
           message:
             response?.message ||
-            "Registration successful! Please check your email inbox to verify your account.",
+            TOAST_MESSAGES.AUTH.REGISTER_SUCCESS,
           type: "success",
         })
       );
@@ -94,7 +96,7 @@ export default function Signup() {
     } catch (err) {
       console.error("Signup error:", err);
       dispatch(showSnackbar({
-        message: err?.message || "Failed to create account. Please check your credentials.",
+        message: err?.message || FORM_ERRORS.AUTH.REGISTER_FAILED,
         type: "error",
       }));
     } finally {
@@ -119,8 +121,8 @@ export default function Signup() {
           <form onSubmit={handleSignup} style={{ width: '100%', display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
             <BrandLogo />
 
-            <h2 style={{ fontWeight: 700, fontSize: '18px', color: '#111827', margin: '8px 0 2px 0' }}>Sign Up</h2>
-            <p style={{ color: '#79797D', fontSize: '13px', margin: '0 0 14px 0' }}>Start your TechGuild Journey</p>
+            <h2 style={{ fontWeight: 700, fontSize: '18px', color: '#111827', margin: '8px 0 2px 0' }}>{STRINGS.TITLE}</h2>
+            <p style={{ color: '#79797D', fontSize: '13px', margin: '0 0 14px 0' }}>{STRINGS.SUBTITLE}</p>
 
             {/* Social Buttons */}
             <button
@@ -130,7 +132,7 @@ export default function Signup() {
               style={{ fontSize: '13px', height: '38px', minHeight: '38px', marginBottom: '8px', flexShrink: 0 }}
             >
               <Google width={18} height={18} />
-              <span>Continue with Google</span>
+              <span>{STRINGS.GOOGLE_BTN}</span>
             </button>
             <button
               type="button"
@@ -139,13 +141,13 @@ export default function Signup() {
               style={{ fontSize: '13px', height: '38px', minHeight: '38px', marginBottom: '4px', flexShrink: 0 }}
             >
               <GitHub width={18} height={18} />
-              <span>Continue with GitHub</span>
+              <span>{STRINGS.GITHUB_BTN}</span>
             </button>
 
             {/* Divider */}
             <div style={{ display: 'flex', alignItems: 'center', margin: '10px 0 10px 0', flexShrink: 0 }}>
               <div style={{ flex: 1, height: '1px', backgroundColor: '#E5E7EB' }}></div>
-              <span style={{ padding: '0 12px', fontSize: '11px', fontWeight: 600, color: '#6B7280', letterSpacing: '0.05em' }}>OR</span>
+              <span style={{ padding: '0 12px', fontSize: '11px', fontWeight: 600, color: '#6B7280', letterSpacing: '0.05em' }}>{STRINGS.DIVIDER_OR}</span>
               <div style={{ flex: 1, height: '1px', backgroundColor: '#E5E7EB' }}></div>
             </div>
 
@@ -155,14 +157,14 @@ export default function Signup() {
               <div className="d-flex gap-2 mb-2" style={{ flexShrink: 0 }}>
                 <div className="w-50">
                   <label htmlFor="first-name" style={{ fontWeight: 700, fontSize: '12px', color: '#111827', display: 'block', marginBottom: '4px' }}>
-                    First Name
+                    {STRINGS.FIRST_NAME_LABEL}
                   </label>
                   <div className="input-group rounded-3 overflow-hidden bg-white" style={{ height: '38px', minHeight: '38px', border: '1px solid #D1D5DB' }}>
                     <input
                       id="first-name"
                       type="text"
                       className="form-control border-0 shadow-none bg-white h-100"
-                      placeholder="e.g. John"
+                      placeholder={STRINGS.FIRST_NAME_PLACEHOLDER}
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       required
@@ -173,14 +175,14 @@ export default function Signup() {
 
                 <div className="w-50">
                   <label htmlFor="last-name" style={{ fontWeight: 700, fontSize: '12px', color: '#111827', display: 'block', marginBottom: '4px' }}>
-                    Last Name
+                    {STRINGS.LAST_NAME_LABEL}
                   </label>
                   <div className="input-group rounded-3 overflow-hidden bg-white" style={{ height: '38px', minHeight: '38px', border: '1px solid #D1D5DB' }}>
                     <input
                       id="last-name"
                       type="text"
                       className="form-control border-0 shadow-none bg-white h-100"
-                      placeholder="e.g. Doe"
+                      placeholder={STRINGS.LAST_NAME_PLACEHOLDER}
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                       required
@@ -193,7 +195,7 @@ export default function Signup() {
               {/* Email Address */}
               <div className="mb-2" style={{ flexShrink: 0 }}>
                 <label htmlFor="signup-email" style={{ fontWeight: 700, fontSize: '12px', color: '#111827', display: 'block', marginBottom: '4px' }}>
-                  Email Address
+                  {STRINGS.EMAIL_LABEL}
                 </label>
                 <div className="input-group rounded-3 overflow-hidden bg-white" style={{ height: '38px', minHeight: '38px', border: '1px solid #D1D5DB' }}>
                   <span className="input-group-text bg-white border-0 d-flex align-items-center justify-content-center" style={{ padding: '0 10px', minWidth: '36px' }}>
@@ -203,7 +205,7 @@ export default function Signup() {
                     id="signup-email"
                     type="email"
                     className="form-control border-0 shadow-none bg-white h-100"
-                    placeholder="Enter your email"
+                    placeholder={STRINGS.EMAIL_PLACEHOLDER}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -215,7 +217,7 @@ export default function Signup() {
               {/* Password */}
               <div className="mb-2" style={{ flexShrink: 0 }}>
                 <label htmlFor="signup-password" style={{ fontWeight: 700, fontSize: '12px', color: '#111827', display: 'block', marginBottom: '4px' }}>
-                  Password
+                  {STRINGS.PASSWORD_LABEL}
                 </label>
                 <div className="input-group rounded-3 overflow-hidden bg-white" style={{ height: '38px', minHeight: '38px', border: '1px solid #D1D5DB' }}>
                   <span className="input-group-text bg-white border-0 d-flex align-items-center justify-content-center" style={{ padding: '0 10px', minWidth: '36px' }}>
@@ -225,7 +227,7 @@ export default function Signup() {
                     id="signup-password"
                     type={showPassword ? "text" : "password"}
                     className="form-control border-0 shadow-none bg-white h-100"
-                    placeholder="Create password (min 8 chars)"
+                    placeholder={STRINGS.PASSWORD_PLACEHOLDER}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
@@ -252,7 +254,7 @@ export default function Signup() {
                   style={{ cursor: "pointer", width: '15px', height: '15px' }}
                 />
                 <label htmlFor="terms" style={{ fontSize: "12px", color: "#4B5563", margin: 0, cursor: "pointer" }}>
-                  I agree to the <Link to="/terms" style={{ color: "#103CA4", fontWeight: 600 }}>Terms of Service</Link> and <Link to="/privacy" style={{ color: "#103CA4", fontWeight: 600 }}>Privacy Policy</Link>
+                  {STRINGS.TERMS_AGREE_PREFIX} <Link to="/terms" style={{ color: "#103CA4", fontWeight: 600 }}>{STRINGS.TERMS_LINK_TEXT}</Link> {STRINGS.TERMS_AND_TEXT} <Link to="/privacy" style={{ color: "#103CA4", fontWeight: 600 }}>{STRINGS.PRIVACY_LINK_TEXT}</Link>
                 </label>
               </div>
 
@@ -270,12 +272,12 @@ export default function Signup() {
                 }}
                 disabled={loading}
               >
-                {loading ? "Creating Account..." : "Create Account"}
+                {loading ? STRINGS.SUBMIT_BTN_LOADING : STRINGS.SUBMIT_BTN}
               </button>
 
               {/* Footer link */}
               <div className="text-center mt-3" style={{ fontSize: "13px", color: "#6B7280", flexShrink: 0 }}>
-                Already have an account? <Link to="/login" style={{ color: "#103CA4", fontWeight: 600 }}>Log In</Link>
+                {STRINGS.FOOTER_PROMPT} <Link to="/login" style={{ color: "#103CA4", fontWeight: 600 }}>{STRINGS.FOOTER_LINK}</Link>
               </div>
             </div>
           </form>

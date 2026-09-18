@@ -10,8 +10,10 @@ import {
 } from "@/Components";
 import authApi from "@/features/auth/api/authApi";
 import oauthApi from "@/features/auth/api/oauthApi";
+import { APP_STRINGS, FORM_ERRORS } from "@/constants/string";
 
 export default function ForgetPass() {
+  const STRINGS = APP_STRINGS.AUTH.FORGOT_PASSWORD;
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,7 +37,7 @@ export default function ForgetPass() {
       setIsSubmitted(true);
     } catch (err) {
       console.error("Forgot password error:", err);
-      setErrorMessage(err?.message || "Failed to send reset email. Please try again.");
+      setErrorMessage(err?.message || FORM_ERRORS.AUTH.FORGOT_FAILED);
     } finally {
       setLoading(false);
     }
@@ -59,11 +61,11 @@ export default function ForgetPass() {
             {!isSubmitted ? (
               <>
                 <h2 style={{ fontWeight: 700, fontSize: '18.5px', color: '#111827', margin: '22px 0 10px 0' }}>
-                  Forgot Password ?
+                  {STRINGS.TITLE}
                 </h2>
 
                 <p className="subtitle" style={{ color: '#6C757D', fontSize: '12.5px', margin: '0 0 22px 0', lineHeight: '1.45' }}>
-                  Enter your email address and we'll send you a link to reset your password.
+                  {STRINGS.SUBTITLE}
                 </p>
 
                 {errorMessage && (
@@ -83,7 +85,7 @@ export default function ForgetPass() {
 
                 <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
                   <label htmlFor="forget-email" style={{ fontWeight: 700, fontSize: '12.5px', color: '#111827', display: 'block', margin: '0 0 8px 0' }}>
-                    Email Address
+                    {STRINGS.EMAIL_LABEL}
                   </label>
 
                   <div className="input-group rounded-3 overflow-hidden bg-white" style={{ marginBottom: '24px', border: '1px solid #B3B3B3' }}>
@@ -94,7 +96,7 @@ export default function ForgetPass() {
                       id="forget-email"
                       type="email"
                       className="form-control border-0 shadow-none bg-white"
-                      placeholder="Enter your email"
+                      placeholder={STRINGS.EMAIL_PLACEHOLDER}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
@@ -107,12 +109,12 @@ export default function ForgetPass() {
                     disabled={loading}
                     className="btn auth-primary-btn"
                   >
-                    {loading ? "Sending link..." : "Send Reset Link"}
+                    {loading ? STRINGS.SUBMIT_BTN_LOADING : STRINGS.SUBMIT_BTN}
                   </button>
 
                   <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0 16px 0' }}>
                     <div style={{ flex: 1, height: '1px', backgroundColor: '#B3B3B3' }}></div>
-                    <span style={{ padding: '0 12px', fontSize: '11px', fontWeight: 600, color: '#4B5563', letterSpacing: '0.05em' }}>OR</span>
+                    <span style={{ padding: '0 12px', fontSize: '11px', fontWeight: 600, color: '#4B5563', letterSpacing: '0.05em' }}>{STRINGS.DIVIDER_OR}</span>
                     <div style={{ flex: 1, height: '1px', backgroundColor: '#B3B3B3' }}></div>
                   </div>
 
@@ -123,7 +125,7 @@ export default function ForgetPass() {
                     style={{ fontSize: '13px', padding: '8px 0', marginBottom: '10px' }}
                   >
                     <Google width={18} height={18} />
-                    <span>Continue with Google</span>
+                    <span>{STRINGS.GOOGLE_BTN}</span>
                   </button>
                   <button
                     type="button"
@@ -132,13 +134,13 @@ export default function ForgetPass() {
                     style={{ fontSize: '13px', padding: '8px 0', marginBottom: '0px' }}
                   >
                     <GitHub width={18} height={18} />
-                    <span>Continue with GitHub</span>
+                    <span>{STRINGS.GITHUB_BTN}</span>
                   </button>
 
                   <div style={{ marginTop: 'auto', paddingTop: '20px', textAlign: 'center' }}>
                     <p style={{ fontSize: '13px', color: '#000000', margin: 0, fontWeight: 500 }}>
-                      Remember your password ?{" "}
-                      <Link to="/login" style={{ color: '#103CA4', textDecoration: 'none', fontWeight: 600 }}>Log In</Link>
+                      {STRINGS.FOOTER_PROMPT}{" "}
+                      <Link to="/login" style={{ color: '#103CA4', textDecoration: 'none', fontWeight: 600 }}>{STRINGS.FOOTER_LINK}</Link>
                     </p>
                   </div>
                 </form>
@@ -149,10 +151,10 @@ export default function ForgetPass() {
                   <img src={mailImage} alt="Mail Sent Icon" className="forgetpass-mail-img" />
                 </div>
 
-                <h2 className="forgetpass-success-title">Check your email</h2>
+                <h2 className="forgetpass-success-title">{STRINGS.SUCCESS.TITLE}</h2>
 
                 <p className="forgetpass-success-desc">
-                  We sent a password reset link to
+                  {STRINGS.SUCCESS.DESC_PREFIX}
                   <br />
                   <span className="forgetpass-email-highlight">{email}</span>
                 </p>
@@ -162,23 +164,23 @@ export default function ForgetPass() {
                   onClick={handleOpenGmail}
                   className="btn auth-primary-btn forgetpass-open-email-btn"
                 >
-                  Open Email
+                  {STRINGS.SUCCESS.OPEN_EMAIL_BTN}
                 </button>
 
                 <div className="forgetpass-resend-wrapper">
-                  <span className="forgetpass-resend-text">Didn't receive the email ? </span>
+                  <span className="forgetpass-resend-text">{STRINGS.SUCCESS.RESEND_PROMPT} </span>
                   <button
                     type="button"
                     onClick={handleSubmit}
                     className="btn btn-link p-0 forgetpass-resend-link"
                   >
-                    Click to resend
+                    {STRINGS.SUCCESS.RESEND_LINK}
                   </button>
                 </div>
 
                 <div className="forgetpass-back-login-wrapper">
                   <Link to="/login" className="forgetpass-back-login-link">
-                    Back to log in
+                    {STRINGS.SUCCESS.BACK_TO_LOGIN}
                   </Link>
                 </div>
               </div>

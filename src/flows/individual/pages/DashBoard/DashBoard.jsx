@@ -1,34 +1,37 @@
 import React from "react";
 import { DashboardLayout, Cards, WelcomeBanner } from "@/Components";
+import { APP_STRINGS } from "@/constants/string";
 import "./dashboard.css";
+
+const DASHBOARD_STRINGS = APP_STRINGS.DASHBOARD.INDIVIDUAL;
 
 const metricsData = [
   {
-    title: "Active Quests",
+    title: DASHBOARD_STRINGS.METRICS.ACTIVE_QUESTS_TITLE,
     icon: "Files",
     value: "0",
-    description: "You don't have any active projects yet",
+    description: DASHBOARD_STRINGS.METRICS.ACTIVE_QUESTS_DESC,
     delay: "0.12s",
   },
   {
-    title: "Application Sent",
+    title: DASHBOARD_STRINGS.METRICS.APPLICATION_SENT_TITLE,
     icon: "FileText",
     value: "0",
-    description: "You haven't sent any proposals yet",
+    description: DASHBOARD_STRINGS.METRICS.APPLICATION_SENT_DESC,
     delay: "0.16s",
   },
   {
-    title: "Total Earnings",
+    title: DASHBOARD_STRINGS.METRICS.TOTAL_EARNINGS_TITLE,
     icon: "IndianRupee",
-    value: "₹0",
-    description: "Your earnings will appear here once you start working",
+    value: DASHBOARD_STRINGS.METRICS.TOTAL_EARNINGS_DEFAULT,
+    description: DASHBOARD_STRINGS.METRICS.TOTAL_EARNINGS_DESC,
     delay: "0.2s",
   },
   {
-    title: "Total Reviews",
+    title: DASHBOARD_STRINGS.METRICS.TOTAL_REVIEWS_TITLE,
     icon: "Star",
     value: "0",
-    description: "Reviews from clients will appear here",
+    description: DASHBOARD_STRINGS.METRICS.TOTAL_REVIEWS_DESC,
     delay: "0.24s",
   },
 ];
@@ -42,14 +45,6 @@ export default function DashBoard() {
           <WelcomeBanner />
           <Cards
             variant="trust"
-            title="Trust Points"
-            points={10}
-            unit="TP"
-            rank="Rank F"
-            badgeText="Email Verified"
-            description="Trust Points increase as you complete your profile, finish projects, and receive client reviews."
-            linkText="View Trust History"
-            linkHref="#trust-history"
             delay="0.08s"
           />
         </div>
@@ -73,19 +68,19 @@ export default function DashBoard() {
         <div className="db-row-activity">
           <Cards
             variant="empty-state"
-            headerTitle="Recent Activity"
+            headerTitle={DASHBOARD_STRINGS.ACTIVITY.RECENT_ACTIVITY_HEADER}
             icon="Clock9"
-            title="No recent activity"
-            description="Your activity will appear here."
+            title={DASHBOARD_STRINGS.ACTIVITY.NO_RECENT_ACTIVITY_TITLE}
+            description={DASHBOARD_STRINGS.ACTIVITY.NO_RECENT_ACTIVITY_DESC}
             delay="0.28s"
           />
 
           <Cards
             variant="empty-state"
             icon="Files"
-            title="No Quests yet"
-            description="Browse projects that match your skills and send your first proposal."
-            buttonText="Browse Quests"
+            title={DASHBOARD_STRINGS.ACTIVITY.NO_QUESTS_TITLE}
+            description={DASHBOARD_STRINGS.ACTIVITY.NO_QUESTS_DESC}
+            buttonText={DASHBOARD_STRINGS.ACTIVITY.BROWSE_QUESTS_BUTTON}
             delay="0.32s"
           />
         </div>
@@ -94,8 +89,8 @@ export default function DashBoard() {
         <div className="db-row-tip">
           <Cards
             variant="tip"
-            message="Tip: Freelancers who complete their profiles and get verified are 5x more likely to get hired."
-            actionText="Complete Your Profile >"
+            message={DASHBOARD_STRINGS.TIP_BANNER.MESSAGE}
+            actionText={DASHBOARD_STRINGS.TIP_BANNER.ACTION_TEXT}
             actionHref="/profile"
             delay="0.36s"
           />
@@ -104,4 +99,3 @@ export default function DashBoard() {
     </DashboardLayout>
   );
 }
-

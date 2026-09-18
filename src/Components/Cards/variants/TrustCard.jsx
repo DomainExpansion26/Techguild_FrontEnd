@@ -1,8 +1,10 @@
 import React from 'react';
 import BaseCard from './BaseCard';
 import Icon from '@/Components/icons/Icon';
+import { APP_STRINGS } from '@/constants/string';
+import { ICON_SIZES } from '@/constants/sizes';
 
-function renderBadgeIcon(icon, defaultSize = 14) {
+function renderBadgeIcon(icon, defaultSize = ICON_SIZES.XS) {
   if (!icon) return null;
   if (React.isValidElement(icon)) {
     return icon;
@@ -14,15 +16,15 @@ function renderBadgeIcon(icon, defaultSize = 14) {
 }
 
 export default function TrustCard({
-  title = 'Trust Points',
+  title = APP_STRINGS.CARDS.TRUST.DEFAULT_TITLE,
   points = 10,
   value,
-  unit = 'TP',
-  rank = 'Rank F',
-  badgeText = 'Email Verified',
+  unit = APP_STRINGS.CARDS.TRUST.DEFAULT_UNIT,
+  rank = APP_STRINGS.CARDS.TRUST.DEFAULT_RANK,
+  badgeText = APP_STRINGS.CARDS.TRUST.DEFAULT_BADGE,
   badgeIcon = 'Verified',
-  description = 'Trust Points increase as you complete your profile, finish projects, and receive client reviews.',
-  linkText = 'View Trust History',
+  description = APP_STRINGS.CARDS.TRUST.DEFAULT_DESC,
+  linkText = APP_STRINGS.CARDS.TRUST.DEFAULT_LINK_TEXT,
   linkHref = '#trust-history',
   onLinkClick,
   delay = '0.08s',
