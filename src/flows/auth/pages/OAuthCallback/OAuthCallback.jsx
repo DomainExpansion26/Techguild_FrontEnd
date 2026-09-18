@@ -3,8 +3,10 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import oauthApi from "@/features/auth/api/oauthApi";
 import { LoadingSpinner } from "@/Components/feedback";
+import { APP_STRINGS } from "@/constants/string";
 
 export default function OAuthCallback() {
+  const STRINGS = APP_STRINGS.AUTH.OAUTH;
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -36,7 +38,7 @@ export default function OAuthCallback() {
         }
       } catch (err) {
         console.error("OAuth callback error:", err);
-        setError(err.message || "Failed to authenticate with OAuth provider");
+        setError(err.message || STRINGS.DEFAULT_ERROR);
       }
     }
 
@@ -52,23 +54,23 @@ export default function OAuthCallback() {
         navigate("/login");
       }
     }
-  }, [searchParams, login, navigate]);
+  }, [searchParams, login, navigate, STRINGS.DEFAULT_ERROR]);
 
   if (error) {
     return (
       <div style={{ padding: "40px", textAlign: "center" }}>
-        <h3 style={{ color: "#dc2626" }}>Authentication Error</h3>
+        <h3 style={{ color: "#dc2626" }}>{STRINGS.ERROR_TITLE}</h3>
         <p style={{ color: "#4b5563" }}>{error}</p>
         <button
           onClick={() => navigate("/login")}
           className="btn btn-primary"
           style={{ marginTop: "16px" }}
         >
-          Return to Login
+          {STRINGS.RETURN_TO_LOGIN}
         </button>
       </div>
     );
   }
 
-  return <LoadingSpinner fullScreen text="Authenticating with provider..." />;
+  return <LoadingSpinner fullScreen text={STRINGS.LOADING_TEXT} />;
 }

@@ -1,4 +1,6 @@
 import Icon from '@/Components/icons/Icon';
+import { APP_STRINGS } from '@/constants/string';
+import { CARD_SIZES, ICON_SIZES } from '@/constants/sizes';
 
 export default function GuildCard({
   guildCard,
@@ -7,7 +9,7 @@ export default function GuildCard({
   category,
   logoInitials,
   starRating,
-  verifiedText = 'VERIFIED CLIENT',
+  verifiedText = APP_STRINGS.CARDS.GUILD.VERIFIED_CLIENT,
   location,
   website,
   rank,
@@ -16,30 +18,32 @@ export default function GuildCard({
   className = '',
   style = {},
   delay,
-  width = '530px',
-  height = '275.6px',
+  width = CARD_SIZES.GUILD_CARD.DEFAULT_WIDTH,
+  height = CARD_SIZES.GUILD_CARD.DEFAULT_HEIGHT,
   ...props
 }) {
+  const STRINGS = APP_STRINGS.CARDS.GUILD;
+  const SIZES_CFG = CARD_SIZES.GUILD_CARD;
   const g = guildCard || {};
-  const displayName = name || companyName || g.name || g.companyName || 'Nexora Solutions';
-  const displayCategory = category || g.category || 'HEALTHCARE COMPANY';
+  const displayName = name || companyName || g.name || g.companyName || STRINGS.DEFAULT_NAME;
+  const displayCategory = category || g.category || STRINGS.DEFAULT_CATEGORY;
   const displayInitials =
     logoInitials ||
     g.logoInitials ||
     (displayName
       ? (displayName.trim().includes(' ')
-          ? displayName.trim().split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase()
-          : (displayName.toUpperCase().startsWith('NEX') ? 'NS' : displayName.slice(0, 2).toUpperCase()))
-      : 'NS');
+        ? displayName.trim().split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase()
+        : (displayName.toUpperCase().startsWith('NEX') ? STRINGS.DEFAULT_INITIALS : displayName.slice(0, 2).toUpperCase()))
+      : STRINGS.DEFAULT_INITIALS);
   const displayStars = starRating !== undefined ? starRating : (g.starRating !== undefined ? g.starRating : 4);
-  const displayLocation = location || g.location || 'Pune, Maharashtra, India';
-  const rawWebsite = website || g.website || 'nexorspvtlmt.com';
-  const displayWebsite = rawWebsite.startsWith('Website:')
+  const displayLocation = location || g.location || STRINGS.DEFAULT_LOCATION;
+  const rawWebsite = website || g.website || STRINGS.DEFAULT_WEBSITE;
+  const displayWebsite = rawWebsite.startsWith(STRINGS.PREFIX_WEBSITE)
     ? rawWebsite
-    : (rawWebsite ? `Website: ${rawWebsite.replace(/^https?:\/\//, '').replace(/\/$/, '')}` : 'Website: nexorspvtlmt.com');
-  const displayRank = rank || g.rank || 'F';
-  const displayGuildId = guildId || g.guildId || 'IND-MH-01-072026';
-  const displayMemberSince = memberSince || g.memberSince || 'July 2026';
+    : (rawWebsite ? `${STRINGS.PREFIX_WEBSITE} ${rawWebsite.replace(/^https?:\/\//, '').replace(/\/$/, '')}` : `${STRINGS.PREFIX_WEBSITE} ${STRINGS.DEFAULT_WEBSITE}`);
+  const displayRank = rank || g.rank || STRINGS.DEFAULT_RANK;
+  const displayGuildId = guildId || g.guildId || STRINGS.DEFAULT_GUILD_ID;
+  const displayMemberSince = memberSince || g.memberSince || STRINGS.DEFAULT_MEMBER_SINCE;
 
   const combinedStyle = {
     ...(width ? { width, maxWidth: '100%' } : {}),
@@ -53,13 +57,13 @@ export default function GuildCard({
       className={`guild-card-variant-root ${className}`}
       style={{
         position: 'relative',
-        width: width || '530px',
-        height: height || '275.6px',
-        minHeight: height || '275.6px',
+        width: width || SIZES_CFG.DEFAULT_WIDTH,
+        height: height || SIZES_CFG.DEFAULT_HEIGHT,
+        minHeight: height || SIZES_CFG.DEFAULT_HEIGHT,
         maxWidth: '100%',
-        aspectRatio: '530 / 275.6',
+        aspectRatio: SIZES_CFG.ASPECT_RATIO,
         overflow: 'hidden',
-        borderRadius: '16px',
+        borderRadius: SIZES_CFG.BORDER_RADIUS,
         color: '#ffffff',
         background: 'linear-gradient(132deg, #092055 0%, #0d2c6e 35%, #0f3984 70%, #124095 100%)',
         boxShadow: '0 10px 24px rgba(7, 25, 66, 0.35)',
@@ -97,8 +101,8 @@ export default function GuildCard({
         }}
       >
         <div style={{ fontSize: 'clamp(12px, 1.15vw, 15px)', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1 }}>
-          <span style={{ color: '#ffffff' }}>Tech</span>
-          <span style={{ color: '#3b82f6' }}>Guild</span>
+          <span style={{ color: '#ffffff' }}>{STRINGS.BRAND_FIRST}</span>
+          <span style={{ color: '#3b82f6' }}>{STRINGS.BRAND_SECOND}</span>
         </div>
         <span
           style={{
@@ -109,7 +113,7 @@ export default function GuildCard({
             textTransform: 'uppercase',
           }}
         >
-          GUILD CARD
+          {STRINGS.BADGE_LABEL}
         </span>
       </div>
 
@@ -437,7 +441,7 @@ export default function GuildCard({
               textTransform: 'uppercase',
             }}
           >
-            GUILD ID
+            {STRINGS.LABEL_GUILD_ID}
           </span>
           <span
             style={{
@@ -466,7 +470,7 @@ export default function GuildCard({
               textTransform: 'uppercase',
             }}
           >
-            MEMBER SINCE
+            {STRINGS.LABEL_MEMBER_SINCE}
           </span>
           <span
             style={{

@@ -8,8 +8,12 @@ import userIcon from "@/assets/icons/user.svg";
 import mailCommentIcon from "@/assets/mail-comment.png";
 import "./Verifyemail.css";
 import authApi from "@/features/auth/api/authApi";
+import { APP_STRINGS, FORM_ERRORS, TOAST_MESSAGES } from "@/constants/string";
 
 export default function VerifyEmail() {
+  const STRINGS = APP_STRINGS.AUTH.VERIFY_EMAIL;
+  const BRAND = APP_STRINGS.AUTH.HOME_SCREEN;
+
   const location = useLocation();
   const navigate = useNavigate();
   const pendingUser = JSON.parse(localStorage.getItem("techguild_pending_user") || "{}");
@@ -23,10 +27,10 @@ export default function VerifyEmail() {
     setResendStatus("");
     try {
       await authApi.resendVerification({ email });
-      setResendStatus("Verification email resent successfully!");
+      setResendStatus(TOAST_MESSAGES.AUTH.RESEND_SUCCESS || STRINGS.RESEND_SUCCESS);
     } catch (err) {
       console.error("Resend error:", err);
-      setResendStatus(err?.message || "Failed to resend verification email.");
+      setResendStatus(err?.message || FORM_ERRORS.AUTH.RESEND_FAILED || STRINGS.RESEND_FAILED);
     } finally {
       setResending(false);
     }
@@ -43,8 +47,8 @@ export default function VerifyEmail() {
     >
       <header className="auth-header">
         <div className="auth-header-logo" onClick={() => navigate("/")}>
-          <span className="logo-tech">Tech</span>
-          <span className="logo-guild">Guild</span>
+          <span className="logo-tech">{BRAND.BRAND_TECH}</span>
+          <span className="logo-guild">{BRAND.BRAND_GUILD}</span>
         </div>
         <div className="auth-header-profile">
           <img src={userIcon} alt="Profile Icon" className="header-profile-icon" />
@@ -59,7 +63,7 @@ export default function VerifyEmail() {
             <img src={mailCommentIcon} alt="Mail" style={{ width: '130px', height: 'auto' }} />
           </div>
 
-          <h2>Verify Your Email To Continue.</h2>
+          <h2>{STRINGS.TITLE}</h2>
 
           {resendStatus && (
             <div
@@ -77,22 +81,22 @@ export default function VerifyEmail() {
           )}
 
           <p className="verify-text">
-            We just sent an email to the address :
+            {STRINGS.INFO_SENT}
           </p>
           <p className="email">{email}</p>
           <p className="verify-text">
-            Please check your email and click the link provided to verify your email address.
+            {STRINGS.INFO_INSTRUCTIONS}
           </p>
 
           <div className="verify-buttons">
             <SecondaryButton
-              text={resending ? "Sending..." : "Send Again"}
+              text={resending ? STRINGS.SENDING_BTN : STRINGS.SEND_AGAIN_BTN}
               onClick={handleResend}
               className="send-again-btn"
               disabled={resending}
             />
             <PrimaryButton
-              text="Open Email"
+              text={STRINGS.OPEN_EMAIL_BTN}
               onClick={handleOpenGmail}
               className="open-email-btn"
             />
@@ -105,7 +109,7 @@ export default function VerifyEmail() {
               className="btn btn-link text-decoration-none"
               style={{ fontSize: "13px", color: "#103ca4", fontWeight: 600 }}
             >
-              I've verified my email → Choose Account Type
+              {STRINGS.ACCOUNT_TYPE_LINK}
             </button>
           </div>
         </div>
