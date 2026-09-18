@@ -350,7 +350,7 @@ export default function Profile() {
   };
 
   const renderActionButtons = (isComplete) => (
-    <div className="profile-form-actions d-flex justify-content-end flex-shrink-0 gap-3">
+    <div className="profile-form-actions d-flex justify-content-end shrink-0 gap-3">
       {isEditingFromReview ? (
         <>
           <div className="profile-btn-wrapper">
@@ -383,8 +383,8 @@ export default function Profile() {
   );
 
   const renderStep1 = () => (
-    <form className="profile-step-form flex-grow-1 d-flex flex-column min-vh-0 h-100" onSubmit={handleStep1Continue}>
-      <div className="profile-section-heading flex-shrink-0">
+    <form className="profile-step-form grow d-flex flex-column min-vh-0 h-100" onSubmit={handleStep1Continue}>
+      <div className="profile-section-heading shrink-0">
         <h2 className="section-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_1_TITLE}</h2>
         <p className="section-subtitle text-secondary">{WIZARD_STRINGS.STEPS.STEP_1_SUBTITLE}</p>
       </div>
@@ -472,8 +472,8 @@ export default function Profile() {
   );
 
   const renderStep2 = () => (
-    <form className="profile-step-form flex-grow-1 d-flex flex-column min-vh-0 h-100" onSubmit={handleStep2Continue}>
-      <div className="profile-section-heading flex-shrink-0">
+    <form className="profile-step-form grow d-flex flex-column min-vh-0 h-100" onSubmit={handleStep2Continue}>
+      <div className="profile-section-heading shrink-0">
         <h2 className="section-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_2_TITLE}</h2>
         <p className="section-subtitle text-secondary">{WIZARD_STRINGS.STEPS.STEP_2_SUBTITLE}</p>
       </div>
@@ -546,8 +546,8 @@ export default function Profile() {
   );
 
   const renderStep3 = () => (
-    <form className="profile-step-form flex-grow-1 d-flex flex-column min-vh-0 h-100" onSubmit={handleStep3Continue}>
-      <div className="profile-section-heading flex-shrink-0">
+    <form className="profile-step-form grow d-flex flex-column min-vh-0 h-100" onSubmit={handleStep3Continue}>
+      <div className="profile-section-heading shrink-0">
         <h2 className="section-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_3_TITLE}</h2>
         <p className="section-subtitle text-secondary">{WIZARD_STRINGS.STEPS.STEP_3_SUBTITLE}</p>
       </div>
@@ -581,8 +581,8 @@ export default function Profile() {
   );
 
   const renderStep4 = () => (
-    <form className="profile-step-form flex-grow-1 d-flex flex-column min-vh-0 h-100" onSubmit={handleStep4Continue}>
-      <div className="profile-section-heading flex-shrink-0">
+    <form className="profile-step-form grow d-flex flex-column min-vh-0 h-100" onSubmit={handleStep4Continue}>
+      <div className="profile-section-heading shrink-0">
         <h2 className="section-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_4_TITLE}</h2>
         <p className="section-subtitle text-secondary">{WIZARD_STRINGS.STEPS.STEP_4_SUBTITLE}</p>
       </div>
@@ -643,8 +643,8 @@ export default function Profile() {
   );
 
   const renderStep5 = () => (
-    <form className="profile-step-form flex-grow-1 d-flex flex-column min-vh-0" onSubmit={handleFinalSubmit}>
-      <div className="profile-section-heading flex-shrink-0 mb-4">
+    <form className="profile-step-form grow d-flex flex-column min-vh-0" onSubmit={handleFinalSubmit}>
+      <div className="profile-section-heading shrink-0 mb-4">
         <h2 className="section-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_5_TITLE}</h2>
         <p className="section-subtitle text-secondary">{WIZARD_STRINGS.STEPS.STEP_5_SUBTITLE}</p>
       </div>
@@ -677,7 +677,7 @@ export default function Profile() {
         </span>
       </div>
 
-      <div className="profile-form-actions d-flex justify-content-end flex-shrink-0">
+      <div className="profile-form-actions d-flex justify-content-end shrink-0">
         <div className="profile-btn-wrapper">
           <PrimaryButton
             type="submit"
@@ -694,7 +694,7 @@ export default function Profile() {
 
     return (
       <div className="completion-screen-wrapper d-flex flex-column align-items-center h-100 w-100 py-1">
-        <div className="w-100 d-flex justify-content-start flex-shrink-0 mb-1">
+        <div className="w-100 d-flex justify-content-start shrink-0 mb-1">
           <button
             type="button"
             className="completion-back-btn"
@@ -757,14 +757,14 @@ export default function Profile() {
 
   return (
     <DashboardLayout>
-      <div className="profile-page-wrapper flex-grow-1 min-vh-0 d-flex flex-column w-100">
-        <Cards className="profile-main-card flex-grow-1 h-100 d-flex flex-column overflow-hidden w-100" padding="0">
+      <div className="profile-page-wrapper grow min-vh-0 d-flex flex-column w-100">
+        <Cards className="profile-main-card grow h-100 d-flex flex-column overflow-hidden w-100" padding="0">
           <div ref={cardInnerRef} className="profile-card-inner d-flex flex-column h-100">
             {isSubmitted ? (
               renderCompletionScreen()
             ) : (
               <>
-                <div className="profile-top-back-wrapper flex-shrink-0 w-100 d-flex justify-content-start">
+                <div className="profile-top-back-wrapper shrink-0 w-100 d-flex justify-content-start">
                   <button
                     type="button"
                     className="profile-top-back-btn"
@@ -774,7 +774,7 @@ export default function Profile() {
                     <Icon name="ArrowLeft" size={ICON_SIZES['2XL']} color="#0b38a8" />
                   </button>
                 </div>
-                <div className="profile-header-section flex-shrink-0">
+                <div className="profile-header-section shrink-0">
                   <h1 className="profile-main-title fw-bold">{WIZARD_STRINGS.MAIN_TITLE}</h1>
                   <p className="profile-main-subtitle text-secondary">{WIZARD_STRINGS.MAIN_SUBTITLE}</p>
                 </div>
