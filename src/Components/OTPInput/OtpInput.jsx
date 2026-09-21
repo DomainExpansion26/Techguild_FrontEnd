@@ -10,6 +10,7 @@ const OtpInput = ({
   length = 6,
   separator = true,
   autoComplete = "one-time-code",
+  onEnter,
 }) => {
   const refs = useRef([]);
 
@@ -27,6 +28,9 @@ const OtpInput = ({
   };
 
   const handleKeyDown = (index, event) => {
+    if (event.key === "Enter") {
+      onEnter?.();
+    }
     if (event.key === "Backspace" && !values[index] && index > 0) {
       refs.current[index - 1]?.focus();
     }

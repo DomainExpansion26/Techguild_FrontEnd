@@ -149,28 +149,43 @@ function ScanQr({ setup, loading, error, expired, retry, disabled, remaining }) 
   );
 }
 
-function BackupCodes({ recoveryCodes }) {
+function BackupGrid({ recoveryCodes }) {
+  return (
+    <div className="as2fa-codes-box">
+      <ol className="as2fa-backup-list">
+        {recoveryCodes.map((code) => (
+          <li key={code} className="as2fa-backup-code">
+            {code}
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+function BackupCodes({ recoveryCodes, variant = "setup" }) {
+  if (variant === "manage") {
+    return (
+      <div className="as2fa-backup as2fa-backup--manage">
+        <BackupGrid recoveryCodes={recoveryCodes} />
+        <p className="as2fa-codes-warning">
+          <TriangleAlert width={10} height={10} aria-hidden="true" />
+          <span>
+            Save these codes securely. They won&rsquo;t be shown again.
+          </span>
+        </p>
+      </div>
+    );
+  }
   return (
     <div className="as2fa-backup">
-      <hr className="as2fa-success-divider" />
-      <div className="as2fa-success-tick" aria-hidden="true">
-        <Check width={48} height={48} />
-      </div>
       <div className="as2fa-codes-card">
         <p className="as2fa-codes-title">Save Your Backup Codes :</p>
         <p className="as2fa-codes-desc">
           Use these codes if you don&rsquo;t have access to your
           authenticator app. Each code can be used once.
         </p>
-        <div className="as2fa-codes-box">
-          <ol className="as2fa-backup-list">
-            {recoveryCodes.map((code) => (
-              <li key={code} className="as2fa-backup-code">
-                {code}
-              </li>
-            ))}
-          </ol>
-        </div>
+        <BackupGrid recoveryCodes={recoveryCodes} />
         <p className="as2fa-codes-warning">
           <TriangleAlert width={10} height={10} aria-hidden="true" />
           <span>
@@ -214,6 +229,12 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
   const qrExpiresAtRef = useRef(0);
   const qrRefreshingRef = useRef(false);
 
+  // Guards the setup "success" finalization (updateUser + toast) so it only
+  // runs once regardless of whether the popup is closed via Close, X,
+  // backdrop, or Esc. State (not a ref) keeps the guard compatible with the
+  // render-phase reset below.
+  const [finalized, setFinalized] = useState(false);
+
   // Reset internal state every time the popup is (re)opened.
   // Adjusting state during render (instead of in an effect) keeps the
   // popup fully clicking/re-fetching fresh on every open.
@@ -228,6 +249,7 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
       setManageError("");
       setPassword("");
       setRecoveryCodes([]);
+      setFinalized(false);
       if (enabled) {
         setView("overview");
         setManageChoice("disable");
@@ -284,7 +306,25 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
     return () => clearInterval(id);
   }, [open, enabled, setup]);
 
+  const finalizeEnable = () => {
+    setFinalized(true);
+    updateUser({ two_factor_enabled: true });
+    dispatch(
+      showSnackbar({
+        message: "Two-factor authentication enabled.",
+        type: "success",
+      })
+    );
+  };
+
   const close = () => {
+    // 2FA was already activated on the backend once verifySetup succeeds.
+    // Finalize the local state + toast on ANY exit from the success step
+    // (Close button, X, backdrop, Esc) so the account never appears
+    // un-enabled if the user skips the Close button.
+    if (!enabled && step === 4 && !finalized) {
+      finalizeEnable();
+    }
     onClose();
   };
 
@@ -305,20 +345,16 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
       setStep(4);
     } catch (err) {
       setError(true);
-      setErrorMessage(err?.message || "The code you entered is incorrect. Please try again");
+      setErrorMessage(
+        err?.message || "The code you entered is incorrect. Please try again"
+      );
+      setOtp(Array(OTP_LENGTH).fill(""));
     } finally {
       setVerifying(false);
     }
   };
 
   const handleSetupDone = () => {
-    updateUser({ two_factor_enabled: true });
-    dispatch(
-      showSnackbar({
-        message: "Two-factor authentication enabled.",
-        type: "success",
-      })
-    );
     close();
   };
 
@@ -420,7 +456,17 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
           ? "Disable 2FA"
           : view === "regenerate"
             ? "Regenerate recovery codes"
-            : "New backup codes";
+            : "Backup Codes";
+    }
+    if (step === 4) {
+      return (
+        <span className="as2fa-success-title">
+          <span className="as2fa-success-title-tick" aria-hidden="true">
+            <Check width={16} height={16} />
+          </span>
+          Authenticator App linked successfully!
+        </span>
+      );
     }
     return step === 1
       ? "Choose & Download "
@@ -439,7 +485,7 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
           ? "Enter your password and the current code from your authenticator app to disable two-factor authentication."
           : view === "regenerate"
             ? "Enter your password to generate a fresh set of recovery codes. Your old codes will stop working."
-            : "Store these new codes somewhere safe. They replace your previous recovery codes.";
+            : "";
     }
     return step === 1
       ? "Select one of the authenticator apps below and download it on your mobile device."
@@ -520,7 +566,7 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
       }
       if (view === "regenerate" || view === "backup") {
         return view === "backup" ? (
-          <BackupCodes recoveryCodes={recoveryCodes} />
+          <BackupCodes recoveryCodes={recoveryCodes} variant="manage" />
         ) : (
           <div className="as2fa-manage-form">
             <PasswordInput
@@ -595,6 +641,7 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
               if (error) setError(false);
             }}
             error={error}
+            onEnter={handleVerify}
           />
           {error && (
             <p className="as2fa-error">
@@ -604,7 +651,7 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
         </div>
       );
     }
-    return <BackupCodes recoveryCodes={recoveryCodes} />;
+    return <BackupCodes recoveryCodes={recoveryCodes} variant="setup" />;
   };
 
   const handleManageContinue = () => {
@@ -769,7 +816,7 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
       footerClassName="as2fa-footer"
       style={
         isWide
-          ? { "--popup-width": "833px", padding: "10px" }
+          ? { "--popup-width": "700px", padding: "10px" }
           : { "--popup-width": "596px", padding: "30px 38px" }
       }
     >

@@ -1,8 +1,8 @@
 /* src/Modules/Individual/Screen/Pages/Settings/AccountSecurity/AccountSecurity2FA.css
    Multi-step 2FA management popup (Figma "popups" flow) */
 
-/* Popup supplies the card padding (30px 38px); step 1 overrides it to 10px
-   via the `style` prop so the card matches the 833px Figma frame. */
+/* Popup supplies the card padding (30px 38px); wide steps override it to 10px
+   via the `style` prop so the card matches the 700px wide frame. */
 .as2fa-card {
   padding: 0;
 }
@@ -22,7 +22,7 @@
   align-items: flex-start;
   justify-content: center;
   gap: 5px;
-  width: 231px;
+  width: 210px;
   min-height: 73px;
   padding: 0 11px;
   text-align: left;
@@ -205,38 +205,54 @@
 }
 
 /* ---------- Step 4: Save backup codes (Figma "success message") ---------- */
-.as2fa-backup {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-  width: 100%;
-}
-
-.as2fa-success-divider {
-  width: 100%;
-  margin: 0;
-  border: none;
-  border-top: 1px solid rgba(15, 23, 42, 0.15);
-}
-
-.as2fa-success-tick {
-  display: flex;
+/* Figma success header: small 32px tick-circle inline before the title. */
+.as2fa-success-title {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 96px;
-  height: 96px;
+  gap: 11px;
+}
+
+.as2fa-success-title-tick {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
   color: #ffffff;
   background: #12b76a;
   border-radius: 50%;
 }
 
+.as2fa-backup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+}
+
+/* Manage "Backup Codes" screen (Figma "Manage-2FA"): codes box + centered note. */
+.as2fa-backup--manage {
+  gap: 16px;
+}
+
+.as2fa-backup--manage .as2fa-codes-box {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.as2fa-backup--manage .as2fa-codes-warning {
+  align-self: center;
+}
+
 .as2fa-codes-card {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
   width: 100%;
-  padding: 22px 32px;
+  padding: 18px 24px;
   background: #ffffff;
   border: 1px solid rgba(15, 23, 42, 0.1);
   border-radius: 20px;
@@ -263,7 +279,7 @@
 }
 
 .as2fa-codes-box {
-  padding: 26px;
+  padding: 20px;
   background: #ffffff;
   border: 1px solid rgba(15, 23, 42, 0.1);
   border-radius: 20px;
@@ -462,7 +478,7 @@
 /* ---------- Footer (Figma: 64px height, 8px radius) ---------- */
 .as2fa-footer {
   gap: 16px;
-  padding-top: 20px;
+  padding: 20px;
 }
 
 .as2fa-footer-row {
