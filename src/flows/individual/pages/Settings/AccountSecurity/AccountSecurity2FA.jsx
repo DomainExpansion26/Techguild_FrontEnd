@@ -6,7 +6,15 @@ import {
   PrimaryButton,
   SecondaryButton,
 } from "@/Components";
-import { CircleCheck, Google, QrCode } from "@/Components/icons";
+import {
+  Check,
+  Download,
+  Files,
+  Google,
+  QrCode,
+  Shield,
+  TriangleAlert,
+} from "@/Components/icons";
 import { useAuth } from "@/context/AuthContext";
 import { useDispatch } from "react-redux";
 import { showSnackbar } from "@/store";
@@ -15,9 +23,10 @@ import "./AccountSecurity2FA.css";
 
 const OTP_LENGTH = 6;
 
-// A fresh QR code is provisioned every minute. The backend's expires_at is
-// provisioned longer (10 min), so the countdown/auto-refresh uses this TTL.
-const QR_TTL_MS = 60 * 1000;
+// A fresh QR code is provisioned for the 10-minute window below. The
+// backend's expires_at is provisioned to match, so the countdown uses
+// this TTL before auto-refreshing the QR.
+const QR_TTL_MS = 10 * 60 * 1000;
 
 const APPS = [
   {
@@ -37,6 +46,21 @@ const APPS = [
   },
 ];
 
+const MANAGE_CHOICES = [
+  {
+    id: "disable",
+    title: "Disable 2FA",
+    desc: "Turn off Two-Factor Authentication. Your account will only require a password to log in",
+    Icon: Shield,
+  },
+  {
+    id: "regenerate",
+    title: "Regenerate Backup Codes",
+    desc: "Generate a new set of 10 one-time 8-digit backup codes. Old codes will no longer work",
+    Icon: Files,
+  },
+];
+
 function AppIcon({ id }) {
   if (id === "google") return <Google width={16} height={16} />;
   return (
@@ -51,6 +75,27 @@ const formatRemaining = (ms) => {
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+};
+
+const copyText = async (text) => {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    try {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+      return true;
+    } catch {
+      return false;
+    }
+  }
 };
 
 function ScanQr({ setup, loading, error, expired, retry, disabled, remaining }) {
@@ -83,7 +128,7 @@ function ScanQr({ setup, loading, error, expired, retry, disabled, remaining }) 
         </div>
       </div>
       <p className="as2fa-qr-note">
-        &bull; Please scan this QR code within 1 minute. If not scanned, a new
+        &bull; Please scan this QR code within 10 minutes. If not scanned, a new
         QR will be generated.
         {!loading && !error && !expired && remaining > 0 && (
           <span className="as2fa-qr-expiry">
@@ -104,6 +149,40 @@ function ScanQr({ setup, loading, error, expired, retry, disabled, remaining }) 
   );
 }
 
+function BackupCodes({ recoveryCodes }) {
+  return (
+    <div className="as2fa-backup">
+      <hr className="as2fa-success-divider" />
+      <div className="as2fa-success-tick" aria-hidden="true">
+        <Check width={48} height={48} />
+      </div>
+      <div className="as2fa-codes-card">
+        <p className="as2fa-codes-title">Save Your Backup Codes :</p>
+        <p className="as2fa-codes-desc">
+          Use these codes if you don&rsquo;t have access to your
+          authenticator app. Each code can be used once.
+        </p>
+        <div className="as2fa-codes-box">
+          <ol className="as2fa-backup-list">
+            {recoveryCodes.map((code) => (
+              <li key={code} className="as2fa-backup-code">
+                {code}
+              </li>
+            ))}
+          </ol>
+        </div>
+        <p className="as2fa-codes-warning">
+          <TriangleAlert width={10} height={10} aria-hidden="true" />
+          <span>
+            If you lose these codes, you may need to contact support to
+            regain access.
+          </span>
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function AccountSecurity2FA({ open, onClose = () => {}, enabled = false }) {
   const dispatch = useDispatch();
   const { updateUser } = useAuth();
@@ -120,9 +199,11 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
   const [isExpired, setIsExpired] = useState(false);
   const [remainingMs, setRemainingMs] = useState(0);
   const [verifying, setVerifying] = useState(false);
+  const [recoveryCodes, setRecoveryCodes] = useState([]);
 
   // Manage mode (2FA enabled)
   const [view, setView] = useState("overview");
+  const [manageChoice, setManageChoice] = useState("disable");
   const [password, setPassword] = useState("");
   const [manageOtp, setManageOtp] = useState(Array(OTP_LENGTH).fill(""));
   const [manageError, setManageError] = useState("");
@@ -146,8 +227,10 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
       setBusy(false);
       setManageError("");
       setPassword("");
+      setRecoveryCodes([]);
       if (enabled) {
         setView("overview");
+        setManageChoice("disable");
       } else {
         setStep(1);
         setSelectedApp(null);
@@ -185,7 +268,7 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
     return () => clearTimeout(id);
   }, [open, enabled, step, setup, setupLoading]);
 
-  // Count down over the fixed 1-minute window and auto-generate a new QR
+  // Count down over the fixed 10-minute window and auto-generate a new QR
   // when it expires.
   useEffect(() => {
     if (!open || enabled || !setup) return;
@@ -217,21 +300,65 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
     setError(false);
     setErrorMessage("");
     try {
-      await twoFaApi.verifySetup({ code });
-      updateUser({ two_factor_enabled: true });
-      dispatch(
-        showSnackbar({
-          message: "Two-factor authentication enabled.",
-          type: "success",
-        })
-      );
-      close();
+      const res = await twoFaApi.verifySetup({ code });
+      setRecoveryCodes(res?.recovery_codes || []);
+      setStep(4);
     } catch (err) {
       setError(true);
       setErrorMessage(err?.message || "The code you entered is incorrect. Please try again");
     } finally {
       setVerifying(false);
     }
+  };
+
+  const handleSetupDone = () => {
+    updateUser({ two_factor_enabled: true });
+    dispatch(
+      showSnackbar({
+        message: "Two-factor authentication enabled.",
+        type: "success",
+      })
+    );
+    close();
+  };
+
+  const handleCopyCodes = async () => {
+    const copied = await copyText(recoveryCodes.join("\n"));
+    dispatch(
+      showSnackbar({
+        message: copied
+          ? "Recovery codes copied to clipboard."
+          : "Could not copy recovery codes. Save them manually.",
+        type: copied ? "success" : "error",
+      })
+    );
+  };
+
+  const handleDownloadCodes = () => {
+    if (recoveryCodes.length === 0) return;
+    const blob = new Blob(
+      [
+        "TechGuild backup codes\n",
+        "Keep these codes somewhere safe. Each code can be used once.\n\n",
+        recoveryCodes.join("\n"),
+        "\n",
+      ],
+      { type: "text/plain" }
+    );
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "techguild-backup-codes.txt";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    dispatch(
+      showSnackbar({
+        message: "Backup codes downloaded.",
+        type: "success",
+      })
+    );
   };
 
   const handleDisable = async () => {
@@ -255,32 +382,72 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
     }
   };
 
-  const isWide = !enabled && step === 1;
+  const handleRegenerate = async () => {
+    if (!password) return;
+    setBusy(true);
+    setManageError("");
+    try {
+      const res = await twoFaApi.regenerateRecoveryCodes({ password });
+      setRecoveryCodes(res?.recovery_codes || []);
+      setPassword("");
+      setView("backup");
+    } catch (err) {
+      setManageError(err?.message || "Failed to regenerate recovery codes.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleRegenerateDone = () => {
+    dispatch(
+      showSnackbar({
+        message: "Recovery codes regenerated.",
+        type: "success",
+      })
+    );
+    close();
+  };
+
+  const isWide =
+    (!enabled && (step === 1 || step === 4)) ||
+    (enabled && (view === "overview" || view === "backup"));
 
   const getTitle = () => {
     if (enabled) {
       return view === "overview"
-        ? "Two-Factor Authentication"
-        : "Disable 2FA";
+        ? "Manage Two-Factor Authentication"
+        : view === "disable"
+          ? "Disable 2FA"
+          : view === "regenerate"
+            ? "Regenerate recovery codes"
+            : "New backup codes";
     }
     return step === 1
       ? "Choose & Download "
       : step === 2
         ? "Scan this barcode/QR code"
-        : "Verify your code";
+        : step === 3
+          ? "Verify your code"
+          : "Authenticator App linked successfully!";
   };
 
   const getSubtitle = () => {
     if (enabled) {
       return view === "overview"
-        ? "2FA is enabled. Manage your security settings below."
-        : "Enter your password and the current code from your authenticator app to disable two-factor authentication.";
+        ? "Your account is protected with Two-Factor Authentication. You can disable it or regenerate your backup codes if needed."
+        : view === "disable"
+          ? "Enter your password and the current code from your authenticator app to disable two-factor authentication."
+          : view === "regenerate"
+            ? "Enter your password to generate a fresh set of recovery codes. Your old codes will stop working."
+            : "Store these new codes somewhere safe. They replace your previous recovery codes.";
     }
     return step === 1
       ? "Select one of the authenticator apps below and download it on your mobile device."
       : step === 2
         ? "Scan this barcode/QR code in the authentication app"
-        : "Enter 6 Digit code from your app";
+        : step === 3
+          ? "Enter 6 Digit code from your app"
+          : "";
   };
 
   const renderStep = () => {
@@ -288,13 +455,37 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
     if (enabled) {
       if (view === "overview") {
         return (
-          <div className="as2fa-manage-overview">
-            <div className="as2fa-manage-status">
-              <CircleCheck width={16} height={16} />
-              <span>
-                2FA is enabled — you use an authenticator app for sign-in.
-              </span>
-            </div>
+          <div
+            className="as2fa-manage-overview"
+            role="radiogroup"
+            aria-label="Manage two-factor authentication"
+          >
+            {MANAGE_CHOICES.map(({ id, title, desc, Icon }) => {
+              const selected = manageChoice === id;
+              return (
+                <label
+                  key={id}
+                  className={`as2fa-choice${selected ? " as2fa-choice--selected" : ""}`}
+                >
+                  <input
+                    type="radio"
+                    name="as2fa-manage-choice"
+                    value={id}
+                    checked={selected}
+                    onChange={() => setManageChoice(id)}
+                    className="as2fa-choice-input"
+                  />
+                  <span className="as2fa-choice-radio" aria-hidden="true" />
+                  <span className="as2fa-choice-chip" aria-hidden="true">
+                    <Icon width={20} height={20} />
+                  </span>
+                  <span className="as2fa-choice-text">
+                    <span className="as2fa-choice-title">{title}</span>
+                    <span className="as2fa-choice-desc">{desc}</span>
+                  </span>
+                </label>
+              );
+            })}
           </div>
         );
       }
@@ -324,6 +515,27 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
               />
             </div>
             {manageError && <p className="as2fa-error">{manageError}</p>}
+          </div>
+        );
+      }
+      if (view === "regenerate" || view === "backup") {
+        return view === "backup" ? (
+          <BackupCodes recoveryCodes={recoveryCodes} />
+        ) : (
+          <div className="as2fa-manage-form">
+            <PasswordInput
+              label="Current Password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (manageError) setManageError("");
+              }}
+            />
+            {manageError && <p className="as2fa-error">{manageError}</p>}
+            <p className="as2fa-manage-warning">
+              Regenerating invalidates your existing recovery codes.
+            </p>
           </div>
         );
       }
@@ -392,8 +604,39 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
         </div>
       );
     }
-    return null;
+    return <BackupCodes recoveryCodes={recoveryCodes} />;
   };
+
+  const handleManageContinue = () => {
+    setPassword("");
+    setManageOtp(Array(OTP_LENGTH).fill(""));
+    setManageError("");
+    setView(manageChoice);
+  };
+
+  const renderCodesFooter = (primaryText, onPrimary) => (
+    <div className="as2fa-footer-row as2fa-success-footer">
+      <SecondaryButton
+        text="Download Codes"
+        icon={<Download width={20} height={20} aria-hidden="true" />}
+        iconPosition="left"
+        onClick={handleDownloadCodes}
+        className="as2fa-footer-light"
+      />
+      <SecondaryButton
+        text="Copy Codes"
+        icon={<Files width={20} height={20} aria-hidden="true" />}
+        iconPosition="left"
+        onClick={handleCopyCodes}
+        className="as2fa-footer-light"
+      />
+      <PrimaryButton
+        text={primaryText}
+        onClick={onPrimary}
+        className="as2fa-footer-solid"
+      />
+    </div>
+  );
 
   const renderFooter = () => {
     // Manage mode
@@ -401,15 +644,15 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
       if (view === "overview") {
         return (
           <div className="as2fa-footer-row">
+            <SecondaryButton
+              text="Cancel"
+              onClick={close}
+              className="as2fa-footer-secondary"
+            />
             <PrimaryButton
-              text="Disable 2FA"
-              onClick={() => {
-                setPassword("");
-                setManageOtp(Array(OTP_LENGTH).fill(""));
-                setManageError("");
-                setView("disable");
-              }}
-              className="as2fa-footer-primary as2fa-danger-btn"
+              text="Continue"
+              onClick={handleManageContinue}
+              className="as2fa-footer-primary"
             />
           </div>
         );
@@ -434,7 +677,26 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
           </div>
         );
       }
-      return null;
+      if (view === "regenerate") {
+        return (
+          <div className="as2fa-footer-row">
+            <SecondaryButton
+              text="Back"
+              onClick={() => setView("overview")}
+              className="as2fa-footer-secondary"
+              disabled={busy}
+            />
+            <PrimaryButton
+              text={busy ? "Regenerating…" : "Regenerate Codes"}
+              onClick={handleRegenerate}
+              disabled={busy || !password}
+              className="as2fa-footer-primary"
+            />
+          </div>
+        );
+      }
+      // view === "backup"
+      return renderCodesFooter("Done", handleRegenerateDone);
     }
 
     // Setup mode
@@ -491,7 +753,8 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
         </div>
       );
     }
-    return null;
+    // step === 4 backup codes
+    return renderCodesFooter("Close", handleSetupDone);
   };
 
   return (
