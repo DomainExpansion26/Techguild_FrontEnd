@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+// [TechGuild Update: 21-09-2026] Client profile settings & getMyProfile sync
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { DashboardLayout, Cards } from "@/Components";
 import { useAuth } from "@/context/AuthContext";
 import { profileApi } from "@/features/profile/api/profileApi";
 import { showSnackbar } from "@/store";
-import Icon from "@/Components/icons/Icon";
 import "@/flows/individual/pages/Settings/settings.css";
 import "@/flows/individual/pages/Settings/Profile/ProfileSetting.css";
 import "./ClientProfileSetting.css";
@@ -39,12 +39,11 @@ export default function ClientProfileSetting() {
   const [location, setLocation] = useState("");
   const [timezone, setTimezone] = useState("");
   const [logoUrl, setLogoUrl] = useState("");
-
-  const fetchClientProfile = async () => {
-    setLoading(true);
+  const fetchClientProfile = useCallback(async (isManual = false) => {
+    if (isManual) setLoading(true);
     try {
-      const res = await profileApi.getProfile();
-      const client = res?.client || res?.data?.client || {};
+      const res = await profileApi.getMyProfile();
+      const client = res?.client || {};
 
       if (client) {
         if (client.company_name) setCompanyName(client.company_name);
@@ -68,11 +67,44 @@ export default function ClientProfileSetting() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
-    fetchClientProfile();
-  }, []);
+    let ignore = false;
+    async function loadData() {
+      try {
+        const res = await profileApi.getMyProfile();
+        if (ignore) return;
+        const client = res?.client || {};
+
+        if (client) {
+          if (client.company_name) setCompanyName(client.company_name);
+          if (client.industry) setIndustry(client.industry);
+          if (client.website_url) setWebsiteUrl(client.website_url);
+          if (client.team_size) setTeamSize(client.team_size);
+          if (client.budget_range) setBudgetRange(client.budget_range);
+          if (client.timezone) setTimezone(client.timezone);
+          if (client.logo_url) setLogoUrl(client.logo_url);
+
+          const cityCountry = [client.city, client.country].filter(Boolean).join(", ");
+          if (cityCountry) setLocation(cityCountry);
+        }
+
+        if (!client.company_name && user?.name) {
+          setCompanyName(user.name);
+        }
+      } catch (err) {
+        console.warn("Could not load client profile:", err);
+        if (!ignore && user?.name) setCompanyName(user.name);
+      } finally {
+        if (!ignore) setLoading(false);
+      }
+    }
+    loadData();
+    return () => {
+      ignore = true;
+    };
+  }, [user]);
 
   const handleLogoUpload = async (e) => {
     const file = e.target.files?.[0];
@@ -149,6 +181,7 @@ export default function ClientProfileSetting() {
             <p className="settings-page-subtitle">
               Manage your company information, branding, and hiring preferences live from TechGuild API.
             </p>
+            {loading && <p className="settings-caption text-primary">Loading company profile...</p>}
           </header>
 
           <Cards className="settings-section profile-settings-section" padding="32px">
@@ -271,7 +304,7 @@ export default function ClientProfileSetting() {
               <button
                 type="button"
                 className="settings-btn-secondary"
-                onClick={fetchClientProfile}
+                onClick={() => fetchClientProfile(true)}
                 disabled={saving}
               >
                 Reset

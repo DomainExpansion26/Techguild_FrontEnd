@@ -1,3 +1,4 @@
+// [TechGuild Update: 21-09-2026] Profile card display, ranking & verification tags
 import Icon from '@/Components/icons/Icon';
 import { APP_STRINGS } from '@/constants/string';
 import { CARD_SIZES, ICON_SIZES } from '@/constants/sizes';
@@ -7,11 +8,14 @@ export default function GuildCard({
   name,
   companyName,
   category,
+  subtitle,
   logoInitials,
   starRating,
   verifiedText = APP_STRINGS.CARDS.GUILD.VERIFIED_CLIENT,
   location,
   website,
+  portfolio,
+  skills = [],
   rank,
   guildId,
   memberSince,
@@ -26,7 +30,8 @@ export default function GuildCard({
   const SIZES_CFG = CARD_SIZES.GUILD_CARD;
   const g = guildCard || {};
   const displayName = name || companyName || g.name || g.companyName || STRINGS.DEFAULT_NAME;
-  const displayCategory = category || g.category || STRINGS.DEFAULT_CATEGORY;
+  const displaySubtitle = subtitle || category || g.subtitle || g.category || STRINGS.DEFAULT_CATEGORY;
+  const isCustomSubtitle = Boolean(subtitle || (category && category.toLowerCase() === category));
   const displayInitials =
     logoInitials ||
     g.logoInitials ||
@@ -37,10 +42,24 @@ export default function GuildCard({
       : STRINGS.DEFAULT_INITIALS);
   const displayStars = starRating !== undefined ? starRating : (g.starRating !== undefined ? g.starRating : 4);
   const displayLocation = location || g.location || STRINGS.DEFAULT_LOCATION;
-  const rawWebsite = website || g.website || STRINGS.DEFAULT_WEBSITE;
-  const displayWebsite = rawWebsite.startsWith(STRINGS.PREFIX_WEBSITE)
-    ? rawWebsite
-    : (rawWebsite ? `${STRINGS.PREFIX_WEBSITE} ${rawWebsite.replace(/^https?:\/\//, '').replace(/\/$/, '')}` : `${STRINGS.PREFIX_WEBSITE} ${STRINGS.DEFAULT_WEBSITE}`);
+
+  // Support both portfolio and website props
+  const rawPortfolio = portfolio || g.portfolio;
+  const rawWebsite = website || g.website;
+  const displayLinkText = rawPortfolio
+    ? (rawPortfolio.startsWith('Portfolio:')
+      ? rawPortfolio
+      : `Portfolio: ${rawPortfolio.replace(/^https?:\/\//, '').replace(/\/$/, '')}`)
+    : (rawWebsite
+      ? (rawWebsite.startsWith(STRINGS.PREFIX_WEBSITE)
+        ? rawWebsite
+        : `${STRINGS.PREFIX_WEBSITE} ${rawWebsite.replace(/^https?:\/\//, '').replace(/\/$/, '')}`)
+      : `${STRINGS.PREFIX_WEBSITE} ${STRINGS.DEFAULT_WEBSITE}`);
+
+  const displaySkills = Array.isArray(skills) && skills.length > 0
+    ? skills
+    : (Array.isArray(g.skills) && g.skills.length > 0 ? g.skills : []);
+
   const displayRank = rank || g.rank || STRINGS.DEFAULT_RANK;
   const displayGuildId = guildId || g.guildId || STRINGS.DEFAULT_GUILD_ID;
   const displayMemberSince = memberSince || g.memberSince || STRINGS.DEFAULT_MEMBER_SINCE;
@@ -191,7 +210,7 @@ export default function GuildCard({
               zIndex: 20,
             }}
           >
-            <Icon name="Check" size={12} color="#ffffff" strokeWidth={3.5} />
+            <Icon name="Check" size={ICON_SIZES['2XS']} color="#ffffff" strokeWidth={3.5} />
           </span>
         </div>
 
@@ -224,15 +243,15 @@ export default function GuildCard({
           <div
             style={{
               margin: '0 0 5px',
-              fontSize: 'clamp(7px, 0.65vw, 8.5px)',
-              lineHeight: 1,
-              fontWeight: 700,
-              letterSpacing: '0.12em',
-              color: '#60a5fa',
-              textTransform: 'uppercase',
+              fontSize: 'clamp(7.5px, 0.72vw, 9.5px)',
+              lineHeight: 1.1,
+              fontWeight: 600,
+              letterSpacing: isCustomSubtitle ? '0.01em' : '0.12em',
+              color: isCustomSubtitle ? '#cbd5e1' : '#60a5fa',
+              textTransform: isCustomSubtitle ? 'none' : 'uppercase',
             }}
           >
-            {displayCategory}
+            {displaySubtitle}
           </div>
 
           {/* STARS */}
@@ -248,7 +267,7 @@ export default function GuildCard({
               <Icon
                 name="Star"
                 key={i}
-                size={11}
+                size={ICON_SIZES['2XS']}
                 fill={i < displayStars ? '#ffc107' : 'none'}
                 color={i < displayStars ? '#ffc107' : '#3b82f6'}
                 strokeWidth={1.5}
@@ -276,7 +295,7 @@ export default function GuildCard({
                 width: 'fit-content',
               }}
             >
-              <Icon name="Shield" size={10} color="#ffffff" strokeWidth={2} />
+              <Icon name="Shield" size={ICON_SIZES['2XS']} color="#ffffff" strokeWidth={2} />
               <span>{verifiedText}</span>
             </div>
           )}
@@ -308,7 +327,7 @@ export default function GuildCard({
                   flexShrink: 0,
                 }}
               >
-                <Icon name="MapPin" size={11} color="#ffffff" strokeWidth={1.8} />
+                <Icon name="MapPin" size={ICON_SIZES['2XS']} color="#ffffff" strokeWidth={1.8} />
               </div>
               <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                 {displayLocation}
@@ -316,8 +335,8 @@ export default function GuildCard({
             </div>
           )}
 
-          {/* WEBSITE */}
-          {displayWebsite && (
+          {/* PORTFOLIO / WEBSITE */}
+          {displayLinkText && (
             <div
               style={{
                 display: 'flex',
@@ -342,11 +361,44 @@ export default function GuildCard({
                   flexShrink: 0,
                 }}
               >
-                <Icon name="Globe" size={11} color="#ffffff" strokeWidth={1.8} />
+                <Icon name="Globe" size={ICON_SIZES['2XS']} color="#ffffff" strokeWidth={1.8} />
               </div>
               <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                {displayWebsite}
+                {displayLinkText}
               </span>
+            </div>
+          )}
+
+          {/* SKILLS PILLS INSIDE GUILD CARD */}
+          {displaySkills && displaySkills.length > 0 && (
+            <div
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                gap: '5px',
+                marginTop: '6px',
+              }}
+            >
+              {displaySkills.slice(0, 4).map((skill, index) => (
+                <span
+                  key={index}
+                  style={{
+                    display: 'inline-block',
+                    padding: '2px 8px',
+                    borderRadius: '999px',
+                    background: 'rgba(255, 255, 255, 0.12)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    color: '#e2e8f0',
+                    fontSize: 'clamp(6.5px, 0.6vw, 8px)',
+                    fontWeight: 500,
+                    letterSpacing: '0.01em',
+                    lineHeight: 1.3,
+                  }}
+                >
+                  {skill}
+                </span>
+              ))}
             </div>
           )}
         </div>
@@ -395,17 +447,17 @@ export default function GuildCard({
           style={{
             position: 'absolute',
             right: '44%',
-            top: '28%',
+            top: '26%',
             margin: 0,
-            fontFamily: 'Arial, Helvetica, sans-serif',
+            fontFamily: '"Times New Roman", "Playfair Display", "Cinzel", Georgia, serif',
             fontSize: 'clamp(58px, 7vw, 92px)',
             lineHeight: 0.9,
             fontWeight: 700,
-            background: 'linear-gradient(180deg, #d8bc5e 0%, #b89838 52%, #cfba5c 100%)',
+            background: 'linear-gradient(180deg, #dfc66a 0%, #b89838 52%, #cfba5c 100%)',
             WebkitBackgroundClip: 'text',
             backgroundClip: 'text',
             color: 'transparent',
-            opacity: 0.92,
+            opacity: 0.88,
             zIndex: 4,
           }}
         >
