@@ -1,86 +1,846 @@
-.whole-profile-container {
-  max-width: 1100px;
+/* [TechGuild Update: 21-09-2026] Individual freelancer whole profile stylesheet & responsive tokens */
+/* Individual Whole Profile - sized to match client whole-profile (wp-*) tokens.
+   Freelancer accents kept: blue section titles, light-blue avatar,
+   top skill pills, activity dots, trust box. */
+.ind-wp-root,
+.ind-wp-root * {
+  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  box-sizing: border-box;
+}
+
+/* ---------- Shell (match client 12px rhythm) ---------- */
+.ind-wp-root.dashboard-layout {
+  padding: 12px;
+  gap: 12px;
+}
+
+.ind-wp-root .main-workspace.ind-wp-workspace {
+  overflow: hidden;
+  gap: 12px;
+}
+
+.ind-wp-scroll {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.ind-wp-scroll::-webkit-scrollbar { display: none; width: 0 !important; height: 0 !important; }
+
+/* Keep every section at natural height so nothing squishes... */
+.ind-wp-scroll > * {
+  flex-shrink: 0;
+}
+
+/* ...except the last row, which stretches to fill leftover space so its
+   bottom edge always sits on the same line as the sidebar bottom. */
+.ind-wp-scroll > :last-child {
+  flex: 1 0 auto;
+}
+
+/* ---------- Cards (client glass tokens) ---------- */
+.ind-wp-root .ind-wp-hero,
+.ind-wp-root .ind-wp-card {
+  background: rgba(255,255,255,0.60) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #e8edf5 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 12px rgba(15,23,42,0.05) !important;
+  overflow: hidden;
+}
+
+.ind-wp-root .ind-wp-hero {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.ind-wp-card-inner {
+  padding: clamp(14px, 1.9vw, 27px) clamp(12px, 1.7vw, 22px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+  min-width: 0;
+}
+
+.ind-wp-card-title {
+  font-size: clamp(14px, 1.15vw, 17px);
+  font-weight: 800;
+  color: #103CA4;
+  margin: 0;
+}
+
+.ind-wp-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: clamp(5px, .7vw, 10px);
+  margin-bottom: clamp(12px, 1.4vw, 20px);
+}
+
+.ind-wp-link {
+  border: none;
+  background: none;
+  color: #103CA4 !important;
+  font-size: clamp(11px, .9vw, 13px);
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  padding: 4px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+.ind-wp-link:hover { text-decoration: underline; }
+
+.ind-wp-sub-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+.ind-wp-divider {
+  height: 1px;
+  background: #eef2f7;
+  margin: 14px 0;
+}
+
+.ind-wp-muted {
+  font-size: clamp(12px, .98vw, 14px);
+  color: #64748b;
+  line-height: 1.5;
+  margin: 8px 0 12px;
+}
+
+/* ---------- Hero banner (client tokens) ---------- */
+.ind-wp-banner {
+  position: relative;
+  height: clamp(110px, 15vw, 220px);
+  flex-shrink: 0;
+  background: radial-gradient(circle, #194fd6 0%, #0c266a 80%, #081a4a 100%);
+  background-color: #0c266a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 16px 16px 0 0;
+  overflow: hidden;
+}
+.ind-wp-banner-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+  transition: opacity 0.2s;
+}
+.ind-wp-banner:hover .ind-wp-banner-inner { opacity: 0.85; }
+.ind-wp-banner-icon {
+  width: 46px;
+  height: 46px;
+  border: 1.5px dashed rgba(255,255,255,0.6);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  color: #fff;
+}
+.ind-wp-banner-title {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: 0.2px;
+}
+.ind-wp-banner-sub {
+  color: rgba(255,255,255,0.8);
+  font-size: 12.5px;
+  font-weight: 400;
+}
+
+/* ---------- Hero identity (client layout tokens) ---------- */
+.ind-wp-identity {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  flex-direction: row;
+  padding: 0 clamp(12px, 2.2vw, 32px) clamp(14px, 2vw, 32px);
+  gap: clamp(12px, 2vw, 32px);
+  width: 100%;
+  min-width: 0;
+}
+.ind-wp-identity-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.ind-wp-avatar {
+  position: relative;
+  width: clamp(72px, 8vw, 112px);
+  height: clamp(72px, 8vw, 112px);
+  border-radius: clamp(14px, 1.5vw, 20px);
+  background: #d9e6fd;
+  background-color: #d9e6fd;
+  color: #2450a8;
+  font-size: clamp(22px, 2.2vw, 30px);
+  line-height: 1;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid #fff;
+  box-shadow: 0 8px 18px rgba(8,35,95,0.22);
+  margin-top: clamp(-56px, -4vw, -30px);
+  margin-bottom: 16px;
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 2;
+  flex-shrink: 0;
+}
+.ind-wp-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.ind-wp-id-text {
+  width: 100%;
+  min-width: 0;
+}
+.ind-wp-name {
+  font-size: clamp(20px, 2.22vw, 32px);
+  font-weight: 800;
+  color: #103CA4;
+  margin: 0 0 4px;
+  overflow-wrap: anywhere;
+}
+.ind-wp-headline {
+  font-size: clamp(12px, 1vw, 14.5px);
+  color: #4b5563;
+  margin: 0 0 8px;
+}
+.ind-wp-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(8px, 1.25vw, 18px);
+  margin-bottom: 4px;
+}
+.ind-wp-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: clamp(11px, .94vw, 13.5px);
+  color: #6b7280;
+  min-width: 0;
+}
+.ind-wp-meta-item svg {
+  color: #9ca3b8;
+  flex-shrink: 0;
+}
+.ind-wp-member {
+  font-size: clamp(11px, .94vw, 13.5px);
+  color: #374151;
+  font-weight: 500;
+  margin: 0 0 10px;
+}
+
+.ind-wp-top-skills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.ind-wp-pill-blue {
+  display: inline-flex;
+  align-items: center;
+  font-size: clamp(10px, .9vw, 13px);
+  font-weight: 600;
+  color: #1d4ed8;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: clamp(4px, .42vw, 6px) clamp(9px, .95vw, 14px);
+  border-radius: 20px;
+  max-width: 100%;
+}
+
+.ind-wp-available {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: clamp(10px, .9vw, 13px);
+  font-weight: 600;
+  color: #16a34a;
+  background: #f2fcf5;
+  border: 1px solid #86efac;
+  padding: clamp(4px, .42vw, 6px) clamp(9px, .95vw, 14px);
+  border-radius: 20px;
+  width: fit-content;
+  max-width: 100%;
+}
+.ind-wp-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #16a34a;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* ---------- Guild card column (client right-column behavior) ---------- */
+.ind-wp-identity-right {
+  margin: auto 0;
+  align-self: center;
+  flex: 0 1 430px;
+  width: 430px;
+  max-width: 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Force GuildCard inside the hero - overrides its 530px fixed inline size */
+.ind-wp-identity-right .guild-card-variant-root {
+  width: 100% !important;
+  max-width: 430px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: 530 / 275.6 !important;
+  flex-shrink: 1;
   margin: 0 auto;
 }
 
-.whole-profile-hero-card {
-  border-radius: 12px;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+/* ---------- Grids (client 12px rhythm) ---------- */
+.ind-wp-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+.ind-wp-grid-exp {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  align-items: stretch;
+  width: 100%;
+}
+.ind-wp-exp-left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.ind-wp-featured .ind-wp-card-inner { height: 100%; }
+.ind-wp-grid-3 {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr 1fr;
+  gap: 12px;
+  align-items: stretch;
+  width: 100%;
+}
+.ind-wp-grid-bottom {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+  align-items: stretch;
+  width: 100%;
+}
+.ind-wp-grid-2 > .ind-wp-card,
+.ind-wp-grid-exp > .ind-wp-card,
+.ind-wp-exp-left > .ind-wp-card,
+.ind-wp-grid-3 > .ind-wp-card,
+.ind-wp-grid-bottom > .ind-wp-card {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
-.whole-profile-avatar {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  background: #103ca4;
-  color: #ffffff;
-  font-size: 32px;
+/* ---------- Empty states (client tokens) ---------- */
+.ind-wp-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 0;
+  gap: 8px;
+}
+.ind-wp-empty.tall { padding: 30px 0; }
+.ind-wp-empty-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+  color: #cbd5e1;
+  flex-shrink: 0;
+}
+.ind-wp-empty h4 {
+  font-size: 0.95rem;
   font-weight: 700;
+  color: #103CA4;
+  margin: 0;
+}
+.ind-wp-empty p {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin: 0;
+  max-width: 320px;
+  line-height: 1.45;
+}
+
+.ind-wp-btn-primary {
+  width: auto;
+  height: auto;
+  margin-top: 4px;
+  background: #0b38a8;
+  background-color: #0b38a8;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+.ind-wp-btn-primary:hover { background-color: #082977; }
+
+.ind-wp-btn-dark {
+  margin-top: 12px;
+  background: #0b38a8;
+  background-color: #0b38a8;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 11px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.2s ease;
+}
+.ind-wp-btn-dark:hover { background-color: #082977; }
+
+/* ---------- Skills chips (client chip tokens) ---------- */
+.ind-wp-chips {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 14px;
+  column-gap: 12px;
+  align-items: center;
+  margin-top: 4px;
+  width: 100%;
+}
+.ind-wp-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 20px;
+  border-radius: 9999px;
+  border: 1px solid #eef1f6;
+  background: #ffffff;
+  color: #334155;
+  font-size: clamp(12px, 0.88vw, 13.5px);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  user-select: none;
+}
+
+/* ---------- About text ---------- */
+.ind-wp-about-text {
+  font-size: clamp(12px, .98vw, 14px);
+  line-height: 1.6;
+  color: #4b5160;
+  margin: 0 0 16px;
+}
+
+/* ---------- Experience (4-col, client-sized values) ---------- */
+.ind-wp-exp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+.ind-wp-exp-value {
+  font-size: clamp(12.5px, .95vw, 14px);
+  font-weight: 700;
+  color: #103CA4;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.ind-wp-exp-value.small { line-height: 1.45; }
+
+/* ---------- Portfolio links (client link-row tokens) ---------- */
+.ind-wp-links {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.2vw, 16px);
+  flex: 1;
+  justify-content: space-between;
+  width: 100%;
+}
+.ind-wp-link-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 2px 0;
+  width: 100%;
+  min-width: 0;
+}
+.ind-wp-link-ico {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #eff6ff;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(16, 60, 164, 0.15);
 }
-
-.whole-profile-name {
-  font-size: 24px;
-  font-weight: 700;
-  color: #111827;
+.ind-wp-link-ico.green { background: #f0fdf4; }
+.ind-wp-link-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0 4px;
 }
-
-.whole-profile-headline {
-  font-size: 15px;
-  color: #4b5563;
-  margin-top: 2px;
-}
-
-.section-title {
-  font-size: 17px;
-  font-weight: 600;
-  color: #111827;
-}
-
-.section-desc {
-  font-size: 14px;
-  color: #4b5563;
-}
-
-.skill-pill {
-  display: inline-block;
-  padding: 6px 14px;
-  border-radius: 20px;
-  background: #eff6ff;
-  color: #1e40af;
-  font-size: 13px;
+.ind-wp-link-top {
+  font-size: 11px;
+  color: #94a3b8;
   font-weight: 500;
-  border: 1px solid #dbeafe;
+}
+.ind-wp-link-url {
+  border: none;
+  background: none;
+  padding: 0;
+  text-align: left;
+  font-size: clamp(12px, 0.84vw, 13px);
+  font-weight: 600;
+  color: #1d4ed8;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ind-wp-link-file {
+  font-size: clamp(12px, 0.84vw, 13px);
+  color: #334155;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ind-wp-ext {
+  border: none;
+  background: none;
+  color: #94a3b8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+.ind-wp-ext:hover { color: #103ca4; }
+.ind-wp-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #16a34a;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 5px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-.tool-pill {
-  background: #f3f4f6;
-  color: #374151;
-  border-color: #e5e7eb;
+/* ---------- Completion checklist (client tokens) ---------- */
+.ind-wp-checks {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.2vw, 16px);
+  flex: 1;
+  justify-content: space-between;
+  margin-top: 4px;
 }
-
-.profile-link-item {
+.ind-wp-check-row {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #2563eb;
-  font-size: 13.5px;
+  font-size: clamp(12.5px, 0.88vw, 13.5px);
   font-weight: 500;
-  text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  transition: all 0.2s ease;
+  width: 100%;
+}
+.ind-wp-check-row .done { color: #334155; }
+.ind-wp-check-row .pending { color: #64748b; }
+.ind-wp-pct {
+  font-size: 11.5px;
+  color: #94a3b8;
+  text-align: center;
+  margin: 8px 0 0;
 }
 
-.profile-link-item:hover {
-  background: #eff6ff;
-  border-color: #bfdbfe;
-  color: #1d4ed8;
+/* ---------- Recent activity (dots, client-sized rows) ---------- */
+.ind-wp-activity {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.2vw, 16px);
+  flex: 1;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+.ind-wp-act-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: clamp(12px, 0.84vw, 13px);
+  color: #334155;
+  font-weight: 500;
+  width: 100%;
+}
+.ind-wp-act-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.ind-wp-act-dot.blue { background: #1d4ed8; }
+.ind-wp-act-dot.green { background: #16a34a; }
+.ind-wp-act-dot.orange { background: #f59e0b; }
+.ind-wp-tp { margin-left: auto; font-size: 11.5px; color: #0f172a; white-space: nowrap; }
+
+/* ---------- Trust journey (client circle tokens) ---------- */
+.ind-wp-ranks {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin: 4px 0 10px;
+  width: 100%;
+}
+.ind-wp-rank {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+.ind-wp-rank-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  background: #ffffff;
+  color: #475569;
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.04);
+  border: 1px solid #e8edf5;
+  user-select: none;
+}
+.ind-wp-rank.active .ind-wp-rank-circle {
+  background: #103ca4;
+  color: #ffffff;
+  border: 2px solid #103ca4;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(16, 60, 164, 0.15);
+}
+.ind-wp-rank-you {
+  font-size: 11px;
+  color: #103ca4;
+  font-weight: 700;
+  min-height: 14px;
+  text-align: center;
+}
+.ind-wp-trust-box {
+  background: #f8fafc;
+  border: 1px solid #eef2f7;
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.ind-wp-trust-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12.5px;
+  color: #475569;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.ind-wp-next { font-size: 12px; color: #64748b; font-weight: 400; }
+.ind-wp-next b { color: #103ca4; font-weight: 700; }
+.ind-wp-trust-track {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: #e8edf5;
+  overflow: hidden;
+}
+.ind-wp-trust-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: #103ca4;
+  transition: width 0.3s ease;
+}
+
+/* ---------- Quick actions (client action-list tokens) ---------- */
+.ind-wp-qa {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.1vw, 15px);
+  width: 100%;
+  flex: 1;
+  justify-content: space-between;
+}
+.ind-wp-qa-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 4px 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+.ind-wp-qa-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+.ind-wp-qa-ico {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background-color: #eff6ff;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.ind-wp-qa-left span:last-child {
+  font-size: clamp(13px, 0.9vw, 14px);
+  font-weight: 500;
+  color: #1e293b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ind-wp-qa-btn:hover .ind-wp-qa-left span:last-child { color: #103ca4; }
+
+/* Prevent long text from forcing overflow */
+.ind-wp-root img,
+.ind-wp-root svg {
+  max-width: 100%;
+}
+
+/* ---------- Tablet (match client) ---------- */
+@media (max-width: 1199px) {
+  .ind-wp-grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 1099px) {
+  .ind-wp-identity {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+  }
+  .ind-wp-identity-left { width: 100%; max-width: 100%; }
+  .ind-wp-identity-right {
+    width: 100%;
+    max-width: 530px;
+    flex: 0 1 auto;
+    margin-top: 0;
+    align-self: flex-start;
+  }
+  .ind-wp-identity-right .guild-card-variant-root {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 530 / 275.6 !important;
+  }
+}
+
+/* ---------- Mobile (match client single-column) ---------- */
+@media (max-width: 767px) {
+  .ind-wp-root.dashboard-layout {
+    padding: 12px;
+    gap: 12px;
+  }
+  .ind-wp-identity {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 16px 18px;
+    gap: 18px;
+  }
+  .ind-wp-identity-left { width: 100%; max-width: 100%; }
+  .ind-wp-identity-right {
+    width: 100%;
+    max-width: 100%;
+    flex: 0 1 auto;
+    margin-top: 0;
+  }
+  .ind-wp-identity-right .guild-card-variant-root {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: unset !important;
+    aspect-ratio: 530 / 275.6 !important;
+  }
+  .ind-wp-card-inner { padding: 18px 16px; }
+  .ind-wp-grid-2,
+  .ind-wp-grid-exp,
+  .ind-wp-grid-3,
+  .ind-wp-grid-bottom { grid-template-columns: minmax(0, 1fr); }
+  .ind-wp-exp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ---------- Small phones ---------- */
+@media (max-width: 480px) {
+  .ind-wp-card-inner { padding: 16px 14px; }
+  .ind-wp-identity { padding: 0 12px 16px; }
+  .ind-wp-link-row { gap: 8px; }
+}
+
+/* ---------- Fluid internals (match client final scale layer) ---------- */
+.ind-wp-root .ind-wp-grid-2,
+.ind-wp-root .ind-wp-grid-exp,
+.ind-wp-root .ind-wp-grid-3,
+.ind-wp-root .ind-wp-grid-bottom {
+  grid-auto-rows: auto;
 }

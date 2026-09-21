@@ -1,3 +1,4 @@
+// [TechGuild Update: 21-09-2026] Individual profile settings & getMyProfile sync
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import {
@@ -51,8 +52,8 @@ export default function ProfileSetting() {
     };
 
     try {
-      const res = await profileApi.getProfile();
-      const profile = res?.individual || res?.data?.individual || res || {};
+      const res = await profileApi.getMyProfile();
+      const profile = res?.individual || {};
 
       if (profile) {
         apply("headline", setHeadline, profile.headline);

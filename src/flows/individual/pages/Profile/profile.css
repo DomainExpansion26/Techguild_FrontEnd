@@ -1,3 +1,4 @@
+/* [TechGuild Update: 21-09-2026] Individual wizard styling, button actions & bottom scroll clearance */
 .profile-page-wrapper {
   flex: 1;
   min-height: 0;
@@ -361,9 +362,9 @@
   justify-content: flex-end;
   gap: 14px;
   margin-top: 30px !important;
-  margin-bottom: 0 !important;
+  margin-bottom: 16px !important;
   padding-top: 0;
-  padding-bottom: 30px !important;
+  padding-bottom: 48px !important;
   flex-shrink: 0;
   width: 100%;
   max-width: 650px;
