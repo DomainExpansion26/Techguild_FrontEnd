@@ -204,24 +204,213 @@
   text-align: left;
 }
 
-/* ---------- Manage mode (2FA enabled) ---------- */
-.as2fa-manage-overview {
+/* ---------- Step 4: Save backup codes (Figma "success message") ---------- */
+.as2fa-backup {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
   width: 100%;
 }
 
-.as2fa-manage-status {
+.as2fa-success-divider {
+  width: 100%;
+  margin: 0;
+  border: none;
+  border-top: 1px solid rgba(15, 23, 42, 0.15);
+}
+
+.as2fa-success-tick {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 16px;
-  color: #12b76a;
-  font-size: 13px;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  color: #ffffff;
+  background: #12b76a;
+  border-radius: 50%;
+}
+
+.as2fa-codes-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding: 22px 32px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 20px;
+}
+
+.as2fa-codes-title {
+  margin: 0;
+  color: #132533;
+  font-family: "SF Pro", "Inter", system-ui, sans-serif;
+  font-size: 16px;
   font-weight: 600;
-  background: rgba(18, 183, 106, 0.08);
-  border: 1px solid rgba(18, 183, 106, 0.25);
+  line-height: 24px;
+  text-align: left;
+}
+
+.as2fa-codes-desc {
+  margin: 0;
+  color: rgba(19, 37, 51, 0.75);
+  font-family: "SF Pro", "Inter", system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+}
+
+.as2fa-codes-box {
+  padding: 26px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 20px;
+}
+
+.as2fa-backup-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.as2fa-backup-code {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 29px;
+  padding: 6px 8px;
+  color: #132533;
+  font-family: "SF Pro", "Inter", system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 17px;
+  text-align: center;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  background: #f6f5f3;
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  border-radius: 9px;
+}
+
+.as2fa-codes-warning {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 6px;
+  max-width: 100%;
+  margin: 0;
+  padding: 10px;
+  color: rgba(19, 37, 51, 0.75);
+  font-family: "SF Pro", "Inter", system-ui, sans-serif;
+  font-size: 11px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 20px;
+  background: rgba(247, 144, 9, 0.1);
+  border-radius: 14px;
+}
+
+/* ---------- Manage mode: option cards (Figma "Manage-2FA") ---------- */
+.as2fa-manage-overview {
+  display: flex;
+  flex-direction: column;
+  gap: 29px;
+  width: 100%;
+  max-width: 625px;
+  margin: 0 auto;
+}
+
+.as2fa-choice {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #cacaca;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.as2fa-choice-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.as2fa-choice-radio {
+  position: relative;
+  flex: none;
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #c6c6c6;
+  border-radius: 50%;
+}
+
+.as2fa-choice-radio::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  background: transparent;
+  border-radius: 50%;
+}
+
+.as2fa-choice-input:checked + .as2fa-choice-radio {
+  border-color: #103ca4;
+}
+
+.as2fa-choice-input:checked + .as2fa-choice-radio::after {
+  background: #103ca4;
+}
+
+.as2fa-choice-input:focus-visible + .as2fa-choice-radio {
+  outline: 2px solid #103ca4;
+  outline-offset: 2px;
+}
+
+.as2fa-choice-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  padding: 8px;
+  color: #103ca4;
+  background: rgba(16, 60, 164, 0.1);
   border-radius: 8px;
+}
+
+.as2fa-choice-chip svg path {
+  stroke: #103ca4;
+}
+
+.as2fa-choice-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.as2fa-choice-title {
+  color: #1a1a1a;
+  font-family: "SF Pro", "Inter", system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.as2fa-choice-desc {
+  color: rgba(19, 37, 51, 0.75);
+  font-family: "SF Pro", "Inter", system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 19px;
 }
 
 .as2fa-manage-form {
@@ -248,6 +437,17 @@
   font-size: 13px;
   font-weight: 600;
   line-height: 20px;
+}
+
+.as2fa-manage-warning {
+  margin: 0;
+  color: #b45309;
+  font-size: 12px;
+  line-height: 18px;
+  background: rgba(180, 83, 9, 0.08);
+  border: 1px solid rgba(180, 83, 9, 0.2);
+  border-radius: 8px;
+  padding: 10px 12px;
 }
 
 .as2fa-danger-btn.primary-btn {
@@ -302,6 +502,49 @@
   background: rgba(17, 24, 39, 0.07);
 }
 
+/* Figma success footer: right-aligned Download / Copy / Close.
+   Buttons never shrink (they wrap instead), so icon + label can't overlap. */
+.as2fa-success-footer {
+  justify-content: flex-end;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.as2fa-success-footer .secondary-btn,
+.as2fa-success-footer .primary-btn {
+  flex: 1 0 auto;
+  min-width: 0;
+  height: 48px;
+  padding: 12px 20px;
+  font-family: "Montserrat", "Inter", "SF Pro", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  border-radius: 8px;
+}
+
+.as2fa-success-footer .secondary-btn {
+  max-width: 176px;
+  background: rgba(16, 60, 164, 0.1);
+}
+
+.as2fa-success-footer .secondary-btn:hover:not(:disabled) {
+  background: rgba(16, 60, 164, 0.18);
+}
+
+.as2fa-success-footer .secondary-btn svg path {
+  stroke: #103ca4;
+}
+
+.as2fa-success-footer .primary-btn {
+  max-width: 152px;
+}
+
+.as2fa-success-footer .btn-icon {
+  display: inline-flex;
+  align-items: center;
+}
+
 .as2fa-footer-btn {
   width: 100%;
   height: 64px;
@@ -313,6 +556,21 @@
 @media (max-width: 576px) {
   .as2fa-app-card {
     width: 100%;
+  }
+  .as2fa-backup-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 12px;
+  }
+  .as2fa-codes-card {
+    padding: 18px;
+  }
+  .as2fa-codes-box {
+    padding: 16px;
+  }
+  .as2fa-success-footer .secondary-btn,
+  .as2fa-success-footer .primary-btn {
+    width: 100%;
+    max-width: none;
   }
   .as2fa-footer-row {
     flex-direction: column;
