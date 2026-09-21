@@ -642,6 +642,7 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
             }}
             error={error}
             onEnter={handleVerify}
+            autoFocus
           />
           {error && (
             <p className="as2fa-error">
@@ -811,13 +812,17 @@ export default function AccountSecurity2FA({ open, onClose = () => {}, enabled =
       title={getTitle()}
       subtitle={getSubtitle()}
       footer={renderFooter()}
-      cardClassName="as2fa-card"
+      cardClassName={`as2fa-card${
+        !enabled && step === 1 ? " as2fa-card--step1" : ""
+      }`}
       headerClassName="as2fa-header"
       footerClassName="as2fa-footer"
       style={
-        isWide
-          ? { "--popup-width": "700px", padding: "10px" }
-          : { "--popup-width": "596px", padding: "30px 38px" }
+        !enabled && step === 1
+          ? { "--popup-width": "833px", padding: "48px 55px 50px" }
+          : isWide
+            ? { "--popup-width": "700px", padding: "10px" }
+            : { "--popup-width": "596px", padding: "30px 38px" }
       }
     >
       {renderStep()}
