@@ -1,8 +1,9 @@
 /* src/Modules/Individual/Screen/Pages/Settings/AccountSecurity/AccountSecurity2FA.css
    Multi-step 2FA management popup (Figma "popups" flow) */
 
-/* Popup supplies the card padding (30px 38px); wide steps override it to 10px
-   via the `style` prop so the card matches the 700px wide frame. */
+/* Popup supplies the card padding (30px 38px); wide steps override it via the
+   `style` prop (700px card @ 10px) and step 1 uses the Figma 833px frame with
+   56px side / ~50px top-bottom inset. */
 .as2fa-card {
   padding: 0;
 }
@@ -16,13 +17,19 @@
   padding: 8px 0;
 }
 
+/* Step 1 (Figma 833px frame): footer buttons span the full 721px content
+   width, so drop the shared 20px footer padding on this step only. */
+.as2fa-card--step1 .as2fa-footer {
+  padding: 0;
+}
+
 .as2fa-app-card {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   gap: 5px;
-  width: 210px;
+  width: 231px;
   min-height: 73px;
   padding: 0 11px;
   text-align: left;
@@ -87,6 +94,7 @@
   color: rgba(17, 24, 39, 0.75);
   font-size: 12px;
   line-height: 20px;
+  white-space: nowrap;
 }
 
 /* ---------- Step 2: Scan barcode / QR code (Figma "Manage-2FA scan QR") ---------- */
@@ -211,6 +219,10 @@
   align-items: center;
   justify-content: center;
   gap: 11px;
+  font-size: 18px;
+  font-weight: 590;
+  line-height: 28px;
+  margin: 15px;
 }
 
 .as2fa-success-title-tick {
@@ -321,7 +333,7 @@
   gap: 6px;
   max-width: 100%;
   margin: 0;
-  padding: 10px;
+  padding-inline: 10px;
   color: rgba(19, 37, 51, 0.75);
   font-family: "SF Pro", "Inter", system-ui, sans-serif;
   font-size: 11px;

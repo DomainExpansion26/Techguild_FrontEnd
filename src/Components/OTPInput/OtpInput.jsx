@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import "./OtpInput.css";
 
 // 6 (or `length`) digit one-time-password input with auto-advance,
@@ -11,8 +11,15 @@ const OtpInput = ({
   separator = true,
   autoComplete = "one-time-code",
   onEnter,
+  autoFocus = false,
 }) => {
   const refs = useRef([]);
+
+  useEffect(() => {
+    if (!autoFocus) return;
+    const timer = requestAnimationFrame(() => refs.current[0]?.focus());
+    return () => cancelAnimationFrame(timer);
+  }, [autoFocus]);
 
   const update = (index, char) => {
     const next = [...values];
