@@ -245,6 +245,12 @@ export const profileApi = {
     return normalizeMyProfile(res);
   },
 
+  // Same, but normalized to { account_type, individual, client, agency }
+  getMyProfile: async () => {
+    const res = await apiClient.get(ENDPOINTS.PROFILE.BASE);
+    return normalizeMyProfile(res);
+  },
+
   // Delete profile
   deleteProfile: async (password) => {
     return apiClient.delete(ENDPOINTS.PROFILE.BASE, { body: { password } });
