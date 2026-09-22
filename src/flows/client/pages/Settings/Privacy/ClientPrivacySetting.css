@@ -1,4 +1,128 @@
-.client-privacy-setting-container {
-  max-width: 800px;
-  margin: 0 auto;
+/* privacy.css */
+
+/* ===========================================================
+   Layout (matches ProfileSetting alignment)
+   =========================================================== */
+
+/* ===========================================================
+   Layout gap (moved out of the inline style on DashboardLayout)
+   =========================================================== */
+.dashboard-layout.privacy-layout {
+  gap: 12px;
+}
+
+.privacy-settings-container {
+  max-width: none;
+  gap: 12px;
+  padding-bottom: 0;
+}
+
+.privacy-settings-section {
+  gap: 10px;
+}
+
+.privacy-settings-section .settings-section-header {
+  width: 100%;
+}
+
+/* ===========================================================
+   Buttons (10px radius to match Settings design system)
+   =========================================================== */
+
+.privacy-settings-section .btn-light {
+  border-radius: 10px !important;
+}
+
+.privacy-settings-section .secondary-btn {
+  width: fit-content;
+  flex: none;
+  height: auto;
+  padding: 8px 24px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+.privacy-settings-section .secondary-btn:hover:not(:disabled) {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+  color: #212529;
+}
+
+.privacy-settings-section .secondary-btn:active:not(:disabled) {
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+/* ===========================================================
+   Profile visibility menu (Select button options)
+   =========================================================== */
+
+.visibility-select-wrap {
+  position: relative;
+  flex: none;
+}
+
+.visibility-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+}
+
+.visibility-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 20;
+  min-width: 264px;
+  padding: 6px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.visibility-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.visibility-menu-item:hover {
+  background-color: #f3f4f6;
+}
+
+.visibility-menu-item.active {
+  font-weight: 600;
+}
+
+.visibility-menu-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  flex: none;
+  color: #103ca4;
+}
+
+
+@media (max-width: 768px) {
+  .privacy-settings-container {
+    gap: 12px;
+  }
 }

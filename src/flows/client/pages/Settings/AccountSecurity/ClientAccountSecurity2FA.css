@@ -1,0 +1,614 @@
+/* src/Modules/Individual/Screen/Pages/Settings/AccountSecurity/AccountSecurity2FA.css
+   Multi-step 2FA management popup (Figma "popups" flow) */
+
+/* Popup supplies the card padding (30px 38px); wide steps override it via the
+   `style` prop (700px card @ 10px) and step 1 uses the Figma 833px frame with
+   56px side / ~50px top-bottom inset. */
+.as2fa-card {
+  padding: 0;
+}
+
+/* ---------- Step 1: Choose & Download ---------- */
+.as2fa-app-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  padding: 8px 0;
+}
+
+/* Step 1 (Figma 833px frame): footer buttons span the full 721px content
+   width, so drop the shared 20px footer padding on this step only. */
+.as2fa-card--step1 .as2fa-footer {
+  padding: 0;
+}
+
+.as2fa-app-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5px;
+  width: 231px;
+  min-height: 73px;
+  padding: 0 11px;
+  text-align: left;
+  background: rgba(15, 23, 42, 0.05);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.as2fa-app-card:hover {
+  background: rgba(15, 23, 42, 0.08);
+}
+
+.as2fa-app-card--selected {
+  border-color: rgba(16, 60, 164, 0.75);
+  background: rgba(16, 60, 164, 0.05);
+}
+
+.as2fa-app-top {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.as2fa-app-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  color: #103ca4;
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 4px 4px rgba(16, 60, 164, 0.25);
+}
+
+.as2fa-app-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 12px;
+  font-weight: 700;
+  color: #103ca4;
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 4px 4px rgba(16, 60, 164, 0.25);
+}
+
+.as2fa-app-name {
+  color: #111827;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.as2fa-app-tagline {
+  color: rgba(17, 24, 39, 0.75);
+  font-size: 12px;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+/* ---------- Step 2: Scan barcode / QR code (Figma "Manage-2FA scan QR") ---------- */
+.as2fa-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  width: 100%;
+}
+
+/* Figma content stack gap: 29px */
+.as2fa-scan-body {
+  gap: 29px;
+}
+
+.as2fa-qr-frame {
+  width: 155px;
+  height: 154px;
+  margin: 0 auto;
+  padding: 8px;
+  background: #ffffff;
+  box-shadow: 0 0.8px 10.4px rgba(0, 0, 0, 0.2);
+}
+
+.as2fa-qr-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #111827;
+  background: #ffffff;
+}
+
+.as2fa-qr-note {
+  width: 476px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+  color: #111827;
+  font-size: 11px;
+  font-weight: 300;
+  line-height: 16px;
+  text-align: center;
+  background: #f6f5f3;
+  border: 1px solid rgba(17, 24, 39, 0.15);
+  border-radius: 10px;
+}
+
+.as2fa-qr-expiry {
+  font-weight: 500;
+  color: rgba(17, 24, 39, 0.65);
+}
+
+.as2fa-qr-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.as2fa-qr-status {
+  color: rgba(17, 24, 39, 0.55);
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  padding: 8px;
+}
+
+.as2fa-qr-provisioning {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #111827;
+}
+
+.as2fa-qr-provisioning span {
+  max-width: 130px;
+  font-size: 10px;
+  line-height: 14px;
+  color: rgba(17, 24, 39, 0.6);
+  word-break: break-all;
+  text-align: center;
+}
+
+.as2fa-qr-box-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #111827;
+}
+
+.as2fa-qr-retry {
+  margin-top: -8px;
+}
+
+/* ---------- Step 3: Enter code (shared OtpInput handles the digits) ---------- */
+.as2fa-verify-body {
+  gap: 16px;
+}
+
+.as2fa-verify-body .otp-group {
+  justify-content: center;
+}
+
+.as2fa-error {
+  width: 100%;
+  margin: 0;
+  color: #f04438;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
+}
+
+/* ---------- Step 4: Save backup codes (Figma "success message") ---------- */
+/* Figma success header: small 32px tick-circle inline before the title. */
+.as2fa-success-title {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  font-size: 18px;
+  font-weight: 590;
+  line-height: 28px;
+  margin: 15px;
+}
+
+.as2fa-success-title-tick {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  color: #ffffff;
+  background: #12b76a;
+  border-radius: 50%;
+}
+
+.as2fa-backup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+}
+
+/* Manage "Backup Codes" screen (Figma "Manage-2FA"): codes box + centered note. */
+.as2fa-backup--manage {
+  gap: 16px;
+}
+
+.as2fa-backup--manage .as2fa-codes-box {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.as2fa-backup--manage .as2fa-codes-warning {
+  align-self: center;
+}
+
+.as2fa-codes-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: 18px 24px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 20px;
+}
+
+.as2fa-codes-title {
+  margin: 0;
+  color: #132533;
+  font-family: "SF Pro", "Inter", system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: left;
+}
+
+.as2fa-codes-desc {
+  margin: 0;
+  color: rgba(19, 37, 51, 0.75);
+  font-family: "SF Pro", "Inter", system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+}
+
+.as2fa-codes-box {
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 20px;
+}
+
+.as2fa-backup-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.as2fa-backup-code {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 29px;
+  padding: 6px 8px;
+  color: #132533;
+  font-family: "SF Pro", "Inter", system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 17px;
+  text-align: center;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  background: #f6f5f3;
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  border-radius: 9px;
+}
+
+.as2fa-codes-warning {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 6px;
+  max-width: 100%;
+  margin: 0;
+  padding-inline: 10px;
+  color: rgba(19, 37, 51, 0.75);
+  font-family: "SF Pro", "Inter", system-ui, sans-serif;
+  font-size: 11px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 20px;
+  background: rgba(247, 144, 9, 0.1);
+  border-radius: 14px;
+}
+
+/* ---------- Manage mode: option cards (Figma "Manage-2FA") ---------- */
+.as2fa-manage-overview {
+  display: flex;
+  flex-direction: column;
+  gap: 29px;
+  width: 100%;
+  max-width: 625px;
+  margin: 0 auto;
+}
+
+.as2fa-choice {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #cacaca;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.as2fa-choice-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.as2fa-choice-radio {
+  position: relative;
+  flex: none;
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #c6c6c6;
+  border-radius: 50%;
+}
+
+.as2fa-choice-radio::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  background: transparent;
+  border-radius: 50%;
+}
+
+.as2fa-choice-input:checked + .as2fa-choice-radio {
+  border-color: #103ca4;
+}
+
+.as2fa-choice-input:checked + .as2fa-choice-radio::after {
+  background: #103ca4;
+}
+
+.as2fa-choice-input:focus-visible + .as2fa-choice-radio {
+  outline: 2px solid #103ca4;
+  outline-offset: 2px;
+}
+
+.as2fa-choice-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  padding: 8px;
+  color: #103ca4;
+  background: rgba(16, 60, 164, 0.1);
+  border-radius: 8px;
+}
+
+.as2fa-choice-chip svg path {
+  stroke: #103ca4;
+}
+
+.as2fa-choice-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.as2fa-choice-title {
+  color: #1a1a1a;
+  font-family: "SF Pro", "Inter", system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.as2fa-choice-desc {
+  color: rgba(19, 37, 51, 0.75);
+  font-family: "SF Pro", "Inter", system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 19px;
+}
+
+.as2fa-manage-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.as2fa-manage-otp {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.as2fa-manage-otp .otp-group {
+  justify-content: center;
+}
+
+.as2fa-manage-field-label {
+  color: #111827;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.as2fa-manage-warning {
+  margin: 0;
+  color: #b45309;
+  font-size: 12px;
+  line-height: 18px;
+  background: rgba(180, 83, 9, 0.08);
+  border: 1px solid rgba(180, 83, 9, 0.2);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.as2fa-danger-btn.primary-btn {
+  background: #f04438;
+  border-color: transparent;
+}
+
+.as2fa-danger-btn.primary-btn:hover:not(:disabled) {
+  background: #d93327;
+}
+
+/* ---------- Footer (Figma: 64px height, 8px radius) ---------- */
+.as2fa-footer {
+  gap: 16px;
+  padding: 20px;
+}
+
+.as2fa-footer-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.as2fa-footer-row .primary-btn,
+.as2fa-footer-row .secondary-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 64px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  border-radius: 8px;
+}
+
+.as2fa-footer-row .secondary-btn {
+  color: #103ca4;
+  background: rgba(16, 60, 164, 0.15);
+  border-color: transparent;
+}
+
+.as2fa-footer-row .secondary-btn:hover:not(:disabled) {
+  color: #103ca4;
+  background: rgba(16, 60, 164, 0.22);
+  border-color: transparent;
+}
+
+.as2fa-footer-row .primary-btn:disabled {
+  color: rgba(17, 24, 39, 0.15);
+  background: rgba(17, 24, 39, 0.07);
+}
+
+/* Figma success footer: right-aligned Download / Copy / Close.
+   Buttons never shrink (they wrap instead), so icon + label can't overlap. */
+.as2fa-success-footer {
+  justify-content: flex-end;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.as2fa-success-footer .secondary-btn,
+.as2fa-success-footer .primary-btn {
+  flex: 1 0 auto;
+  min-width: 0;
+  height: 48px;
+  padding: 12px 20px;
+  font-family: "Montserrat", "Inter", "SF Pro", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  border-radius: 8px;
+}
+
+.as2fa-success-footer .secondary-btn {
+  max-width: 176px;
+  background: rgba(16, 60, 164, 0.1);
+}
+
+.as2fa-success-footer .secondary-btn:hover:not(:disabled) {
+  background: rgba(16, 60, 164, 0.18);
+}
+
+.as2fa-success-footer .secondary-btn svg path {
+  stroke: #103ca4;
+}
+
+.as2fa-success-footer .primary-btn {
+  max-width: 152px;
+}
+
+.as2fa-success-footer .btn-icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.as2fa-footer-btn {
+  width: 100%;
+  height: 64px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
+}
+
+@media (max-width: 576px) {
+  .as2fa-app-card {
+    width: 100%;
+  }
+  .as2fa-backup-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 12px;
+  }
+  .as2fa-codes-card {
+    padding: 18px;
+  }
+  .as2fa-codes-box {
+    padding: 16px;
+  }
+  .as2fa-success-footer .secondary-btn,
+  .as2fa-success-footer .primary-btn {
+    width: 100%;
+    max-width: none;
+  }
+  .as2fa-footer-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .as2fa-footer-row .primary-btn,
+  .as2fa-footer-row .secondary-btn,
+  .as2fa-footer-btn {
+    width: 100%;
+    height: 56px;
+    font-size: 15px;
+  }
+}
