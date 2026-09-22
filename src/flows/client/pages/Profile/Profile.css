@@ -1,3 +1,4 @@
+/* [TechGuild Update: 21-09-2026] Client profile wizard styling, label weights & scroll clearance */
 /* =========================================
    CLIENT PROFILE (Complete Your Profile)
    -----------------------------------------
@@ -120,7 +121,7 @@
 .client-profile-page .profile-card-inner {
   flex: 1;
   min-height: 0;
-  padding: var(--cp-card-pad-y) var(--cp-card-pad-x) calc(var(--cp-card-pad-y) + 8px) var(--cp-card-pad-x);
+  padding: var(--cp-card-pad-y) var(--cp-card-pad-x) calc(var(--cp-card-pad-y) + 40px) var(--cp-card-pad-x);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -328,6 +329,7 @@
   flex-direction: column;
   justify-content: flex-start;
   width: 100%;
+  padding-bottom: 24px;
 }
 
 .client-profile-page .profile-field-group {
@@ -365,7 +367,7 @@
 .client-profile-page .field-label {
   display: block;
   font-size: var(--cp-label-font) !important;
-  font-weight: 700 !important;
+  font-weight: 500 !important;
   color: #111827;
   margin-bottom: 0;
   line-height: 1.2;
@@ -533,8 +535,10 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding-top: 16px;
+  padding-top: 24px;
+  padding-bottom: 40px;
   margin-top: auto;
+  margin-bottom: 16px;
   flex-shrink: 0;
   gap: 12px;
 }

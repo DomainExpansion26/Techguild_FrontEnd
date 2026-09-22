@@ -1,3 +1,4 @@
+// [TechGuild Update: 21-09-2026] Individual freelancer profile wizard & OpenAPI save integration
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DashboardLayout, Cards, PrimaryButton, SecondaryButton, TextInput, Stepper } from "@/Components";
@@ -69,23 +70,19 @@ const getInitialFormData = () => {
   return data;
 };
 
-const clearDraftStorage = () => {
-  Object.keys(sessionStorage)
-    .filter((key) => key.startsWith("ind_") && key !== "ind_profile_submitted")
-    .forEach((key) => sessionStorage.removeItem(key));
-};
-
 export default function Profile() {
   const navigate = useNavigate();
   const { step } = useParams();
 
-  const [currentStep, setCurrentStep] = useState(1);
+  // Derive current step and submission status directly from URL params
+  const currentStep = slugStepMap[step] || (sessionStorage.getItem("ind_profile_submitted") === "true" ? 6 : 1);
+  const isSubmitted = step === "completed" || currentStep === 6;
+
   const [isEditingFromReview, setIsEditingFromReview] = useState(false);
   const [snapshot, setSnapshot] = useState(null);
 
   const [formData, setFormData] = useState(getInitialFormData);
   const [errors, setErrors] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(() => sessionStorage.getItem("ind_profile_submitted") === "true");
 
   const cardInnerRef = useRef(null);
 
@@ -99,32 +96,11 @@ export default function Profile() {
     }
   };
 
-  const resetFormState = () => {
-    setFormData(initialFormData);
-    setErrors({});
-  };
-
   useEffect(() => {
     if (cardInnerRef.current) {
       cardInnerRef.current.scrollTop = 0;
     }
     window.scrollTo(0, 0);
-  }, [currentStep, step]);
-
-  useEffect(() => {
-    if (!step) {
-      if (!isSubmitted) {
-        clearDraftStorage();
-        resetFormState();
-        setCurrentStep(1);
-      }
-    } else if (step === "completed") {
-      setIsSubmitted(true);
-      setCurrentStep(6);
-    } else if (slugStepMap[step]) {
-      setIsSubmitted(false);
-      setCurrentStep(slugStepMap[step]);
-    }
   }, [step]);
 
   const handleBackTop = () => {
@@ -315,35 +291,42 @@ export default function Profile() {
     setIsSubmitting(true);
     setSubmitError("");
     try {
+      // 1. Upload avatar if selected -> capture avatar_url (UploadAvatarResponse)
+      let avatarUrl = null;
       if (formData.profilePhoto instanceof File) {
-        await profileApi.uploadAvatar(formData.profilePhoto);
+        const avatarRes = await profileApi.uploadAvatar(formData.profilePhoto);
+        avatarUrl = avatarRes?.avatar_url || null;
       }
+      // 2. Upload resume if selected -> capture resume_url (UploadResumeResponse)
+      let resumeUrl = null;
       if (formData.resumeFile instanceof File) {
-        await profileApi.uploadResume(formData.resumeFile);
+        const resumeRes = await profileApi.uploadResume(formData.resumeFile);
+        resumeUrl = resumeRes?.resume_url || null;
       }
+      // 3. Save profile data (strict CreateIndividualProfileRequest body is
+      //    built inside saveIndividualProfile: only documented keys are sent)
       await profileApi.saveIndividualProfile({
-        full_name: formData.fullName,
-        country: formData.country,
-        time_zone: formData.timeZone,
-        headline: formData.headline,
+        avatar_url: avatarUrl,
         bio: formData.bio,
+        country: formData.country,
+        city: null,
+        headline: formData.headline,
+        timezone: formData.timeZone,
         experience_level: formData.experience,
         availability: formData.availability,
         skills: formData.skills ? formData.skills.split(",").map((s) => s.trim()) : [],
-        tools: formData.tools ? formData.tools.split(",").map((t) => t.trim()) : [],
-        categories: formData.categories ? formData.categories.split(",").map((c) => c.trim()) : [],
+        tools_technologies: formData.tools ? formData.tools.split(",").map((t) => t.trim()) : [],
+        service_categories: formData.categories ? formData.categories.split(",").map((c) => c.trim()) : [],
         portfolio_url: formData.portfolioUrl,
         github_url: formData.githubUrl,
         linkedin_url: formData.linkedinUrl,
+        resume_url: resumeUrl,
       });
       sessionStorage.setItem("ind_profile_submitted", "true");
-      setIsSubmitted(true);
       goToStep(6);
     } catch (err) {
       console.error("Failed to save profile:", err);
-      sessionStorage.setItem("ind_profile_submitted", "true");
-      setIsSubmitted(true);
-      goToStep(6);
+      setSubmitError(err?.message || "Failed to save profile. Please check your details and try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -649,39 +632,57 @@ export default function Profile() {
         <p className="section-subtitle text-secondary">{WIZARD_STRINGS.STEPS.STEP_5_SUBTITLE}</p>
       </div>
 
-      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
+      <Cards variant="base" radius="md" className="review-summary-card d-flex align-items-center justify-content-between w-100 mb-3">
         <span className="review-summary-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_1_LABEL}</span>
         <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(1)} role="button">
           {WIZARD_STRINGS.BUTTONS.EDIT}
         </span>
-      </div>
+      </Cards>
 
-      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
+      <Cards variant="base" radius="md" className="review-summary-card d-flex align-items-center justify-content-between w-100 mb-3">
         <span className="review-summary-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_2_LABEL}</span>
         <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(2)} role="button">
           {WIZARD_STRINGS.BUTTONS.EDIT}
         </span>
-      </div>
+      </Cards>
 
-      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
+      <Cards variant="base" radius="md" className="review-summary-card d-flex align-items-center justify-content-between w-100 mb-3">
         <span className="review-summary-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_3_LABEL}</span>
         <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(3)} role="button">
           {WIZARD_STRINGS.BUTTONS.EDIT}
         </span>
-      </div>
+      </Cards>
 
-      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
+      <Cards variant="base" radius="md" className="review-summary-card d-flex align-items-center justify-content-between w-100 mb-4">
         <span className="review-summary-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_4_LABEL}</span>
         <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(4)} role="button">
           {WIZARD_STRINGS.BUTTONS.EDIT}
         </span>
-      </div>
+      </Cards>
+
+      {submitError && (
+        <div
+          role="alert"
+          className="mb-3"
+          style={{
+            background: "#fef2f2",
+            border: "1px solid #fecaca",
+            color: "#991b1b",
+            borderRadius: "10px",
+            padding: "10px 14px",
+            fontSize: "0.85rem",
+          }}
+        >
+          {submitError}
+        </div>
+      )}
 
       <div className="profile-form-actions d-flex justify-content-end shrink-0">
         <div className="profile-btn-wrapper">
           <PrimaryButton
             type="submit"
-            text={WIZARD_STRINGS.BUTTONS.SUBMIT}
+            disabled={isSubmitting}
+            text={isSubmitting ? "Submitting..." : WIZARD_STRINGS.BUTTONS.SUBMIT}
           />
         </div>
       </div>
@@ -714,10 +715,16 @@ export default function Profile() {
             {WIZARD_STRINGS.COMPLETION.MAIN_TITLE_LINE1}<br />{WIZARD_STRINGS.COMPLETION.MAIN_TITLE_LINE2}
           </h1>
 
-          <div className="completion-reward-banner text-start mb-4 w-100">
+          <Cards
+            variant="base"
+            radius="md"
+            bg="#E9F0FF"
+            className="completion-reward-banner text-start mb-4 w-100"
+            style={{ backgroundColor: '#E9F0FF', background: '#E9F0FF', border: 'none', boxShadow: 'none' }}
+          >
             <h3 className="reward-banner-title fw-bold mb-1">{WIZARD_STRINGS.COMPLETION.BANNER_TITLE}</h3>
             <p className="reward-banner-subtitle mb-0">{WIZARD_STRINGS.COMPLETION.BANNER_SUBTITLE}</p>
-          </div>
+          </Cards>
 
           <div className="completion-stepper-container position-relative w-100 mb-4">
             <div className="completion-stepper position-relative d-flex align-items-start justify-content-between w-100">
@@ -742,13 +749,12 @@ export default function Profile() {
           </div>
 
           <div className="completion-cta-wrapper d-flex justify-content-center mt-2">
-            <button
+            <PrimaryButton
               type="button"
-              className="completion-cta-btn border-0 text-white fw-bold d-inline-flex align-items-center justify-content-center"
+              className="completion-cta-btn border-0 text-white fw-bold d-inline-flex align-items-center justify-content-center px-5"
               onClick={() => navigate("/verification")}
-            >
-              {WIZARD_STRINGS.COMPLETION.CTA_BUTTON}
-            </button>
+              text={WIZARD_STRINGS.COMPLETION.CTA_BUTTON}
+            />
           </div>
         </div>
       </div>
