@@ -22,12 +22,16 @@ export const twoFaApi = {
     return apiClient.post(ENDPOINTS.AUTH.TWO_FA.REGENERATE_RECOVERY_CODES, { password });
   },
 
-  // Verify TOTP during login (deferred: login-time flow not yet wired)
+  // Verify TOTP during the login-time 2FA challenge (wired: /verify-2fa).
+  // Backend contract (OpenAPI): body { temporary_token, code }, security []
+  // (no Authorization header) — matches the working Zudoku request exactly.
   verifyLogin: async ({ temporary_token, code }) => {
     return apiClient.post(ENDPOINTS.AUTH.TWO_FA.VERIFY_LOGIN, { temporary_token, code });
   },
 
-  // Authenticate using a single-use recovery code
+  // Authenticate using a single-use recovery code (wired: /verify-2fa).
+  // Same contract: body only, no auth header. Backend example codes look
+  // like "ABCD-EFGH" (alphanumeric + dash), NOT plain digits.
   verifyRecoveryCode: async ({ temporary_token, code }) => {
     return apiClient.post(ENDPOINTS.AUTH.TWO_FA.VERIFY_RECOVERY_CODE, { temporary_token, code });
   },

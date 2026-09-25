@@ -1,42 +1,297 @@
+/* ===== Forgot Password — Figma frame 119:13 ("Forgot Password", 1440x900) ===== */
 .forgetpass-page {
+  --forget-primary: #103ca4;
+  --forget-ink: #000000;
+  --forget-muted: #59595d; /* Figma #79797D, shifted for AA (was 4.33:1) */
+  --forget-placeholder: #6b7280; /* Figma #8E8E93, shifted for AA (was 3.26:1) */
+  --forget-border: #b3b3b3; /* input + social stroke */
+  --forget-divider: #7e8a7d; /* OR divider lines */
+  --forget-error-bg: #fee2e2;
+  --forget-error-text: #b91c1c;
+  --forget-card-radius: 14px;
+  --forget-field-radius: 9px;
+
   width: 100vw;
   height: 100vh;
   position: relative;
   overflow: hidden;
 }
 
-/* ForgetPass card position (left: 105px, top: 44%) and reduced fixed height (415px) */
+/* Card: 504 wide, padding 40/70, radius 14 (Figma Frame 3466089) */
 .forgetpass-page .auth-card-wrapper {
-  width: 450px;
-  left: 75px;
-  top: 48%;
+  width: 504px;
+  left: 80px;
+  top: 50%;
 }
 
 .forgetpass-page .signup-card {
   width: 100%;
-  height: 510px;
-  padding: 28px 28px 22px 28px;
+  min-height: 614px;
+  padding: 40px 70px;
+  border-radius: var(--forget-card-radius);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
 }
 
-/* Success state maintains original fixed height */
+/* Success card matches Figma frame (504x461, padding 40/70) */
 .forgetpass-page .signup-card.success-state {
-  height: 415px;
-  width: 400px;
+  width: 504px;
+  min-height: 461px;
+  height: auto;
+  padding: 40px 70px;
 }
 
-/* Input Placeholder styling */
+/* Marketing text block: shared layout assumes a ~430px card (left 550px).
+ * This card is 504 wide, so shift the block right to keep the 40px gutter.
+ * Scoped to this page — other auth pages are unaffected. */
+.forgetpass-page .auth-home-text-block {
+  left: 624px;
+}
+
+/* ===== Form ===== */
+.forget-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.forget-logo-row {
+  display: flex;
+  width: 100%;
+}
+
+.forget-logo-row.center {
+  justify-content: center;
+}
+
+/* Title: 24 Bold #000 */
+.forget-title {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.2;
+  color: var(--forget-ink);
+  margin: 22px 0 6px 0;
+}
+
+/* Subtitle: 14 Regular */
+.forget-subtitle {
+  color: var(--forget-muted);
+  font-size: 14px;
+  margin: 0 0 30px 0;
+  line-height: 1.45;
+}
+
+.forget-error {
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  background-color: var(--forget-error-bg);
+  color: var(--forget-error-text);
+  font-size: 12px;
+}
+
+.forget-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Label: 18 Medium #000 */
+.forget-label {
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--forget-ink);
+  display: block;
+  margin: 0 0 10px 0;
+}
+
+/* Input: 40px, radius 9, border #B3B3B3 */
+.forget-input-group {
+  margin-bottom: 30px;
+  border: 1px solid var(--forget-border);
+  border-radius: var(--forget-field-radius);
+  min-height: 40px;
+}
+
+.forget-input-addon {
+  padding: 0 14px;
+  min-width: 44px;
+  color: #6a717d; /* mail.svg uses currentColor; Figma vector is #6A717D */
+}
+
+.forget-input-group .form-control {
+  font-size: 15px;
+  color: var(--forget-ink);
+  padding: 8px 12px 8px 0;
+}
+
+/* Input placeholder */
 .forgetpass-page .signup-card input::placeholder {
-  color: #B3B3B3 !important;
+  color: var(--forget-placeholder) !important;
   opacity: 1 !important;
 }
 
-/* Responsive adjustments for mobile/tablet */
+/* Submit: 46px, radius 9, text 16 Medium (overrides shared .auth-primary-btn) */
+.forgetpass-page .auth-primary-btn.forget-submit {
+  min-height: 46px !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  border-radius: var(--forget-field-radius) !important;
+}
+
+/* OR divider: #7E8A7D lines, 12 Medium #000 */
+.forget-divider {
+  display: flex;
+  align-items: center;
+  margin: 30px 0;
+}
+
+.forget-divider-line {
+  flex: 1;
+  height: 1px;
+  background-color: var(--forget-divider);
+}
+
+.forget-divider-text {
+  padding: 0 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--forget-ink);
+}
+
+/* Social: 40px, radius 9, border #B3B3B3, label 15 Regular #000 */
+.forgetpass-page .forget-social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 40px;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--forget-ink);
+  background: #ffffff;
+  border: 1px solid var(--forget-border);
+  border-radius: var(--forget-field-radius);
+  padding: 8px 0;
+  margin-bottom: 10px;
+}
+
+.forgetpass-page .forget-social-btn.last {
+  margin-bottom: 0;
+}
+
+/* Footer: 18 Medium — prompt #000, link #103CA4 */
+.forget-footer {
+  margin-top: auto;
+  padding-top: 30px;
+  text-align: center;
+}
+
+.forget-footer p {
+  font-size: 18px;
+  color: var(--forget-ink);
+  margin: 0;
+  font-weight: 500;
+}
+
+.forget-footer a {
+  color: var(--forget-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.forget-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Success state (Figma "Reset link sent" 122:4) ===== */
+.forgetpass-success-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+}
+
+/* Envelope illustration: 173x86 banner, no circle (Figma has none) */
+.forgetpass-success-banner {
+  width: 173px;
+  height: 86px;
+  object-fit: contain;
+  margin-bottom: 30px;
+}
+
+.forgetpass-success-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--forget-ink);
+  margin: 0 0 10px 0;
+  line-height: 1.2;
+}
+
+.forgetpass-success-desc {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--forget-ink);
+  margin: 0 0 30px 0;
+  line-height: 1.45;
+}
+
+.forgetpass-email-highlight {
+  font-weight: 700;
+  color: var(--forget-ink);
+}
+
+.forgetpass-open-email-btn {
+  width: 100%;
+}
+
+/* ===== Tablet adjustments ===== */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .forgetpass-page .auth-card-wrapper {
+    width: 100%;
+    max-width: 504px;
+  }
+
+  .forgetpass-page .signup-card {
+    min-height: auto;
+    padding: 32px 40px;
+  }
+}
+
+/* ===== Mobile adjustments ===== */
 @media (max-width: 767px) {
   .forgetpass-page .auth-card-wrapper {
     left: auto;
     top: auto;
+    width: 100%;
+    max-width: 504px;
+  }
+
+  .forgetpass-page .signup-card {
+    min-height: auto;
+    padding: 28px 24px;
+  }
+
+  .forgetpass-page .signup-card.success-state {
+    width: 100%;
+    min-height: auto;
+    padding: 28px 24px;
+  }
+
+  .forget-title {
+    font-size: 22px;
+  }
+
+  .forget-label {
+    font-size: 16px;
+  }
+
+  .forget-footer p {
+    font-size: 16px;
   }
 }

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import SignupCard from "@/Components/SignupCard/SignupCard";
-import { Check, Lock } from "@/Components/icons";
+import { Lock } from "@/Components/icons";
 import img2 from "@/assets/img2.png";
 import userIcon from "@/assets/icons/user.svg";
 import mailImage from "@/assets/mail.png";
@@ -9,31 +9,79 @@ import "./Emailverify.css";
 import authApi from "@/features/auth/api/authApi";
 import { APP_STRINGS, FORM_ERRORS } from "@/constants/string";
 
+const initialState = {
+  status: "verifying", // verifying | success | error
+  errorMessage: "",
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "VERIFY_SUCCESS":
+      return { status: "success", errorMessage: "" };
+    case "VERIFY_ERROR":
+      return { status: "error", errorMessage: action.error };
+    default:
+      return state;
+  }
+}
+
 export default function EmailVerified() {
   const STRINGS = APP_STRINGS.AUTH.EMAIL_VERIFIED;
   const BRAND = APP_STRINGS.AUTH.HOME_SCREEN;
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const token = searchParams.get("token");
-  const [isVerifying, setIsVerifying] = useState(Boolean(token));
-  const [errorMessage, setErrorMessage] = useState("");
+  const token = (searchParams.get("token") || "").trim();
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { status, errorMessage } = state;
+  const mountedRef = useRef(true);
+  const verifyFailedMsg = FORM_ERRORS.AUTH.VERIFY_FAILED || STRINGS.INVALID_TOKEN_ERROR;
 
   useEffect(() => {
-    if (token) {
-      async function verify() {
-        try {
-          await authApi.verifyEmail(token);
-        } catch (err) {
-          console.error("Verification error:", err);
-          setErrorMessage(err?.message || FORM_ERRORS.AUTH.VERIFY_FAILED || STRINGS.INVALID_TOKEN_ERROR);
-        } finally {
-          setIsVerifying(false);
+    mountedRef.current = true;
+    if (!token) {
+      dispatch({ type: "VERIFY_ERROR", error: verifyFailedMsg });
+      return;
+    }
+    async function verify() {
+      try {
+        await authApi.verifyEmail(token);
+        if (mountedRef.current) dispatch({ type: "VERIFY_SUCCESS" });
+      } catch (err) {
+        if (mountedRef.current) {
+          dispatch({ type: "VERIFY_ERROR", error: err?.message || verifyFailedMsg });
         }
       }
-      verify();
     }
-  }, [token]);
+    verify();
+    return () => {
+      mountedRef.current = false;
+    };
+  }, [token, verifyFailedMsg]);
+
+  const steps = [
+    {
+      title: STRINGS.STEPS.EMAIL_VERIFIED_TITLE,
+      points: STRINGS.STEPS.EMAIL_VERIFIED_POINTS,
+      active: true,
+    },
+    {
+      title: STRINGS.STEPS.PROFILE_COMPLETED_TITLE,
+      points: STRINGS.STEPS.PROFILE_COMPLETED_POINTS,
+      active: false,
+    },
+    {
+      title: STRINGS.STEPS.IDENTITY_VERIFIED_TITLE,
+      points: STRINGS.STEPS.IDENTITY_VERIFIED_POINTS,
+      active: false,
+    },
+    {
+      title: STRINGS.STEPS.FIRST_PROJECT_TITLE,
+      points: STRINGS.STEPS.FIRST_PROJECT_POINTS,
+      active: false,
+    },
+  ];
 
   const handleContinue = () => {
     navigate("/account-type");
@@ -44,37 +92,28 @@ export default function EmailVerified() {
       className="verified-page"
       style={{ backgroundImage: `url(${img2})` }}
     >
-      <header className="auth-header">
-        <div className="auth-header-logo" onClick={() => navigate("/")}>
+      <header className="verified-header">
+        <div className="verified-header-logo" onClick={() => navigate("/")}>
           <span className="logo-tech">{BRAND.BRAND_TECH}</span>
           <span className="logo-guild">{BRAND.BRAND_GUILD}</span>
         </div>
-        <div className="auth-header-profile">
-          <img src={userIcon} alt="Profile Icon" className="header-profile-icon" />
+        <div className="verified-header-profile" aria-hidden="true">
+          <img src={userIcon} alt="" className="verified-profile-icon" />
         </div>
       </header>
 
-      <div className="overlay" />
-
       <SignupCard>
         <div className="verified-container">
-          <div className="mailBox">
-            <img src={mailImage} alt="Mail" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+          <div className="verified-illust">
+            <img src={mailImage} alt="Email verified" />
           </div>
 
-          <h2>{isVerifying ? STRINGS.VERIFYING_TITLE : STRINGS.SUCCESS_TITLE}</h2>
+          <h2 className="verified-title">
+            {status === "verifying" ? STRINGS.VERIFYING_TITLE : STRINGS.SUCCESS_TITLE}
+          </h2>
 
-          {errorMessage ? (
-            <div
-              style={{
-                padding: "8px 12px",
-                marginBottom: "12px",
-                borderRadius: "6px",
-                backgroundColor: "#fee2e2",
-                color: "#b91c1c",
-                fontSize: "12px",
-              }}
-            >
+          {status === "error" ? (
+            <div className="verified-error" role="alert">
               {errorMessage}
             </div>
           ) : (
@@ -87,40 +126,22 @@ export default function EmailVerified() {
           <div className="verify-progress">
             <div className="line"></div>
 
-            <div className="step active">
-              <div className="circle">
-                <Check width={14} height={14} />
+            {steps.map((step) => (
+              <div key={step.title} className={`step${step.active ? " active" : ""}`}>
+                <div className="circle">
+                  {!step.active && <Lock width={20} height={20} />}
+                </div>
+                <h5>{step.title}</h5>
+                <span>{step.points}</span>
               </div>
-              <h5>{STRINGS.STEPS.EMAIL_VERIFIED_TITLE}</h5>
-              <span>{STRINGS.STEPS.EMAIL_VERIFIED_POINTS}</span>
-            </div>
-
-            <div className="step">
-              <div className="circle">
-                <Lock width={14} height={14} />
-              </div>
-              <h5>{STRINGS.STEPS.PROFILE_COMPLETED_TITLE}</h5>
-              <span>{STRINGS.STEPS.PROFILE_COMPLETED_POINTS}</span>
-            </div>
-
-            <div className="step">
-              <div className="circle">
-                <Lock width={14} height={14} />
-              </div>
-              <h5>{STRINGS.STEPS.IDENTITY_VERIFIED_TITLE}</h5>
-              <span>{STRINGS.STEPS.IDENTITY_VERIFIED_POINTS}</span>
-            </div>
-
-            <div className="step">
-              <div className="circle">
-                <Lock width={14} height={14} />
-              </div>
-              <h5>{STRINGS.STEPS.FIRST_PROJECT_TITLE}</h5>
-              <span>{STRINGS.STEPS.FIRST_PROJECT_POINTS}</span>
-            </div>
+            ))}
           </div>
 
-          <button className="continueBtn" onClick={handleContinue}>
+          <button
+            className="continueBtn"
+            onClick={handleContinue}
+            disabled={status !== "success"}
+          >
             {STRINGS.CONTINUE_BTN}
           </button>
         </div>

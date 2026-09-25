@@ -1,0 +1,220 @@
+/* Login-time 2FA challenge — Figma "for 6- digit code" / "for 8 digit code".
+   Glass card centered over the shared auth photo background (same image +
+   pattern as AuthHomeScreen on login/signup).
+   All rules are page-scoped (.twofa-*) — shared OtpInput/PrimaryButton CSS
+   is untouched. */
+
+.twofa-page {
+  --twofa-ink: #111827;
+  --twofa-muted: #6a717d;
+  --twofa-accent: #103ca4;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.twofa-brand {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 28px 40px;
+}
+
+.twofa-card-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 96px 24px 48px;
+}
+
+.twofa-card {
+  width: min(640px, 94vw);
+  padding: 48px 56px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 24px;
+  box-shadow: 0 24px 64px rgba(17, 24, 39, 0.16);
+}
+
+.twofa-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+  color: var(--twofa-ink);
+}
+
+.twofa-subtitle {
+  margin: 8px 0 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--twofa-muted);
+}
+
+/* Recovery mode holds 9 exact boxes, so the card widens (Figma's second
+   screen is wider too): 9×60 + 8×12 + 12 = 648px fits 780 − 112 = 668px.
+   The gap after the 4th box echoes Figma's split without faking a dash. */
+.twofa-card--wide {
+  width: min(780px, 94vw);
+}
+
+.twofa-otp--rec .otp-group {
+  gap: 12px;
+}
+
+.twofa-otp--rec .otp-group > input:nth-child(4) {
+  margin-right: 12px;
+}
+
+.twofa-error {
+  margin: 16px 0 0;
+  padding: 10px 14px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #b42318;
+  background: #fef3f2;
+  border: 1px solid #fecdca;
+  border-radius: 8px;
+}
+
+.twofa-code-block {
+  display: inline-block;
+  margin-top: 28px;
+  text-align: left;
+}
+
+.twofa-otp {
+  display: flex;
+  justify-content: center;
+}
+
+/* Figma renders the "-" separator inside its own narrow white box. */
+.twofa-otp .otp-sep {
+  background: #ffffff;
+  border: 1px solid rgba(17, 24, 39, 0.15);
+  border-radius: 8px;
+}
+
+.twofa-options {
+  display: flex;
+  gap: 24px;
+  justify-content: flex-start;
+  margin-top: 16px;
+}
+
+.twofa-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--twofa-ink);
+}
+
+.twofa-option-input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.twofa-checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  color: #ffffff;
+  background: #ffffff;
+  border: 1.5px solid #9aa0aa;
+  border-radius: 6px;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.twofa-option-input:checked + .twofa-checkbox {
+  background: var(--twofa-accent);
+  border-color: var(--twofa-accent);
+}
+
+.twofa-option-input:focus-visible + .twofa-checkbox {
+  outline: 2px solid var(--twofa-accent);
+  outline-offset: 2px;
+}
+
+.twofa-option-label {
+  user-select: none;
+}
+
+.twofa-submit {
+  width: 100%;
+  min-height: 52px;
+  margin-top: 28px;
+  font-size: 16px;
+  border-radius: 10px;
+}
+
+@media (max-width: 576px) {
+  .twofa-card {
+    padding: 32px 24px;
+  }
+
+  /* 9×36 + 8×6 + 6 = 378px fits a 481px viewport (452 − 48 = 404px). */
+  .twofa-otp--rec .otp-group {
+    gap: 6px;
+  }
+
+  .twofa-otp--rec .otp-input {
+    width: 36px;
+    height: 46px;
+  }
+
+  .twofa-otp--rec .otp-group > input:nth-child(4) {
+    margin-right: 6px;
+  }
+
+.twofa-options {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+/* Authenticator + recovery boxes must still fit a 360px viewport:
+   9×30 + 8×4 = 302px fits the 338 − 24 = 314px content width. */
+@media (max-width: 480px) {
+  .twofa-card {
+    padding: 32px 12px;
+  }
+
+  .twofa-otp .otp-group,
+  .twofa-otp--rec .otp-group {
+    gap: 4px;
+  }
+
+  .twofa-otp .otp-input {
+    width: 30px;
+    height: 42px;
+    padding: 8px 4px;
+    font-size: 13px;
+  }
+
+  .twofa-otp .otp-sep {
+    width: 10px;
+    height: 42px;
+    font-size: 18px;
+  }
+
+  .twofa-otp--rec .otp-group > input:nth-child(4) {
+    margin-right: 4px;
+  }
+}
