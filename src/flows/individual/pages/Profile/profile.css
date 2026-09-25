@@ -19,6 +19,35 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  --tg-card-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.profile-page-wrapper .card,
+.profile-page-wrapper .tg-card,
+.profile-welcome-wrapper .card,
+.profile-welcome-wrapper .tg-card,
+.profile-main-card,
+.profile-welcome-hero-card,
+.profile-benefit-card,
+.profile-steps-container-card {
+  --tg-card-shadow: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+  border-radius: 10px !important;
+}
+
+.profile-page-wrapper .card:hover,
+.profile-page-wrapper .tg-card:hover,
+.profile-welcome-wrapper .card:hover,
+.profile-welcome-wrapper .tg-card:hover,
+.profile-main-card:hover,
+.profile-welcome-hero-card:hover,
+.profile-benefit-card:hover,
+.profile-steps-container-card:hover {
+  --tg-card-shadow: none !important;
+  box-shadow: none !important;
+  transform: none !important;
 }
 
 .profile-card-inner {
@@ -30,12 +59,15 @@
   height: 100%;
   overflow-y: auto !important;
   overflow-x: hidden !important;
-  scrollbar-width: none !important; /* Firefox */
-  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important;
+  /* Firefox */
+  -ms-overflow-style: none !important;
+  /* IE and Edge */
 }
 
 .profile-card-inner::-webkit-scrollbar {
-  display: none !important; /* Chrome, Safari, Opera */
+  display: none !important;
+  /* Chrome, Safari, Opera */
   width: 0 !important;
   height: 0 !important;
 }
@@ -134,6 +166,13 @@
   margin-bottom: 20px;
   width: 100%;
   max-width: 650px;
+}
+
+.profile-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-sizing: border-box;
 }
 
 .profile-field-group:last-of-type,
@@ -289,6 +328,10 @@
 .custom-dropdown-container {
   width: 100%;
   max-width: 650px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-sizing: border-box;
 }
 
 .custom-dropdown-box {
@@ -662,4 +705,553 @@
   .bio-textarea-wrapper {
     height: 106px !important;
   }
+}
+
+/* ==============================================================================
+   PROFILE WELCOME / INTRO SCREEN (Landing View)
+   ============================================================================== */
+
+.profile-welcome-wrapper {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  scrollbar-width: none !important;
+  /* Firefox */
+  -ms-overflow-style: none !important;
+  /* IE and Edge */
+}
+
+.profile-welcome-wrapper::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.profile-welcome-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
+  gap: 24px;
+  animation: fadeInProfile 0.3s ease-out;
+}
+
+@keyframes fadeInProfile {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 1. Hero Banner Card */
+.profile-welcome-hero-card {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  border-radius: 10px !important;
+  padding: 40px 24px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+  --tg-card-shadow: none !important;
+  box-shadow: none !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-welcome-hero-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(16, 60, 164, 0.06) 0%, rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+}
+
+.profile-hero-illustration-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.profile-hero-icon-container {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background-color: #e9f0ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-welcome-hero-title {
+  font-size: clamp(26px, 2.2vw, 34px);
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+
+.profile-welcome-highlight {
+  color: #103ca4;
+}
+
+.profile-welcome-hero-subtitle {
+  font-size: clamp(14px, 1.05vw, 15.5px);
+  color: #64748b;
+  max-width: 580px;
+  line-height: 1.55;
+  margin-bottom: 28px;
+}
+
+.profile-welcome-cta-btn {
+  background: #103ca4 !important;
+  color: #ffffff !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  width: 290px !important;
+  max-width: 290px !important;
+  height: 50px !important;
+  padding: 0 16px !important;
+  border-radius: 8px !important;
+  border: none !important;
+  cursor: pointer;
+  box-shadow: none !important;
+  transition: background-color 0.2s ease !important;
+  margin-bottom: 16px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transform: none !important;
+  box-sizing: border-box !important;
+}
+
+.profile-welcome-cta-btn:hover {
+  background: #0c3188 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.profile-welcome-cta-btn:active {
+  background: #092363 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.profile-welcome-security-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 13px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* 2. Section: Why complete your profile? */
+.profile-welcome-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.profile-welcome-section-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+  margin: 0;
+  padding-left: 2px;
+}
+
+.profile-benefits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.profile-benefit-card {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  border-radius: 10px !important;
+  padding: 16px 22px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  --tg-card-shadow: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.profile-benefit-card:hover {
+  transform: none !important;
+  --tg-card-shadow: none !important;
+  box-shadow: none !important;
+  border-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.profile-benefit-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.profile-benefit-desc {
+  font-size: 13.5px;
+  color: #64748b;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* 3. Section: Profile setup in 4 simple steps */
+.profile-steps-container-card {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  border-radius: 10px !important;
+  padding: 36px 28px !important;
+  --tg-card-shadow: none !important;
+  box-shadow: none !important;
+  width: 100%;
+}
+
+.profile-setup-stepper-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  position: relative;
+  width: 100%;
+}
+
+.profile-step-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.profile-step-number-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.profile-step-number-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #edf4ff !important;
+  border: 1.5px solid #bfdbfe !important;
+  color: #103ca4 !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.profile-step-column:hover .profile-step-number-circle {
+  transform: none !important;
+  background: #edf4ff !important;
+  border-color: #bfdbfe !important;
+}
+
+.profile-step-connector-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 0;
+  border-top: 1.5px dashed #bfdbfe !important;
+  z-index: 1;
+  transform: translateY(-50%);
+}
+
+.profile-step-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 200px;
+}
+
+.profile-step-item-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.profile-step-item-desc {
+  font-size: 12.5px;
+  color: #64748b;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* 4. Footer Note */
+.profile-welcome-footer-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 8px;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  line-height: 1.2;
+}
+
+@media (max-width: 768px) {
+  .profile-setup-stepper-row {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .profile-step-connector-line {
+    display: none;
+  }
+
+  .profile-step-column {
+    align-items: flex-start;
+    text-align: left;
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .profile-step-number-container {
+    width: auto;
+    margin-bottom: 0;
+  }
+
+  .profile-step-info {
+    max-width: 100%;
+  }
+
+  .profile-welcome-container {
+    padding: 0;
+    gap: 20px;
+  }
+
+  .profile-welcome-hero-card {
+    padding: 28px 16px !important;
+  }
+}
+
+/* Tag Input & Suggestions System */
+.profile-tag-input-box {
+  min-height: 50px;
+  border: 1.2px solid #e5e7eb;
+  border-radius: 10px !important;
+  background: #ffffff;
+  padding: 6px 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  cursor: text;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 650px;
+}
+
+.profile-tag-input-box:hover {
+  border-color: #0b38a8;
+}
+
+.profile-tag-input-box.is-focused,
+.profile-tag-input-box:focus-within {
+  border-color: #0b38a8;
+  box-shadow: 0 0 0 3px rgba(11, 56, 168, 0.1);
+}
+
+.profile-tag-input-box.input-error {
+  border-color: #ef4444 !important;
+}
+
+.profile-tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #edf5ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1e40af;
+  user-select: none;
+  line-height: 1.2;
+}
+
+.profile-tag-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: #1e40af;
+}
+
+.profile-tag-pill-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #3b82f6;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0;
+  margin-left: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.profile-tag-pill-close:hover {
+  color: #1e3a8a;
+  transform: scale(1.15);
+}
+
+.profile-tag-input-field {
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: #111827 !important;
+  min-width: 140px;
+  flex: 1;
+  padding: 4px 0;
+  font-family: inherit;
+}
+
+.profile-tag-input-field::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+/* Autocomplete suggestions dropdown */
+.profile-suggestions-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1.2px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 1000;
+  padding: 6px 0;
+  scrollbar-width: thin;
+}
+
+.profile-suggestion-item {
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.profile-suggestion-item:hover {
+  background-color: #eff6ff;
+  color: #103ca4;
+  font-weight: 500;
+}
+
+/* Suggested Skills based on role section */
+.profile-suggested-skills-wrapper {
+  margin-top: 10px;
+  margin-bottom: 6px;
+  width: 100%;
+}
+
+.profile-suggested-skills-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+  margin: 0 0 8px 0;
+  display: block;
+}
+
+.profile-suggested-chips-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+}
+
+.profile-suggested-chip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  font-family: inherit;
+}
+
+.profile-suggested-chip-btn:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+.profile-suggested-chip-btn.selected {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1e40af;
+  font-weight: 600;
+}
+
+.chip-icon-symbol {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
 }
