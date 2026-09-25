@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Google, GitHub, Mail, Lock, Eye, EyeOff } from "@/Components/icons";
 import "./login.css";
@@ -6,6 +6,10 @@ import {
   AuthHomeScreen,
   BrandLogo,
   SignupCard,
+  SocialButton,
+  Divider,
+  TextInput,
+  PrimaryButton,
 } from "@/Components";
 import authApi from "@/features/auth/api/authApi";
 import oauthApi from "@/features/auth/api/oauthApi";
@@ -13,110 +17,248 @@ import profileApi from "@/features/profile/api/profileApi";
 import { useAuth } from "@/context/AuthContext";
 import { useDispatch } from "react-redux";
 import { showSnackbar } from "@/store";
-import { APP_STRINGS, TOAST_MESSAGES, FORM_ERRORS } from "@/constants/string";
+import { APP_STRINGS, APP_CONFIG, TOAST_MESSAGES, FORM_ERRORS } from "@/constants/string";
+import { ROLES } from "@/permissions/roles";
+
+const REMEMBERED_EMAIL_KEY = "techguild_remembered_email";
+const PENDING_USER_KEY = "techguild_pending_user";
+
+const initialFormState = {
+  email: "",
+  password: "",
+  rememberMe: false,
+  showPassword: false,
+  loading: false,
+  errorMessage: "",
+  fieldErrors: { email: "", password: "" },
+};
+
+function formReducer(state, action) {
+  switch (action.type) {
+    case "CHANGE_FIELD":
+      return {
+        ...state,
+        [action.field]: action.value,
+        errorMessage: "",
+        fieldErrors: { ...state.fieldErrors, [action.field]: "" },
+      };
+    case "TOGGLE_SHOW_PASSWORD":
+      return { ...state, showPassword: !state.showPassword };
+    case "TOGGLE_REMEMBER":
+      return { ...state, rememberMe: !state.rememberMe };
+    case "HYDRATE_REMEMBERED":
+      return {
+        ...state,
+        email: action.email,
+        rememberMe: true,
+      };
+    case "SUBMIT_START":
+      return { ...state, loading: true, errorMessage: "" };
+    case "SUBMIT_ERROR":
+      return {
+        ...state,
+        loading: false,
+        errorMessage: action.message,
+        fieldErrors: action.fieldErrors ?? state.fieldErrors,
+      };
+    case "SUBMIT_END":
+      return { ...state, loading: false };
+    default:
+      return state;
+  }
+}
+
+function readPendingName(cleanEmail) {
+  try {
+    const raw = localStorage.getItem(PENDING_USER_KEY);
+    if (!raw) return null;
+    const pendingUser = JSON.parse(raw);
+    if (
+      pendingUser?.email?.toLowerCase() === cleanEmail.toLowerCase() &&
+      pendingUser?.name
+    ) {
+      return pendingUser.name;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+function deriveDisplayName(cleanEmail) {
+  return (
+    readPendingName(cleanEmail) ??
+    cleanEmail
+      .split("@")[0]
+      .replace(/[._-]+/g, " ")
+      .replace(/\b\w/g, (l) => l.toUpperCase())
+  );
+}
+
+function resolveDashboardPath(role) {
+  if (role === ROLES.CLIENT) return "/client-quest-board";
+  if (role === ROLES.AGENCY) return "/agency/dashboard";
+  return "/dashboard";
+}
 
 export default function Login() {
   const dispatch = useDispatch();
   const STRINGS = APP_STRINGS.AUTH.LOGIN;
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [state, formDispatch] = useReducer(formReducer, initialFormState);
+  const { email, password, rememberMe, showPassword, loading, errorMessage, fieldErrors } = state;
 
   const { login } = useAuth();
   const navigate = useNavigate();
+  const redirectTimer = useRef(null);
 
-  const handleLogin = async (e) => {
-    e?.preventDefault();
-    setErrorMessage("");
-    setLoading(true);
-
-    try {
-      const cleanEmail = email.trim();
-      const response = await authApi.login({ email: cleanEmail, password });
-      const token = response?.access_token;
-
-      if (!token) {
-        throw new Error(response?.message || "Login failed: No access token returned.");
-      }
-
-      // Restore user name from pending registration cache if available
-      const pendingUser = JSON.parse(localStorage.getItem("techguild_pending_user") || "{}");
-      const resolvedName =
-        pendingUser?.email?.toLowerCase() === cleanEmail.toLowerCase() && pendingUser?.name
-          ? pendingUser.name
-          : cleanEmail
-              .split("@")[0]
-              .replace(/[._-]/g, " ")
-              .replace(/\b\w/g, (l) => l.toUpperCase());
-
-      let role = "individual";
-      // Try to read profile to get actual user role
-      try {
-        localStorage.setItem("techguild_token", token);
-        const profileRes = await profileApi.getProfile();
-        if (profileRes?.account_type) {
-          role = profileRes.account_type;
-        }
-      } catch {
-        // Fallback to individual
-      }
-
-      await login(
-        {
-          email: cleanEmail,
-          name: resolvedName,
-          role,
-          avatar: resolvedName.charAt(0).toUpperCase(),
-        },
-        token,
-        role
-      );
-
-      dispatch(
-        showSnackbar({
-          message: TOAST_MESSAGES.AUTH.LOGIN_SUCCESS,
-          type: "success",
-        })
-      );
-
-      if (role === "client") {
-        navigate("/client-quest-board");
-      } else if (role === "agency") {
-        navigate("/agency/dashboard");
-      } else {
-        navigate("/dashboard");
-      }
-    } catch (err) {
-      console.error("Login failed:", err);
-      const isUnverified =
-        err?.status === 401 && err?.message?.toLowerCase().includes("verify your email");
-      const msg = isUnverified
-        ? TOAST_MESSAGES.AUTH.VERIFY_EMAIL_REQUIRED
-        : (err?.message || FORM_ERRORS.AUTH.INVALID_CREDENTIALS);
-      setErrorMessage(msg);
-      dispatch(showSnackbar({ message: msg, type: "error" }));
-
-      if (isUnverified) {
-        setTimeout(() => {
-          navigate("/verify-email", { state: { email: email.trim() } });
-        }, 1800);
-      }
-    } finally {
-      setLoading(false);
+  // Restore remembered email (rememberMe now actually persists).
+  useEffect(() => {
+    const remembered = localStorage.getItem(REMEMBERED_EMAIL_KEY);
+    if (remembered) {
+      formDispatch({ type: "HYDRATE_REMEMBERED", email: remembered });
     }
-  };
+    return () => {
+      if (redirectTimer.current) clearTimeout(redirectTimer.current);
+    };
+  }, []);
 
-  const handleGoogleLogin = () => {
+  const setField = useCallback(
+    (field) => (e) => formDispatch({ type: "CHANGE_FIELD", field, value: e.target.value }),
+    []
+  );
+
+  const fail = useCallback(
+    (message, fieldErrors) => {
+      formDispatch({ type: "SUBMIT_ERROR", message, fieldErrors });
+      dispatch(showSnackbar({ message, type: "error" }));
+    },
+    [dispatch]
+  );
+
+  const handleLogin = useCallback(
+    async (e) => {
+      e?.preventDefault();
+      const cleanEmail = email.trim().toLowerCase();
+
+      if (!cleanEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+        fail(
+          FORM_ERRORS.INVALID_EMAIL,
+          { email: FORM_ERRORS.INVALID_EMAIL, password: "" }
+        );
+        return;
+      }
+      if (!password) {
+        fail(
+          FORM_ERRORS.AUTH.EMAIL_PASSWORD_REQUIRED,
+          { email: "", password: FORM_ERRORS.REQUIRED }
+        );
+        return;
+      }
+
+      formDispatch({ type: "SUBMIT_START" });
+
+      try {
+        const response = await authApi.login({ email: cleanEmail, password });
+
+        // 2FA challenge: the backend withholds the access token and issues a
+        // temporary_token instead. Stash it (survives refresh) and hand off
+        // to the /verify-2fa challenge page without creating a session.
+        if (response?.requires_2fa || response?.temporary_token) {
+          sessionStorage.setItem(
+            APP_CONFIG.AUTH.STORAGE_KEYS.TWO_FA_CHALLENGE,
+            JSON.stringify({
+              temporaryToken: response.temporary_token,
+              email: cleanEmail,
+            })
+          );
+          navigate("/verify-2fa", {
+            state: {
+              temporary_token: response.temporary_token,
+              email: cleanEmail,
+            },
+          });
+          return;
+        }
+
+        const token = response?.access_token;
+
+        if (!token) {
+          throw new Error(response?.message || "Login failed: No access token returned.");
+        }
+
+        const resolvedName = deriveDisplayName(cleanEmail);
+
+        // Single write path: AuthContext.login persists token/user/role.
+        // Probe profile first (token passed explicitly so apiClient doesn't
+        // depend on storage ordering), defaulting to individual.
+        let role = ROLES.INDIVIDUAL;
+        try {
+          const profileRes = await profileApi.getProfile({ token });
+          if (profileRes?.account_type) {
+            role = profileRes.account_type;
+          }
+        } catch {
+          // Fallback to individual when profile is unreachable.
+        }
+
+        await login(
+          {
+            email: cleanEmail,
+            name: resolvedName,
+            role,
+            avatar: resolvedName.charAt(0).toUpperCase(),
+          },
+          token,
+          role
+        );
+
+        if (rememberMe) {
+          localStorage.setItem(REMEMBERED_EMAIL_KEY, cleanEmail);
+        } else {
+          localStorage.removeItem(REMEMBERED_EMAIL_KEY);
+        }
+
+        dispatch(
+          showSnackbar({
+            message: TOAST_MESSAGES.AUTH.LOGIN_SUCCESS,
+            type: "success",
+          })
+        );
+
+        navigate(resolveDashboardPath(role));
+      } catch (err) {
+        const isUnverified =
+          err?.status === 401 && err?.message?.toLowerCase().includes("verify your email");
+        const msg = isUnverified
+          ? TOAST_MESSAGES.AUTH.VERIFY_EMAIL_REQUIRED
+          : err?.message || FORM_ERRORS.AUTH.INVALID_CREDENTIALS;
+        fail(msg);
+
+        if (isUnverified) {
+          redirectTimer.current = setTimeout(() => {
+            navigate("/verify-email", { state: { email: cleanEmail } });
+          }, 1800);
+        }
+      } finally {
+        formDispatch({ type: "SUBMIT_END" });
+      }
+    },
+    [email, password, rememberMe, login, navigate, dispatch, fail]
+  );
+
+  const handleGoogleLogin = useCallback(() => {
     oauthApi.redirectToGoogle();
-  };
+  }, []);
 
-  const handleGithubLogin = () => {
+  const handleGithubLogin = useCallback(() => {
     oauthApi.redirectToGithub();
-  };
+  }, []);
+
+  const canSubmit = useMemo(
+    () => email.trim().length > 0 && password.length > 0 && !loading,
+    [email, password, loading]
+  );
 
   return (
     <div className="login-page">
@@ -124,127 +266,120 @@ export default function Login() {
 
       <div className="auth-card-wrapper">
         <SignupCard>
-          <form onSubmit={handleLogin} style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+          <form onSubmit={handleLogin} className="login-form" noValidate>
             <BrandLogo />
 
-            <h2 style={{ fontWeight: 700, fontSize: '18px', color: '#111827', margin: '6px 0 1px 0' }}>{STRINGS.TITLE}</h2>
-            <p style={{ color: '#79797D', fontSize: '13px', margin: '0 0 14px 0' }}>{STRINGS.SUBTITLE}</p>
+            <h2 className="login-title">{STRINGS.TITLE}</h2>
+            <p className="login-subtitle">{STRINGS.SUBTITLE}</p>
 
             {errorMessage && (
-              <div
-                style={{
-                  padding: "8px 12px",
-                  marginBottom: "12px",
-                  borderRadius: "6px",
-                  backgroundColor: "#fee2e2",
-                  color: "#b91c1c",
-                  fontSize: "12px",
-                  lineHeight: "1.4",
-                }}
-              >
+              <div className="login-error" role="alert" aria-live="assertive">
                 {errorMessage}
               </div>
             )}
 
-            <button
-              type="button"
-              onClick={handleGoogleLogin}
-              className="btn btn-light bg-white border d-flex align-items-center justify-content-center gap-2 w-100 shadow-sm fw-medium rounded-3"
-              style={{ fontSize: '13px', padding: '8px 0', marginBottom: '10px' }}
-            >
-              <Google width={18} height={18} />
-              <span>{STRINGS.GOOGLE_BTN}</span>
-            </button>
-            <button
-              type="button"
-              onClick={handleGithubLogin}
-              className="btn btn-light bg-white border d-flex align-items-center justify-content-center gap-2 w-100 shadow-sm fw-medium rounded-3"
-              style={{ fontSize: '13px', padding: '8px 0', marginBottom: '0px' }}
-            >
-              <GitHub width={18} height={18} />
-              <span>{STRINGS.GITHUB_BTN}</span>
-            </button>
-
-            <div style={{ display: 'flex', alignItems: 'center', margin: '8px 0 8px 0' }}>
-              <div style={{ flex: 1, height: '1px', backgroundColor: '#B3B3B3' }}></div>
-              <span style={{ padding: '0 12px', fontSize: '11px', fontWeight: 600, color: '#4B5563', letterSpacing: '0.05em' }}>{STRINGS.DIVIDER_OR}</span>
-              <div style={{ flex: 1, height: '1px', backgroundColor: '#B3B3B3' }}></div>
+            <div className="login-oauth-stack">
+              <SocialButton
+                text={STRINGS.GOOGLE_BTN}
+                icon={<Google width={18} height={18} />}
+                onClick={handleGoogleLogin}
+                disabled={loading}
+              />
+              <SocialButton
+                text={STRINGS.GITHUB_BTN}
+                icon={<GitHub width={18} height={18} />}
+                onClick={handleGithubLogin}
+                disabled={loading}
+              />
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <label htmlFor="login-email" style={{ fontWeight: 700, fontSize: '12.5px', color: '#111827', display: 'block', margin: '0 0 4px 0' }}>{STRINGS.EMAIL_LABEL}</label>
-              <div className="input-group rounded-3 overflow-hidden bg-white" style={{ height: '38px', minHeight: '38px', marginBottom: '10px', border: '1px solid #D1D5DB', flexShrink: 0 }}>
-                <span className="input-group-text bg-white border-0 d-flex align-items-center justify-content-center" style={{ padding: '0 10px', minWidth: '36px' }}>
-                  <Mail width={16} height={16} color="#6A717D" />
-                </span>
-                <input
-                  id="login-email"
-                  type="email"
-                  className="form-control border-0 shadow-none bg-white h-100"
-                  placeholder={STRINGS.EMAIL_PLACEHOLDER}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  style={{ fontSize: '13px', padding: '0 10px 0 0' }}
-                />
-              </div>
+            <div className="login-divider-wrap">
+              <Divider text={STRINGS.DIVIDER_OR} />
+            </div>
 
-              <label htmlFor="login-password" style={{ fontWeight: 700, fontSize: '12.5px', color: '#111827', display: 'block', margin: '0 0 4px 0' }}>{STRINGS.PASSWORD_LABEL}</label>
-              <div className="input-group rounded-3 overflow-hidden bg-white" style={{ height: '38px', minHeight: '38px', marginBottom: '12px', border: '1px solid #D1D5DB', flexShrink: 0 }}>
-                <span className="input-group-text bg-white border-0 d-flex align-items-center justify-content-center" style={{ padding: '0 10px', minWidth: '36px' }}>
-                  <Lock width={16} height={16} />
-                </span>
-                <input
-                  id="login-password"
-                  type={showPassword ? "text" : "password"}
-                  className="form-control border-0 shadow-none bg-white h-100"
-                  placeholder={STRINGS.PASSWORD_PLACEHOLDER}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  style={{ fontSize: '13px', padding: '0 10px 0 0' }}
-                />
-                <button
-                  type="button"
-                  className="input-group-text bg-white border-0 btn shadow-none d-flex align-items-center justify-content-center"
-                  onClick={() => setShowPassword(!showPassword)}
-                  style={{ padding: '0 10px' }}
-                >
-                  {showPassword ? <Eye width={16} height={16} /> : <EyeOff width={16} height={16} />}
-                </button>
-              </div>
+            <div className="login-fields">
+              <label className="login-label" htmlFor="login-email">
+                {STRINGS.EMAIL_LABEL}
+              </label>
+              <TextInput
+                id="login-email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                placeholder={STRINGS.EMAIL_PLACEHOLDER}
+                aria-label={STRINGS.EMAIL_LABEL}
+                value={email}
+                onChange={setField("email")}
+                required
+                disabled={loading}
+                error={fieldErrors.email}
+                aria-invalid={Boolean(fieldErrors.email)}
+                leftIcon={<Mail width={16} height={16} color="#6A717D" aria-hidden="true" />}
+                containerClassName="login-textinput"
+              />
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', flexShrink: 0 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <label className="login-label" htmlFor="login-password">
+                {STRINGS.PASSWORD_LABEL}
+              </label>
+              <TextInput
+                id="login-password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                autoComplete={rememberMe ? "current-password" : "off"}
+                placeholder={STRINGS.PASSWORD_PLACEHOLDER}
+                aria-label={STRINGS.PASSWORD_LABEL}
+                value={password}
+                onChange={setField("password")}
+                required
+                disabled={loading}
+                error={fieldErrors.password}
+                aria-invalid={Boolean(fieldErrors.password)}
+                leftIcon={<Lock width={16} height={16} aria-hidden="true" />}
+                rightIcon={
+                  <button
+                    type="button"
+                    className="login-eye-btn"
+                    onClick={() => formDispatch({ type: "TOGGLE_SHOW_PASSWORD" })}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    aria-pressed={showPassword}
+                    disabled={loading}
+                  >
+                    {showPassword ? <Eye width={16} height={16} /> : <EyeOff width={16} height={16} />}
+                  </button>
+                }
+                containerClassName="login-textinput"
+              />
+
+              <div className="login-options">
+                <div className="login-remember">
                   <input
                     type="checkbox"
                     id="rememberMe"
                     checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
+                    onChange={() => formDispatch({ type: "TOGGLE_REMEMBER" })}
                     className="cursor-pointer"
-                    style={{ margin: 0 }}
+                    disabled={loading}
                   />
-                  <label htmlFor="rememberMe" className="cursor-pointer" style={{ fontWeight: 600, fontSize: '13px', color: '#111827', margin: 0 }}>
+                  <label htmlFor="rememberMe" className="cursor-pointer">
                     {STRINGS.REMEMBER_ME}
                   </label>
                 </div>
-                <Link to="/forgot-password" style={{ color: '#103CA4', textDecoration: 'none', fontWeight: 600, fontSize: '13px' }}>
+                <Link to="/forgot-password" className="login-forgot">
                   {STRINGS.FORGOT_PASSWORD_LINK}
                 </Link>
               </div>
             </div>
 
-            <button
+            <PrimaryButton
               type="submit"
-              disabled={loading}
-              className="btn auth-primary-btn"
-            >
-              {loading ? STRINGS.SUBMIT_BTN_LOADING : STRINGS.SUBMIT_BTN}
-            </button>
+              disabled={!canSubmit}
+              className="login-submit"
+              text={loading ? STRINGS.SUBMIT_BTN_LOADING : STRINGS.SUBMIT_BTN}
+            />
 
-            <p style={{ textAlign: 'center', fontSize: '13px', color: '#000000', margin: 'auto 0 2px 0', fontWeight: 500 }}>
+            <p className="login-footer">
               {STRINGS.FOOTER_PROMPT}{" "}
-              <Link to="/signup" style={{ color: '#103CA4', textDecoration: 'none', fontWeight: 600 }}>{STRINGS.FOOTER_LINK}</Link>
+              <Link to="/signup">{STRINGS.FOOTER_LINK}</Link>
             </p>
           </form>
         </SignupCard>

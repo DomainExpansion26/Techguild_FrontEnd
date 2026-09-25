@@ -65,21 +65,23 @@ export const APP_STRINGS = {
       GITHUB_BTN: "Continue with GitHub",
       DIVIDER_OR: "OR",
       FIRST_NAME_LABEL: "First Name",
-      FIRST_NAME_PLACEHOLDER: "e.g. John",
+      FIRST_NAME_PLACEHOLDER: "First Name",
       LAST_NAME_LABEL: "Last Name",
-      LAST_NAME_PLACEHOLDER: "e.g. Doe",
+      LAST_NAME_PLACEHOLDER: "Last Name",
       EMAIL_LABEL: "Email Address",
       EMAIL_PLACEHOLDER: "Enter your email",
       PASSWORD_LABEL: "Password",
-      PASSWORD_PLACEHOLDER: "Create password (min 8 chars)",
+      PASSWORD_PLACEHOLDER: "Enter your password",
+      PASSWORD_SHOW_LABEL: "Show password",
+      PASSWORD_HIDE_LABEL: "Hide password",
       TERMS_AGREE_PREFIX: "I agree to the",
-      TERMS_LINK_TEXT: "Terms of Service",
+      TERMS_LINK_TEXT: "TechGuild User Agreement",
       TERMS_AND_TEXT: "and",
       PRIVACY_LINK_TEXT: "Privacy Policy",
-      SUBMIT_BTN: "Create Account",
+      SUBMIT_BTN: "Join TechGuild",
       SUBMIT_BTN_LOADING: "Creating Account...",
-      FOOTER_PROMPT: "Already have an account?",
-      FOOTER_LINK: "Log In",
+      FOOTER_PROMPT: "Already have an account ?",
+      FOOTER_LINK: "Login",
     },
 
     // Forgot password screen
@@ -96,12 +98,9 @@ export const APP_STRINGS = {
       FOOTER_PROMPT: "Remember your password ?",
       FOOTER_LINK: "Log In",
       SUCCESS: {
-        TITLE: "Check your email",
-        DESC_PREFIX: "We sent a password reset link to",
-        OPEN_EMAIL_BTN: "Open Email",
-        RESEND_PROMPT: "Didn't receive the email ?",
-        RESEND_LINK: "Click to resend",
-        BACK_TO_LOGIN: "Back to log in",
+        TITLE: "Reset Link Sent !",
+        DESC_PREFIX: "We’ve sent a password reset link to",
+        OPEN_EMAIL_BTN: "Go to gmail inbox",
       },
     },
 
@@ -112,8 +111,8 @@ export const APP_STRINGS = {
       SUBTITLE_LINE2: "Make sure it's strong and unique.",
       NEW_PASSWORD_LABEL: "New Password",
       NEW_PASSWORD_PLACEHOLDER: "Enter new password",
-      CONFIRM_PASSWORD_LABEL: "Confirm Password",
-      CONFIRM_PASSWORD_PLACEHOLDER: "Confirm new password",
+      CONFIRM_PASSWORD_LABEL: "Confirm New Password",
+      CONFIRM_PASSWORD_PLACEHOLDER: "Confirm your new password",
       RULES: {
         MIN_LENGTH: "Must be at least 8 characters",
         UPPERCASE: "Must contain an uppercase letter",
@@ -123,10 +122,10 @@ export const APP_STRINGS = {
       SUBMIT_BTN_LOADING: "Updating...",
       BACK_TO_LOGIN: "Back to log in",
       SUCCESS: {
-        TITLE: "Password reset",
-        SUBTITLE_LINE1: "Your password has been successfully reset.",
-        SUBTITLE_LINE2: "Click below to log in.",
-        CONTINUE_BTN: "Continue",
+        TITLE: "Password reset successful !",
+        DESC: "Your password has been updated successfully.",
+        CONTINUE_BTN: "Continue to Log in",
+        BACK_HOME: "Back to Home",
       },
     },
 
@@ -137,10 +136,12 @@ export const APP_STRINGS = {
       INFO_INSTRUCTIONS: "Please check your email and click the link provided to verify your email address.",
       SEND_AGAIN_BTN: "Send Again",
       SENDING_BTN: "Sending...",
-      OPEN_EMAIL_BTN: "Open Email",
-      ACCOUNT_TYPE_LINK: "I've verified my email → Choose Account Type",
+      OPEN_EMAIL_BTN: "Go to Gmail Inbox",
+      TRUST_LINE1: "Build trust, unlock more opportunities,",
+      TRUST_LINE2: "Earn Trust Points !",
       RESEND_SUCCESS: "Verification email resent successfully!",
       RESEND_FAILED: "Failed to resend verification email.",
+      NO_EMAIL: "We couldn't find your email address. Please sign up again.",
     },
 
     // Email verified confirmation screen
@@ -156,7 +157,7 @@ export const APP_STRINGS = {
         PROFILE_COMPLETED_POINTS: "+20 Trust Points",
         IDENTITY_VERIFIED_TITLE: "Identity Verified",
         IDENTITY_VERIFIED_POINTS: "+40 Trust Points",
-        FIRST_PROJECT_TITLE: "First Project",
+        FIRST_PROJECT_TITLE: "First Project/ Proposal",
         FIRST_PROJECT_POINTS: "+30 Trust Points",
       },
       CONTINUE_BTN: "Continue to account type",
@@ -209,6 +210,17 @@ export const APP_STRINGS = {
       RETURN_TO_LOGIN: "Return to Login",
       LOADING_TEXT: "Authenticating with provider...",
       DEFAULT_ERROR: "Failed to authenticate with OAuth provider",
+    },
+
+    // Two-factor login challenge screen (Figma: "for 6- digit code" / "for 8 digit code")
+    TWO_FACTOR: {
+      TITLE: "Enter your code",
+      SUBTITLE_AUTHENTICATOR: "Enter 6 Digit code from your Authenticator app",
+      SUBTITLE_RECOVERY: "Enter 8 Digit code from your Authenticator app",
+      AUTHENTICATOR_OPTION: "Select from Authenticator App",
+      RECOVERY_OPTION: "Select from Recovery codes",
+      SUBMIT_BTN: "Verify & Save",
+      SUBMIT_BTN_LOADING: "Verifying...",
     },
   },
 
@@ -639,6 +651,8 @@ export const TOAST_MESSAGES = {
     VERIFY_EMAIL_REQUIRED: "Please verify your email address first before logging in. Check your inbox.",
     RESEND_SUCCESS: "Verification email resent successfully!",
     WELCOME_ROLE: (role) => `Welcome to TechGuild as a ${role}!`,
+    TWO_FA_SUCCESS: "Two-factor verification successful! Welcome back.",
+    TWO_FA_CHALLENGE_MISSING: "Your verification session expired. Please log in again.",
   },
   QUESTS: {
     APPLIED_SUCCESS: "Your quest application has been submitted!",
@@ -677,6 +691,8 @@ export const FORM_ERRORS = {
     VERIFY_FAILED: "Verification link is invalid or expired.",
     RESEND_FAILED: "Failed to resend verification email.",
     ACCOUNT_TYPE_FAILED: "Failed to set account type. Please try again.",
+    TWO_FA_FAILED: "The code you entered is incorrect. Please try again.",
+    TWO_FA_INCOMPLETE: "Please enter the complete code.",
   },
   PROFILE: {
     PHOTO_REQUIRED: "Profile picture is required",
@@ -725,6 +741,25 @@ export const APP_CONFIG = {
     DEFAULT_PAGE: 1,
     DEFAULT_PAGE_SIZE: 10,
     PAGE_SIZE_OPTIONS: [10, 20, 50],
+  },
+
+  // Auth flow: storage keys, validation rules, timings
+  AUTH: {
+    STORAGE_KEYS: {
+      PENDING_USER: "techguild_pending_user",
+      REMEMBERED_EMAIL: "techguild_remembered_email",
+      TWO_FA_CHALLENGE: "techguild_2fa_challenge",
+    },
+    PASSWORD_MIN_LENGTH: 8,
+    /** Delay before navigating after a successful signup (lets the toast read) */
+    SIGNUP_REDIRECT_DELAY_MS: 1000,
+    /** Login-time 2FA challenge lengths: 6-digit TOTP, and 9 exact chars
+        for recovery codes (e.g. "Zpp_-Sf2s" — mixed case, "_" and "-"
+        included, sent verbatim — see TwoFactor.jsx). */
+    TWO_FA_CODE_LENGTHS: {
+      AUTHENTICATOR: 6,
+      RECOVERY: 9,
+    },
   },
 
   // Social / Community links

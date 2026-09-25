@@ -1,3 +1,30 @@
+/* ===== Account-type design tokens (from Figma frame 115:11 "Account type") =====
+ * Figbridge audits on the frame:
+ * - palette: 8 colors -> tokens. Card hairlines/divider stay #E7EBF2;
+ *   icon badges keep the original #E1EBFF (restored in Figma after audit
+ *   merge); #000000/#071329 unified to --acct-ink; active #2D61DB unified
+ *   to primary.
+ * - typography: 36/32/24/16/14/12/10 -> snapped to 32/20/14/13/12 scale.
+ * - spacing: card padding 24.01/14, gaps 13.33/8.00/30 -> 8pt grid (24/16).
+ * - a11y: footer #788397 (3.82:1) -> --acct-muted (passes AA). Title/desc
+ *   grays kept at #596579 (passes AA, audit-clean).
+ * - layout: horizontal 3-card row (223px each, gap 30->24), centered text,
+ *   centered 297x48 button. Vertical list replaced to match.
+ */
+.account-page {
+  --acct-ink: #111827;
+  --acct-body: #596579;
+  --acct-muted: #6b7280;
+  --acct-primary: #103ca4;
+  --acct-primary-hover: #0c3188;
+  --acct-card-border: #e7ebf2;
+  --acct-icon-bg: #e1ebff; /* Figma icon badge (77px circle), distinct from hairlines */
+  --acct-error-bg: #fee2e2;
+  --acct-error-ink: #b91c1c;
+  --acct-radius-card: 12px;
+  --acct-radius-btn: 8px;
+}
+
 .account-page {
   width: 100vw;
   height: 100vh;
@@ -76,7 +103,7 @@
   inset: 0;
 }
 
-/* Signup Card - compact dimensions matching screenshot */
+/* Modal card: widened to fit the 3-column row (Figma ~800px content) */
 .account-page .signup-card {
   position: relative !important;
   left: auto !important;
@@ -84,182 +111,235 @@
   transform: translateY(-15px) !important;
   margin: auto !important;
 
-  width: 450px !important;
-  max-width: 92% !important;
+  width: min(880px, 94vw) !important;
+  max-width: 94vw !important;
   height: auto !important;
+  max-height: 94vh !important;
+  overflow-y: auto !important;
 
-  padding: 22px 22px 20px !important;
+  padding: 48px 32px 32px !important; /* Figma 50/30 snapped to grid */
   background: rgba(255, 255, 255, 0.55) !important;
   border-radius: 20px !important;
   border: 1px solid rgba(255, 255, 255, 0.7) !important;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
   box-sizing: border-box !important;
-  overflow: visible !important;
 }
 
 .account-container {
   width: 100%;
+  text-align: center;
 }
 
 .account-container h2 {
-  font-size: 16px;
+  font-size: 32px; /* Figma 36 Bold snapped to scale */
   font-weight: 700;
-  color: #000000;
+  color: var(--acct-ink);
   margin-top: 0;
-  margin-bottom: 2px;
-  text-align: left;
+  margin-bottom: 8px;
   letter-spacing: -0.01em;
+  line-height: 1.2;
 }
 
 .subtitle {
-  font-size: 10.5px;
-  color: #555555;
+  font-size: 14px; /* Figma 16 Regular snapped to app subtitle scale */
+  color: var(--acct-body);
   margin-top: 0;
-  margin-bottom: 8px;
+  margin-bottom: 24px;
+  line-height: 1.4;
+}
+
+.account-error {
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  background-color: var(--acct-error-bg);
+  color: var(--acct-error-ink);
+  font-size: 12px;
+  line-height: 1.4;
   text-align: left;
 }
 
-/* Cards */
+/* Cards: horizontal row on desktop (Figma Frame 1707482541) */
 .account-list {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 24px; /* Figma 30 snapped to 8pt grid */
 }
 
 .account-card {
-  width: 100%;
-  height: auto;
+  flex: 1 1 0;
+  min-width: 0;
+  position: relative;
 
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0;
 
-  padding: 8px 10px;
+  padding: 16px 16px 20px; /* Figma 14/24 snapped */
 
-  border: 1px solid #B3B3B3;
-  border-radius: 12px;
+  border: 1px solid var(--acct-card-border);
+  border-radius: var(--acct-radius-card);
 
-  background: rgba(255, 255, 255, 0.25);
+  background: #ffffff;
 
-  transition: all 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
   box-sizing: border-box;
   cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.account-card:hover {
+  border-color: var(--acct-primary);
+}
+
+.account-card:focus-visible {
+  outline: 2px solid var(--acct-primary);
+  outline-offset: 2px;
+}
+
+.account-card[aria-disabled="true"] {
+  cursor: default;
 }
 
 .account-card.active {
-  border: 2px solid #2D61DB;
-  background: rgba(255, 255, 255, 0.45);
-  padding: 7px 9px;
-  /* Reduce padding by 1px to offset the 2px border and prevent layout shift */
+  border: 2px solid var(--acct-primary);
+  padding: 15px 15px 19px;
+  /* -1px padding offsets the 2px border to prevent layout shift */
+  box-shadow: 0 4px 16px rgba(16, 60, 164, 0.12);
 }
 
-/* Icon Box */
+/* Icon badge: circle (Figma 77px Container, radius = half) */
 .account-icon {
-  width: 52px;
-  height: 52px;
+  width: 72px;
+  height: 72px;
 
-  border-radius: 12px;
+  border-radius: 50%;
 
-  background: #ebf2ff;
+  background: var(--acct-icon-bg);
 
-  color: #103CA4;
+  color: var(--acct-primary);
 
   display: flex;
   align-items: center;
   justify-content: center;
 
   flex-shrink: 0;
-}
-
-.account-card.active .account-icon {
-  background: #ebf2ff;
-  color: #103CA4;
+  margin-bottom: 12px;
 }
 
 /* Content */
 .account-info {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .account-info h3 {
-  margin: 0 0 2px 0;
-  font-size: 13.5px;
+  margin: 0 0 4px 0;
+  font-size: 20px; /* Figma 24 Bold, scaled to card width */
   font-weight: 700;
-  color: #000000;
+  color: var(--acct-ink);
   line-height: 1.25;
+}
+
+.account-card.active .account-info h3 {
+  color: var(--acct-primary); /* Figma: selected title turns blue */
 }
 
 .desc {
   margin-top: 0;
-  margin-bottom: 4px;
-  font-size: 10px;
-  color: #555555;
-  line-height: 1.35;
+  margin-bottom: 12px;
+  font-size: 13px; /* Figma 14 snapped */
+  color: var(--acct-body);
+  line-height: 1.4;
 }
 
 .account-info ul {
-  margin-top: 2px;
-  margin-bottom: 0;
-  padding-left: 14px;
-  list-style-type: disc;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Figma 8.00 */
+  align-items: flex-start;
 }
 
 .account-info li {
-  font-size: 9.8px;
-  color: #666666;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px; /* Figma 12 Regular */
+  color: var(--acct-body);
   line-height: 1.35;
 }
 
-.account-info li::marker {
-  font-size: 8px;
-  color: #666666;
+.account-info li svg {
+  flex-shrink: 0;
+  color: var(--acct-primary);
 }
 
-/* Radio */
+/* Figma: card + tick glyphs render in primary #103CA4. The shared SVG
+ * assets hardcode stroke="#6A717D" (presentation attribute), which ignores
+ * the inherited `color` above — so override it here. Scoped to this page:
+ * Login and other consumers keep their gray icons. */
+.account-icon svg path,
+.account-info li svg path {
+  stroke: var(--acct-primary);
+}
+
+/* Radio: top-right corner */
 .radio {
+  position: absolute;
+  top: 12px;
+  right: 12px;
   width: 18px;
   height: 18px;
 
-  border: 2px solid #6b7a90;
+  border: 2px solid #9ca3af;
   border-radius: 50%;
+  background: #ffffff;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  cursor: pointer;
-
   flex-shrink: 0;
-  margin-top: 2px;
   transition: all 0.2s ease;
+  padding: 0;
 }
 
 .account-card.active .radio {
-  border-color: #103CA4;
-  background: #103CA4;
+  border-color: var(--acct-primary);
+  background: var(--acct-primary);
 }
 
 .dot {
-  width: 100%;
-  height: 100%;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
+  background: transparent;
 }
 
-.selected {
-  background: #103CA4;
+.dot.selected {
+  background: #ffffff;
 }
 
-/* Button */
+/* Button: centered fixed width (Figma 297x48, radius 8) */
 .continue-btn {
-  width: 100%;
-  height: 38px;
+  display: block;
+  width: min(297px, 100%);
+  height: 48px;
+  margin: 24px auto 0;
 
-  margin-top: 8px;
+  border-radius: var(--acct-radius-btn);
 
-  border-radius: 8px;
-
-  font-size: 13px;
+  font-size: 14px; /* Figma 14 Semibold */
   font-weight: 600;
 
   cursor: pointer;
@@ -268,14 +348,19 @@
 }
 
 .continue-btn:not(:disabled) {
-  background: #103CA4;
+  background: var(--acct-primary);
   color: #fff;
   border: none;
   box-shadow: 0 4px 14px rgba(16, 60, 164, 0.25);
 }
 
 .continue-btn:not(:disabled):hover {
-  background: #0c3188;
+  background: var(--acct-primary-hover);
+}
+
+.continue-btn:focus-visible {
+  outline: 2px solid var(--acct-primary);
+  outline-offset: 2px;
 }
 
 .continue-btn:disabled {
@@ -286,7 +371,72 @@
   cursor: not-allowed;
 }
 
-/* Responsive */
+/* Trust note (was missing in code; Figma footer, AA-fixed color) */
+.account-trust-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 16px 0 0 0;
+  font-size: 12px; /* Figma 10 raised for readability */
+  color: var(--acct-muted);
+  line-height: 1.4;
+}
+
+/* Responsive: collapse row to stacked cards */
+@media (max-width: 900px) {
+  .account-page .signup-card {
+    padding: 32px 24px 24px !important;
+  }
+
+  .account-container h2 {
+    font-size: 24px;
+  }
+
+  .account-list {
+    flex-direction: column;
+    gap: 12px;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .account-card {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    padding: 12px;
+  }
+
+  .account-card.active {
+    padding: 11px;
+  }
+
+  .account-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 0;
+  }
+
+  .account-info {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .account-info h3 {
+    font-size: 16px;
+  }
+
+  .account-info ul {
+    align-items: flex-start;
+  }
+
+  .radio {
+    position: static;
+    margin-top: 2px;
+    margin-left: auto;
+  }
+}
+
 @media (max-width: 768px) {
   .auth-header {
     top: 16px;
@@ -298,36 +448,7 @@
     font-size: 22px;
   }
 
-  .account-page .signup-card {
-    width: 92% !important;
-    padding: 14px 14px 12px !important;
-  }
-
-  .account-card {
-    padding: 6px 8px;
-    gap: 8px;
-  }
-
-  .account-card.active {
-    padding: 5px 7px;
-  }
-
-  .account-icon {
-    width: 36px;
-    height: 36px;
-  }
-
-  .account-info h3 {
-    font-size: 12.5px;
-  }
-
-  .desc,
-  .account-info li {
-    font-size: 9.2px;
-  }
-
   .continue-btn {
-    height: 36px;
-    font-size: 12.5px;
+    height: 44px;
   }
 }

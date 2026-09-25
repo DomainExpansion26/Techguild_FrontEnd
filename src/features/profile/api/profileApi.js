@@ -226,9 +226,17 @@ export const normalizeMyProfile = (res) => {
 // ---------------------------------------------------------------------------
 
 export const profileApi = {
-  // Get logged-in user profile (get-my-profile)
-  getProfile: async () => {
-    return apiClient.get(ENDPOINTS.PROFILE.BASE);
+  // Get logged-in user profile. Accepts an explicit token so login can probe
+  // the role before persisting session (single-write path in AuthContext).
+  getProfile: async (options = {}) => {
+    const { token, ...rest } = options;
+    if (token) {
+      return apiClient.get(ENDPOINTS.PROFILE.BASE, {
+        ...rest,
+        headers: { ...rest.headers, Authorization: `Bearer ${token}` },
+      });
+    }
+    return apiClient.get(ENDPOINTS.PROFILE.BASE, rest);
   },
 
   // Same, but normalized to { account_type, individual, client, agency }
