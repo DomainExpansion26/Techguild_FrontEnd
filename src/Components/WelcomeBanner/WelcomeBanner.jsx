@@ -35,7 +35,7 @@ export default function WelcomeBanner({
     if (onActionClick) {
       onActionClick();
     } else {
-      navigate("/profile");
+      navigate("/profile/basic-info");
     }
   };
 

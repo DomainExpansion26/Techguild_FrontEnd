@@ -6,6 +6,7 @@ import { profileApi } from "@/features/profile/api/profileApi";
 import {
   APP_STRINGS,
   COUNTRY_OPTIONS,
+  CITY_OPTIONS,
   TIME_ZONE_OPTIONS,
   EXPERIENCE_LEVEL_OPTIONS,
   AVAILABILITY_OPTIONS,
@@ -15,6 +16,7 @@ import {
 import { ICON_SIZES, FORM_SIZES } from "@/constants/sizes";
 import "./profile.css";
 
+const WELCOME_STRINGS = APP_STRINGS.PROFILE.WELCOME_SCREEN;
 const WIZARD_STRINGS = APP_STRINGS.PROFILE.WIZARD;
 const ERRORS = FORM_ERRORS.PROFILE;
 
@@ -36,11 +38,256 @@ const slugStepMap = {
   "completed": 6,
 };
 
+const ROLE_SUGGESTIONS_MAP = [
+  {
+    keywords: ["ui", "ux", "design", "figma", "product design", "visual"],
+    skills: ["Figma", "User Research", "Design System", "Prototyping", "Sketch", "Wireframing", "Adobe XD", "Interaction Design", "Usability Testing"],
+    tools: ["Figma", "Adobe XD", "Sketch", "Photoshop", "Illustrator", "InVision", "Miro", "Zeplin", "Framer"],
+    categories: ["UI/UX Design", "Product Design", "Web Design", "Mobile App Design", "Design Systems"],
+  },
+  {
+    keywords: ["frontend", "front-end", "front end", "react", "vue", "angular", "web dev", "javascript", "typescript", "html", "css", "next"],
+    skills: ["React", "JavaScript", "TypeScript", "HTML5", "CSS3", "Next.js", "Tailwind CSS", "Redux", "REST API", "Vue.js"],
+    tools: ["VS Code", "GitHub", "Chrome DevTools", "Vite", "Webpack", "Postman", "npm", "Figma", "Vercel"],
+    categories: ["Frontend Development", "Web Development", "Single Page Applications", "UI Engineering", "Responsive Design"],
+  },
+  {
+    keywords: ["backend", "back-end", "back end", "node", "python", "django", "java", "golang", "php", "laravel", "express", "database", "api"],
+    skills: ["Node.js", "Express.js", "Python", "Django", "PostgreSQL", "MongoDB", "REST APIs", "GraphQL", "Redis", "Docker"],
+    tools: ["Postman", "Docker", "Git", "VS Code", "TablePlus", "DBeaver", "MongoDB Compass", "AWS", "Swagger"],
+    categories: ["Backend & APIs", "Database Design", "Cloud & DevOps", "API Development", "Microservices Architecture"],
+  },
+  {
+    keywords: ["fullstack", "full stack", "full-stack", "software engineer", "developer", "mern", "mean"],
+    skills: ["React", "Node.js", "JavaScript", "TypeScript", "Next.js", "MongoDB", "PostgreSQL", "Express.js", "Tailwind CSS", "REST APIs"],
+    tools: ["VS Code", "GitHub", "Docker", "Postman", "Vite", "AWS", "Vercel", "npm"],
+    categories: ["Full Stack Development", "Web Development", "Frontend Development", "Backend & APIs", "SaaS Applications"],
+  },
+  {
+    keywords: ["mobile", "android", "ios", "flutter", "react native", "swift", "kotlin", "app"],
+    skills: ["Flutter", "React Native", "Swift", "Kotlin", "Android Development", "iOS Development", "Dart", "Mobile UI", "Firebase"],
+    tools: ["Android Studio", "Xcode", "VS Code", "Firebase Console", "Postman", "GitHub", "Figma"],
+    categories: ["Mobile App Development", "Cross-Platform Apps", "iOS Development", "Android Development", "App Development"],
+  },
+  {
+    keywords: ["ai", "machine learning", "ml", "data science", "deep learning", "nlp", "llm", "data"],
+    skills: ["Machine Learning", "Deep Learning", "Python", "PyTorch", "TensorFlow", "NLP", "Computer Vision", "LLMs", "Data Analysis", "Pandas"],
+    tools: ["Jupyter Notebook", "Google Colab", "Hugging Face", "VS Code", "Docker", "Git", "Weights & Biases"],
+    categories: ["AI & Machine Learning", "Data Science", "Generative AI", "Natural Language Processing", "Computer Vision"],
+  },
+  {
+    keywords: ["devops", "cloud", "aws", "azure", "docker", "kubernetes", "sre", "ci/cd", "infra"],
+    skills: ["AWS", "Docker", "Kubernetes", "CI/CD", "Terraform", "Linux", "Jenkins", "Ansible", "GitHub Actions", "Prometheus"],
+    tools: ["Docker", "Kubernetes", "AWS Console", "Terraform", "GitHub Actions", "Grafana", "VS Code"],
+    categories: ["DevOps & Cloud Infrastructure", "Cloud Architecture", "Site Reliability Engineering", "CI/CD Automation"],
+  },
+  {
+    keywords: ["qa", "test", "automation", "quality assurance", "tester"],
+    skills: ["Manual Testing", "Automation Testing", "Selenium", "Cypress", "Playwright", "Jest", "API Testing", "Bug Tracking", "Test Cases"],
+    tools: ["Postman", "Selenium", "Cypress", "Jira", "GitHub", "VS Code", "BrowserStack"],
+    categories: ["Quality Assurance", "Test Automation", "Performance Testing", "Manual Testing"],
+  },
+];
+
+const DEFAULT_SUGGESTED_SKILLS = [
+  "Figma", "User Research", "Design System", "Prototyping", "Sketch"
+];
+
+const MASTER_SKILLS_LIST = [
+  "Figma", "Figma UI", "Figma Design", "User Research", "Design System", "Prototyping", "Wireframing", "Sketch", "Adobe XD", "Interaction Design", "Usability Testing", "Information Architecture", "Visual Design",
+  "React", "React.js", "React Native", "Next.js", "JavaScript", "TypeScript", "HTML5", "CSS3", "Tailwind CSS", "Bootstrap", "Vue.js", "Angular", "Svelte", "Redux", "Zustand", "GraphQL", "REST APIs",
+  "Node.js", "Express.js", "NestJS", "Python", "Django", "FastAPI", "Flask", "Java", "Spring Boot", "Golang", "PHP", "Laravel", "Ruby on Rails", "C#", ".NET",
+  "PostgreSQL", "MySQL", "MongoDB", "Redis", "Supabase", "Firebase", "Prisma",
+  "Docker", "Kubernetes", "AWS", "Azure", "GCP", "CI/CD", "Git", "GitHub", "Terraform", "Linux",
+  "Flutter", "Swift", "Kotlin", "Android Development", "iOS Development", "Dart",
+  "Machine Learning", "Deep Learning", "Data Analysis", "NLP", "Computer Vision", "LLMs", "TensorFlow", "PyTorch", "Pandas", "Scikit-Learn",
+  "Manual Testing", "Automation Testing", "Selenium", "Cypress", "Playwright", "Jest", "API Testing",
+  "Cybersecurity", "Blockchain", "Solidity", "Web3", "SEO Optimization", "Content Writing", "Copywriting", "Project Management", "Agile", "Scrum"
+];
+
+const MASTER_TOOLS_LIST = [
+  "Figma", "VS Code", "GitHub", "GitLab", "Postman", "Docker", "Jira", "Trello", "Notion", "Slack", "Adobe XD", "Adobe Photoshop", "Adobe Illustrator", "Adobe After Effects", "Sketch", "InVision", "Framer", "Miro", "Zeplin", "Canva", "Linear", "Asana", "TablePlus", "DBeaver", "MongoDB Compass", "Vercel", "Netlify", "AWS Console", "Firebase", "Supabase", "Xcode", "Android Studio", "Postgres", "RedisInsight", "Swagger", "Jupyter Notebook", "Google Colab", "Chrome DevTools", "Webpack", "Vite", "npm", "Yarn", "pnpm"
+];
+
+const MASTER_CATEGORIES_LIST = [
+  "UI/UX Design", "Product Design", "Web Design", "Mobile App Design", "Design Systems", "User Research", "Visual Design", "Frontend Development", "Backend & APIs", "Full Stack Development", "Web Development", "Mobile App Development", "iOS Development", "Android Development", "Cross-Platform Apps", "Application", "App Development", "Application Management", "Software Architecture", "API Development", "Database Design", "Cloud & DevOps", "DevOps & Cloud Infrastructure", "AI & Machine Learning", "Data Science", "Natural Language Processing", "Computer Vision", "Quality Assurance", "Test Automation", "Web3 & Blockchain", "Cybersecurity", "Technical Writing", "E-commerce Development", "SaaS Development"
+];
+
+const MASTER_LANGUAGES_LIST = [
+  "English", "Hindi", "Spanish", "French", "German", "Japanese", "Mandarin Chinese", "Marathi", "Bengali", "Telugu", "Tamil", "Gujarati", "Kannada", "Malayalam", "Punjabi", "Arabic", "Portuguese", "Russian", "Korean", "Italian"
+];
+
+const getRoleSuggestions = (headline) => {
+  if (!headline || !headline.trim()) {
+    return {
+      skills: DEFAULT_SUGGESTED_SKILLS,
+    };
+  }
+  const cleanHeadline = headline.toLowerCase();
+  const matched = ROLE_SUGGESTIONS_MAP.find((entry) =>
+    entry.keywords.some((kw) => cleanHeadline.includes(kw))
+  );
+  if (matched) {
+    return {
+      skills: matched.skills.slice(0, 6),
+    };
+  }
+  return {
+    skills: DEFAULT_SUGGESTED_SKILLS,
+  };
+};
+
+function TagInput({
+  label,
+  placeholder,
+  value = "",
+  onChange,
+  suggestions = [],
+  error,
+  id,
+  extraContent,
+}) {
+  const [inputValue, setInputValue] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef(null);
+  const inputRef = useRef(null);
+
+  const tags = typeof value === "string"
+    ? value.split(",").map((s) => s.trim()).filter(Boolean)
+    : (Array.isArray(value) ? value : []);
+
+  const setTags = (newTags) => {
+    onChange(newTags.join(", "));
+  };
+
+  const addTag = (tagText) => {
+    const trimmed = tagText.trim();
+    if (!trimmed) return;
+    const exists = tags.some((t) => t.toLowerCase() === trimmed.toLowerCase());
+    if (!exists) {
+      setTags([...tags, trimmed]);
+    }
+    setInputValue("");
+    setIsOpen(false);
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
+  const removeTag = (tagToRemove) => {
+    setTags(tags.filter((t) => t.toLowerCase() !== tagToRemove.toLowerCase()));
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" || e.key === ",") {
+      e.preventDefault();
+      if (inputValue.trim()) {
+        addTag(inputValue);
+      }
+    } else if (e.key === "Backspace" && !inputValue && tags.length > 0) {
+      removeTag(tags[tags.length - 1]);
+    }
+  };
+
+  const handleBlur = () => {
+    if (inputValue.trim()) {
+      addTag(inputValue);
+    }
+  };
+
+  const filteredSuggestions = suggestions.filter((item) => {
+    const notSelected = !tags.some((t) => t.toLowerCase() === item.toLowerCase());
+    if (!inputValue.trim()) {
+      return notSelected;
+    }
+    return notSelected && item.toLowerCase().includes(inputValue.toLowerCase().trim());
+  });
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (containerRef.current && !containerRef.current.contains(event.target)) {
+        if (inputValue.trim()) {
+          addTag(inputValue);
+        }
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [inputValue, tags]);
+
+  return (
+    <div className="profile-field-group" ref={containerRef}>
+      {label && <label className="field-label" htmlFor={id}>{label}</label>}
+      <div
+        className={`profile-tag-input-box d-flex flex-wrap align-items-center position-relative w-100 ${error ? "input-error" : ""
+          } ${isOpen ? "is-focused" : ""}`}
+        onClick={() => inputRef.current?.focus()}
+      >
+        {tags.map((tag) => (
+          <span key={tag} className="profile-tag-pill d-inline-flex align-items-center">
+            <span className="profile-tag-text">{tag}</span>
+            <button
+              type="button"
+              className="profile-tag-pill-close d-inline-flex align-items-center justify-content-center"
+              onClick={(e) => {
+                e.stopPropagation();
+                removeTag(tag);
+              }}
+              aria-label={`Remove ${tag}`}
+            >
+              ×
+            </button>
+          </span>
+        ))}
+
+        <input
+          ref={inputRef}
+          id={id}
+          type="text"
+          className="profile-tag-input-field grow border-0"
+          placeholder={tags.length === 0 ? placeholder : ""}
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+            setIsOpen(true);
+          }}
+          onFocus={() => setIsOpen(true)}
+          onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
+        />
+
+        {isOpen && filteredSuggestions.length > 0 && (
+          <div className="profile-suggestions-dropdown position-absolute w-100">
+            {filteredSuggestions.slice(0, 8).map((suggestion) => (
+              <div
+                key={suggestion}
+                className="profile-suggestion-item"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  addTag(suggestion);
+                }}
+              >
+                <span>{suggestion}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {extraContent}
+
+      {error && <span className="field-error">{error}</span>}
+    </div>
+  );
+}
+
 const initialFormData = {
   profilePhoto: null,
   profilePhotoName: "",
   fullName: "",
   country: "",
+  city: "",
   timeZone: "",
   headline: "",
   bio: "",
@@ -49,6 +296,7 @@ const initialFormData = {
   skills: "",
   tools: "",
   categories: "",
+  preferredLanguages: "",
   portfolioUrl: "",
   githubUrl: "",
   linkedinUrl: "",
@@ -134,7 +382,7 @@ export default function Profile() {
     } else if (currentStep > 1 && currentStep <= 5) {
       goToStep(currentStep - 1);
     } else {
-      navigate(-1);
+      navigate("/dashboard");
     }
   };
 
@@ -191,6 +439,7 @@ export default function Profile() {
     (formData.profilePhoto !== null || formData.profilePhotoName !== "") &&
     formData.fullName.trim() !== "" &&
     formData.country !== "" &&
+    formData.city !== "" &&
     formData.timeZone !== "";
   const isStep2Complete =
     formData.headline.trim() !== "" &&
@@ -200,7 +449,8 @@ export default function Profile() {
   const isStep3Complete =
     formData.skills.trim() !== "" &&
     formData.tools.trim() !== "" &&
-    formData.categories.trim() !== "";
+    formData.categories.trim() !== "" &&
+    formData.preferredLanguages.trim() !== "";
   const isStep4Complete =
     formData.portfolioUrl.trim() !== "" ||
     formData.githubUrl.trim() !== "" ||
@@ -228,6 +478,7 @@ export default function Profile() {
     if (!formData.profilePhoto && !formData.profilePhotoName) newErrors.photo = ERRORS.PHOTO_REQUIRED;
     if (!formData.fullName.trim()) newErrors.fullName = ERRORS.FULL_NAME_REQUIRED;
     if (!formData.country) newErrors.country = ERRORS.COUNTRY_REQUIRED;
+    if (!formData.city) newErrors.city = ERRORS.CITY_REQUIRED || "City is required";
     if (!formData.timeZone) newErrors.timeZone = ERRORS.TIME_ZONE_REQUIRED;
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -268,6 +519,7 @@ export default function Profile() {
     if (!formData.skills.trim()) newErrors.skills = ERRORS.SKILLS_REQUIRED;
     if (!formData.tools.trim()) newErrors.tools = ERRORS.TOOLS_REQUIRED;
     if (!formData.categories.trim()) newErrors.categories = ERRORS.CATEGORIES_REQUIRED;
+    if (!formData.preferredLanguages.trim()) newErrors.preferredLanguages = ERRORS.PREFERRED_LANGUAGES_REQUIRED || "Preferred languages are required";
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
@@ -324,14 +576,16 @@ export default function Profile() {
       await profileApi.saveIndividualProfile({
         full_name: formData.fullName,
         country: formData.country,
+        city: formData.city,
         time_zone: formData.timeZone,
         headline: formData.headline,
         bio: formData.bio,
         experience_level: formData.experience,
         availability: formData.availability,
-        skills: formData.skills ? formData.skills.split(",").map((s) => s.trim()) : [],
-        tools: formData.tools ? formData.tools.split(",").map((t) => t.trim()) : [],
-        categories: formData.categories ? formData.categories.split(",").map((c) => c.trim()) : [],
+        skills: formData.skills ? formData.skills.split(",").map((s) => s.trim()).filter(Boolean) : [],
+        tools: formData.tools ? formData.tools.split(",").map((t) => t.trim()).filter(Boolean) : [],
+        categories: formData.categories ? formData.categories.split(",").map((c) => c.trim()).filter(Boolean) : [],
+        preferred_languages: formData.preferredLanguages ? formData.preferredLanguages.split(",").map((l) => l.trim()).filter(Boolean) : [],
         portfolio_url: formData.portfolioUrl,
         github_url: formData.githubUrl,
         linkedin_url: formData.linkedinUrl,
@@ -449,6 +703,26 @@ export default function Profile() {
 
       <div className="profile-field-group">
         <div className="custom-dropdown-container w-100">
+          <label className="field-label">{WIZARD_STRINGS.LABELS.CITY || "City"}</label>
+          <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${errors.city ? "dropdown-error" : ""}`}>
+            <select
+              className="custom-dropdown-select w-100 h-100"
+              value={formData.city}
+              onChange={(e) => updateField("city", e.target.value)}
+            >
+              <option value="" disabled hidden>{WIZARD_STRINGS.PLACEHOLDERS.SELECT_CITY || "Select your city"}</option>
+              {CITY_OPTIONS.map((item) => (
+                <option key={item.value} value={item.value}>{item.label}</option>
+              ))}
+            </select>
+            <Icon name="ChevronDown" size={ICON_SIZES.DEFAULT} className="dropdown-chevron-icon position-absolute" />
+          </div>
+          {errors.city && <span className="field-error">{errors.city}</span>}
+        </div>
+      </div>
+
+      <div className="profile-field-group">
+        <div className="custom-dropdown-container w-100">
           <label className="field-label">{WIZARD_STRINGS.LABELS.TIME_ZONE}</label>
           <div className={`custom-dropdown-box d-flex align-items-center position-relative w-100 ${errors.timeZone ? "dropdown-error" : ""}`}>
             <select
@@ -545,40 +819,96 @@ export default function Profile() {
     </form>
   );
 
-  const renderStep3 = () => (
-    <form className="profile-step-form grow d-flex flex-column min-vh-0 h-100" onSubmit={handleStep3Continue}>
-      <div className="profile-section-heading shrink-0">
-        <h2 className="section-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_3_TITLE}</h2>
-        <p className="section-subtitle text-secondary">{WIZARD_STRINGS.STEPS.STEP_3_SUBTITLE}</p>
-      </div>
+  const renderStep3 = () => {
+    const roleSuggestions = getRoleSuggestions(formData.headline);
+    const currentSkills = formData.skills
+      ? formData.skills.split(",").map((s) => s.trim()).filter(Boolean)
+      : [];
 
-      <TextInput
-        label={WIZARD_STRINGS.LABELS.SKILLS}
-        placeholder={WIZARD_STRINGS.PLACEHOLDERS.SKILLS}
-        value={formData.skills}
-        error={errors.skills}
-        onChange={(e) => updateField("skills", e.target.value)}
-      />
+    const handleToggleSkill = (skill) => {
+      const exists = currentSkills.some((s) => s.toLowerCase() === skill.toLowerCase());
+      if (exists) {
+        const updated = currentSkills.filter((s) => s.toLowerCase() !== skill.toLowerCase());
+        updateField("skills", updated.join(", "));
+      } else {
+        updateField("skills", [...currentSkills, skill].join(", "));
+      }
+    };
 
-      <TextInput
-        label={WIZARD_STRINGS.LABELS.TOOLS}
-        placeholder={WIZARD_STRINGS.PLACEHOLDERS.TOOLS}
-        value={formData.tools}
-        error={errors.tools}
-        onChange={(e) => updateField("tools", e.target.value)}
-      />
+    return (
+      <form className="profile-step-form grow d-flex flex-column min-vh-0 h-100" onSubmit={handleStep3Continue}>
+        <div className="profile-section-heading shrink-0">
+          <h2 className="section-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_3_TITLE}</h2>
+          <p className="section-subtitle text-secondary">{WIZARD_STRINGS.STEPS.STEP_3_SUBTITLE}</p>
+        </div>
 
-      <TextInput
-        label={WIZARD_STRINGS.LABELS.CATEGORIES}
-        placeholder={WIZARD_STRINGS.PLACEHOLDERS.CATEGORIES}
-        value={formData.categories}
-        error={errors.categories}
-        onChange={(e) => updateField("categories", e.target.value)}
-      />
+        <TagInput
+          label={WIZARD_STRINGS.LABELS.SKILLS}
+          placeholder={WIZARD_STRINGS.PLACEHOLDERS.SKILLS}
+          value={formData.skills}
+          error={errors.skills}
+          onChange={(val) => updateField("skills", val)}
+          suggestions={MASTER_SKILLS_LIST}
+          id="profile-skills-input"
+          extraContent={
+            <div className="profile-suggested-skills-wrapper">
+              <span className="profile-suggested-skills-title">
+                {WIZARD_STRINGS.LABELS.SUGGESTED_SKILLS_ROLE || "Suggested skills based on your role"}
+              </span>
+              <div className="profile-suggested-chips-list">
+                {roleSuggestions.skills.map((skill) => {
+                  const isSelected = currentSkills.some((s) => s.toLowerCase() === skill.toLowerCase());
+                  return (
+                    <button
+                      key={skill}
+                      type="button"
+                      className={`profile-suggested-chip-btn ${isSelected ? "selected" : ""}`}
+                      onClick={() => handleToggleSkill(skill)}
+                    >
+                      <span className="chip-icon-symbol">{isSelected ? "✓" : "+"}</span>
+                      <span>{skill}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          }
+        />
 
-      {renderActionButtons(isStep3Complete)}
-    </form>
-  );
+        <TagInput
+          label={WIZARD_STRINGS.LABELS.TOOLS}
+          placeholder={WIZARD_STRINGS.PLACEHOLDERS.TOOLS}
+          value={formData.tools}
+          error={errors.tools}
+          onChange={(val) => updateField("tools", val)}
+          suggestions={MASTER_TOOLS_LIST}
+          id="profile-tools-input"
+        />
+
+        <TagInput
+          label={WIZARD_STRINGS.LABELS.CATEGORIES}
+          placeholder={WIZARD_STRINGS.PLACEHOLDERS.CATEGORIES}
+          value={formData.categories}
+          error={errors.categories}
+          onChange={(val) => updateField("categories", val)}
+          suggestions={MASTER_CATEGORIES_LIST}
+          id="profile-categories-input"
+        />
+
+        <TagInput
+          label={WIZARD_STRINGS.LABELS.PREFERRED_LANGUAGES || "Preferred Languages"}
+          placeholder={WIZARD_STRINGS.PLACEHOLDERS.PREFERRED_LANGUAGES || "Select languages (e.g. English, Hindi)"}
+          value={formData.preferredLanguages}
+          error={errors.preferredLanguages}
+          onChange={(val) => updateField("preferredLanguages", val)}
+          suggestions={MASTER_LANGUAGES_LIST}
+          id="profile-languages-input"
+        />
+
+        {renderActionButtons(isStep3Complete)}
+      </form>
+    );
+  };
 
   const renderStep4 = () => (
     <form className="profile-step-form grow d-flex flex-column min-vh-0 h-100" onSubmit={handleStep4Continue}>
@@ -755,40 +1085,133 @@ export default function Profile() {
     );
   };
 
-  return (
-    <DashboardLayout>
-      <div className="profile-page-wrapper grow min-vh-0 d-flex flex-column w-100">
-        <Cards className="profile-main-card grow h-100 d-flex flex-column overflow-hidden w-100" padding="0">
-          <div ref={cardInnerRef} className="profile-card-inner d-flex flex-column h-100">
-            {isSubmitted ? (
-              renderCompletionScreen()
-            ) : (
-              <>
-                <div className="profile-top-back-wrapper shrink-0 w-100 d-flex justify-content-start">
-                  <button
-                    type="button"
-                    className="profile-top-back-btn"
-                    onClick={handleBackTop}
-                    aria-label="Go back"
-                  >
-                    <Icon name="ArrowLeft" size={ICON_SIZES['2XL']} color="#0b38a8" />
-                  </button>
-                </div>
-                <div className="profile-header-section shrink-0">
-                  <h1 className="profile-main-title fw-bold">{WIZARD_STRINGS.MAIN_TITLE}</h1>
-                  <p className="profile-main-subtitle text-secondary">{WIZARD_STRINGS.MAIN_SUBTITLE}</p>
-                </div>
-                <Stepper steps={steps} currentStep={currentStep} className="profile-stepper-container" />
-                {currentStep === 1 && renderStep1()}
-                {currentStep === 2 && renderStep2()}
-                {currentStep === 3 && renderStep3()}
-                {currentStep === 4 && renderStep4()}
-                {currentStep === 5 && renderStep5()}
-              </>
-            )}
+  const renderWelcomeScreen = () => (
+    <div className="profile-welcome-wrapper">
+      <div className="profile-welcome-container">
+        {/* 1. Top Hero Card */}
+        <Cards className="profile-welcome-hero-card" padding="0" shadow="none">
+          <div className="profile-hero-illustration-wrapper">
+            <div className="profile-hero-icon-container">
+              <Icon name="IdCard" size={36} color="#103ca4" />
+            </div>
+          </div>
+
+          <h1 className="profile-welcome-hero-title">
+            {WELCOME_STRINGS.HERO.TITLE_PREFIX}
+            <span className="profile-welcome-highlight">{WELCOME_STRINGS.HERO.TITLE_HIGHLIGHT}</span>
+          </h1>
+
+          <p className="profile-welcome-hero-subtitle">
+            {WELCOME_STRINGS.HERO.SUBTITLE}
+          </p>
+
+          <PrimaryButton
+            type="button"
+            text={WELCOME_STRINGS.HERO.CTA_BUTTON}
+            onClick={() => goToStep(1)}
+            className="profile-welcome-cta-btn"
+            id="btn-complete-your-profile"
+          />
+
+          <div className="profile-welcome-security-badge">
+            <Icon name="Shield" size={ICON_SIZES.SM || 16} color="#64748b" />
+            <span>{WELCOME_STRINGS.HERO.SECURITY_NOTE}</span>
           </div>
         </Cards>
+
+        {/* 2. Section: Why complete your profile? */}
+        <section className="profile-welcome-section">
+          <h2 className="profile-welcome-section-title">
+            {WELCOME_STRINGS.WHY_COMPLETE.SECTION_TITLE}
+          </h2>
+
+          <div className="profile-benefits-list">
+            {WELCOME_STRINGS.WHY_COMPLETE.ITEMS.map((item) => (
+              <Cards key={item.ID} className="profile-benefit-card" padding="0" shadow="none">
+                <h3 className="profile-benefit-title">{item.TITLE}</h3>
+                <p className="profile-benefit-desc">{item.DESCRIPTION}</p>
+              </Cards>
+            ))}
+          </div>
+        </section>
+
+        {/* 3. Section: Profile setup in 4 simple steps */}
+        <section className="profile-welcome-section">
+          <h2 className="profile-welcome-section-title">
+            {WELCOME_STRINGS.SETUP_STEPS.SECTION_TITLE}
+          </h2>
+
+          <Cards className="profile-steps-container-card" padding="0" shadow="none">
+            <div className="profile-setup-stepper-row">
+              {WELCOME_STRINGS.SETUP_STEPS.STEPS.map((stepItem, idx) => {
+                const isLast = idx === WELCOME_STRINGS.SETUP_STEPS.STEPS.length - 1;
+                return (
+                  <div key={stepItem.STEP_NUMBER} className="profile-step-column">
+                    <div className="profile-step-number-container">
+                      <div className="profile-step-number-circle">
+                        {stepItem.STEP_NUMBER}
+                      </div>
+                      {!isLast && <div className="profile-step-connector-line"></div>}
+                    </div>
+
+                    <div className="profile-step-info">
+                      <h3 className="profile-step-item-title">{stepItem.TITLE}</h3>
+                      <p className="profile-step-item-desc">{stepItem.DESCRIPTION}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </Cards>
+        </section>
+
+        {/* 4. Footer Note */}
+        <footer className="profile-welcome-footer-note">
+          <Icon name="Lock" size={ICON_SIZES.SM || 14} color="#64748b" />
+          <span>{WELCOME_STRINGS.FOOTER_NOTE}</span>
+        </footer>
       </div>
+    </div>
+  );
+
+  return (
+    <DashboardLayout>
+      {!step && !isSubmitted ? (
+        renderWelcomeScreen()
+      ) : (
+        <div className="profile-page-wrapper grow min-vh-0 d-flex flex-column w-100">
+          <Cards className="profile-main-card grow h-100 d-flex flex-column overflow-hidden w-100" padding="0" shadow="none">
+            <div ref={cardInnerRef} className="profile-card-inner d-flex flex-column h-100">
+              {isSubmitted ? (
+                renderCompletionScreen()
+              ) : (
+                <>
+                  <div className="profile-top-back-wrapper shrink-0 w-100 d-flex justify-content-start">
+                    <button
+                      type="button"
+                      className="profile-top-back-btn"
+                      onClick={handleBackTop}
+                      aria-label="Go back"
+                    >
+                      <Icon name="ArrowLeft" size={ICON_SIZES['2XL']} color="#0b38a8" />
+                    </button>
+                  </div>
+                  <div className="profile-header-section shrink-0">
+                    <h1 className="profile-main-title fw-bold">{WIZARD_STRINGS.MAIN_TITLE}</h1>
+                    <p className="profile-main-subtitle text-secondary">{WIZARD_STRINGS.MAIN_SUBTITLE}</p>
+                  </div>
+                  <Stepper steps={steps} currentStep={currentStep} className="profile-stepper-container" />
+                  {currentStep === 1 && renderStep1()}
+                  {currentStep === 2 && renderStep2()}
+                  {currentStep === 3 && renderStep3()}
+                  {currentStep === 4 && renderStep4()}
+                  {currentStep === 5 && renderStep5()}
+                </>
+              )}
+            </div>
+          </Cards>
+        </div>
+      )}
     </DashboardLayout>
   );
 }
