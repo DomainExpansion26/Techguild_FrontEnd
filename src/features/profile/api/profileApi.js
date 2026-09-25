@@ -2,9 +2,17 @@ import { apiClient } from "@/services/api";
 import { ENDPOINTS } from "@/services/api/endpoints";
 
 export const profileApi = {
-  // Get logged-in user profile
-  getProfile: async () => {
-    return apiClient.get(ENDPOINTS.PROFILE.BASE);
+  // Get logged-in user profile. Accepts an explicit token so login can probe
+  // the role before persisting session (single-write path in AuthContext).
+  getProfile: async (options = {}) => {
+    const { token, ...rest } = options;
+    if (token) {
+      return apiClient.get(ENDPOINTS.PROFILE.BASE, {
+        ...rest,
+        headers: { ...rest.headers, Authorization: `Bearer ${token}` },
+      });
+    }
+    return apiClient.get(ENDPOINTS.PROFILE.BASE, rest);
   },
 
   // Delete profile

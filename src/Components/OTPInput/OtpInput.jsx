@@ -3,6 +3,8 @@ import "./OtpInput.css";
 
 // 6 (or `length`) digit one-time-password input with auto-advance,
 // backspace navigation, arrow-key navigation, and paste support.
+// `inputMode` / `acceptPattern` allow alphanumeric codes (e.g. 2FA
+// recovery codes like "ABCD-EFGH"): only matching chars are accepted.
 const OtpInput = ({
   values = [],
   onChange,
@@ -10,6 +12,10 @@ const OtpInput = ({
   length = 6,
   separator = true,
   autoComplete = "one-time-code",
+  onEnter,
+  autoFocus = false,
+  inputMode = "numeric",
+  acceptPattern = "\\d",
 }) => {
   const refs = useRef([]);
 
@@ -18,8 +24,10 @@ const OtpInput = ({
     if (char === "") {
       next[index] = "";
     } else {
-      next[index] = char.slice(-1);
-      if (index < length - 1 && char) {
+      const typed = char.slice(-1);
+      if (!new RegExp(`^${acceptPattern}$`).test(typed)) return;
+      next[index] = typed;
+      if (index < length - 1 && typed) {
         refs.current[index + 1]?.focus();
       }
     }
@@ -40,15 +48,19 @@ const OtpInput = ({
 
   const handlePaste = (index, event) => {
     const text = event.clipboardData.getData("text");
-    if (!/^\d{1,6}$/.test(text)) return;
+    // Keep only accepted chars (lets "ABCD-EFGH" paste into 8 boxes).
+    const cleaned = text
+      .split("")
+      .filter((ch) => new RegExp(`^${acceptPattern}$`).test(ch))
+      .slice(0, length);
+    if (cleaned.length === 0) return;
     event.preventDefault();
-    const digits = text.split("").slice(0, length);
     const next = [...values];
-    digits.forEach((d, i) => {
+    cleaned.forEach((d, i) => {
       if (index + i < length) next[index + i] = d;
     });
     onChange(next);
-    refs.current[Math.min(index + digits.length, length - 1)]?.focus();
+    refs.current[Math.min(index + cleaned.length, length - 1)]?.focus();
   };
 
   return (
@@ -62,7 +74,7 @@ const OtpInput = ({
           <input
             ref={(el) => (refs.current[i] = el)}
             className="otp-input"
-            inputMode="numeric"
+            inputMode={inputMode}
             autoComplete={autoComplete}
             aria-label={`One time password digit ${i + 1}`}
             value={values[i] || ""}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useReducer, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { showSnackbar } from "@/store";
@@ -8,38 +8,87 @@ import {
   AuthHomeScreen,
   BrandLogo,
   SignupCard,
+  TextInput,
+  SecondaryButton,
+  PrimaryButton,
+  Divider,
+  TermsCheckbox,
 } from "@/Components";
 import authApi from "@/features/auth/api/authApi";
 import oauthApi from "@/features/auth/api/oauthApi";
-import { APP_STRINGS, TOAST_MESSAGES, FORM_ERRORS } from "@/constants/string";
+import { APP_STRINGS, APP_CONFIG, TOAST_MESSAGES, FORM_ERRORS } from "@/constants/string";
+import { AUTH_ROUTES } from "@/constants/navigation";
+import { ICON_SIZES } from "@/constants/sizes";
+
+const { STORAGE_KEYS, PASSWORD_MIN_LENGTH, SIGNUP_REDIRECT_DELAY_MS } = APP_CONFIG.AUTH;
+
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  termsAccepted: false,
+  showPassword: false,
+  loading: false,
+};
+
+function signupReducer(state, action) {
+  switch (action.type) {
+    case "FIELD":
+      return { ...state, [action.field]: action.value };
+    case "TOGGLE":
+      return { ...state, [action.field]: !state[action.field] };
+    case "SUBMIT_START":
+      return { ...state, loading: true };
+    case "SUBMIT_END":
+      return { ...state, loading: false };
+    default:
+      return state;
+  }
+}
 
 export default function Signup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const STRINGS = APP_STRINGS.AUTH.SIGNUP;
+  const navigateTimer = useRef(null);
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [termsAccepted, setTermsAccepted] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [state, dispatchForm] = useReducer(signupReducer, initialState);
+  const { firstName, lastName, email, password, termsAccepted, showPassword, loading } = state;
+
+  useEffect(() => {
+    return () => {
+      if (navigateTimer.current) {
+        clearTimeout(navigateTimer.current);
+      }
+    };
+  }, []);
+
+  const setField = (field) => (e) => {
+    const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
+    dispatchForm({ type: "FIELD", field, value });
+  };
 
   const handleSignup = async (e) => {
     e?.preventDefault();
 
-    if (!firstName.trim() || !lastName.trim()) {
+    if (loading) return;
+
+    const cleanFirstName = firstName.trim();
+    const cleanLastName = lastName.trim();
+    const cleanEmail = email.trim();
+
+    if (!cleanFirstName || !cleanLastName) {
       dispatch(showSnackbar({ message: FORM_ERRORS.AUTH.NAME_REQUIRED, type: "error" }));
       return;
     }
 
-    if (!email.trim() || !password.trim()) {
+    if (!cleanEmail || !password) {
       dispatch(showSnackbar({ message: FORM_ERRORS.AUTH.EMAIL_PASSWORD_REQUIRED, type: "error" }));
       return;
     }
 
-    if (password.length < 8) {
+    if (password.length < PASSWORD_MIN_LENGTH) {
       dispatch(showSnackbar({ message: FORM_ERRORS.AUTH.PASSWORD_MIN_LENGTH, type: "warning" }));
       return;
     }
@@ -49,12 +98,8 @@ export default function Signup() {
       return;
     }
 
-    setLoading(true);
+    dispatchForm({ type: "SUBMIT_START" });
     try {
-      const cleanFirstName = firstName.trim();
-      const cleanLastName = lastName.trim();
-      const cleanEmail = email.trim();
-
       const response = await authApi.register({
         first_name: cleanFirstName,
         last_name: cleanLastName,
@@ -62,17 +107,21 @@ export default function Signup() {
         password,
       });
 
-      // Save pending user profile info so real name is never replaced by dummy data
-      localStorage.setItem(
-        "techguild_pending_user",
-        JSON.stringify({
-          firstName: cleanFirstName,
-          lastName: cleanLastName,
-          name: `${cleanFirstName} ${cleanLastName}`.trim(),
-          email: cleanEmail,
-          password,
-        })
-      );
+      // Save pending user profile info so real name is never replaced by dummy data.
+      // Password is intentionally not persisted — nothing downstream needs it.
+      try {
+        localStorage.setItem(
+          STORAGE_KEYS.PENDING_USER,
+          JSON.stringify({
+            firstName: cleanFirstName,
+            lastName: cleanLastName,
+            name: `${cleanFirstName} ${cleanLastName}`.trim(),
+            email: cleanEmail,
+          })
+        );
+      } catch {
+        // Storage may be unavailable (private mode); signup still succeeds.
+      }
 
       dispatch(
         showSnackbar({
@@ -83,24 +132,22 @@ export default function Signup() {
         })
       );
 
-      setTimeout(() => {
-        navigate("/verify-email", {
+      navigateTimer.current = setTimeout(() => {
+        navigate(AUTH_ROUTES.VERIFY_EMAIL, {
           state: {
             email: cleanEmail,
             firstName: cleanFirstName,
             lastName: cleanLastName,
-            password,
           },
         });
-      }, 1000);
+      }, SIGNUP_REDIRECT_DELAY_MS);
     } catch (err) {
-      console.error("Signup error:", err);
       dispatch(showSnackbar({
         message: err?.message || FORM_ERRORS.AUTH.REGISTER_FAILED,
         type: "error",
       }));
     } finally {
-      setLoading(false);
+      dispatchForm({ type: "SUBMIT_END" });
     }
   };
 
@@ -118,168 +165,127 @@ export default function Signup() {
 
       <div className="auth-card-wrapper">
         <SignupCard>
-          <form onSubmit={handleSignup} style={{ width: '100%', display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
-            <BrandLogo />
-
-            <h2 style={{ fontWeight: 700, fontSize: '18px', color: '#111827', margin: '8px 0 2px 0' }}>{STRINGS.TITLE}</h2>
-            <p style={{ color: '#79797D', fontSize: '13px', margin: '0 0 14px 0' }}>{STRINGS.SUBTITLE}</p>
+          <form className="signup-form" onSubmit={handleSignup} noValidate>
+            <div className="signup-heading">
+              <BrandLogo />
+              <h2 className="signup-title">{STRINGS.TITLE}</h2>
+              <p className="signup-subtitle">{STRINGS.SUBTITLE}</p>
+            </div>
 
             {/* Social Buttons */}
-            <button
-              type="button"
-              onClick={handleGoogleSignup}
-              className="btn btn-light bg-white border d-flex align-items-center justify-content-center gap-2 w-100 shadow-sm fw-medium rounded-3"
-              style={{ fontSize: '13px', height: '38px', minHeight: '38px', marginBottom: '8px', flexShrink: 0 }}
-            >
-              <Google width={18} height={18} />
-              <span>{STRINGS.GOOGLE_BTN}</span>
-            </button>
-            <button
-              type="button"
-              onClick={handleGithubSignup}
-              className="btn btn-light bg-white border d-flex align-items-center justify-content-center gap-2 w-100 shadow-sm fw-medium rounded-3"
-              style={{ fontSize: '13px', height: '38px', minHeight: '38px', marginBottom: '4px', flexShrink: 0 }}
-            >
-              <GitHub width={18} height={18} />
-              <span>{STRINGS.GITHUB_BTN}</span>
-            </button>
+            <div className="signup-oauth-stack">
+              <SecondaryButton
+                className="signup-oauth"
+                text={STRINGS.GOOGLE_BTN}
+                icon={<Google width={ICON_SIZES.LG} height={ICON_SIZES.LG} />}
+                iconPosition="left"
+                onClick={handleGoogleSignup}
+                disabled={loading}
+              />
+              <SecondaryButton
+                className="signup-oauth"
+                text={STRINGS.GITHUB_BTN}
+                icon={<GitHub width={ICON_SIZES.LG} height={ICON_SIZES.LG} />}
+                iconPosition="left"
+                onClick={handleGithubSignup}
+                disabled={loading}
+              />
+            </div>
 
             {/* Divider */}
-            <div style={{ display: 'flex', alignItems: 'center', margin: '10px 0 10px 0', flexShrink: 0 }}>
-              <div style={{ flex: 1, height: '1px', backgroundColor: '#E5E7EB' }}></div>
-              <span style={{ padding: '0 12px', fontSize: '11px', fontWeight: 600, color: '#6B7280', letterSpacing: '0.05em' }}>{STRINGS.DIVIDER_OR}</span>
-              <div style={{ flex: 1, height: '1px', backgroundColor: '#E5E7EB' }}></div>
+            <div className="signup-divider-wrap">
+              <Divider text={STRINGS.DIVIDER_OR} />
             </div>
 
-            {/* Form Fields */}
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              {/* First Name & Last Name */}
-              <div className="d-flex gap-2 mb-2" style={{ flexShrink: 0 }}>
-                <div className="w-50">
-                  <label htmlFor="first-name" style={{ fontWeight: 700, fontSize: '12px', color: '#111827', display: 'block', marginBottom: '4px' }}>
-                    {STRINGS.FIRST_NAME_LABEL}
-                  </label>
-                  <div className="input-group rounded-3 overflow-hidden bg-white" style={{ height: '38px', minHeight: '38px', border: '1px solid #D1D5DB' }}>
-                    <input
-                      id="first-name"
-                      type="text"
-                      className="form-control border-0 shadow-none bg-white h-100"
-                      placeholder={STRINGS.FIRST_NAME_PLACEHOLDER}
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      required
-                      style={{ fontSize: '13px', padding: '0 12px' }}
-                    />
-                  </div>
-                </div>
-
-                <div className="w-50">
-                  <label htmlFor="last-name" style={{ fontWeight: 700, fontSize: '12px', color: '#111827', display: 'block', marginBottom: '4px' }}>
-                    {STRINGS.LAST_NAME_LABEL}
-                  </label>
-                  <div className="input-group rounded-3 overflow-hidden bg-white" style={{ height: '38px', minHeight: '38px', border: '1px solid #D1D5DB' }}>
-                    <input
-                      id="last-name"
-                      type="text"
-                      className="form-control border-0 shadow-none bg-white h-100"
-                      placeholder={STRINGS.LAST_NAME_PLACEHOLDER}
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
-                      required
-                      style={{ fontSize: '13px', padding: '0 12px' }}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Email Address */}
-              <div className="mb-2" style={{ flexShrink: 0 }}>
-                <label htmlFor="signup-email" style={{ fontWeight: 700, fontSize: '12px', color: '#111827', display: 'block', marginBottom: '4px' }}>
-                  {STRINGS.EMAIL_LABEL}
-                </label>
-                <div className="input-group rounded-3 overflow-hidden bg-white" style={{ height: '38px', minHeight: '38px', border: '1px solid #D1D5DB' }}>
-                  <span className="input-group-text bg-white border-0 d-flex align-items-center justify-content-center" style={{ padding: '0 10px', minWidth: '36px' }}>
-                    <Mail width={16} height={16} color="#6A717D" />
-                  </span>
-                  <input
-                    id="signup-email"
-                    type="email"
-                    className="form-control border-0 shadow-none bg-white h-100"
-                    placeholder={STRINGS.EMAIL_PLACEHOLDER}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    style={{ fontSize: '13px', padding: '0 10px 0 0' }}
-                  />
-                </div>
-              </div>
-
-              {/* Password */}
-              <div className="mb-2" style={{ flexShrink: 0 }}>
-                <label htmlFor="signup-password" style={{ fontWeight: 700, fontSize: '12px', color: '#111827', display: 'block', marginBottom: '4px' }}>
-                  {STRINGS.PASSWORD_LABEL}
-                </label>
-                <div className="input-group rounded-3 overflow-hidden bg-white" style={{ height: '38px', minHeight: '38px', border: '1px solid #D1D5DB' }}>
-                  <span className="input-group-text bg-white border-0 d-flex align-items-center justify-content-center" style={{ padding: '0 10px', minWidth: '36px' }}>
-                    <Lock width={16} height={16} />
-                  </span>
-                  <input
-                    id="signup-password"
-                    type={showPassword ? "text" : "password"}
-                    className="form-control border-0 shadow-none bg-white h-100"
-                    placeholder={STRINGS.PASSWORD_PLACEHOLDER}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    style={{ fontSize: '13px', padding: '0 10px 0 0' }}
-                  />
-                  <button
-                    type="button"
-                    className="input-group-text bg-white border-0 d-flex align-items-center justify-content-center"
-                    style={{ padding: '0 10px', cursor: 'pointer' }}
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <EyeOff width={16} height={16} /> : <Eye width={16} height={16} />}
-                  </button>
-                </div>
-              </div>
-
-              {/* Terms Checkbox */}
-              <div className="d-flex align-items-center gap-2 mb-3" style={{ flexShrink: 0, marginTop: '2px' }}>
-                <input
-                  id="terms"
-                  type="checkbox"
-                  checked={termsAccepted}
-                  onChange={(e) => setTermsAccepted(e.target.checked)}
-                  style={{ cursor: "pointer", width: '15px', height: '15px' }}
-                />
-                <label htmlFor="terms" style={{ fontSize: "12px", color: "#4B5563", margin: 0, cursor: "pointer" }}>
-                  {STRINGS.TERMS_AGREE_PREFIX} <Link to="/terms" style={{ color: "#103CA4", fontWeight: 600 }}>{STRINGS.TERMS_LINK_TEXT}</Link> {STRINGS.TERMS_AND_TEXT} <Link to="/privacy" style={{ color: "#103CA4", fontWeight: 600 }}>{STRINGS.PRIVACY_LINK_TEXT}</Link>
-                </label>
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                className="btn btn-primary w-100 rounded-3 fw-semibold"
-                style={{
-                  backgroundColor: "#103CA4",
-                  borderColor: "#103CA4",
-                  height: "40px",
-                  minHeight: "40px",
-                  fontSize: "14px",
-                  flexShrink: 0,
-                }}
+            {/* First Name & Last Name */}
+            <div className="signup-names">
+              <TextInput
+                id="first-name"
+                name="firstName"
+                placeholder={STRINGS.FIRST_NAME_PLACEHOLDER}
+                aria-label={STRINGS.FIRST_NAME_LABEL}
+                autoComplete="given-name"
+                value={firstName}
+                onChange={setField("firstName")}
                 disabled={loading}
-              >
-                {loading ? STRINGS.SUBMIT_BTN_LOADING : STRINGS.SUBMIT_BTN}
-              </button>
-
-              {/* Footer link */}
-              <div className="text-center mt-3" style={{ fontSize: "13px", color: "#6B7280", flexShrink: 0 }}>
-                {STRINGS.FOOTER_PROMPT} <Link to="/login" style={{ color: "#103CA4", fontWeight: 600 }}>{STRINGS.FOOTER_LINK}</Link>
-              </div>
+                containerClassName="signup-name-field"
+              />
+              <TextInput
+                id="last-name"
+                name="lastName"
+                placeholder={STRINGS.LAST_NAME_PLACEHOLDER}
+                aria-label={STRINGS.LAST_NAME_LABEL}
+                autoComplete="family-name"
+                value={lastName}
+                onChange={setField("lastName")}
+                disabled={loading}
+                containerClassName="signup-name-field"
+              />
             </div>
+
+            {/* Email Address */}
+            <TextInput
+              id="signup-email"
+              name="email"
+              type="email"
+              placeholder={STRINGS.EMAIL_PLACEHOLDER}
+              aria-label={STRINGS.EMAIL_LABEL}
+              autoComplete="email"
+              value={email}
+              onChange={setField("email")}
+              disabled={loading}
+              leftIcon={<Mail width={ICON_SIZES.MD} height={ICON_SIZES.MD} color="#6A717D" aria-hidden="true" />}
+            />
+
+            {/* Password */}
+            <TextInput
+              id="signup-password"
+              name="password"
+              type={showPassword ? "text" : "password"}
+              placeholder={STRINGS.PASSWORD_PLACEHOLDER}
+              aria-label={STRINGS.PASSWORD_LABEL}
+              autoComplete="new-password"
+              value={password}
+              onChange={setField("password")}
+              disabled={loading}
+              leftIcon={<Lock width={ICON_SIZES.MD} height={ICON_SIZES.MD} aria-hidden="true" />}
+              rightIcon={
+                <button
+                  type="button"
+                  className="signup-eye"
+                  onClick={() => dispatchForm({ type: "TOGGLE", field: "showPassword" })}
+                  aria-label={showPassword ? STRINGS.PASSWORD_HIDE_LABEL : STRINGS.PASSWORD_SHOW_LABEL}
+                  aria-pressed={showPassword}
+                  disabled={loading}
+                >
+                  {showPassword
+                    ? <EyeOff width={ICON_SIZES.MD} height={ICON_SIZES.MD} />
+                    : <Eye width={ICON_SIZES.MD} height={ICON_SIZES.MD} />}
+                </button>
+              }
+            />
+
+            {/* Terms Checkbox */}
+            <TermsCheckbox
+              checked={termsAccepted}
+              onChange={setField("termsAccepted")}
+              userAgreementLink={AUTH_ROUTES.TERMS}
+              privacyPolicyLink={AUTH_ROUTES.PRIVACY}
+            />
+
+            {/* Submit Button */}
+            <PrimaryButton
+              className="signup-submit"
+              type="submit"
+              disabled={loading}
+              text={loading ? STRINGS.SUBMIT_BTN_LOADING : STRINGS.SUBMIT_BTN}
+            />
+
+            {/* Footer link */}
+            <p className="signup-footer">
+              {STRINGS.FOOTER_PROMPT}{" "}
+              <Link to={AUTH_ROUTES.LOGIN}>{STRINGS.FOOTER_LINK}</Link>
+            </p>
           </form>
         </SignupCard>
       </div>

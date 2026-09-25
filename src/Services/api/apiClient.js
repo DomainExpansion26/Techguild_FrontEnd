@@ -25,11 +25,15 @@ const axiosInstance = axios.create({
   withCredentials: true, // For cookies like refresh_token, oauth_state
 });
 
-// Attach the Bearer token when present (never "Bearer null" / empty token)
+// Attach the Bearer token when present (never "Bearer null" / empty token).
+// An explicit Authorization header always wins so callers can probe with a
+// fresh token before it is persisted (e.g. login -> getProfile).
 axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("techguild_token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  if (!config.headers.Authorization) {
+    const token = localStorage.getItem("techguild_token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
   }
   return config;
 });
