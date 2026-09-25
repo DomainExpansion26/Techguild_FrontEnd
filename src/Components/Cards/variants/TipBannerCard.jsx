@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import BaseCard from './BaseCard';
 import Icon from '@/Components/icons/Icon';
 
@@ -30,6 +31,7 @@ export default function TipBannerCard({
   padding = '0',
   ...props
 }) {
+  const navigate = useNavigate();
   const displayMsg = message || text || children;
   const displayAction = actionText || linkText;
   const displayHref = linkHref || actionHref;
@@ -37,6 +39,15 @@ export default function TipBannerCard({
   const combinedStyle = {
     ...(delay ? { animationDelay: delay } : {}),
     ...style,
+  };
+
+  const handleActionClick = (e) => {
+    if (onActionClick) {
+      onActionClick(e);
+    } else if (displayHref && displayHref.startsWith('/')) {
+      e.preventDefault();
+      navigate(displayHref);
+    }
   };
 
   return (
@@ -56,7 +67,7 @@ export default function TipBannerCard({
         {displayAction && (
           <a
             href={displayHref}
-            onClick={onActionClick}
+            onClick={handleActionClick}
             style={{
               fontSize: '0.75rem',
               fontWeight: 600,
