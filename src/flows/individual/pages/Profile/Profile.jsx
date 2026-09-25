@@ -962,33 +962,33 @@ export default function Profile() {
         <p className="section-subtitle text-secondary">{WIZARD_STRINGS.STEPS.STEP_5_SUBTITLE}</p>
       </div>
 
-      <Cards variant="base" radius="md" className="review-summary-card d-flex align-items-center justify-content-between w-100 mb-3">
+      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
         <span className="review-summary-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_1_LABEL}</span>
         <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(1)} role="button">
           {WIZARD_STRINGS.BUTTONS.EDIT}
         </span>
-      </Cards>
+      </div>
 
-      <Cards variant="base" radius="md" className="review-summary-card d-flex align-items-center justify-content-between w-100 mb-3">
+      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
         <span className="review-summary-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_2_LABEL}</span>
         <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(2)} role="button">
           {WIZARD_STRINGS.BUTTONS.EDIT}
         </span>
-      </Cards>
+      </div>
 
-      <Cards variant="base" radius="md" className="review-summary-card d-flex align-items-center justify-content-between w-100 mb-3">
+      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
         <span className="review-summary-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_3_LABEL}</span>
         <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(3)} role="button">
           {WIZARD_STRINGS.BUTTONS.EDIT}
         </span>
-      </Cards>
+      </div>
 
-      <Cards variant="base" radius="md" className="review-summary-card d-flex align-items-center justify-content-between w-100 mb-4">
+      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
         <span className="review-summary-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_4_LABEL}</span>
         <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(4)} role="button">
           {WIZARD_STRINGS.BUTTONS.EDIT}
         </span>
-      </Cards>
+      </div>
 
       {submitError && (
         <div
