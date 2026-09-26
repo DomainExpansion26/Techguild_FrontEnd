@@ -1,5 +1,5 @@
-import { useReducer } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useReducer } from "react";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import SignupCard from "@/Components/SignupCard/SignupCard";
 import { ArrowLeft } from "@/Components/icons";
 import img2 from "@/assets/img2.png";
@@ -44,7 +44,16 @@ export default function VerifyEmail() {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const token = (searchParams.get("token") || "").trim();
   const email = readPendingEmail(location?.state?.email);
+
+  // If a token is in the URL (user clicked a verification link pointing to /verify-email?token=...)
+  useEffect(() => {
+    if (token) {
+      navigate(`/emailverify?token=${encodeURIComponent(token)}`, { replace: true });
+    }
+  }, [token, navigate]);
 
   const [state, dispatch] = useReducer(reducer, initialState);
   const { resending, statusKind, statusMessage } = state;

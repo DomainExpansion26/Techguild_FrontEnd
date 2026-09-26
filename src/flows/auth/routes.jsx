@@ -19,6 +19,9 @@ export const authRoutes = (
     <Route path="/reset-password" element={<ResetPass />} />
     <Route path="/verify-email" element={<VerifyEmail />} />
     <Route path="/emailverify" element={<EmailVerified />} />
+    <Route path="/email-verify" element={<EmailVerified />} />
+    <Route path="/verifyemail" element={<EmailVerified />} />
+    <Route path="/auth/verify-email" element={<EmailVerified />} />
     <Route path="/account-type" element={<AccountType />} />
     <Route path="/verify-2fa" element={<TwoFactor />} />
     <Route path="/oauth/callback" element={<OAuthCallback />} />
