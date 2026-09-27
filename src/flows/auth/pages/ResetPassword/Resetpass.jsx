@@ -93,9 +93,6 @@ export default function ResetPass() {
     ? errorMessage || FORM_ERRORS.AUTH.RESET_FAILED
     : "";
 
-  const showError = errorMessage || (!hasToken && !isSubmitted)
-    ? errorMessage || FORM_ERRORS.AUTH.RESET_FAILED
-    : "";
 
   return (
     <div className="resetpass-page">
