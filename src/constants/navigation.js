@@ -62,3 +62,13 @@ export const SETTINGS_SUBMENU_ITEMS = [
   { id: "deactivate-account", label: "Deactivate Account", icon: "Trash", path: "/settings/deactivate-account", clientPath: "/client-settings/deactivate-account", agencyPath: "/agency/settings/deactivate", adminPath: "/admin/settings/deactivate" },
   { id: "sign-out", label: "Sign Out", icon: "LogOut", path: "/settings/sign-out", clientPath: "/client-settings/sign-out", agencyPath: "/agency/settings/sign-out", adminPath: "/admin/settings/sign-out", isDanger: true },
 ];
+
+/** App route paths touched by the auth flow */
+export const AUTH_ROUTES = {
+  LOGIN: "/login",
+  SIGNUP: "/signup",
+  VERIFY_EMAIL: "/verify-email",
+  VERIFY_2FA: "/verify-2fa",
+  TERMS: "/terms",
+  PRIVACY: "/privacy",
+};

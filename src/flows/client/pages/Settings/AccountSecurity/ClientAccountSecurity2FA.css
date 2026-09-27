@@ -390,15 +390,15 @@
   border-radius: 50%;
 }
 
-.as2fa-choice-input:checked+.as2fa-choice-radio {
+.as2fa-choice-input:checked + .as2fa-choice-radio {
   border-color: #103ca4;
 }
 
-.as2fa-choice-input:checked+.as2fa-choice-radio::after {
+.as2fa-choice-input:checked + .as2fa-choice-radio::after {
   background: #103ca4;
 }
 
-.as2fa-choice-input:focus-visible+.as2fa-choice-radio {
+.as2fa-choice-input:focus-visible + .as2fa-choice-radio {
   outline: 2px solid #103ca4;
   outline-offset: 2px;
 }
@@ -585,31 +585,25 @@
   .as2fa-app-card {
     width: 100%;
   }
-
   .as2fa-backup-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px 12px;
   }
-
   .as2fa-codes-card {
     padding: 18px;
   }
-
   .as2fa-codes-box {
     padding: 16px;
   }
-
   .as2fa-success-footer .secondary-btn,
   .as2fa-success-footer .primary-btn {
     width: 100%;
     max-width: none;
   }
-
   .as2fa-footer-row {
     flex-direction: column;
     gap: 12px;
   }
-
   .as2fa-footer-row .primary-btn,
   .as2fa-footer-row .secondary-btn,
   .as2fa-footer-btn {

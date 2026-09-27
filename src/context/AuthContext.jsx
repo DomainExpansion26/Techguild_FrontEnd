@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { ROLES } from "@/permissions/roles";
 
 const AuthContext = createContext(null);
@@ -9,42 +9,60 @@ const STORAGE_KEYS = {
   ROLE: "techguild_role",
 };
 
-export function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem(STORAGE_KEYS.USER);
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        // Purge legacy hardcoded demo profile
-        if (parsed && parsed.name === "Arjun Mehta" && parsed.email === "arjun@example.com") {
-          localStorage.removeItem(STORAGE_KEYS.USER);
-          return null;
-        }
-        return parsed;
-      } catch {
-        return null;
+function loadInitialSession() {
+  let user = null;
+  let token = null;
+  let role = ROLES.INDIVIDUAL;
+
+  try {
+    const savedUser = localStorage.getItem(STORAGE_KEYS.USER);
+    if (savedUser) {
+      const parsed = JSON.parse(savedUser);
+      // Purge legacy hardcoded demo profile
+      if (parsed && parsed.name === "Arjun Mehta" && parsed.email === "arjun@example.com") {
+        localStorage.removeItem(STORAGE_KEYS.USER);
+      } else if (parsed) {
+        user = parsed;
       }
     }
-    return null;
-  });
+  } catch {
+    localStorage.removeItem(STORAGE_KEYS.USER);
+  }
 
-  const [role, setRole] = useState(() => {
-    const savedRole = localStorage.getItem(STORAGE_KEYS.ROLE);
-    return savedRole || (user?.role || ROLES.INDIVIDUAL);
-  });
+  const savedToken = localStorage.getItem(STORAGE_KEYS.TOKEN);
+  // Purge legacy mock token
+  if (savedToken === "mock-jwt-token") {
+    localStorage.removeItem(STORAGE_KEYS.TOKEN);
+  } else if (savedToken) {
+    token = savedToken;
+  }
 
-  const [token, setToken] = useState(() => {
-    const savedToken = localStorage.getItem(STORAGE_KEYS.TOKEN);
-    // Purge legacy mock token
-    if (savedToken === "mock-jwt-token") {
-      localStorage.removeItem(STORAGE_KEYS.TOKEN);
-      return null;
-    }
-    return savedToken || null;
-  });
+  const savedRole = localStorage.getItem(STORAGE_KEYS.ROLE);
+  if (savedRole && Object.values(ROLES).includes(savedRole)) {
+    role = savedRole;
+  } else if (user?.role && Object.values(ROLES).includes(user.role)) {
+    role = user.role;
+  }
 
+  // No token -> no session: drop stale user/role so a logged-out reload
+  // never resurrects a previous identity.
+  if (!token) {
+    user = null;
+  }
+
+  return { user, token, role };
+}
+
+export function AuthProvider({ children }) {
+  const [initial] = useState(loadInitialSession);
+  const [user, setUser] = useState(initial.user);
+  const [token, setToken] = useState(initial.token);
+  const [role, setRole] = useState(initial.role);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Single persist path per slice; effects are the only writers so state
+  // stays the source of truth (callers never touch localStorage directly,
+  // except Login's remember-me email which is a separate preference key).
   useEffect(() => {
     if (user) {
       localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user));
@@ -54,12 +72,12 @@ export function AuthProvider({ children }) {
   }, [user]);
 
   useEffect(() => {
-    if (role) {
+    if (token && role) {
       localStorage.setItem(STORAGE_KEYS.ROLE, role);
     } else {
       localStorage.removeItem(STORAGE_KEYS.ROLE);
     }
-  }, [role]);
+  }, [token, role]);
 
   useEffect(() => {
     if (token) {
@@ -69,10 +87,11 @@ export function AuthProvider({ children }) {
     }
   }, [token]);
 
-  const login = async (userData, userToken, userRole) => {
+  const login = useCallback((userData, userToken, userRole) => {
+    const activeRole = userRole || userData?.role || ROLES.INDIVIDUAL;
     setIsLoading(true);
     try {
-      const activeRole = userRole || userData?.role || ROLES.INDIVIDUAL;
+      // Batch-adjacent sets: one render pass commits user+token+role together.
       setUser(userData);
       setToken(userToken || null);
       setRole(activeRole);
@@ -80,17 +99,13 @@ export function AuthProvider({ children }) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  const updateUser = (updates) => {
-    setUser((prev) => {
-      const updated = { ...prev, ...updates };
-      localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(updated));
-      return updated;
-    });
-  };
+  const updateUser = useCallback((updates) => {
+    setUser((prev) => (prev ? { ...prev, ...updates } : prev));
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setUser(null);
     setToken(null);
     setRole(ROLES.INDIVIDUAL);
@@ -98,28 +113,29 @@ export function AuthProvider({ children }) {
     localStorage.removeItem(STORAGE_KEYS.TOKEN);
     localStorage.removeItem(STORAGE_KEYS.ROLE);
     localStorage.removeItem("techguild_pending_user");
-  };
+  }, []);
 
-  const switchRole = (newRole) => {
+  const switchRole = useCallback((newRole) => {
     if (Object.values(ROLES).includes(newRole)) {
       setRole(newRole);
-      if (user) {
-        setUser({ ...user, role: newRole });
-      }
+      setUser((prev) => (prev ? { ...prev, role: newRole } : prev));
     }
-  };
+  }, []);
 
-  const value = {
-    user,
-    role,
-    token,
-    isLoading,
-    isAuthenticated: Boolean(token && token !== "mock-jwt-token"),
-    login,
-    logout,
-    updateUser,
-    switchRole,
-  };
+  const value = useMemo(
+    () => ({
+      user,
+      role,
+      token,
+      isLoading,
+      isAuthenticated: Boolean(token && token !== "mock-jwt-token"),
+      login,
+      logout,
+      updateUser,
+      switchRole,
+    }),
+    [user, role, token, isLoading, login, logout, updateUser, switchRole]
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -1,4 +1,14 @@
+/* ===== Verify Email — Figma frame 129:6 ("Verify email.", 1440x900) ===== */
 .verify-page {
+  --verify-primary: #103ca4;
+  --verify-ink: #000000;
+  --verify-border: #b3b3b3; /* outline button stroke */
+  --verify-hairline: #e5e7eb; /* card stroke */
+  --verify-error-bg: #fee2e2;
+  --verify-error-text: #b91c1c;
+  --verify-success-bg: #dcfce7;
+  --verify-success-text: #15803d;
+
   width: 100vw;
   height: 100vh;
   position: fixed;
@@ -12,25 +22,26 @@
   align-items: center;
 }
 
-.auth-header {
+/* Header: logo at (80,23) 32 Semibold, profile circle 36px at right 80px */
+.verify-header {
   position: absolute;
-  top: 24px;
-  left: 36px;
-  right: 36px;
+  top: 23px;
+  left: 80px;
+  right: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 20;
 }
 
-.auth-header-logo {
-  font-size: 26px;
-  font-weight: 700;
+.verify-header-logo {
+  font-size: 32px;
+  font-weight: 600;
   display: flex;
   align-items: center;
   cursor: pointer;
   user-select: none;
-  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1;
 }
 
 .logo-tech {
@@ -38,187 +49,211 @@
 }
 
 .logo-guild {
-  color: #1155F4;
+  color: #1155f4;
 }
 
-.auth-header-profile {
-  width: 38px;
-  height: 38px;
+.verify-header-profile {
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.45);
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--verify-hairline);
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
 }
 
-.auth-header-profile:hover {
-  background: rgba(255, 255, 255, 0.25);
-  color: #FFFFFF;
-}
-
-.header-profile-icon {
+.verify-profile-icon {
   width: 20px;
   height: 20px;
-  filter: brightness(0) invert(1) opacity(0.85);
 }
 
-.card-mail-icon {
-  width: 42px;
-  height: 42px;
-}
-
-.badge-check-icon {
-  width: 14px;
-  height: 14px;
-  filter: brightness(0) invert(1);
-}
-
-.overlay {
-  position: absolute;
-  inset: 0;
-
+/* Card: 531 wide, radius 20, 1px #E5E7EB, padding 64/30/30, min-height 530 */
+.verify-page .signup-card {
+  position: relative;
+  width: 531px;
+  max-width: 95%;
+  min-height: 530px;
+  max-height: calc(100vh - 32px);
+  padding: 64px 30px 30px 30px;
+  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid var(--verify-hairline);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  overflow-y: auto;
+  z-index: 10;
 }
 
 .verify-content {
   text-align: center;
-}
-
-.mail-icon-wrapper {
-  width: auto;
-  height: auto;
-  margin: 4px auto 20px;
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: transparent !important;
-  box-shadow: none !important;
-  border: none !important;
 }
 
-.badge {
+/* Back arrow floats top-left (Figma arrow-up at 30,64 over content starting at 84) */
+.verify-back-btn {
   position: absolute;
-  right: 2px;
-  top: -6px;
-  width: 24px;
-  height: 24px;
-  background: #1155f4;
-  color: #ffffff;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2.5px solid #ffffff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  top: 0;
+  left: 0;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--verify-primary); /* ArrowLeft uses currentColor */
+  cursor: pointer;
+  line-height: 0;
 }
 
-.verify-content h2 {
-  font-size: 20px;
+/* Illustration: 215x143 centered (Figma image rect) */
+.verify-illust {
+  margin-top: 20px;
+}
+
+.verify-illust img {
+  width: 215px;
+  height: 143px;
+  object-fit: contain;
+}
+
+/* Title: 24 Bold #000 */
+.verify-title {
+  font-size: 24px;
   font-weight: 700;
-  color: #000000;
-  margin-top: 0;
-  margin-bottom: 16px;
-  letter-spacing: -0.01em;
-}
-
-.verify-text {
-  font-size: 13.5px;
-  color: #000000;
-  font-weight: 500;
-  line-height: 1.45;
+  color: var(--verify-ink);
   margin: 0;
+  line-height: 1.2;
 }
 
-.email {
-  font-size: 13.5px;
-  font-weight: 500;
-  color: #000000;
-  line-height: 1.45;
-  margin: 2px 0 2px;
+.verify-status {
+  padding: 8px 12px;
+  margin: 12px auto 0;
+  max-width: 403px;
+  border-radius: 6px;
+  font-size: 12px;
 }
 
+.verify-status-success {
+  background-color: var(--verify-success-bg);
+  color: var(--verify-success-text);
+}
+
+.verify-status-error {
+  background-color: var(--verify-error-bg);
+  color: var(--verify-error-text);
+}
+
+/* Desc: 16 Regular #000, centered, 403 wide like the Figma node (else the
+ * email wraps differently and pushes everything below off by a line) */
+.verify-desc {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--verify-ink);
+  line-height: 1.31; /* Figma: 4 lines in 84px */
+  max-width: 403px;
+  margin: 20px auto 0;
+}
+
+/* Buttons: outline 174 + primary 212, 54 tall, 17 gap, centered */
 .verify-buttons {
   display: flex;
-  gap: 12px;
-  margin-top: 22px;
-  margin-bottom: 22px;
+  gap: 17px;
+  margin-top: 20px;
+  justify-content: center;
   align-items: center;
 }
 
-.verify-buttons .secondary-btn {
-  flex: 1;
+.verify-btn-outline {
+  flex: 0 0 174px;
+  min-height: 54px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--verify-ink);
+  background: #ffffff;
+  border: 2px solid var(--verify-border);
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
 }
 
-.verify-buttons .primary-btn {
-  flex: 1.4;
-  width: auto;
+.verify-btn-outline:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-.footer-text {
-  font-size: 13.5px;
-  color: #000000;
-  line-height: 1.5;
-  font-weight: 400;
-  margin: 0;
+.verify-btn-primary {
+  flex: 0 0 212px;
+  min-height: 54px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  background: var(--verify-primary);
+  border: 2px solid var(--verify-primary);
+  border-radius: 9px;
+  padding: 8px 12px;
+  cursor: pointer;
 }
 
-/* Override SignupCard ONLY on this page to match Emailverify */
-.verify-page .signup-card {
-  position: relative !important;
-  left: auto !important;
-  top: auto !important;
-  transform: translateY(-20px) !important;
-  margin: auto !important;
-
-  width: 420px !important;
-  max-width: 95% !important;
-  height: auto !important;
-  min-height: 390px !important;
-  max-height: calc(100vh - 32px) !important;
-
-  padding: 20px 32px 18px 32px !important;
-  border-radius: 20px !important;
-
-  overflow-y: auto !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1) !important;
-  box-sizing: border-box !important;
+/* Trust: 16 Medium #000, centered, 20px below buttons */
+.verify-trust {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--verify-ink);
+  line-height: 1.45;
+  margin: 20px 0 0 0;
 }
 
-/* Tablet */
+/* Pin card top to Figma y=156 on desktop (page flex-centers by default,
+ * which lands the card ~22px low). Scoped to this page. */
+@media (min-width: 1025px) {
+  .verify-page {
+    align-items: flex-start;
+  }
 
-@media (max-width:1024px) {
-  .verify-content h2 {
-    font-size: 18px;
+  .verify-page .signup-card {
+    margin-top: 156px;
   }
 }
 
-/* Mobile */
+/* ===== Tablet ===== */
+@media (max-width: 1024px) {
+  .verify-header {
+    left: 4vw;
+    right: 4vw;
+  }
 
-@media (max-width:767px) {
+  .verify-page .signup-card {
+    width: 100%;
+    max-width: 531px;
+  }
+}
 
-  .verify-page {
-    justify-content: center;
-    padding: 20px;
+/* ===== Mobile ===== */
+@media (max-width: 767px) {
+  .verify-header {
+    top: 16px;
+    left: 16px;
+    right: 16px;
+  }
+
+  .verify-header-logo {
+    font-size: 24px;
+  }
+
+  .verify-page .signup-card {
+    min-height: auto;
+    padding: 56px 24px 24px 24px;
   }
 
   .verify-buttons {
     flex-direction: column;
   }
 
-  .verify-content h2 {
-    font-size: 16px;
+  .verify-btn-outline,
+  .verify-btn-primary {
+    flex: none;
+    width: 100%;
   }
 
-  .mail-icon-wrapper {
-    width: auto;
-    height: auto;
+  .verify-title {
+    font-size: 22px;
   }
 }

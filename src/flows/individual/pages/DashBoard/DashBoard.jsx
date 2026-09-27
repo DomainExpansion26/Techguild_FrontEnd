@@ -91,7 +91,7 @@ export default function DashBoard() {
             variant="tip"
             message={DASHBOARD_STRINGS.TIP_BANNER.MESSAGE}
             actionText={DASHBOARD_STRINGS.TIP_BANNER.ACTION_TEXT}
-            actionHref="/profile"
+            actionHref="/profile/basic-info"
             delay="0.36s"
           />
         </div>

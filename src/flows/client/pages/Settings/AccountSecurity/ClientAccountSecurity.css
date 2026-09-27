@@ -1,4 +1,593 @@
-.client-account-security-container {
-  max-width: 800px;
-  margin: 0 auto;
+/* ===========================================================
+   Layout gap (moved out of the inline style on DashboardLayout)
+   =========================================================== */
+.dashboard-layout.account-security-layout {
+  gap: 12px;
+}
+
+.account-security-container {
+  max-width: none;
+  gap: 12px;
+  padding-bottom: 0;
+}
+.account-security-section {
+  gap: 20px;
+}
+.account-security-section .settings-section-header {
+  margin: 0;
+}
+.account-security-grid {
+  row-gap: 18px;
+}
+.account-security-grid .settings-divider {
+  margin: 0;
+}
+.account-security-field-control {
+  min-width: 0;
+}
+.account-security-field-control .settings-input {
+  max-width: 521px;
+}
+
+.account-security-inline-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.account-security-email-input {
+  max-width: 232px !important;
+  background: #f9fafb;
+}
+.account-security-secondary-button,
+.account-security-primary-button,
+.account-security-signout-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+}
+.account-security-secondary-button {
+  min-height: 34px;
+  padding: 6px 14px;
+  color: #374151;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+}
+.account-security-secondary-button:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+/* ===========================================================
+   Buttons (override Verifyemail.css .secondary-btn)
+   =========================================================== */
+
+.account-security-section .secondary-btn {
+  width: fit-content;
+  flex: none;
+  height: auto;
+  padding: 8px 24px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+.account-security-section .secondary-btn:hover:not(:disabled) {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+  color: #212529;
+}
+
+.account-security-section .secondary-btn:active:not(:disabled) {
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+/* Revoke button: keep red text + original secondary styling
+   (scoped so it beats .account-security-section .secondary-btn) */
+.account-security-section .account-security-revoke {
+  min-height: 34px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  gap: 8px;
+  white-space: nowrap;
+  color: #dc2626;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: none;
+}
+.account-security-section .account-security-revoke:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  color: #b91c1c;
+}
+
+.account-security-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #9ca3af;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.account-security-password-input {
+  position: relative;
+  display: block;
+  max-width: 521px;
+}
+.account-security-password-input .settings-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 40px;
+}
+.account-security-password-visibility {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 8px;
+  margin: auto 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  color: #6b7280;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+}
+.account-security-password-visibility:hover {
+  color: #374151;
+  background: #f3f4f6;
+}
+
+.account-security-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.account-security-section .account-security-primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  min-height: 36px;
+  padding: 8px 18px;
+  color: #ffffff;
+  background: #103ca4;
+  border: 0;
+  width: auto;
+  height: auto;
+  margin-top: 0;
+}
+.account-security-section .account-security-primary-button:hover:not(:disabled) {
+  background: #0c2b7a;
+  box-shadow: none;
+  transform: none;
+}
+.account-security-section .account-security-primary-button:active:not(:disabled) {
+  background: #0c2b7a;
+  transform: none;
+  box-shadow: none;
+}
+
+.account-security-setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 56px;
+  padding: 12px 0;
+  border-top: 1px solid #f3f4f6;
+}
+.account-security-setting-row:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+.account-security-row-title {
+  color: #111827;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 19.5px;
+}
+.account-security-setting-row p {
+  margin: 3px 0 0;
+  color: #9ca3af;
+  font-size: 12px;
+  line-height: 18px;
+}
+.account-security-row-action {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.account-security-enabled {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #16a34a;
+  font-size: 12px;
+  font-weight: 600;
+}
+.account-security-sessions {
+  border-top: 1px solid #f3f4f6;
+}
+.account-security-session {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 61px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+.account-security-device {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.account-security-device-icon {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  background: #f3f4f6;
+  border-radius: 8px;
+}
+.account-security-device b {
+  display: block;
+  color: #111827;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 19.5px;
+}
+.account-security-device small {
+  display: block;
+  margin-top: 2px;
+  color: #9ca3af;
+  font-size: 11px;
+  line-height: 16.5px;
+}
+/* 1. "Current" now has plain text style (was the revoke style) */
+.account-security-current {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  color: #16a34a;
+  font-size: 12px;
+  font-weight: 500;
+  /* Removed background, padding, border-radius */
+}
+
+/* "Revoke" now has the button style (white bg, border, red text) */
+.account-security-revoke {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  min-height: 34px;
+  padding: 6px 14px;
+  color: #dc2626;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+.account-security-revoke:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+/* 3. Keep "Sign out of all other sessions" as plain red text
+   (since it also uses the .account-security-revoke class).
+   Scoped to match .account-security-section .account-security-revoke
+   specificity so the button styles can't win. */
+.account-security-section .account-security-signout-others {
+  display: block;
+  width: auto;
+  margin-top: 14px;
+  margin-right: auto;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: normal;
+  text-align: left;
+  /* Override the button styles */
+  min-height: auto;
+  padding: 0;
+  color: #dc2626;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.account-security-section .account-security-signout-others:hover {
+  background: transparent;
+  border: 0;
+  color: #b91c1c;
+}
+
+.account-security-signout-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.account-security-signout h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+}
+.account-security-signout p {
+  margin: 4px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 19.5px;
+}
+.account-security-signout-button {
+  padding: 9px 18px;
+  color: #374151;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 600;
+}
+
+/* Sign Out button: preserve original styling
+   (scoped to beat global Verifyemail.css .secondary-btn flex:1) */
+.account-security-signout .secondary-btn.account-security-signout-button {
+  flex: none;
+  min-height: auto;
+  padding: 9px 18px;
+  color: #374151;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.account-security-signout .secondary-btn.account-security-signout-button:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  color: #374151;
+}
+
+/* Cream background card for signout section (Figma: #FFFBEB @ 60%, border #FEF3C7, r10).
+   WHY this shape (do not simplify without re-checking cards.css):
+   1. BaseCard renders `card tg-card` — no `shadow-sm`/`rounded-3` — so the original
+      `.card.shadow-sm.rounded-3` selector never matched anything.
+   2. The shared glass rule (`.card:not(...)` x4 in cards.css) has specificity 0,5,0
+      with !important, which beats a plain 0,4,0 override even with !important.
+   This rule wins twice: the `main...` selector below is 0,5,1 (beats 0,5,0), AND it
+   sets the `--tg-card-*` hooks the glass rule itself reads via var(), so the glass
+   fallbacks can never apply. */
+main.settings-container.account-security-container .card.tg-card.account-security-signout {
+  --tg-card-bg: rgba(255, 251, 235, 0.6);
+  --tg-card-border: 1px solid #fef3c7;
+  --tg-card-radius: 10px;
+  background: rgba(255, 251, 235, 0.6) !important;
+  background-color: rgba(255, 251, 235, 0.6) !important;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border: 1px solid #fef3c7 !important;
+  border-radius: 10px !important;
+}
+
+
+@media (max-width: 768px) {
+  .account-security-container {
+    gap: 12px;
+  }
+  .account-security-inline-control,
+  .account-security-setting-row,
+  .account-security-signout-content {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .account-security-email-input {
+    max-width: none !important;
+  }
+  .account-security-row-action {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* Change the row from space-between to flex-start so it doesn't push items to the edge */
+.account-security-setting-row {
+  display: flex;
+  justify-content: flex-start; /* was space-between */
+  align-items: center;
+  gap: 16px;
+  /* ... keep the rest of your existing properties ... */
+}
+
+/* New class for the left side group */
+.account-security-left-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+/* Ensure the buttons stay pushed to the far right */
+.account-security-row-action {
+  margin-left: auto;
+}
+
+/* ===========================================================
+   Two-Factor Authentication - "Learn about 2FA" dropdown
+   Figma Settings01 (closed state) + Settings02 (expanded state)
+   =========================================================== */
+.account-security-learn-wrap {
+  width: 100%;
+  background: #f6f5f3;
+  border: 1px solid #11182727;
+  border-radius: 10px;
+  overflow: hidden; /* clips children to the rounded corners */
+}
+.account-security-learn-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  min-height: 40px;
+  padding: 12px 16px;
+  color: #111827;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.account-security-learn-toggle:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+.account-security-learn-chevron {
+  flex: none;
+  transition: transform 0.2s ease;
+}
+.account-security-learn-chevron path {
+  stroke: #111827;
+}
+.account-security-learn-toggle[aria-expanded="true"]
+  .account-security-learn-chevron {
+  transform: rotate(180deg);
+}
+
+.account-security-learn-content {
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+  padding: 8px 16px 20px;
+}
+.account-security-learn-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.account-security-learn-icon {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  color: #103ca4;
+  background: #e0e7ff;
+  border-radius: 8px;
+}
+.account-security-learn-icon path {
+  stroke: #103ca4;
+}
+.account-security-learn-text {
+  min-width: 0;
+  padding-top: 5px;
+}
+.account-security-learn-title {
+  color: #111827;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+}
+.account-security-learn-text p {
+  margin: 4px 0 0;
+  color: #111827;
+  font-size: 12px;
+  line-height: 18px;
+}
+.account-security-learn-steps {
+  font-size: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+.account-security-learn-arrow {
+  color: #9ca3af;
+  font-size: 14px;
+  line-height: 1;
+}
+.account-security-learn-list {
+  margin-top: 4px;
+}
+.account-security-learn-list p {
+  margin: 4px 0 0;
+}
+.account-security-learn-apps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 18px;
+  margin-top: 4px;
+}
+.account-security-learn-app {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.account-security-learn-app-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: #6b7280;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+}
+.account-security-learn-app-icon path {
+  stroke: #6b7280;
+}
+.account-security-learn-app-name {
+  color: #103ca4;
+  font-size: 12px;
+  line-height: 18px;
 }

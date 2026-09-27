@@ -12,6 +12,15 @@ import authApi from "@/features/auth/api/authApi";
 import oauthApi from "@/features/auth/api/oauthApi";
 import { APP_STRINGS, FORM_ERRORS } from "@/constants/string";
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function validateEmail(rawValue) {
+  const value = rawValue.trim();
+  if (!value) return FORM_ERRORS.REQUIRED;
+  if (!EMAIL_PATTERN.test(value)) return FORM_ERRORS.INVALID_EMAIL;
+  return "";
+}
+
 export default function ForgetPass() {
   const STRINGS = APP_STRINGS.AUTH.FORGOT_PASSWORD;
   const [email, setEmail] = useState("");
@@ -27,16 +36,30 @@ export default function ForgetPass() {
     oauthApi.redirectToGithub();
   };
 
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    if (errorMessage) setErrorMessage("");
+  };
+
   const handleSubmit = async (e) => {
     e?.preventDefault();
+    if (loading) return;
+
+    const validationError = validateEmail(email);
+    if (validationError) {
+      setErrorMessage(validationError);
+      return;
+    }
+
+    const trimmedEmail = email.trim();
     setErrorMessage("");
     setLoading(true);
 
     try {
-      await authApi.forgotPassword({ email });
+      await authApi.forgotPassword({ email: trimmedEmail });
+      setEmail(trimmedEmail);
       setIsSubmitted(true);
     } catch (err) {
-      console.error("Forgot password error:", err);
       setErrorMessage(err?.message || FORM_ERRORS.AUTH.FORGOT_FAILED);
     } finally {
       setLoading(false);
@@ -53,76 +76,65 @@ export default function ForgetPass() {
 
       <div className="auth-card-wrapper">
         <SignupCard className={isSubmitted ? "success-state" : ""}>
-          <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
-            <div style={isSubmitted ? { display: 'flex', justifyContent: 'center', width: '100%' } : {}}>
+          <div className="forget-content">
+            <div className={`forget-logo-row${isSubmitted ? " center" : ""}`}>
               <BrandLogo />
             </div>
 
             {!isSubmitted ? (
               <>
-                <h2 style={{ fontWeight: 700, fontSize: '18.5px', color: '#111827', margin: '22px 0 10px 0' }}>
+                <h2 className="forget-title">
                   {STRINGS.TITLE}
                 </h2>
 
-                <p className="subtitle" style={{ color: '#6C757D', fontSize: '12.5px', margin: '0 0 22px 0', lineHeight: '1.45' }}>
+                <p className="subtitle forget-subtitle">
                   {STRINGS.SUBTITLE}
                 </p>
 
                 {errorMessage && (
-                  <div
-                    style={{
-                      padding: "8px 12px",
-                      marginBottom: "12px",
-                      borderRadius: "6px",
-                      backgroundColor: "#fee2e2",
-                      color: "#b91c1c",
-                      fontSize: "12px",
-                    }}
-                  >
+                  <div className="forget-error" role="alert">
                     {errorMessage}
                   </div>
                 )}
 
-                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-                  <label htmlFor="forget-email" style={{ fontWeight: 700, fontSize: '12.5px', color: '#111827', display: 'block', margin: '0 0 8px 0' }}>
+                <form onSubmit={handleSubmit} noValidate className="forget-form">
+                  <label htmlFor="forget-email" className="forget-label">
                     {STRINGS.EMAIL_LABEL}
                   </label>
 
-                  <div className="input-group rounded-3 overflow-hidden bg-white" style={{ marginBottom: '24px', border: '1px solid #B3B3B3' }}>
-                    <span className="input-group-text bg-white border-0 d-flex align-items-center justify-content-center" style={{ padding: '0 10px', minWidth: '36px' }}>
-                      <Mail width={16} height={16} color="#6A717D" />
+                  <div className="forget-input-group input-group rounded-3 overflow-hidden bg-white">
+                    <span className="forget-input-addon input-group-text bg-white border-0 d-flex align-items-center justify-content-center">
+                      <Mail width={18} height={18} />
                     </span>
                     <input
                       id="forget-email"
                       type="email"
+                      autoComplete="email"
                       className="form-control border-0 shadow-none bg-white"
                       placeholder={STRINGS.EMAIL_PLACEHOLDER}
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      style={{ fontSize: '13px', padding: '8px 10px 8px 0' }}
+                      onChange={handleEmailChange}
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={loading}
-                    className="btn auth-primary-btn"
+                    className="btn auth-primary-btn forget-submit"
                   >
                     {loading ? STRINGS.SUBMIT_BTN_LOADING : STRINGS.SUBMIT_BTN}
                   </button>
 
-                  <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0 16px 0' }}>
-                    <div style={{ flex: 1, height: '1px', backgroundColor: '#B3B3B3' }}></div>
-                    <span style={{ padding: '0 12px', fontSize: '11px', fontWeight: 600, color: '#4B5563', letterSpacing: '0.05em' }}>{STRINGS.DIVIDER_OR}</span>
-                    <div style={{ flex: 1, height: '1px', backgroundColor: '#B3B3B3' }}></div>
+                  <div className="forget-divider">
+                    <div className="forget-divider-line"></div>
+                    <span className="forget-divider-text">{STRINGS.DIVIDER_OR}</span>
+                    <div className="forget-divider-line"></div>
                   </div>
 
                   <button
                     type="button"
                     onClick={handleGoogleLogin}
-                    className="btn btn-light bg-white border d-flex align-items-center justify-content-center gap-2 w-100 shadow-sm fw-medium rounded-3"
-                    style={{ fontSize: '13px', padding: '8px 0', marginBottom: '10px' }}
+                    className="btn btn-light forget-social-btn"
                   >
                     <Google width={18} height={18} />
                     <span>{STRINGS.GOOGLE_BTN}</span>
@@ -130,58 +142,44 @@ export default function ForgetPass() {
                   <button
                     type="button"
                     onClick={handleGithubLogin}
-                    className="btn btn-light bg-white border d-flex align-items-center justify-content-center gap-2 w-100 shadow-sm fw-medium rounded-3"
-                    style={{ fontSize: '13px', padding: '8px 0', marginBottom: '0px' }}
+                    className="btn btn-light forget-social-btn last"
                   >
                     <GitHub width={18} height={18} />
                     <span>{STRINGS.GITHUB_BTN}</span>
                   </button>
 
-                  <div style={{ marginTop: 'auto', paddingTop: '20px', textAlign: 'center' }}>
-                    <p style={{ fontSize: '13px', color: '#000000', margin: 0, fontWeight: 500 }}>
+                  <div className="forget-footer">
+                    <p>
                       {STRINGS.FOOTER_PROMPT}{" "}
-                      <Link to="/login" style={{ color: '#103CA4', textDecoration: 'none', fontWeight: 600 }}>{STRINGS.FOOTER_LINK}</Link>
+                      <Link to="/login">{STRINGS.FOOTER_LINK}</Link>
                     </p>
                   </div>
                 </form>
               </>
             ) : (
               <div className="forgetpass-success-body">
-                <div className="forgetpass-icon-circle">
-                  <img src={mailImage} alt="Mail Sent Icon" className="forgetpass-mail-img" />
-                </div>
+                <img src={mailImage} alt="Reset link sent" className="forgetpass-success-banner" />
 
                 <h2 className="forgetpass-success-title">{STRINGS.SUCCESS.TITLE}</h2>
 
                 <p className="forgetpass-success-desc">
-                  {STRINGS.SUCCESS.DESC_PREFIX}
-                  <br />
+                  {STRINGS.SUCCESS.DESC_PREFIX}{" "}
                   <span className="forgetpass-email-highlight">{email}</span>
                 </p>
 
                 <button
                   type="button"
                   onClick={handleOpenGmail}
-                  className="btn auth-primary-btn forgetpass-open-email-btn"
+                  className="btn auth-primary-btn forget-submit forgetpass-open-email-btn"
                 >
                   {STRINGS.SUCCESS.OPEN_EMAIL_BTN}
                 </button>
 
-                <div className="forgetpass-resend-wrapper">
-                  <span className="forgetpass-resend-text">{STRINGS.SUCCESS.RESEND_PROMPT} </span>
-                  <button
-                    type="button"
-                    onClick={handleSubmit}
-                    className="btn btn-link p-0 forgetpass-resend-link"
-                  >
-                    {STRINGS.SUCCESS.RESEND_LINK}
-                  </button>
-                </div>
-
-                <div className="forgetpass-back-login-wrapper">
-                  <Link to="/login" className="forgetpass-back-login-link">
-                    {STRINGS.SUCCESS.BACK_TO_LOGIN}
-                  </Link>
+                <div className="forget-footer">
+                  <p>
+                    {STRINGS.FOOTER_PROMPT}{" "}
+                    <Link to="/login">{STRINGS.FOOTER_LINK}</Link>
+                  </p>
                 </div>
               </div>
             )}

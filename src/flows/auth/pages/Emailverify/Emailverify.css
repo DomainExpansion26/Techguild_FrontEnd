@@ -1,99 +1,83 @@
+/* ===== Email Verified — Figma frame 131:36 ("Email verified", 1440x900) ===== */
 .verified-page {
+  --email-primary: #103ca4;
+  --email-ink: #000000;
+  --email-reward-bg: #e9f0ff;
+  --email-hairline: #e5e7eb; /* card stroke */
+  --email-lock-ring: #8e8e93; /* locked circle stroke */
+  --email-lock-icon: #6a717d; /* lock.svg uses currentColor */
+  --email-lock-label: #5d5858;
+  --email-lock-points: #7b7474; /* passes AA per frame audit */
+  --email-line: #918d8d; /* connector lines */
+  --email-error-bg: #fee2e2;
+  --email-error-text: #b91c1c;
+
   width: 100vw;
   height: 100vh;
   position: fixed;
   inset: 0;
-  background-size: 100% 100% !important;
-  background-position: center center !important;
-  background-repeat: no-repeat !important;
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.auth-header {
+/* Header: logo at (80,23) 32 Semibold, profile circle 36px at right 80px */
+.verified-header {
   position: absolute;
-  top: 24px;
-  left: 36px;
-  right: 36px;
+  top: 23px;
+  left: 80px;
+  right: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 20;
 }
 
-.auth-header-logo {
-  font-size: 26px;
-  font-weight: 700;
+.verified-header-logo {
+  font-size: 32px;
+  font-weight: 600;
   display: flex;
   align-items: center;
   cursor: pointer;
   user-select: none;
-  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1;
 }
 
-.logo-tech {
-  color: #111827;
-}
-
-.logo-guild {
-  color: #1155F4;
-}
-
-.auth-header-profile {
-  width: 38px;
-  height: 38px;
+.verified-header-profile {
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.45);
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--email-hairline);
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
 }
 
-.auth-header-profile:hover {
-  background: rgba(255, 255, 255, 0.25);
-  color: #FFFFFF;
-}
-
-.header-profile-icon {
+.verified-profile-icon {
   width: 20px;
   height: 20px;
-  filter: brightness(0) invert(1) opacity(0.85);
 }
 
-.overlay {
-  position: absolute;
-  inset: 0;
-}
-
-/* Override SignupCard ONLY on this page */
+/* Card: 795 wide, radius 14, 1px #E5E7EB, padding 30/29, min-height 541 */
 .verified-page .signup-card {
-  position: relative !important;
-  left: auto !important;
-  top: auto !important;
-  transform: translateY(5px) !important;
-  margin: auto !important;
-
-  width: 540px !important;
-  max-width: 95% !important;
-  height: auto !important;
-  max-height: calc(100vh - 32px) !important;
-
-  padding: 10px 32px 10px 32px !important;
-  border-radius: 20px !important;
-
-  overflow-y: auto !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1) !important;
-  box-sizing: border-box !important;
+  position: relative;
+  width: 795px;
+  max-width: 95%;
+  min-height: 541px;
+  max-height: calc(100vh - 32px);
+  padding: 30px 29px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid var(--email-hairline);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  overflow-y: auto;
+  z-index: 10;
 }
 
 .verified-container {
@@ -104,94 +88,91 @@
   align-items: center;
 }
 
-.mailBox {
-  width: 180px;
-  height: 130px;
-  margin: 0 auto 12px;
-  background: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  box-shadow: none;
+/* Illustration: 215x143 centered */
+.verified-illust {
+  margin: 0 auto;
+  line-height: 0;
 }
 
-.tick {
-  position: absolute;
-  right: 0px;
-  top: -5px;
-
-  width: 24px;
-  height: 24px;
-
-  border-radius: 50%;
-  background: #1155F4;
-  color: #fff;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  border: 2px solid #fff;
+.verified-illust img {
+  width: 215px;
+  height: 143px;
+  object-fit: contain;
 }
 
-.verified-container h2 {
-  margin: 0 0 10px;
-  font-size: 22px;
+/* Title: 24 Bold #000, directly below illustration */
+.verified-title {
+  margin: 0;
+  font-size: 24px;
   font-weight: 700;
-  color: #111;
+  color: var(--email-ink);
   text-align: center;
+  line-height: 1.2;
 }
 
+/* Reward: 285 wide, radius 10, #E9F0FF, left text, 30px below title */
 .reward-card {
+  width: 285px;
+  max-width: 100%;
+  margin: 30px auto 0;
+  padding: 10px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   text-align: left;
-  background: #eef4ff;
-  border: 1px solid #d4e3ff;
-  border-radius: 12px;
-  padding: 8px 16px;
-  margin-bottom: 18px;
+  background: var(--email-reward-bg);
+  border: 0;
+  border-radius: 10px;
 }
 
 .reward-card h4 {
-  color: #103ca4;
-  font-size: 14px;
+  color: var(--email-primary);
+  font-size: 18px;
   font-weight: 700;
   margin: 0 0 4px 0;
+  line-height: 1.2;
 }
 
 .reward-card p {
-  color: #103ca4;
-  font-size: 13px;
-  font-weight: 600;
+  color: var(--email-primary);
+  font-size: 16px;
+  font-weight: 500;
   margin: 0;
+  line-height: 1.4;
 }
 
+.verified-error {
+  max-width: 403px;
+  margin: 30px auto 0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background-color: var(--email-error-bg);
+  color: var(--email-error-text);
+  font-size: 12px;
+}
+
+/* Steps: 4 columns, 35px circles, 1px #918D8D connectors, 30px below reward */
 .verify-progress {
   position: relative;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   width: 100%;
-
-  margin: 0 0 28px;
+  margin: 30px 0 0;
   padding: 0;
   overflow: visible;
-
-  height: auto !important;
-  background: transparent !important;
+  background: transparent;
 }
 
 .line {
   position: absolute;
-  top: 16px;
-  left: calc(12.5% + 16px);
-  right: calc(12.5% + 16px);
-  height: 2px;
-  background: #cbd5e1;
+  top: 17px;
+  left: calc(12.5% + 17px);
+  right: calc(12.5% + 17px);
+  height: 1px;
+  background: var(--email-line);
   z-index: 0;
 }
 
@@ -199,136 +180,161 @@
   position: relative;
   z-index: 2;
   flex: 1;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-
   text-align: center;
   overflow: visible;
   padding: 0 4px;
 }
 
 .circle {
-  width: 32px;
-  height: 32px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
-  border: 2px solid #cbd5e1;
+  border: 1px solid var(--email-lock-ring);
   background: #fff;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
-  margin-bottom: 8px;
-  color: #94a3b8;
-  transition: all 0.2s ease;
+  margin-bottom: 14px;
+  color: var(--email-lock-icon);
 }
 
+/* Active step is a filled radio (blue circle + white dot), not a check */
 .step.active .circle {
-  background: #103ca4;
-  border-color: #103ca4;
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(16, 60, 164, 0.25);
+  background: var(--email-primary);
+  border-color: var(--email-primary);
+  position: relative;
+}
+
+.step.active .circle::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
 }
 
 .step h5 {
-  margin: 0 0 3px 0;
-  font-size: 12px;
-  font-weight: 600;
-  color: #64748b;
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--email-lock-label);
   white-space: normal;
-  line-height: 1.3;
+  line-height: 1.2;
 }
 
 .step.active h5 {
-  color: #0f172a;
-  font-weight: 700;
+  color: var(--email-ink);
+  font-weight: 600;
 }
 
 .step span {
   display: block;
-  font-size: 11px;
-  color: #94a3b8;
+  font-size: 14px;
+  color: var(--email-lock-points);
   font-weight: 500;
   white-space: normal;
-  line-height: 1.3;
+  line-height: 1.2;
 }
 
 .step.active span {
-  color: #103ca4;
-  font-weight: 700;
+  color: var(--email-primary);
+  font-weight: 600;
 }
 
+/* Button: 279x54, radius 9, 16 Medium, 30px below steps */
 .continueBtn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 240px;
+  width: 279px;
   max-width: 90%;
-  height: 44px;
-  margin: 0 auto;
-
+  height: 54px;
+  margin: 30px auto 0;
   border: none;
-  border-radius: 10px;
-
-  background: #103ca4;
+  border-radius: 9px;
+  background: var(--email-primary);
   color: #fff;
-
-  font-size: 15px;
-  font-weight: 600;
-
+  font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
-
-  transition: all 0.25s ease;
-  box-shadow: 0 4px 14px rgba(16, 60, 164, 0.25);
+  transition: background 0.25s ease;
 }
 
-.continueBtn:hover {
+.continueBtn:hover:not(:disabled) {
   background: #0c3188;
-  transform: none;
-  box-shadow: 0 6px 18px rgba(16, 60, 164, 0.35);
 }
 
-.continueBtn:active {
-  transform: translateY(0);
+.continueBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-/* Tablet & Mobile Responsiveness */
-@media (max-width: 640px) {
-  .verified-page .signup-card {
-    width: 100% !important;
-    padding: 22px 16px !important;
-    transform: none !important;
+/* Pin card top to Figma y=150 on desktop (page flex-centers by default) */
+@media (min-width: 1025px) {
+  .verified-page {
+    align-items: flex-start;
   }
 
-  .verified-container h2 {
-    font-size: 18px;
-    margin-bottom: 10px;
+  .verified-page .signup-card {
+    margin-top: 150px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .verified-header {
+    left: 4vw;
+    right: 4vw;
+  }
+
+  .verified-page .signup-card {
+    width: 100%;
+    max-width: 795px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .verified-header {
+    top: 16px;
+    left: 16px;
+    right: 16px;
+  }
+
+  .verified-header-logo {
+    font-size: 24px;
+  }
+
+  .verified-page .signup-card {
+    width: 100%;
+    min-height: auto;
+    padding: 24px 16px;
+  }
+
+  .verified-title {
+    font-size: 20px;
   }
 
   .reward-card {
-    padding: 8px 16px;
-    margin-bottom: 18px;
+    width: 100%;
   }
 
   .reward-card h4 {
-    font-size: 13px;
+    font-size: 16px;
   }
 
   .reward-card p {
-    font-size: 12px;
-  }
-
-  .verify-progress {
-    margin: 0 0 20px;
+    font-size: 14px;
   }
 
   .circle {
     width: 28px;
     height: 28px;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
 
   .line {
@@ -338,16 +344,16 @@
   }
 
   .step h5 {
-    font-size: 10.5px;
+    font-size: 11px;
   }
 
   .step span {
-    font-size: 9.5px;
+    font-size: 10px;
   }
 
   .continueBtn {
-    height: 40px;
-    font-size: 14px;
-    width: 210px;
+    height: 48px;
+    font-size: 15px;
+    width: 100%;
   }
 }

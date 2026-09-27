@@ -19,7 +19,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useDispatch } from "react-redux";
 import { showSnackbar } from "@/store";
 import { twoFaApi } from "@/features/auth/api/twoFaApi";
-import "./AccountSecurity2FA.css";
+import "./ClientAccountSecurity2FA.css";
 
 const OTP_LENGTH = 6;
 
@@ -198,7 +198,7 @@ function BackupCodes({ recoveryCodes, variant = "setup" }) {
   );
 }
 
-export default function AccountSecurity2FA({ open, onClose = () => { }, enabled = false }) {
+export default function AccountSecurity2FA({ open, onClose = () => {}, enabled = false }) {
   const dispatch = useDispatch();
   const { updateUser } = useAuth();
 
@@ -812,8 +812,9 @@ export default function AccountSecurity2FA({ open, onClose = () => { }, enabled 
       title={getTitle()}
       subtitle={getSubtitle()}
       footer={renderFooter()}
-      cardClassName={`as2fa-card${!enabled && step === 1 ? " as2fa-card--step1" : ""
-        }`}
+      cardClassName={`as2fa-card${
+        !enabled && step === 1 ? " as2fa-card--step1" : ""
+      }`}
       headerClassName="as2fa-header"
       footerClassName="as2fa-footer"
       style={

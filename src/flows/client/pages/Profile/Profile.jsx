@@ -1,16 +1,13 @@
+// [TechGuild Update: 21-09-2026] Client profile onboarding wizard & OpenAPI step-save integration
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Navbar, Cards, Header, PrimaryButton, Stepper } from "@/Components";
+import { Navbar, Cards, Header, PrimaryButton, SecondaryButton, TextInput, Stepper } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import { useAuth } from "@/context/AuthContext";
 import { profileApi } from "@/features/profile/api/profileApi";
+import { ICON_SIZES } from "@/constants/sizes";
 import dashboardBg from "@/assets/dashboard.bg.png";
 import "@/flows/individual/pages/DashBoard/dashboard.css";
-import uploadIcon from "@/assets/icons/arrow-up-from-line.svg";
-import ContinueIcon from "@/assets/icons/arrow-right.svg";
-import Back from "@/assets/icons/arrow-left.svg";
-import SelectIcon from "@/assets/icons/chevron-down.svg";
-
 import "./Profile.css";
 
 /**
@@ -68,8 +65,14 @@ export default function ClientProfile() {
   // Step 1 Form States
   const [clientName, setClientName] = useState("");
   const [logoFile, setLogoFile] = useState(null);
+  const [logoUrl, setLogoUrl] = useState("");
   const [industry, setIndustry] = useState("");
   const [website, setWebsite] = useState("");
+  // Required by CreateClientProfileRequest (all keys required, no extras)
+  const [phone, setPhone] = useState("");
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
+  const [timezone, setTimezone] = useState("");
   const [step1Errors, setStep1Errors] = useState({});
 
   // Step 2 Form States
@@ -81,8 +84,9 @@ export default function ClientProfile() {
   useEffect(() => {
     async function loadData() {
       try {
-        const profRes = await profileApi.getProfile();
-        const p = profRes?.client || profRes?.data?.client || profRes || {};
+        // get-my-profile: { account_type, individual, client, agency }
+        const profRes = await profileApi.getMyProfile();
+        const p = profRes?.client || {};
         setProfile(p);
 
         const initialName =
@@ -101,6 +105,12 @@ export default function ClientProfile() {
           const pt = Array.isArray(p.project_types) ? p.project_types[0] : p.project_types;
           setProjectTypes(pt || "");
         }
+        // Spec-required contact + location fields
+        if (p?.phone) setPhone(p.phone);
+        if (p?.country) setCountry(p.country);
+        if (p?.city) setCity(p.city);
+        if (p?.timezone) setTimezone(p.timezone);
+        if (p?.logo_url) setLogoUrl(p.logo_url);
       } catch (err) {
         console.warn("Failed to pre-fill client profile:", err);
       }
@@ -126,11 +136,17 @@ export default function ClientProfile() {
     }
   };
 
+  const isPhoneValid = (v) => /^[+\d][\d\s-]{6,}$/.test((v || "").trim());
+
   const isStep1Complete =
     clientName.trim() !== "" &&
+    isPhoneValid(phone) &&
     industry !== "" &&
     website.trim() !== "" &&
-    (logoFile !== null || Boolean(profile?.logo_url));
+    country.trim() !== "" &&
+    city.trim() !== "" &&
+    timezone !== "" &&
+    (logoFile !== null || logoUrl !== "");
   const isStep2Complete = projectTypes !== "" && budget !== "" && teamSize !== "";
 
   const handleCancelEdit = () => {
@@ -142,9 +158,13 @@ export default function ClientProfile() {
     e.preventDefault();
     const errors = {};
     if (!clientName.trim()) errors.clientName = "Client Name is required";
-    if (!logoFile) errors.logoFile = "Logo is required";
+    if (!logoFile && !logoUrl) errors.logoFile = "Logo is required";
+    if (!isPhoneValid(phone)) errors.phone = "Valid phone number is required";
     if (!industry) errors.industry = "Industry is required";
     if (!website.trim()) errors.website = "Website is required";
+    if (!country.trim()) errors.country = "Country is required";
+    if (!city.trim()) errors.city = "City is required";
+    if (!timezone) errors.timezone = "Time zone is required";
 
     if (Object.keys(errors).length > 0) {
       setStep1Errors(errors);
@@ -202,20 +222,19 @@ export default function ClientProfile() {
       </div>
 
       <div className="client-info-row mb-4">
-        <div className="profile-field-group client-name-group">
-          <label className="field-label fw-bold">Client Name</label>
-          <input
-            type="text"
-            className={`profile-text-input ${step1Errors.clientName ? "input-error" : ""}`}
+        <div className="client-name-group" style={{ flex: 1 }}>
+          <TextInput
+            label="Client Name"
             placeholder="Enter agency name"
             value={clientName}
+            error={step1Errors.clientName}
+            required
             onChange={(e) => { setClientName(e.target.value); setStep1Errors((p) => ({ ...p, clientName: "" })); }}
           />
-          {step1Errors.clientName && <span className="field-error">{step1Errors.clientName}</span>}
         </div>
 
         <div className="profile-field-group client-logo-group">
-          <label className="field-label fw-bold">Logo</label>
+          <label className="field-label">Logo</label>
           <div className="upload-btn-wrapper">
             <label
               htmlFor="client-logo-input"
@@ -225,7 +244,7 @@ export default function ClientProfile() {
               <span className="upload-btn-text">
                 {logoFile ? (logoFile.name || "Logo Selected") : "Upload Logo"}
               </span>
-              <img src={uploadIcon} alt="Upload" className="btn-icon-svg" />
+              <Icon name="Upload" size={ICON_SIZES.MD} color="#ffffff" />
             </label>
             <input id="client-logo-input" type="file" accept="image/*" className="hidden-input" onChange={handleLogoUpload} />
           </div>
@@ -235,7 +254,7 @@ export default function ClientProfile() {
 
       <div className="profile-field-group mb-4">
         <div className="custom-dropdown-container">
-          <label className="field-label fw-bold">Industry</label>
+          <label className="field-label">Industry</label>
           <div className={`custom-dropdown-box ${step1Errors.industry ? "dropdown-error" : ""}`}>
             <select className={`custom-dropdown-select ${industry === "" ? "is-placeholder" : ""}`} value={industry} onChange={(e) => { setIndustry(e.target.value); setStep1Errors((p) => ({ ...p, industry: "" })); }}>
               <option value="" disabled hidden>Select Industry</option>
@@ -245,40 +264,89 @@ export default function ClientProfile() {
               <option value="Marketing">Marketing</option>
               <option value="Education">Education</option>
             </select>
-            <img src={SelectIcon} alt="Select" className="dropdown-chevron-icon" />
+            <Icon name="ChevronDown" size={ICON_SIZES.DEFAULT} className="dropdown-chevron-icon position-absolute" />
           </div>
           {step1Errors.industry && <span className="field-error">{step1Errors.industry}</span>}
         </div>
       </div>
 
-      <div className="profile-field-group mb-4">
-        <label className="field-label fw-bold">Website</label>
-        <input
-          type="text"
-          className={`profile-text-input ${step1Errors.website ? "input-error" : ""}`}
+      <div className="mb-4">
+        <TextInput
+          label="Website"
           placeholder="Enter website URL"
           value={website}
+          error={step1Errors.website}
+          required
           onChange={(e) => { setWebsite(e.target.value); setStep1Errors((p) => ({ ...p, website: "" })); }}
         />
-        {step1Errors.website && <span className="field-error">{step1Errors.website}</span>}
+      </div>
+
+      <div className="mb-4">
+        <TextInput
+          label="Phone Number"
+          type="tel"
+          placeholder="e.g. +919876543210"
+          value={phone}
+          error={step1Errors.phone}
+          required
+          onChange={(e) => { setPhone(e.target.value); setStep1Errors((p) => ({ ...p, phone: "" })); }}
+        />
+      </div>
+
+      <div className="client-info-row mb-4">
+        <div style={{ flex: "1 1 0", minWidth: 0 }}>
+          <TextInput
+            label="Country"
+            placeholder="e.g. India"
+            value={country}
+            error={step1Errors.country}
+            required
+            onChange={(e) => { setCountry(e.target.value); setStep1Errors((p) => ({ ...p, country: "" })); }}
+          />
+        </div>
+
+        <div style={{ flex: "1 1 0", minWidth: 0 }}>
+          <TextInput
+            label="City"
+            placeholder="e.g. Pune"
+            value={city}
+            error={step1Errors.city}
+            required
+            onChange={(e) => { setCity(e.target.value); setStep1Errors((p) => ({ ...p, city: "" })); }}
+          />
+        </div>
+      </div>
+
+      <div className="profile-field-group mb-4">
+        <div className="custom-dropdown-container">
+          <label className="field-label">Time Zone</label>
+          <div className={`custom-dropdown-box ${step1Errors.timezone ? "dropdown-error" : ""}`}>
+            <select className={`custom-dropdown-select ${timezone === "" ? "is-placeholder" : ""}`} value={timezone} onChange={(e) => { setTimezone(e.target.value); setStep1Errors((p) => ({ ...p, timezone: "" })); }}>
+              <option value="" disabled hidden>Select time zone</option>
+              <option value="Asia/Kolkata">Asia/Kolkata (IST)</option>
+              <option value="America/New_York">America/New_York (EST/EDT)</option>
+              <option value="America/Los_Angeles">America/Los_Angeles (PST/PDT)</option>
+              <option value="Europe/London">Europe/London (GMT/BST)</option>
+              <option value="Asia/Singapore">Asia/Singapore (SGT)</option>
+              <option value="Australia/Sydney">Australia/Sydney (AEST)</option>
+            </select>
+            <Icon name="ChevronDown" size={ICON_SIZES.DEFAULT} className="dropdown-chevron-icon position-absolute" />
+          </div>
+          {step1Errors.timezone && <span className="field-error">{step1Errors.timezone}</span>}
+        </div>
       </div>
 
       <div className="profile-form-actions d-flex justify-content-end align-items-center shrink-0 mt-auto gap-3">
         {isEditMode && (
-          <button type="button" className="cancel-btn" onClick={handleCancelEdit}>
-            Cancel
-          </button>
+          <SecondaryButton type="button" onClick={handleCancelEdit} text="Cancel" />
         )}
         <div className="continue-btn-wrapper">
           <PrimaryButton
             type="submit"
             disabled={!isStep1Complete}
-            text={
-              <span className="d-inline-flex align-items-center gap-2">
-                <span>{isEditMode ? "Save Changes" : "Continue"}</span>
-                {!isEditMode && <img src={ContinueIcon} alt="Continue" className="btn-icon-svg" />}
-              </span>
-            }
+            text={isEditMode ? "Save Changes" : "Continue"}
+            icon={!isEditMode && <Icon name="ArrowRight" size={ICON_SIZES.DEFAULT} color="#ffffff" />}
+            iconPosition="right"
           />
         </div>
       </div>
@@ -294,7 +362,7 @@ export default function ClientProfile() {
 
       <div className="profile-field-group mb-4">
         <div className="custom-dropdown-container">
-          <label className="field-label fw-bold">Project Types</label>
+          <label className="field-label">Project Types</label>
           <div className={`custom-dropdown-box ${step2Errors.projectTypes ? "dropdown-error" : ""}`}>
             <select className={`custom-dropdown-select ${projectTypes === "" ? "is-placeholder" : ""}`} value={projectTypes} onChange={(e) => { setProjectTypes(e.target.value); setStep2Errors((p) => ({ ...p, projectTypes: "" })); }}>
               <option value="" disabled hidden>Select project types</option>
@@ -302,7 +370,7 @@ export default function ClientProfile() {
               <option value="long-term">Long-term Contract</option>
               <option value="full-time">Full-time Placement</option>
             </select>
-            <img src={SelectIcon} alt="Select" className="dropdown-chevron-icon" />
+            <Icon name="ChevronDown" size={ICON_SIZES.DEFAULT} className="dropdown-chevron-icon position-absolute" />
           </div>
           {step2Errors.projectTypes && <span className="field-error">{step2Errors.projectTypes}</span>}
         </div>
@@ -310,7 +378,7 @@ export default function ClientProfile() {
 
       <div className="profile-field-group mb-4">
         <div className="custom-dropdown-container">
-          <label className="field-label fw-bold">Budget</label>
+          <label className="field-label">Budget</label>
           <div className={`custom-dropdown-box ${step2Errors.budget ? "dropdown-error" : ""}`}>
             <select className={`custom-dropdown-select ${budget === "" ? "is-placeholder" : ""}`} value={budget} onChange={(e) => { setBudget(e.target.value); setStep2Errors((p) => ({ ...p, budget: "" })); }}>
               <option value="" disabled hidden>Select budget range</option>
@@ -319,7 +387,7 @@ export default function ClientProfile() {
               <option value="5k-10k">$5,000 - $10,000</option>
               <option value="10k-plus">$10,000+</option>
             </select>
-            <img src={SelectIcon} alt="Select" className="dropdown-chevron-icon" />
+            <Icon name="ChevronDown" size={ICON_SIZES.DEFAULT} className="dropdown-chevron-icon position-absolute" />
           </div>
           {step2Errors.budget && <span className="field-error">{step2Errors.budget}</span>}
         </div>
@@ -327,7 +395,7 @@ export default function ClientProfile() {
 
       <div className="profile-field-group mb-4">
         <div className="custom-dropdown-container">
-          <label className="field-label fw-bold">Team Size</label>
+          <label className="field-label">Team Size</label>
           <div className={`custom-dropdown-box ${step2Errors.teamSize ? "dropdown-error" : ""}`}>
             <select className={`custom-dropdown-select ${teamSize === "" ? "is-placeholder" : ""}`} value={teamSize} onChange={(e) => { setTeamSize(e.target.value); setStep2Errors((p) => ({ ...p, teamSize: "" })); }}>
               <option value="" disabled hidden>Select team size</option>
@@ -336,7 +404,7 @@ export default function ClientProfile() {
               <option value="21-50">21-50 Employees</option>
               <option value="50-plus">50+ Employees</option>
             </select>
-            <img src={SelectIcon} alt="Select" className="dropdown-chevron-icon" />
+            <Icon name="ChevronDown" size={ICON_SIZES.DEFAULT} className="dropdown-chevron-icon position-absolute" />
           </div>
           {step2Errors.teamSize && <span className="field-error">{step2Errors.teamSize}</span>}
         </div>
@@ -344,20 +412,15 @@ export default function ClientProfile() {
 
       <div className="profile-form-actions d-flex justify-content-end align-items-center shrink-0 mt-auto gap-3">
         {isEditMode && (
-          <button type="button" className="cancel-btn" onClick={handleCancelEdit}>
-            Cancel
-          </button>
+          <SecondaryButton type="button" onClick={handleCancelEdit} text="Cancel" />
         )}
         <div className="continue-btn-wrapper">
           <PrimaryButton
             type="submit"
             disabled={!isStep2Complete}
-            text={
-              <span className="d-inline-flex align-items-center gap-2">
-                <span>{isEditMode ? "Save Changes" : "Continue"}</span>
-                {!isEditMode && <img src={ContinueIcon} alt="Continue" className="btn-icon-svg" />}
-              </span>
-            }
+            text={isEditMode ? "Save Changes" : "Continue"}
+            icon={!isEditMode && <Icon name="ArrowRight" size={ICON_SIZES.DEFAULT} color="#ffffff" />}
+            iconPosition="right"
           />
         </div>
       </div>
@@ -365,37 +428,52 @@ export default function ClientProfile() {
   );
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   /**
-   * Final Submission Handler:
-   * 1. Uploads company logo file to API if a new File is selected.
-   * 2. Saves/updates client profile details (company name, industry, website, project types, budget, team size).
-   * 3. Transitions to Step 4 (Completed / Reward Screen).
+   * Final Submission Handler (POST /v1/profile/client wizard step-save):
+   * 1. Uploads company logo file -> captures `logo_url` from UploadLogoResponse.
+   * 2. Saves via strict CreateClientProfileRequest body (all 11 keys, no extras).
+   *    PATCH /v1/profile/client is used when a profile already exists.
+   * 3. Transitions to Step 4 (Completed / Reward Screen) only on success.
    */
   const handleFinalSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError("");
     try {
       // 1. Upload logo if selected as a File instance
+      let resolvedLogoUrl = logoUrl || profile?.logo_url || null;
       if (logoFile instanceof File) {
-        await profileApi.uploadLogo(logoFile);
+        const uploadRes = await profileApi.uploadLogo(logoFile);
+        resolvedLogoUrl = uploadRes?.logo_url || resolvedLogoUrl;
+        if (resolvedLogoUrl) setLogoUrl(resolvedLogoUrl);
       }
 
-      // 2. Persist company & hiring preferences to backend
-      await profileApi.saveClientProfile({
-        company_name: clientName,
-        industry: industry,
-        website: website,
-        project_types: projectTypes,
-        budget: budget,
-        team_size: teamSize,
-      });
+      // 2. Persist company & hiring preferences (strict spec body built inside)
+      const profileExists = Boolean(profile?.public_url_slug || profile?.company_name);
+      await profileApi.saveClientProfile(
+        {
+          company_name: clientName,
+          phone,
+          logo_url: resolvedLogoUrl,
+          industry,
+          website_url: website,
+          project_types: projectTypes,
+          budget_range: budget,
+          team_size: teamSize,
+          country,
+          city,
+          timezone,
+        },
+        profileExists
+      );
 
       // 3. Navigate to completion step
       goToStep(4);
     } catch (err) {
       console.error("Failed to save client profile:", err);
-      goToStep(4);
+      setSubmitError(err?.message || "Failed to save profile. Please check your details and try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -431,15 +509,28 @@ export default function ClientProfile() {
           <PrimaryButton
             type="submit"
             disabled={isSubmitting}
-            text={
-              <span className="d-inline-flex align-items-center gap-2">
-                <span>{isSubmitting ? "Submitting..." : "Continue"}</span>
-                {!isSubmitting && <img src={ContinueIcon} alt="Continue" className="btn-icon-svg" />}
-              </span>
-            }
+            text={isSubmitting ? "Submitting..." : "Continue"}
+            icon={!isSubmitting && <Icon name="ArrowRight" size={ICON_SIZES.DEFAULT} color="#ffffff" />}
+            iconPosition="right"
           />
         </div>
       </div>
+      {submitError && (
+        <div
+          role="alert"
+          className="mt-3"
+          style={{
+            background: "#fef2f2",
+            border: "1px solid #fecaca",
+            color: "#991b1b",
+            borderRadius: "10px",
+            padding: "10px 14px",
+            fontSize: "0.85rem",
+          }}
+        >
+          {submitError}
+        </div>
+      )}
     </form>
   );
 
@@ -447,7 +538,7 @@ export default function ClientProfile() {
     <div className="completion-screen-wrapper d-flex flex-column align-items-center h-100 w-100 py-1">
       <div className="d-flex flex-column align-items-center w-100 my-auto">
         <div className="completion-avatar-circle d-flex align-items-center justify-content-center mb-3">
-          <Icon name="User" size={44} color="#103CA4" stroke="#103CA4" strokeWidth={2.2} />
+          <Icon name="User" size={ICON_SIZES.HERO} color="#103CA4" stroke="#103CA4" strokeWidth={2.2} />
         </div>
         <h1 className="completion-main-title fw-bold text-center mb-3">
           Profile Setup Completed<br />Successfully !
@@ -493,7 +584,7 @@ export default function ClientProfile() {
 
             <div className="completion-step-item d-flex flex-column align-items-center">
               <div className="completion-circle locked d-flex align-items-center justify-content-center bg-white">
-                <Icon name="Lock" size={14} color="#9ca3af" />
+                <Icon name="Lock" size={ICON_SIZES.XS} color="#9ca3af" />
               </div>
               <span className="completion-step-title text-muted mt-2">Identity Verified</span>
               <span className="completion-step-points text-muted">+40 Trust Points</span>
@@ -501,7 +592,7 @@ export default function ClientProfile() {
 
             <div className="completion-step-item d-flex flex-column align-items-center">
               <div className="completion-circle locked d-flex align-items-center justify-content-center bg-white">
-                <Icon name="Lock" size={14} color="#9ca3af" />
+                <Icon name="Lock" size={ICON_SIZES.XS} color="#9ca3af" />
               </div>
               <span className="completion-step-title text-muted mt-2">First Project/ Proposal</span>
               <span className="completion-step-points text-muted">+30 Trust Points</span>
@@ -510,13 +601,11 @@ export default function ClientProfile() {
         </div>
 
         <div className="completion-cta-wrapper d-flex justify-content-center mt-4">
-          <button
-            type="button"
-            className="completion-cta-btn border-0 text-white fw-bold d-inline-flex align-items-center justify-content-center px-5"
+          <PrimaryButton
+            text="Continue to Verify Identity"
             onClick={() => navigate("/client-verification-hub")}
-          >
-            Continue to Verify Identity
-          </button>
+            className="completion-cta-btn border-0 text-white fw-bold d-inline-flex align-items-center justify-content-center px-5"
+          />
         </div>
       </div>
     </div>
@@ -559,7 +648,7 @@ export default function ClientProfile() {
                   }}
                   aria-label="Go back"
                 >
-                  <img src={Back} alt="Back" className="back-icon-svg" />
+                  <Icon name="ArrowLeft" size={ICON_SIZES['2XL']} color="#0b38a8" />
                 </button>
               </div>
 

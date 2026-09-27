@@ -29,13 +29,13 @@ const createProxyRoute = () => ({
 export default defineConfig({
   plugins: [react(), svgr()],
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@/services': path.resolve(__dirname, './src/Services'),
-      '@/Services': path.resolve(__dirname, './src/Services'),
-      '@/components': path.resolve(__dirname, './src/Components'),
-      '@/Components': path.resolve(__dirname, './src/Components'),
-    },
+    alias: [
+      { find: '@/services', replacement: path.resolve(__dirname, './src/services') },
+      { find: '@/Services', replacement: path.resolve(__dirname, './src/services') },
+      { find: '@/components', replacement: path.resolve(__dirname, './src/Components') },
+      { find: '@/Components', replacement: path.resolve(__dirname, './src/Components') },
+      { find: '@', replacement: path.resolve(__dirname, './src') },
+    ],
   },
   server: {
     proxy: {

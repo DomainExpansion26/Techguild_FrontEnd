@@ -10,6 +10,12 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+# Environment variables
+.env
+.env.local
+.env.*.local
+!.env.example
+
 *.local
 
 # Editor directories and files
@@ -28,3 +34,4 @@ docs
 opencode.json
 AGENTS.md
 .opencode
+.graphify

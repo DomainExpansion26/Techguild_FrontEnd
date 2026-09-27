@@ -1,112 +1,309 @@
+/* ===== Reset Password — Figma frame 123:33 ("Reset pass", 1440x900) ===== */
 .resetpass-page {
+  --reset-primary: #103ca4;
+  --reset-ink: #000000;
+  --reset-muted: #59595d; /* sibling-frame gray, shifted for AA */
+  --reset-placeholder: #6b7280; /* sibling-frame gray, shifted for AA */
+  --reset-border: #b3b3b3; /* input stroke */
+  --reset-error-bg: #fee2e2;
+  --reset-error-text: #b91c1c;
+  --reset-card-radius: 14px;
+  --reset-field-radius: 9px;
+
   width: 100vw;
   height: 100vh;
   position: relative;
   overflow: hidden;
 }
 
-/* Move brand logo to the left */
-.resetpass-page .signup-card .brand {
-  margin: 10px 0 8px 0;
+/* Card: 504x575, padding 40/70, radius 14 (Figma Frame 3466093 at 80,107) */
+.resetpass-page .auth-card-wrapper {
+  width: 504px;
+  left: 80px;
+  top: 50%;
 }
 
-/* Card dimensions specific to Reset Password */
-.resetpass-page .auth-card-wrapper {
-  width: 400px;
+/* Pin card top to Figma y=107 on desktop (shared wrapper centers via top 50%
+ * + translateY(-50%), which lands a 575px card at y≈163). Scoped to this page. */
+@media (min-width: 1025px) {
+  .resetpass-page .auth-card-wrapper {
+    top: 107px;
+    transform: none;
+  }
 }
 
 .resetpass-page .signup-card {
   width: 100%;
-  height: auto;
-  min-height: 450px;
+  min-height: 575px;
+  padding: 40px 70px;
+  border-radius: var(--reset-card-radius);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
-.resetpass-page .signup-card.success-state-card {
-  min-height: auto;
-  padding: 16px 28px 16px 28px;
-  transform: translateY(-50px);
+/* Marketing text block at x=689 (Figma Frame 3466092).
+ * Scoped to this page — other auth pages are unaffected. */
+.resetpass-page .auth-home-text-block {
+  left: 689px;
 }
 
-/* Tablet */
-@media (max-width: 1024px) and (min-width: 768px) {
-  .resetpass-page .signup-card {
-    width: 340px;
-  }
+/* ===== Form ===== */
+.reset-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
 }
 
-
-/* Card heading - Reset Password */
-.signup-card h2 {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  margin-top: 16px;
-  color: #111;
+.reset-logo-row {
+  display: flex;
+  width: 100%;
 }
 
-/* Subtitle */
-.signup-card .subtitle {
-  color: #000;
-  font-size: 13px;
-  margin-bottom: 20px;
-  min-height: 18px;
+.reset-logo-row.center {
+  justify-content: center;
 }
 
-/* Input labels */
-.signup-card .input-label {
-  display: block;
-  font-size: 15px;
+/* Title: 24 Bold #000; logo block top at 40, title frame at 100
+ * (BrandLogo renders 36px vs Figma 30px text → margin-top 24) */
+.reset-title {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.2;
+  color: var(--reset-ink);
+  margin: 24px 0 0 0;
+}
+
+/* Subtitle: 14 Regular #000, top at 159 (title bottom 129 + 30 gap) */
+.reset-subtitle {
+  color: var(--reset-ink);
+  font-size: 14px;
+  margin: 30px 0 30px 0;
+  line-height: 1.25; /* Figma: 2 lines in 34px */
+}
+
+.reset-error {
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  background-color: var(--reset-error-bg);
+  color: var(--reset-error-text);
+  font-size: 12px;
+}
+
+.reset-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Label: 18 Medium #000 */
+.reset-label {
   font-weight: 500;
-  color: #000000;
-  margin-bottom: 8px;
-  margin-top: 16px;
-  margin-left: 4px;
+  font-size: 18px;
+  color: var(--reset-ink);
+  display: block;
+  margin: 0 0 10px 0;
 }
 
-/* Gap between PasswordInput components */
-.signup-card .password-input-container+.password-input-container {
+.reset-label + .reset-input-group {
+  margin-top: 0;
+}
+
+.reset-form .reset-label:not(:first-of-type) {
+  margin-top: 30px; /* field frames are 76 apart with 30px gaps (223 → 329) */
+}
+
+/* Input: 40px, radius 9, border #B3B3B3 */
+.reset-input-group {
+  border: 1px solid var(--reset-border);
+  border-radius: var(--reset-field-radius);
+  min-height: 40px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.reset-input-addon {
+  padding: 0 14px;
+  min-width: 44px;
+  color: #6a717d; /* lock.svg uses currentColor; sibling vector is #6A717D */
+  background: #ffffff;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reset-input-group .form-control {
+  font-size: 15px;
+  color: var(--reset-ink);
+  padding: 8px 12px 8px 0;
+}
+
+.reset-input-toggle {
+  padding: 0 14px;
+  background: #ffffff;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--reset-muted);
+  cursor: pointer;
+}
+
+/* Input placeholder */
+.resetpass-page .signup-card input::placeholder {
+  color: var(--reset-placeholder) !important;
+  opacity: 1 !important;
+}
+
+/* Submit: 46px, radius 9, text 16 Medium (overrides shared .auth-primary-btn);
+ * field frame ends at 405, button frame at 435 → gap 30 */
+.resetpass-page .auth-primary-btn.reset-submit {
+  min-height: 46px !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  border-radius: var(--reset-field-radius) !important;
+  width: 100%;
   margin-top: 30px;
 }
 
-/* Success icon */
-.signup-card .success-icon {
+/* Back row: 24px arrow (#033E8A) + 12 gap + 16 Medium #000 (Frame 3466103);
+ * button frame ends at 481, back row at 511 → gap 30 */
+.reset-back-row {
   display: flex;
-  justify-content: center;
-  margin: 32px 0 24px 0;
-}
-
-/* Success message */
-.signup-card .success-message {
-  color: #6B7280;
-  font-size: 14px;
-  text-align: center;
-  line-height: 1.5;
-  margin: 24px 0;
-  padding: 0 12px;
-}
-
-/* Primary Button spacing */
-.signup-card .primary-button {
-  margin-top: 80px;
-}
-
-/* Back to login link */
-.signup-card .back-to-login {
-  text-align: left;
-  margin-top: 20px;
-  margin-bottom: 8px;
-  font-size: 13px;
-}
-
-.signup-card .back-to-login a {
-  color: #000;
-  text-decoration: none;
-  font-weight: 500;
-  display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 12px;
+  margin-top: 30px;
 }
 
-.signup-card .back-to-login a:hover {
-  color: #103CA4;
+.reset-back-row-center {
+  justify-content: center;
+}
+
+.reset-back-icon {
+  color: #033e8a; /* arrow-left.svg uses currentColor; Figma Vector stroke */
+  flex-shrink: 0;
+}
+
+.reset-back-link {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--reset-ink);
+  text-decoration: none;
+  line-height: 1.5;
+}
+
+.reset-back-link:hover {
+  color: var(--reset-primary);
+}
+
+/* ===== Success state (Figma "Reset Successful" 126:74, card 504x469) ===== */
+.resetpass-page .signup-card.reset-success-state {
+  min-height: 469px;
+}
+
+.reset-success-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+}
+
+/* Badge: 114px circle, blue radial (sampled Figma AI fill #2E8DFD → #0270FD) */
+.reset-success-badge {
+  width: 114px;
+  height: 114px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 35%, #2e8dfd 0%, #0a76fd 60%, #0270fd 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff; /* check.svg uses currentColor */
+  margin: 24px auto 14px;
+  flex-shrink: 0;
+}
+
+/* Title: 24 Bold #000, desc 14 Regular #000 (Frame 3466105, 6px title→desc gap) */
+.reset-success-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--reset-ink);
+  margin: 0 0 6px 0;
+  line-height: 1.2;
+}
+
+.reset-success-desc {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--reset-ink);
+  max-width: 230px; /* Figma desc node is 220 wide, wraps to two lines */
+  margin: 0 auto 30px;
+  line-height: 1.4;
+}
+
+.resetpass-page .auth-primary-btn.reset-submit.reset-success-btn {
+  width: 100%;
+  margin-top: 0; /* desc margin-bottom carries the 30px gap */
+}
+
+/* "Back to Home": 18 Medium #103CA4, centered, no arrow (Figma text node) */
+.reset-success-home {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.reset-home-link {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--reset-primary);
+  text-decoration: none;
+  line-height: 1.5;
+}
+
+.reset-home-link:hover {
+  text-decoration: underline;
+}
+
+/* ===== Tablet adjustments ===== */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .resetpass-page .auth-card-wrapper {
+    width: 100%;
+    max-width: 504px;
+  }
+
+  .resetpass-page .signup-card {
+    min-height: auto;
+    padding: 32px 40px;
+  }
+}
+
+/* ===== Mobile adjustments ===== */
+@media (max-width: 767px) {
+  .resetpass-page .auth-card-wrapper {
+    left: auto;
+    top: auto;
+    width: 100%;
+    max-width: 504px;
+  }
+
+  .resetpass-page .signup-card {
+    min-height: auto;
+    padding: 28px 24px;
+  }
+
+  .reset-title {
+    font-size: 22px;
+  }
+
+  .reset-label {
+    font-size: 16px;
+  }
+
+  .reset-back-link {
+    font-size: 15px;
+  }
 }

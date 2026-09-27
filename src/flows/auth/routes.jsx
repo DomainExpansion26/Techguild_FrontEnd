@@ -8,6 +8,7 @@ const ResetPass = lazy(() => import("./pages/ResetPassword/Resetpass"));
 const VerifyEmail = lazy(() => import("./pages/Verifyemail/Verifyemail"));
 const EmailVerified = lazy(() => import("./pages/Emailverify/Emailverify"));
 const AccountType = lazy(() => import("./pages/Accountype/Accounttype"));
+const TwoFactor = lazy(() => import("./pages/TwoFactor/TwoFactor"));
 const OAuthCallback = lazy(() => import("./pages/OAuthCallback/OAuthCallback"));
 
 export const authRoutes = (
@@ -18,7 +19,11 @@ export const authRoutes = (
     <Route path="/reset-password" element={<ResetPass />} />
     <Route path="/verify-email" element={<VerifyEmail />} />
     <Route path="/emailverify" element={<EmailVerified />} />
+    <Route path="/email-verify" element={<EmailVerified />} />
+    <Route path="/verifyemail" element={<EmailVerified />} />
+    <Route path="/auth/verify-email" element={<EmailVerified />} />
     <Route path="/account-type" element={<AccountType />} />
+    <Route path="/verify-2fa" element={<TwoFactor />} />
     <Route path="/oauth/callback" element={<OAuthCallback />} />
     <Route path="/oauth/google/callback" element={<OAuthCallback />} />
     <Route path="/oauth/github/callback" element={<OAuthCallback />} />

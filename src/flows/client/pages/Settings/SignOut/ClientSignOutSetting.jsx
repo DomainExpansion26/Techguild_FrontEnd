@@ -1,8 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { DashboardLayout } from "@/Components";
-import Icon from "@/Components/icons/Icon";
+import { DashboardLayout, PrimaryButton, SecondaryButton } from "@/Components";
 import { useAuth } from "@/context/AuthContext";
 import { showSnackbar } from "@/store";
 import authApi from "@/features/auth/api/authApi";
@@ -16,6 +15,7 @@ export default function ClientSignOutSetting() {
 
   const handleConfirmSignOut = async () => {
     try {
+      // Optional backend logout notification
       await authApi.logout().catch(() => {});
     } finally {
       logout();
@@ -32,9 +32,10 @@ export default function ClientSignOutSetting() {
   };
 
   const displayName = user?.name || (user?.first_name ? `${user.first_name} ${user.last_name || ""}`.trim() : null) || user?.email || "Client";
+  const displayRole = user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : "Client";
 
   return (
-    <DashboardLayout containerClass="signout-container" activeSettingsTab="sign-out">
+    <DashboardLayout containerClass="settings-layout-collapsed-nav signout-container" activeSettingsTab="sign-out">
       <div
         className="dashboard-content"
         style={{
@@ -45,45 +46,41 @@ export default function ClientSignOutSetting() {
         }}
       >
         <div className="signout-card">
+          {/* Header Section */}
           <div className="signout-header">
             <div className="user-name">{displayName}</div>
-            <div className="user-role">Client Account</div>
+            <div className="user-role">{displayRole}</div>
           </div>
 
+          {/* Divider */}
           <hr className="custom-divider" />
 
+          {/* Icon Section — Figma LogoutIllustration 164px:
+              #EFF6FF tile + #C7D7FD dashed inset + 57px navy avatar mark.
+              Pure-CSS approximation (no vector asset exported). */}
           <div className="signout-icon-section">
-            <div className="signout-icon-wrap">
-              <Icon name="User" size={132} color="#D12027" strokeWidth={1.5} className="icon-person" />
-              <span className="icon-arrow-badge">
-                <Icon name="ArrowRight" size={20} color="#FFFFFF" strokeWidth={2.5} className="icon-arrow" />
-              </span>
+            <div className="signout-illustration" role="img" aria-label="Sign out illustration">
+              <div className="signout-illustration-dash" />
+              <div className="signout-avatar">
+                <div className="signout-avatar-head" />
+                <div className="signout-avatar-body" />
+              </div>
             </div>
           </div>
 
+          {/* Question Text */}
           <p className="question-text">
             Are you sure you want to <span className="sign-out-text">Sign Out ?</span>
           </p>
 
+          {/* Buttons */}
           <div className="signout-actions">
-            <button
-              type="button"
-              className="btn btn-custom-cancel"
-              onClick={handleCancel}
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              className="btn btn-custom-confirm"
-              onClick={handleConfirmSignOut}
-            >
-              Confirm Sign Out
-            </button>
+            <SecondaryButton text="Cancel" className="cancel-btn" onClick={handleCancel} />
+            <PrimaryButton text="Confirm Sign Out" className="btn-custom-confirm" onClick={handleConfirmSignOut} />
           </div>
+
         </div>
       </div>
     </DashboardLayout>
   );
 }
-

@@ -1,4 +1,15 @@
 .signup-page {
+  /* Figma "Frame 3466088": SOLID white at 0.5 opacity */
+  --signup-card-bg: rgba(255, 255, 255, 0.5);
+  --signup-text: #000000;
+  --signup-subtitle: #59595d;
+  --signup-input-border: #b3b3b3;
+  --signup-placeholder: #6b7280;
+  --signup-placeholder-first: #6a717d;
+  --signup-divider-line: #7e8a7d;
+  --signup-primary: #103ca4;
+  --signup-radius: 9px;
+
   width: 100%;
   height: 100vh;
   position: fixed;
@@ -6,14 +17,215 @@
   background-size: cover !important;
   background-position: center;
   background-repeat: no-repeat;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-.cursor-pointer {
+/* ===== Page-scoped card placement (Figma: 509x680 at 78,110) ===== */
+.signup-page .auth-card-wrapper {
+  left: 78px;
+  top: 110px;
+  transform: none;
+  width: 509px;
+}
+
+.signup-page .signup-card {
+  width: 509px;
+  min-height: 680px;
+  max-height: none;
+  padding: 40px 70px;
+  background: var(--signup-card-bg);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  overflow: visible;
+}
+
+/* ===== Page-scoped logo size (Figma: 32 Semibold) ===== */
+.signup-page .brand {
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+}
+
+/* ===== Page-scoped marketing position (Figma: 689,107 / 432 wide) ===== */
+.signup-page .auth-home-container .auth-home-text-block {
+  left: 689px;
+  top: 107px;
+  width: 432px;
+  max-width: 432px;
+}
+
+/* ===== Form rhythm: 20px between blocks ===== */
+.signup-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;
+}
+
+.signup-heading .signup-title {
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--signup-text);
+  margin: 0;
+}
+
+.signup-heading .signup-subtitle {
+  font-size: 15px;
+  color: var(--signup-subtitle);
+  margin: 4px 0 0 0;
+}
+
+/* ===== OAuth stack (Figma: 364x40 buttons, 10 gap) ===== */
+.signup-oauth-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.signup-page .secondary-btn.signup-oauth {
+  height: 40px;
+  margin: 0;
+  background: #ffffff;
+  border: 1px solid var(--signup-input-border);
+  border-radius: var(--signup-radius);
+  box-shadow: none;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--signup-text);
+}
+
+.signup-page .secondary-btn.signup-oauth:hover:not(:disabled) {
+  background: #ffffff;
+  border-color: var(--signup-input-border);
+  color: var(--signup-text);
+  box-shadow: none;
+}
+
+/* ===== OR divider (Figma: 139px #7E8A7D lines, 12 Medium) ===== */
+.signup-divider-wrap .divider {
+  margin: 0;
+}
+
+.signup-divider-wrap .divider::before,
+.signup-divider-wrap .divider::after {
+  width: calc(50% - 43px);
+  background-color: var(--signup-divider-line);
+}
+
+.signup-divider-wrap .divider span {
+  padding: 0 34px;
+  color: var(--signup-text);
+}
+
+/* ===== Name row (Figma: 2x173x46, 18 gap) ===== */
+.signup-names {
+  display: flex;
+  gap: 18px;
+}
+
+.signup-names .signup-name-field {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ===== TextInput geometry (Figma: 40px fields, 46px names) ===== */
+.signup-page .text-input-group {
+  gap: 0;
+}
+
+.signup-page .text-input-wrapper {
+  height: 40px;
+  border: 1px solid var(--signup-input-border);
+  border-radius: var(--signup-radius);
+}
+
+.signup-page .signup-names .text-input-wrapper {
+  height: 46px;
+}
+
+.signup-page .text-input-wrapper:focus-within {
+  border-color: var(--signup-primary);
+  box-shadow: none;
+}
+
+.signup-page .text-input-field {
+  font-size: 15px;
+  color: var(--signup-text);
+}
+
+.signup-page .text-input-field::placeholder {
+  color: var(--signup-placeholder);
+  font-size: 15px;
+}
+
+.signup-page .signup-names .signup-name-field:first-child .text-input-field::placeholder {
+  color: var(--signup-placeholder-first);
+}
+
+.signup-eye {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
   cursor: pointer;
+  color: var(--signup-text);
 }
 
-/* Clean autofill background inside glass card */
+/* ===== Terms row (Figma: 36px, 14 Regular) ===== */
+.signup-page .terms-checkbox {
+  gap: 9px;
+  margin: 0 0 0 3px;
+  font-size: 14px;
+}
+
+.signup-page .terms-checkbox-input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--signup-primary);
+}
+
+.signup-page .terms-text {
+  color: var(--signup-text);
+}
+
+.signup-page .terms-link {
+  color: inherit;
+}
+
+/* ===== Submit (Figma: 364x46 #103CA4, 16 Medium) ===== */
+.signup-page .primary-btn.signup-submit {
+  height: 46px;
+  border-radius: var(--signup-radius);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* ===== Footer (Figma: 18 Medium, centered) ===== */
+.signup-footer {
+  margin: 0;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--signup-text);
+}
+
+.signup-footer a {
+  color: var(--signup-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.signup-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Clean autofill background inside card */
 .signup-card input:-webkit-autofill,
 .signup-card input:-webkit-autofill:hover,
 .signup-card input:-webkit-autofill:focus {
@@ -22,11 +234,63 @@
   -webkit-text-fill-color: #212529 !important;
 }
 
+@media (max-height: 840px) {
+  .signup-page .auth-card-wrapper {
+    top: 24px;
+  }
+
+  .signup-page .signup-card {
+    min-height: 0;
+    padding: 28px 70px;
+  }
+
+  .signup-page .auth-home-container .auth-home-text-block {
+    top: 24px;
+  }
+
+  .signup-form {
+    gap: 14px;
+  }
+
+  .signup-page .brand {
+    margin-bottom: 14px;
+  }
+
+  .signup-heading .signup-subtitle {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .signup-page .auth-card-wrapper {
+    left: 4vw;
+    width: min(509px, 92vw);
+  }
+
+  .signup-page .signup-card {
+    width: 100%;
+    min-height: auto;
+    padding: 32px 28px;
+  }
+
+  .signup-page .auth-home-container .auth-home-text-block {
+    left: calc(4vw + 390px + 20px);
+  }
+}
+
 @media (max-width: 767px) {
   .signup-page {
     position: relative;
     min-height: 100vh;
     height: auto;
     overflow-y: auto;
+  }
+
+  .signup-page .signup-card {
+    padding: 24px 20px;
+  }
+
+  .signup-names {
+    flex-direction: column;
   }
 }

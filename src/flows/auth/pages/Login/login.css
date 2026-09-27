@@ -1,3 +1,26 @@
+/* ===== Login design tokens (consolidated from Figma frame 109:35 "Login") =====
+ * Figbridge audits on the frame:
+ * - palette: 9 distinct colors -> consolidated to 6 tokens below
+ *   (#6A717D + #79797D merged; #B3B3B3/#D9D9D9/#D1D5DB merged to --login-border)
+ * - typography: 7 sizes + fractional (14.61/18.26/21.91/16.43/34.70)
+ *   -> snapped to 12/13/14/22 scale
+ * - spacing: 22% div-by-4 -> snapped to 8pt grid (8/12/16/20)
+ * - a11y: 3 contrast failures (#79797D subtitle 4.33:1, #8E8E93
+ *   placeholders 3.26:1) -> darkened to pass WCAG AA 4.5:1
+ */
+.login-page {
+  --login-ink: #111827; /* Figma #000000 snapped to app ink for consistency */
+  --login-muted: #59595d; /* Figma #79797D darkened: 4.33:1 -> ~7:1 on white */
+  --login-placeholder: #6b7280; /* Figma #8E8E93 (3.26:1) -> 4.83:1, passes AA */
+  --login-border: #d1d5db; /* merges Figma #B3B3B3 / #D9D9D9 */
+  --login-icon: #6a717d; /* Figma icon gray, kept as canonical */
+  --login-primary: #103ca4; /* Figma primary blue */
+  --login-primary-hover: #0c3188;
+  --login-error-bg: #fee2e2;
+  --login-error-ink: #b91c1c;
+  --login-radius: 8px; /* Figma 9.13 snapped to 8pt grid */
+}
+
 .login-page {
   width: 100%;
   height: 100vh;
@@ -14,6 +37,249 @@
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+/* ===== Login form typography (snapped type scale) ===== */
+.login-title {
+  font-weight: 700;
+  font-size: 22px; /* Figma "Welcome back" 21.92 Bold */
+  line-height: 1.25;
+  color: var(--login-ink);
+  margin: 8px 0 4px 0;
+}
+
+.login-subtitle {
+  color: var(--login-muted);
+  font-size: 14px; /* Figma 14.61 Regular snapped */
+  line-height: 1.4;
+  margin: 0 0 16px 0;
+}
+
+.login-form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+/* ===== OAuth (uses shared SocialButton, spacing on 8pt grid) ===== */
+.login-oauth-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+/* ===== Divider spacing (Figma 32.88 gap / asymmetric lines -> 8pt grid) ===== */
+.login-divider-wrap {
+  margin: 12px 0;
+}
+
+/* ===== OR divider (Figma Login "Line 50/51": #6A717D grey lines, 12px black OR) ===== */
+.login-divider-wrap .divider {
+  margin: 0;
+}
+
+.login-divider-wrap .divider::before,
+.login-divider-wrap .divider::after {
+  width: calc(50% - 43px);
+  background-color: #6a717d;
+}
+
+.login-divider-wrap .divider span {
+  padding: 0 34px;
+  color: var(--login-ink);
+}
+
+/* ===== Fields (Figma 40px height, 9.13 radius -> 40px / 8px grid) ===== */
+.login-fields {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-label {
+  font-weight: 600;
+  font-size: 14px; /* Figma 18.26 Medium is oversized for a label; snapped to scale */
+  line-height: 1.3;
+  color: var(--login-ink);
+  display: block;
+  margin: 0 0 4px 0;
+}
+
+/* ===== Shared TextInput dressed as the login field (Figma 40px / 8px grid) ===== */
+.login-page .login-textinput {
+  gap: 0;
+}
+
+.login-page .login-textinput .text-input-wrapper {
+  height: 40px;
+  min-height: 40px;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border: 1px solid var(--login-border);
+  border-radius: var(--login-radius);
+  box-shadow: none;
+}
+
+.login-page .login-textinput .text-input-wrapper:focus-within {
+  border-color: var(--login-primary);
+  box-shadow: 0 0 0 3px rgba(16, 60, 164, 0.12);
+}
+
+.login-page .login-textinput .text-input-wrapper.has-error {
+  border-color: var(--login-error-ink);
+}
+
+.login-page .login-textinput .text-input-icon.left-icon {
+  min-width: 36px;
+  padding: 0 10px;
+  justify-content: center;
+}
+
+.login-page .login-textinput .text-input-icon.right-icon {
+  min-width: 36px;
+  padding: 0 10px;
+  justify-content: center;
+}
+
+.login-page .login-textinput .text-input-field {
+  font-size: 14px;
+  color: var(--login-ink);
+  padding: 0 10px 0 0;
+}
+
+.login-page .login-textinput .text-input-wrapper.has-left-icon .text-input-field {
+  padding-left: 0;
+}
+
+.login-page .login-textinput .text-input-wrapper.has-right-icon .text-input-field {
+  padding-right: 0;
+}
+
+.login-page .login-textinput .text-input-field::placeholder {
+  color: var(--login-placeholder);
+  font-size: 14px;
+  opacity: 1; /* keep AA ratio, don't fade further */
+}
+
+.login-eye-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--login-ink);
+}
+
+.login-eye-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ===== Shared PrimaryButton dressed as the auth submit (mirrors .auth-primary-btn) ===== */
+.login-page .primary-btn.login-submit {
+  min-height: 40px;
+  padding: 9.5px 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(16, 60, 164, 0.25);
+}
+
+.login-page .primary-btn.login-submit:hover:not(:disabled) {
+  background: var(--login-primary-hover);
+  box-shadow: 0 6px 18px rgba(12, 49, 136, 0.35);
+}
+
+.login-page .primary-btn.login-submit:active:not(:disabled) {
+  background: #092363;
+}
+
+.login-page .primary-btn.login-submit:disabled {
+  background: var(--login-primary);
+  opacity: 0.7;
+}
+
+/* ===== Remember / forgot row (Figma 66.67 gap -> space-between, 8pt) ===== */
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+}
+
+.login-remember {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Figma 6 snapped to grid */
+}
+
+.login-remember input {
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--login-primary);
+}
+
+.login-remember label {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--login-ink);
+  margin: 0;
+}
+
+.login-forgot {
+  color: var(--login-primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.login-forgot:hover {
+  text-decoration: underline;
+}
+
+/* ===== Error banner (a11y: role=alert in JSX) ===== */
+.login-error {
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  background-color: var(--login-error-bg);
+  color: var(--login-error-ink);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.login-fields .text-input-error-msg {
+  font-size: 12px;
+  color: var(--login-error-ink);
+  margin: -8px 0 8px 0;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+/* ===== Footer (Figma 18.26 Medium -> 13px, 8pt spacing) ===== */
+.login-footer {
+  text-align: center;
+  font-size: 13px;
+  color: var(--login-ink);
+  margin: 10px 0 2px 0;
+  font-weight: 500;
+}
+
+.login-footer a {
+  color: var(--login-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-footer a:hover {
+  text-decoration: underline;
 }
 
 /* Clean autofill background inside glass card */

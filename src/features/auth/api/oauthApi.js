@@ -1,6 +1,4 @@
-import { BASE_URL } from "@/services/api/apiClient";
-import { apiClient } from "@/services/api";
-import { ENDPOINTS } from "@/services/api/endpoints";
+import { apiClient, BASE_URL, ENDPOINTS } from "@/services/api";
 
 export const oauthApi = {
   getGoogleLoginUrl: () => `${BASE_URL}${ENDPOINTS.OAUTH.GOOGLE_LOGIN}`,
