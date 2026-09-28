@@ -1,4 +1,5 @@
 /* [TechGuild Update: 21-09-2026] Individual freelancer whole profile stylesheet & responsive tokens */
+/* [TechGuild Update: 28-09-26] Avatar edit menu, banner image state, QA/checklist polish, edit modal system */
 /* Individual Whole Profile - sized to match client whole-profile (wp-*) tokens.
    Freelancer accents kept: blue section titles, light-blue avatar,
    top skill pills, activity dots, trust box. */
@@ -148,6 +149,7 @@
   border-radius: 16px 16px 0 0;
   overflow: hidden;
 }
+/* [28-09-26] Banner cover-image state + frosted upload label */
 .ind-wp-banner-has-image {
   background-size: cover;
   background-position: center;
@@ -247,7 +249,7 @@
 }
 .ind-wp-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
 
-/* Avatar edit trigger - mirrors client .wp-logo-edit */
+/* [28-09-26] Avatar edit trigger - mirrors client .wp-logo-edit */
 .ind-wp-avatar-edit {
   position: absolute;
   width: clamp(26px, 2.4vw, 38px);
@@ -710,7 +712,7 @@
 .ind-wp-check-row .done { color: #334155; }
 .ind-wp-check-row .pending { color: #64748b; }
 
-/* Checklist status icons green like the Download button */
+/* [28-09-26] Checklist status icons green like the Download button */
 .ind-wp-check-row svg *,
 .ind-wp-check-row svg path {
   stroke: #16a34a;
@@ -879,7 +881,7 @@
 }
 .ind-wp-qa-btn:hover .ind-wp-qa-left span:last-child { color: #103ca4; }
 
-/* Force all QA icons blue (some SVGs carry a hardcoded gray stroke) */
+/* [28-09-26] Force all QA icons blue (some SVGs carry a hardcoded gray stroke) */
 .ind-wp-qa-ico svg *,
 .ind-wp-qa-ico svg path {
   stroke: #2563eb;
@@ -984,7 +986,7 @@
   grid-auto-rows: auto;
 }
 
-/* ---------- Edit modal (mirrors client whole_Profile wp-modal-*) ---------- */
+/* [28-09-26] ---------- Edit modal (mirrors client whole_Profile wp-modal-*) ---------- */
 .ind-wp-modal-overlay {
   position: fixed;
   inset: 0;
