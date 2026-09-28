@@ -6,6 +6,7 @@ export const ENDPOINTS = {
     LOGOUT: "/auth/logout",
     REFRESH_TOKEN: "/auth/refresh-token",
     REGISTER_ACCOUNT_TYPE: "/auth/register/account-type",
+    ACCOUNT_TYPE: "/auth/account-type",
     CHANGE_PASSWORD: "/auth/change-password",
     FORGOT_PASSWORD: "/auth/forgot-password",
     RESET_PASSWORD: "/auth/reset-password",

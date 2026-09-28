@@ -22,6 +22,14 @@ function resolveOnboardingPath(accountType) {
   return "/profile";
 }
 
+function readSessionPassword() {
+  try {
+    return sessionStorage.getItem("techguild_pending_password") || "";
+  } catch {
+    return "";
+  }
+}
+
 function loadPendingCredentials(routeState) {
   let pending;
   try {
@@ -29,8 +37,9 @@ function loadPendingCredentials(routeState) {
   } catch {
     pending = {};
   }
+  const sessionPw = readSessionPassword();
   const email = routeState?.email || pending?.email || "";
-  const password = routeState?.password || pending?.password || "";
+  const password = routeState?.password || sessionPw || pending?.password || "";
   const firstName = routeState?.firstName || pending?.firstName || "";
   const lastName = routeState?.lastName || pending?.lastName || "";
   const fullName =
@@ -43,6 +52,7 @@ function loadPendingCredentials(routeState) {
 // Scrub the plaintext password Signup cached, keeping identity for display.
 function scrubPendingPassword() {
   try {
+    sessionStorage.removeItem("techguild_pending_password");
     const raw = localStorage.getItem(PENDING_USER_KEY);
     if (!raw) return;
     const pending = JSON.parse(raw);
@@ -74,7 +84,7 @@ export default function AccountType() {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const { login } = useAuth();
+  const { login, isAuthenticated, token } = useAuth();
   const [state, selectionDispatch] = useReducer(selectionReducer, initialSelectionState);
   const { selected, loading, error } = state;
   const redirectTimer = useRef(null);
@@ -135,12 +145,37 @@ export default function AccountType() {
   const handleContinue = useCallback(async () => {
     if (!selected || loading) return;
 
+    // If user is already authenticated (e.g. verified or OAuth)
+    if (isAuthenticated && token) {
+      selectionDispatch({ type: "SUBMIT_START" });
+      try {
+        await authApi.setAccountTypeAuthenticated({ account_type: selected });
+        dispatch(
+          showSnackbar({
+            message: TOAST_MESSAGES.AUTH.WELCOME_ROLE(selected),
+            type: "success",
+          })
+        );
+        navigate(resolveOnboardingPath(selected));
+        return;
+      } catch (err) {
+        fail(err?.message || FORM_ERRORS.AUTH.ACCOUNT_TYPE_FAILED);
+        return;
+      } finally {
+        selectionDispatch({ type: "SUBMIT_END" });
+      }
+    }
+
     // Account-type registration needs the signup credentials. Without them
-    // (deep link / cleared storage) never navigate session-less: send back.
+    // redirect to login with a helpful message instead of forcing full signup restart.
     if (!email || !password) {
-      const msg = "Session expired. Please sign up again to choose an account type.";
+      const msg = "Please log in to finalize your account type selection.";
       fail(msg);
-      redirectTimer.current = setTimeout(() => navigate("/signup"), 1800);
+      redirectTimer.current = setTimeout(() => {
+        navigate("/login", {
+          state: { email, message: "Please log in to choose your account type." },
+        });
+      }, 1500);
       return;
     }
 

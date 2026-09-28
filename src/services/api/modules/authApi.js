@@ -22,6 +22,10 @@ export const authApi = {
     return apiClient.post(ENDPOINTS.AUTH.REGISTER_ACCOUNT_TYPE, { email, password, account_type });
   },
 
+  setAccountTypeAuthenticated: async ({ account_type }) => {
+    return apiClient.post(ENDPOINTS.AUTH.ACCOUNT_TYPE, { account_type });
+  },
+
   changePassword: async ({ old_password, new_password }) => {
     return apiClient.post(ENDPOINTS.AUTH.CHANGE_PASSWORD, { old_password, new_password });
   },

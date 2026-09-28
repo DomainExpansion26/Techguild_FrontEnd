@@ -108,7 +108,6 @@ export default function Signup() {
       });
 
       // Save pending user profile info so real name is never replaced by dummy data.
-      // Password is intentionally not persisted — nothing downstream needs it.
       try {
         localStorage.setItem(
           STORAGE_KEYS.PENDING_USER,
@@ -119,6 +118,8 @@ export default function Signup() {
             email: cleanEmail,
           })
         );
+        // Save temporarily in sessionStorage so AccountType can finalize registration & auto-login
+        sessionStorage.setItem("techguild_pending_password", password);
       } catch {
         // Storage may be unavailable (private mode); signup still succeeds.
       }
@@ -138,6 +139,7 @@ export default function Signup() {
             email: cleanEmail,
             firstName: cleanFirstName,
             lastName: cleanLastName,
+            password,
           },
         });
       }, SIGNUP_REDIRECT_DELAY_MS);

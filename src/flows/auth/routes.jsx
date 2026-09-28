@@ -18,10 +18,17 @@ export const authRoutes = (
     <Route path="/forgot-password" element={<ForgetPass />} />
     <Route path="/reset-password" element={<ResetPass />} />
     <Route path="/verify-email" element={<VerifyEmail />} />
+    <Route path="/verify-email/:token" element={<EmailVerified />} />
+    <Route path="/verify" element={<EmailVerified />} />
+    <Route path="/verify/:token" element={<EmailVerified />} />
     <Route path="/emailverify" element={<EmailVerified />} />
+    <Route path="/emailverify/:token" element={<EmailVerified />} />
     <Route path="/email-verify" element={<EmailVerified />} />
+    <Route path="/email-verify/:token" element={<EmailVerified />} />
     <Route path="/verifyemail" element={<EmailVerified />} />
+    <Route path="/verifyemail/:token" element={<EmailVerified />} />
     <Route path="/auth/verify-email" element={<EmailVerified />} />
+    <Route path="/auth/verify-email/:token" element={<EmailVerified />} />
     <Route path="/account-type" element={<AccountType />} />
     <Route path="/verify-2fa" element={<TwoFactor />} />
     <Route path="/oauth/callback" element={<OAuthCallback />} />

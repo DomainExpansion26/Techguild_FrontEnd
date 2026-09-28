@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, useParams, Link } from "react-router-dom";
 import SignupCard from "@/Components/SignupCard/SignupCard";
 import { Lock } from "@/Components/icons";
 import img2 from "@/assets/img2.png";
@@ -16,6 +16,8 @@ const initialState = {
 
 function reducer(state, action) {
   switch (action.type) {
+    case "VERIFY_START":
+      return { status: "verifying", errorMessage: "" };
     case "VERIFY_SUCCESS":
       return { status: "success", errorMessage: "" };
     case "VERIFY_ERROR":
@@ -30,31 +32,64 @@ export default function EmailVerified() {
   const BRAND = APP_STRINGS.AUTH.HOME_SCREEN;
 
   const navigate = useNavigate();
+  const { token: pathToken } = useParams();
   const [searchParams] = useSearchParams();
-  const token = (searchParams.get("token") || "").trim();
+  const queryToken =
+    searchParams.get("token") ||
+    searchParams.get("code") ||
+    searchParams.get("key") ||
+    searchParams.get("verification_token") ||
+    "";
+  const token = (pathToken || queryToken || "").trim();
 
   const [state, dispatch] = useReducer(reducer, initialState);
   const { status, errorMessage } = state;
   const mountedRef = useRef(true);
+  const hasFiredRef = useRef(false);
   const verifyFailedMsg = FORM_ERRORS.AUTH.VERIFY_FAILED || STRINGS.INVALID_TOKEN_ERROR;
+
+  const executeVerify = async (tokenToVerify) => {
+    if (!tokenToVerify) {
+      dispatch({ type: "VERIFY_ERROR", error: "Verification token is missing. Please check your link or paste the token below." });
+      return;
+    }
+    dispatch({ type: "VERIFY_START" });
+    try {
+      await authApi.verifyEmail(tokenToVerify);
+      try {
+        localStorage.setItem("techguild_email_verified", Date.now().toString());
+      } catch {
+        // ignore
+      }
+      if (mountedRef.current) dispatch({ type: "VERIFY_SUCCESS" });
+    } catch (err) {
+      const msg = String(err?.message || "").toLowerCase();
+      if (msg.includes("already verified") || msg.includes("already active")) {
+        try {
+          localStorage.setItem("techguild_email_verified", Date.now().toString());
+        } catch {
+          // ignore
+        }
+        if (mountedRef.current) dispatch({ type: "VERIFY_SUCCESS" });
+        return;
+      }
+      if (mountedRef.current) {
+        dispatch({ type: "VERIFY_ERROR", error: err?.message || verifyFailedMsg });
+      }
+    }
+  };
 
   useEffect(() => {
     mountedRef.current = true;
     if (!token) {
-      dispatch({ type: "VERIFY_ERROR", error: verifyFailedMsg });
+      dispatch({ type: "VERIFY_ERROR", error: "No verification token found in link. Please paste your token or check your email." });
       return;
     }
-    async function verify() {
-      try {
-        await authApi.verifyEmail(token);
-        if (mountedRef.current) dispatch({ type: "VERIFY_SUCCESS" });
-      } catch (err) {
-        if (mountedRef.current) {
-          dispatch({ type: "VERIFY_ERROR", error: err?.message || verifyFailedMsg });
-        }
-      }
-    }
-    verify();
+    if (hasFiredRef.current) return;
+    hasFiredRef.current = true;
+
+    executeVerify(token);
+
     return () => {
       mountedRef.current = false;
     };
@@ -113,8 +148,18 @@ export default function EmailVerified() {
           </h2>
 
           {status === "error" ? (
-            <div className="verified-error" role="alert">
-              {errorMessage}
+            <div className="mt-3 mb-3 text-center">
+              <div className="verified-error mb-3" role="alert">
+                {errorMessage}
+              </div>
+              <div className="d-flex justify-content-center gap-3 mt-3">
+                <Link to="/verify-email" className="btn btn-sm btn-outline-secondary">
+                  Resend Verification Email
+                </Link>
+                <Link to="/login" className="btn btn-sm text-white" style={{ backgroundColor: "#103ca4" }}>
+                  Sign In
+                </Link>
+              </div>
             </div>
           ) : (
             <div className="reward-card">

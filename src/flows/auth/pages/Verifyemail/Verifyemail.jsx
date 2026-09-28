@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState, useCallback } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import SignupCard from "@/Components/SignupCard/SignupCard";
 import { ArrowLeft } from "@/Components/icons";
@@ -45,18 +45,96 @@ export default function VerifyEmail() {
   const location = useLocation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const token = (searchParams.get("token") || "").trim();
+  const queryToken =
+    searchParams.get("token") ||
+    searchParams.get("code") ||
+    searchParams.get("key") ||
+    searchParams.get("verification_token") ||
+    "";
+  const token = queryToken.trim();
   const email = readPendingEmail(location?.state?.email);
 
-  // If a token is in the URL (user clicked a verification link pointing to /verify-email?token=...)
+  let pendingPassword = "";
+  try {
+    pendingPassword = location?.state?.password || sessionStorage.getItem("techguild_pending_password") || "";
+  } catch {
+    pendingPassword = "";
+  }
+
+  const [checking, setChecking] = useState(false);
+
+  // If a token is in the URL, forward directly to email verification
   useEffect(() => {
     if (token) {
       navigate(`/emailverify?token=${encodeURIComponent(token)}`, { replace: true });
     }
   }, [token, navigate]);
 
+  // Cross-tab detection: when another tab completes email verification
+  useEffect(() => {
+    const handleStorage = (e) => {
+      if (e.key === "techguild_email_verified") {
+        navigate("/account-type", {
+          state: { email, password: pendingPassword },
+          replace: true,
+        });
+      }
+    };
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, [navigate, email, pendingPassword]);
+
   const [state, dispatch] = useReducer(reducer, initialState);
   const { resending, statusKind, statusMessage } = state;
+
+  // Auto-check if verified (polls every 5s if credentials are in session)
+  const checkVerifiedStatus = useCallback(async (isManual = false) => {
+    if (!email || checking) return;
+    if (isManual) setChecking(true);
+    try {
+      if (pendingPassword) {
+        const res = await authApi.login({ email, password: pendingPassword });
+        if (res?.access_token) {
+          try {
+            localStorage.setItem("techguild_email_verified", Date.now().toString());
+          } catch {
+            // ignore
+          }
+          dispatch({ type: "RESEND_SUCCESS", message: "Email verified! Automatically taking you to account setup..." });
+          setTimeout(() => {
+            navigate("/account-type", {
+              state: { email, password: pendingPassword },
+              replace: true,
+            });
+          }, 1000);
+          return;
+        }
+      }
+      if (isManual) {
+        dispatch({
+          type: "RESEND_ERROR",
+          message: "Account not verified yet. Please click the link in your email or paste the token below.",
+        });
+      }
+    } catch {
+      if (isManual) {
+        dispatch({
+          type: "RESEND_ERROR",
+          message: "Account not verified yet. Please check your email inbox and spam folder.",
+        });
+      }
+    } finally {
+      if (isManual) setChecking(false);
+    }
+  }, [email, pendingPassword, checking, navigate]);
+
+  useEffect(() => {
+    if (!email || !pendingPassword) return;
+    const interval = setInterval(() => {
+      checkVerifiedStatus(false);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [email, pendingPassword, checkVerifiedStatus]);
 
   const handleResend = async () => {
     if (resending) return;
@@ -67,7 +145,10 @@ export default function VerifyEmail() {
     dispatch({ type: "RESEND_START" });
     try {
       await authApi.resendVerification({ email });
-      dispatch({ type: "RESEND_SUCCESS", message: STRINGS.RESEND_SUCCESS });
+      dispatch({
+        type: "RESEND_SUCCESS",
+        message: "New verification email sent! Please check your inbox and Spam / Promotions folder.",
+      });
     } catch (err) {
       dispatch({
         type: "RESEND_ERROR",
@@ -114,7 +195,7 @@ export default function VerifyEmail() {
 
           {statusMessage && (
             <div
-              className={`verify-status verify-status-${statusKind}`}
+              className={`verify-status verify-status-${statusKind} mb-3`}
               role={statusKind === "error" ? "alert" : "status"}
             >
               {statusMessage}
@@ -122,10 +203,14 @@ export default function VerifyEmail() {
           )}
 
           <p className="verify-desc">
-            {STRINGS.INFO_SENT} {email}
+            {STRINGS.INFO_SENT} <strong>{email || "your registered email"}</strong>
             <br />
             {STRINGS.INFO_INSTRUCTIONS}
           </p>
+
+          <div className="alert alert-info py-2 px-3 text-start mb-3" style={{ fontSize: "12px", borderRadius: "8px" }}>
+            💡 <strong>Tip:</strong> If you don't see the email within 1-2 minutes, please check your <strong>Spam / Junk</strong> or <strong>Promotions</strong> folder.
+          </div>
 
           <div className="verify-buttons">
             <button
@@ -145,7 +230,19 @@ export default function VerifyEmail() {
             </button>
           </div>
 
-          <p className="verify-trust">
+          <div className="mt-3 text-center">
+            <button
+              type="button"
+              className="btn btn-sm btn-link text-decoration-none"
+              style={{ color: "#103ca4", fontWeight: 600, fontSize: "13px" }}
+              disabled={checking}
+              onClick={() => checkVerifiedStatus(true)}
+            >
+              {checking ? "Checking verification status..." : "I've already clicked the email link"}
+            </button>
+          </div>
+
+          <p className="verify-trust mt-4">
             {STRINGS.TRUST_LINE1}
             <br />
             {STRINGS.TRUST_LINE2}
