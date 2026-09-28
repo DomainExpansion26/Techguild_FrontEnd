@@ -1,4 +1,5 @@
 // [TechGuild Update: 21-09-2026] Individual whole profile page, resume upload, live avatar preview & Trust rank journey
+// [TechGuild Update: 28-09-26] Scoped edit modal (about/skills/experience/links/all), avatar menu/remove, snackbar, GuildCard logo sync
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -50,6 +51,7 @@ export default function WholeProfile() {
   const [avatarPreview, setAvatarPreview] = useState(null);
   const [coverPreview, setCoverPreview] = useState(null);
   const [avatarImgError, setAvatarImgError] = useState(false);
+  // [28-09-26] Avatar edit menu + upload state (mirrors client logo menu)
   const [avatarMenuOpen, setAvatarMenuOpen] = useState(false);
   const [avatarJustApplied, setAvatarJustApplied] = useState(false);
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
@@ -66,7 +68,7 @@ export default function WholeProfile() {
     return () => document.removeEventListener("pointerdown", onDown);
   }, [avatarMenuOpen]);
 
-  // Client-style scoped edit modal: section cards pass "about" | "skills" |
+  // [28-09-26] Client-style scoped edit modal: section cards pass "about" | "skills" |
   // "experience" | "links", header passes "all" with tabs.
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editScope, setEditScope] = useState("all");
@@ -293,6 +295,7 @@ export default function WholeProfile() {
     }
   };
 
+  // [28-09-26] Remove avatar via API + clear local preview/user sync
   const handleRemoveAvatar = async (e) => {
     e?.stopPropagation?.();
     setAvatarMenuOpen(false);
@@ -490,6 +493,7 @@ export default function WholeProfile() {
                     guildId={guildId}
                     memberSince={memberSince}
                     logoInitials={initials}
+                    // [28-09-26] Sync avatar image into GuildCard logo
                     logoUrl={avatarUrl}
                     logo={avatarUrl}
                     verifiedText="VERIFIED MEMBER"
