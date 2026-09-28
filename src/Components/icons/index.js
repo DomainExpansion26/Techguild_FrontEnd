@@ -73,6 +73,7 @@ import MonitorSpeaker from "../../assets/icons/monitor-speaker.svg?react";
 import RectangleVertical from "../../assets/icons/rectangle-vertical.svg?react";
 import TvMinimal from "../../assets/icons/tv-minimal.svg?react";
 import QrCode from "../../assets/icons/qr-code.svg?react";
+import Copy from "../../assets/icons/copy.svg?react";
 import Palette from "../../assets/icons/palette.svg?react";
 import Tag from "../../assets/icons/tag.svg?react";
 import LifeBuoy from "../../assets/icons/life-buoy.svg?react";
@@ -155,6 +156,7 @@ export {
   RectangleVertical,
   TvMinimal,
   QrCode,
+  Copy,
   Palette,
   Tag,
   LifeBuoy,
