@@ -79,9 +79,8 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const pathParts = currentPath.split("/").filter(Boolean);
-  const activeTabId =
-    activeSettingsTab ||
-    (isSettingsPath && pathParts.length >= 2 ? pathParts[pathParts.length - 1] : "profile");
+  const pathTab = isSettingsPath && pathParts.length >= 2 ? pathParts[pathParts.length - 1] : "profile";
+  const activeTabId = activeSettingsTab || pathTab;
 
   const handleSettingsSubClick = (subItem) => {
     if (onSelectSettingsTab) {
@@ -96,7 +95,6 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
       : subItem.path;
     navigate(target);
   };
-
   const settingsProfilePath = isAdminFlow
     ? "/admin/settings/profile"
     : isAgencyFlow
