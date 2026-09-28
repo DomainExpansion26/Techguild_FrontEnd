@@ -386,6 +386,7 @@ export default function ClientProfile() {
   // [28-09-26] `phone` holds national digits only; `countryCode` holds the dial prefix.
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState(DEFAULT_COUNTRY_META.dial);
+  const [countryCode, setCountryCode] = useState(DEFAULT_COUNTRY_META.dial);
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [timezone, setTimezone] = useState("");
