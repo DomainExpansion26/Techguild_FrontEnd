@@ -198,6 +198,7 @@ export default function GuildCard({
                 letterSpacing: '-0.01em',
                 lineHeight: 1,
                 overflow: 'hidden',
+                overflow: 'hidden',
               }}
             >
               {/* [28-09-26] Render logo image when valid, else initials fallback */}
