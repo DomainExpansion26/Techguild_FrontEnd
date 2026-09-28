@@ -1,4 +1,5 @@
 // [TechGuild Update: 21-09-2026] Client profile onboarding wizard & OpenAPI step-save integration
+// [TechGuild Update: 28-09-26] Country dial/currency metadata, phone prefix + budget currency sync, useRef enhancements
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DashboardLayout, Cards, PrimaryButton, SecondaryButton, TextInput, Stepper } from "@/Components";
@@ -35,7 +36,7 @@ const clientSlugStepMap = {
   "completed": 4
 };
 
-// Country + dial code + currency metadata. Selecting a country drives the
+// [28-09-26] Country + dial code + currency metadata. Selecting a country drives the
 // phone dial-code prefix and the Step 2 budget currency.
 const isoToFlag = (iso = "") =>
   `${iso || ""}`.toUpperCase().replace(/[^A-Z]/g, "").split("").map((c) => String.fromCodePoint(127397 + c.charCodeAt(0))).join("");
@@ -382,7 +383,7 @@ export default function ClientProfile() {
   const [industry, setIndustry] = useState("");
   const [website, setWebsite] = useState("");
   // Required by CreateClientProfileRequest (all keys required, no extras)
-  // `phone` holds national digits only; `countryCode` holds the dial prefix.
+  // [28-09-26] `phone` holds national digits only; `countryCode` holds the dial prefix.
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState(DEFAULT_COUNTRY_META.dial);
   const [country, setCountry] = useState("");
@@ -390,13 +391,13 @@ export default function ClientProfile() {
   const [timezone, setTimezone] = useState("");
   const [step1Errors, setStep1Errors] = useState({});
 
-  // Currency follows the selected country (e.g. India -> INR ₹).
+  // [28-09-26] Currency follows the selected country (e.g. India -> INR ₹).
   const countryMeta = getCountryMeta(country);
   const activeCurrency = countryMeta?.currency || DEFAULT_COUNTRY_META.currency;
   const activeSymbol = countryMeta?.symbol || DEFAULT_COUNTRY_META.symbol;
   const activeFlag = (countryMeta && flagOf(countryMeta)) || "🇮🇳";
 
-  // Intl-tel-input style flag picker (single phone box).
+  // [28-09-26] Intl-tel-input style flag picker (single phone box).
   const [phonePanelOpen, setPhonePanelOpen] = useState(false);
   const [countrySearch, setCountrySearch] = useState("");
   const phoneBoxRef = useRef(null);
