@@ -12,64 +12,15 @@ const AgencyReports = lazy(() => import("./pages/Reports/Reports"));
 const AgencySettings = lazy(() => import("./pages/Settings/Settings"));
 
 export const agencyRoutes = (
-  <>
-    <Route
-      path="/agency/dashboard"
-      element={
-        <RoleGuard allowedRoles={[ROLES.AGENCY, ROLES.ADMIN]}>
-          <AgencyDashboard />
-        </RoleGuard>
-      }
-    />
-    <Route
-      path="/agency/projects"
-      element={
-        <RoleGuard allowedRoles={[ROLES.AGENCY, ROLES.ADMIN]}>
-          <AgencyProjects />
-        </RoleGuard>
-      }
-    />
-    <Route
-      path="/agency/clients"
-      element={
-        <RoleGuard allowedRoles={[ROLES.AGENCY, ROLES.ADMIN]}>
-          <AgencyClients />
-        </RoleGuard>
-      }
-    />
-    <Route
-      path="/agency/team"
-      element={
-        <RoleGuard allowedRoles={[ROLES.AGENCY, ROLES.ADMIN]}>
-          <AgencyTeam />
-        </RoleGuard>
-      }
-    />
-    <Route
-      path="/agency/payments"
-      element={
-        <RoleGuard allowedRoles={[ROLES.AGENCY, ROLES.ADMIN]}>
-          <AgencyPayments />
-        </RoleGuard>
-      }
-    />
-    <Route
-      path="/agency/reports"
-      element={
-        <RoleGuard allowedRoles={[ROLES.AGENCY, ROLES.ADMIN]}>
-          <AgencyReports />
-        </RoleGuard>
-      }
-    />
-    <Route
-      path="/agency/settings"
-      element={
-        <RoleGuard allowedRoles={[ROLES.AGENCY, ROLES.ADMIN]}>
-          <AgencySettings />
-        </RoleGuard>
-      }
-    />
-  </>
+  <Route element={<RoleGuard allowedRoles={[ROLES.AGENCY, ROLES.ADMIN]} />}>
+    <Route path="/agency/dashboard" element={<AgencyDashboard />} />
+    <Route path="/agency/projects" element={<AgencyProjects />} />
+    <Route path="/agency/clients" element={<AgencyClients />} />
+    <Route path="/agency/team" element={<AgencyTeam />} />
+    <Route path="/agency/payments" element={<AgencyPayments />} />
+    <Route path="/agency/reports" element={<AgencyReports />} />
+    <Route path="/agency/settings" element={<AgencySettings />} />
+  </Route>
 );
 
 export default agencyRoutes;

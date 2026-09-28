@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { DashboardLayout } from "@/Components";
-import { contractsApi } from "@/features/contracts/api/contractsApi";
-import { submissionsApi } from "@/features/submissions/api/submissionsApi";
+import { contractsApi, submissionsApi } from "@/services/api";
 
 export default function ActiveQuests() {
   const [contracts, setContracts] = useState([]);
@@ -9,11 +8,7 @@ export default function ActiveQuests() {
   const [error, setError] = useState(null);
   const [actionLoading, setActionLoading] = useState(null);
 
-  useEffect(() => {
-    fetchClientContracts();
-  }, []);
-
-  const fetchClientContracts = async () => {
+  const fetchClientContracts = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -27,7 +22,11 @@ export default function ActiveQuests() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchClientContracts();
+  }, [fetchClientContracts]);
 
   const handleApproveWork = async (submissionId) => {
     if (!window.confirm("Approve this milestone deliverable and release payment from escrow?")) return;

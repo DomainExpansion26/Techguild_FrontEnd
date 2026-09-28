@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { DashboardLayout } from "@/Components";
-import { verificationApi } from "@/features/verification/api/verificationApi";
+import { verificationApi } from "@/services/api";
 
 export default function VerificationHub() {
   const [status, setStatus] = useState(null);
@@ -14,11 +14,7 @@ export default function VerificationHub() {
   const [submitting, setSubmitting] = useState(false);
   const [feedbackMsg, setFeedbackMsg] = useState({ type: "", text: "" });
 
-  useEffect(() => {
-    fetchVerificationStatus();
-  }, []);
-
-  const fetchVerificationStatus = async () => {
+  const fetchVerificationStatus = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -29,7 +25,11 @@ export default function VerificationHub() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchVerificationStatus();
+  }, [fetchVerificationStatus]);
 
   const handleSubmitBusinessVerification = async (e) => {
     e.preventDefault();
@@ -73,7 +73,14 @@ export default function VerificationHub() {
 
         {error && <div className="alert alert-danger mb-4">{error}</div>}
 
-        {isApproved ? (
+        {loading ? (
+          <div className="card p-5 text-center bg-white shadow-sm rounded-3">
+            <div className="spinner-border text-primary mx-auto mb-3" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+            <p className="text-secondary mb-0">Checking verification status...</p>
+          </div>
+        ) : isApproved ? (
           <div className="card p-5 border-success text-center bg-white shadow-sm rounded-3">
             <div className="fs-1 mb-2">🛡️</div>
             <h3 className="fs-4 fw-bold text-success mb-2">Your Business is Fully Verified!</h3>

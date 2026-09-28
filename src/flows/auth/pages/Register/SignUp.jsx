@@ -14,8 +14,8 @@ import {
   Divider,
   TermsCheckbox,
 } from "@/Components";
-import authApi from "@/features/auth/api/authApi";
-import oauthApi from "@/features/auth/api/oauthApi";
+import { authApi } from "@/services/api";
+import { oauthApi } from "@/services/api";
 import { APP_STRINGS, APP_CONFIG, TOAST_MESSAGES, FORM_ERRORS } from "@/constants/string";
 import { AUTH_ROUTES } from "@/constants/navigation";
 import { ICON_SIZES } from "@/constants/sizes";

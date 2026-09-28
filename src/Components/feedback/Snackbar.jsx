@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { hideSnackbar } from "@/store/slices/snackbarSlice";
 import "./Snackbar.css";
@@ -15,26 +15,23 @@ export default function Snackbar() {
   const { open, message, type = "info", duration = 4000 } = useSelector((state) => state.snackbar || {});
   const [isClosing, setIsClosing] = useState(false);
 
-  useEffect(() => {
-    if (!open) {
+  const handleClose = useCallback(() => {
+    setIsClosing(true);
+    setTimeout(() => {
+      dispatch(hideSnackbar());
       setIsClosing(false);
-      return;
-    }
+    }, 280);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!open) return;
 
     const timer = setTimeout(() => {
       handleClose();
     }, duration);
 
     return () => clearTimeout(timer);
-  }, [open, duration, message]);
-
-  const handleClose = () => {
-    setIsClosing(true);
-    setTimeout(() => {
-      dispatch(hideSnackbar());
-      setIsClosing(false);
-    }, 280);
-  };
+  }, [open, duration, message, handleClose]);
 
   if (!open && !isClosing) return null;
 

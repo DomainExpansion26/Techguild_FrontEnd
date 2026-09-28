@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { LoadingSpinner, NotFound } from "@/Components/feedback";
+import { AuthGuard } from "@/permissions";
 
 import { authRoutes } from "@/flows/auth/routes";
 import { landingRoutes } from "@/flows/landing/routes";
@@ -22,17 +23,13 @@ export default function AppRoutes() {
         {/* Authentication Flow */}
         {authRoutes}
 
-        {/* Individual (Freelancer) User Flow */}
-        {individualRoutes}
-
-        {/* Client User Flow */}
-        {clientRoutes}
-
-        {/* Agency User Flow (Guarded) */}
-        {agencyRoutes}
-
-        {/* Admin User Flow (Guarded) */}
-        {adminRoutes}
+        {/* Protected Role-Based Flows (Requires Active Session) */}
+        <Route element={<AuthGuard />}>
+          {individualRoutes}
+          {clientRoutes}
+          {agencyRoutes}
+          {adminRoutes}
+        </Route>
 
         {/* 404 Fallback */}
         <Route path="*" element={<NotFound />} />

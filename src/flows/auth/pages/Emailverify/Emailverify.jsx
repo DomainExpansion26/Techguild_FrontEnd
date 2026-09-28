@@ -6,7 +6,7 @@ import img2 from "@/assets/img2.png";
 import userIcon from "@/assets/icons/user.svg";
 import mailImage from "@/assets/mail.png";
 import "./Emailverify.css";
-import authApi from "@/features/auth/api/authApi";
+import { authApi } from "@/services/api";
 import { APP_STRINGS, FORM_ERRORS } from "@/constants/string";
 
 const initialState = {

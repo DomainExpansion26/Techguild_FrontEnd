@@ -1,4 +1,5 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import AccessDenied from "@/Components/feedback/AccessDenied";
 import LoadingSpinner from "@/Components/feedback/LoadingSpinner";
@@ -14,5 +15,5 @@ export default function RoleGuard({ allowedRoles = [], children }) {
     return <AccessDenied message={`Access restricted. Required role: ${allowedRoles.join(" or ")}`} />;
   }
 
-  return children;
+  return children ? children : <Outlet />;
 }

@@ -1,12 +1,14 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import ProfileSetting from "./Profile/ProfileSetting";
-import AccountSecurity from "./AccountSecurity/AccountSecurity";
-import NotificationsSetting from "./Notifications/NotificationsSetting";
-import PrivacySetting from "./Privacy/PrivacySetting";
-import BillingPayments from "./BillingPayments/BillingPayments";
-import DeactivateAccount from "./DeactivateAccount/DeactivateAccount";
-import SignOutSetting from "./SignOut/SignOutSetting";
+import {
+  AccountSecurity,
+  NotificationsSetting,
+  PrivacySetting,
+  BillingPayments,
+  DeactivateAccount,
+  SignOutSetting,
+} from "@/flows/shared/settings";
 
 export default function IndividualSettingsWrapper() {
   const { tab } = useParams();
@@ -30,4 +32,3 @@ export default function IndividualSettingsWrapper() {
       return <ProfileSetting />;
   }
 }
-

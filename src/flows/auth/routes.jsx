@@ -7,7 +7,7 @@ const ForgetPass = lazy(() => import("./pages/ForgotPassword/Forgetpass"));
 const ResetPass = lazy(() => import("./pages/ResetPassword/Resetpass"));
 const VerifyEmail = lazy(() => import("./pages/Verifyemail/Verifyemail"));
 const EmailVerified = lazy(() => import("./pages/Emailverify/Emailverify"));
-const AccountType = lazy(() => import("./pages/Accountype/Accounttype"));
+const AccountType = lazy(() => import("./pages/AccountType/AccountType"));
 const TwoFactor = lazy(() => import("./pages/TwoFactor/TwoFactor"));
 const OAuthCallback = lazy(() => import("./pages/OAuthCallback/OAuthCallback"));
 

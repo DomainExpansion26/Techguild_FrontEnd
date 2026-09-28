@@ -1,10 +1,12 @@
 export { default as ClientProfileSetting } from "./Profile/ClientProfileSetting";
-export { default as ClientAccountSecurity } from "./AccountSecurity/ClientAccountSecurity";
-export { default as ClientNotificationsSetting } from "./Notifications/ClientNotificationsSetting";
-export { default as ClientPrivacySetting } from "./Privacy/ClientPrivacySetting";
-export { default as ClientBillingPayments } from "./BillingPayments/ClientBillingPayments";
-export { default as ClientDeactivateAccount } from "./DeactivateAccount/ClientDeactivateAccount";
-export { default as ClientSignOutSetting } from "./SignOut/ClientSignOutSetting";
 export { default as ClientSettingsWrapper } from "./ClientSettingsWrapper";
+export {
+  AccountSecurity as ClientAccountSecurity,
+  NotificationsSetting as ClientNotificationsSetting,
+  PrivacySetting as ClientPrivacySetting,
+  BillingPayments as ClientBillingPayments,
+  DeactivateAccount as ClientDeactivateAccount,
+  SignOutSetting as ClientSignOutSetting,
+} from "@/flows/shared/settings";
 
 export { default } from "./ClientSettingsWrapper";

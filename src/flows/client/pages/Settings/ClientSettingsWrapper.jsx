@@ -1,12 +1,14 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import ClientProfileSetting from "./Profile/ClientProfileSetting";
-import ClientAccountSecurity from "./AccountSecurity/ClientAccountSecurity";
-import ClientNotificationsSetting from "./Notifications/ClientNotificationsSetting";
-import ClientPrivacySetting from "./Privacy/ClientPrivacySetting";
-import ClientBillingPayments from "./BillingPayments/ClientBillingPayments";
-import ClientDeactivateAccount from "./DeactivateAccount/ClientDeactivateAccount";
-import ClientSignOutSetting from "./SignOut/ClientSignOutSetting";
+import {
+  AccountSecurity,
+  NotificationsSetting,
+  PrivacySetting,
+  BillingPayments,
+  DeactivateAccount,
+  SignOutSetting,
+} from "@/flows/shared/settings";
 
 export default function ClientSettingsWrapper() {
   const { tab } = useParams();
@@ -14,20 +16,19 @@ export default function ClientSettingsWrapper() {
 
   switch (currentTab) {
     case "account-security":
-      return <ClientAccountSecurity />;
+      return <AccountSecurity />;
     case "notifications":
-      return <ClientNotificationsSetting />;
+      return <NotificationsSetting />;
     case "privacy":
-      return <ClientPrivacySetting />;
+      return <PrivacySetting />;
     case "billing-payments":
-      return <ClientBillingPayments />;
+      return <BillingPayments />;
     case "deactivate-account":
-      return <ClientDeactivateAccount />;
+      return <DeactivateAccount />;
     case "sign-out":
-      return <ClientSignOutSetting />;
+      return <SignOutSetting />;
     case "profile":
     default:
       return <ClientProfileSetting />;
   }
 }
-

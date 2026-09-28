@@ -8,8 +8,8 @@ import {
   BrandLogo,
   SignupCard,
 } from "@/Components";
-import authApi from "@/features/auth/api/authApi";
-import oauthApi from "@/features/auth/api/oauthApi";
+import { authApi } from "@/services/api";
+import { oauthApi } from "@/services/api";
 import { APP_STRINGS, FORM_ERRORS } from "@/constants/string";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

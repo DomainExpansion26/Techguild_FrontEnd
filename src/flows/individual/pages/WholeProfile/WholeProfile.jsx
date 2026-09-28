@@ -5,7 +5,7 @@ import { DashboardLayout, Cards, PrimaryButton } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import { GuildCard } from "@/Components/Cards/variants";
 import { useAuth } from "@/context/AuthContext";
-import { profileApi } from "@/features/profile/api/profileApi";
+import { profileApi } from "@/services/api";
 import { ICON_SIZES } from "@/constants/sizes";
 import "./WholeProfile.css";
 

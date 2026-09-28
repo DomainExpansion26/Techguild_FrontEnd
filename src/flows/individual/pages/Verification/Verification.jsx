@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { showSnackbar } from "@/store";
 import { DashboardLayout, Cards } from "@/Components";
 import Icon from "@/Components/icons/Icon";
-import { verificationApi } from "@/features/verification/api/verificationApi";
+import { verificationApi } from "@/services/api";
 import { useAuth } from "@/context/AuthContext";
 import "./verification.css";
 
 export default function Verification() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user, token, isAuthenticated } = useAuth();
+  const { token, isAuthenticated } = useAuth();
   const [currentStep, setCurrentStep] = useState(0); // 0: Start Screen, 1: Choose Doc, 2: Upload Files, 3: Review & Submit
   const [selectedDoc, setSelectedDoc] = useState("aadhaar");
   const [frontDoc, setFrontDoc] = useState(null);
@@ -24,11 +24,7 @@ export default function Verification() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
-  useEffect(() => {
-    checkCurrentStatus();
-  }, []);
-
-  const checkCurrentStatus = async () => {
+  const checkCurrentStatus = useCallback(async () => {
     setStatusLoading(true);
     try {
       const res = await verificationApi.getStatus();
@@ -38,14 +34,11 @@ export default function Verification() {
     } finally {
       setStatusLoading(false);
     }
-  };
+  }, []);
 
-  const steps = [
-    { number: 1, label: "Verification Document" },
-    { number: 2, label: "Upload Documents" },
-    { number: 3, label: "Take Selfie / Photo" },
-    { number: 4, label: "Review & Submit" },
-  ];
+  useEffect(() => {
+    checkCurrentStatus();
+  }, [checkCurrentStatus]);
 
   const docOptions = [
     {
@@ -118,6 +111,17 @@ export default function Verification() {
   };
 
   const renderStartScreen = () => {
+    if (statusLoading) {
+      return (
+        <div className="text-center py-5">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading status...</span>
+          </div>
+          <p className="mt-3 text-muted">Checking verification status...</p>
+        </div>
+      );
+    }
+
     const isApproved = verificationStatus?.identity_status === "approved" || verificationStatus?.status === "approved";
     const isPending = verificationStatus?.identity_status === "pending" || verificationStatus?.status === "pending";
 

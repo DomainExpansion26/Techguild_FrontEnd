@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
-import oauthApi from "@/features/auth/api/oauthApi";
+import { oauthApi } from "@/services/api";
 import { LoadingSpinner } from "@/Components/feedback";
 import { APP_STRINGS } from "@/constants/string";
 

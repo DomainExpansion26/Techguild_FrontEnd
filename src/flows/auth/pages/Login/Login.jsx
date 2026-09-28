@@ -11,9 +11,9 @@ import {
   TextInput,
   PrimaryButton,
 } from "@/Components";
-import authApi from "@/features/auth/api/authApi";
-import oauthApi from "@/features/auth/api/oauthApi";
-import profileApi from "@/features/profile/api/profileApi";
+import { authApi } from "@/services/api";
+import { oauthApi } from "@/services/api";
+import { profileApi } from "@/services/api";
 import { useAuth } from "@/context/AuthContext";
 import { useDispatch } from "react-redux";
 import { showSnackbar } from "@/store";

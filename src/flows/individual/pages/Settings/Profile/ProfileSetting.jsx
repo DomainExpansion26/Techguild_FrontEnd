@@ -10,9 +10,9 @@ import {
   SecondaryButton,
 } from "@/Components";
 import { useAuth } from "@/context/AuthContext";
-import { profileApi } from "@/features/profile/api/profileApi";
+import { profileApi } from "@/services/api";
 import { showSnackbar } from "@/store";
-import "../settings.css";
+import "@/flows/shared/settings/settings.css";
 import "./ProfileSetting.css";
 
 export default function ProfileSetting() {
@@ -107,7 +107,6 @@ export default function ProfileSetting() {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchProfileData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -121,7 +120,6 @@ export default function ProfileSetting() {
         user?.name ||
         (user?.first_name ? `${user.first_name} ${user.last_name || ""}`.trim() : "") ||
         (user?.email ? user.email.split("@")[0] : "");
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (initialName) setFullName(initialName);
     }
     if (!touchedRef.current.has("username")) {

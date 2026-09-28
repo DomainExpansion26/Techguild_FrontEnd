@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { DashboardLayout } from "@/Components";
-import { projectsApi } from "@/features/projects/api/projectsApi";
-import { applicationsApi } from "@/features/applications/api/applicationsApi";
+import { projectsApi, applicationsApi } from "@/services/api";
 import { showSnackbar } from "@/store";
 import "./projects.css";
 
@@ -23,11 +22,7 @@ export default function Projects() {
   const [deliveryDays, setDeliveryDays] = useState("14");
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  const fetchProjects = async () => {
+  const fetchProjects = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -41,7 +36,11 @@ export default function Projects() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchProjects();
+  }, [fetchProjects]);
 
   const handleApplyClick = (project, e) => {
     e.stopPropagation();

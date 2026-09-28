@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DashboardLayout, Cards, PrimaryButton, SecondaryButton, TextInput, Stepper } from "@/Components";
 import Icon from "@/Components/icons/Icon";
-import { profileApi } from "@/features/profile/api/profileApi";
+import { profileApi } from "@/services/api";
 import {
   APP_STRINGS,
   COUNTRY_OPTIONS,

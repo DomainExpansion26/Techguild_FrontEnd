@@ -16,96 +16,19 @@ const AdminCms = lazy(() => import("./pages/CMS/Cms"));
 const AdminSettings = lazy(() => import("./pages/Settings/Settings"));
 
 export const adminRoutes = (
-  <>
-    <Route
-      path="/admin/dashboard"
-      element={
-        <RoleGuard allowedRoles={[ROLES.ADMIN]}>
-          <AdminDashboard />
-        </RoleGuard>
-      }
-    />
-    <Route
-      path="/admin/users"
-      element={
-        <RoleGuard allowedRoles={[ROLES.ADMIN]}>
-          <AdminUsers />
-        </RoleGuard>
-      }
-    />
-    <Route
-      path="/admin/agencies"
-      element={
-        <RoleGuard allowedRoles={[ROLES.ADMIN]}>
-          <AdminAgencies />
-        </RoleGuard>
-      }
-    />
-    <Route
-      path="/admin/clients"
-      element={
-        <RoleGuard allowedRoles={[ROLES.ADMIN]}>
-          <AdminClients />
-        </RoleGuard>
-      }
-    />
-    <Route
-      path="/admin/freelancers"
-      element={
-        <RoleGuard allowedRoles={[ROLES.ADMIN]}>
-          <AdminFreelancers />
-        </RoleGuard>
-      }
-    />
-    <Route
-      path="/admin/projects"
-      element={
-        <RoleGuard allowedRoles={[ROLES.ADMIN]}>
-          <AdminProjects />
-        </RoleGuard>
-      }
-    />
-    <Route
-      path="/admin/payments"
-      element={
-        <RoleGuard allowedRoles={[ROLES.ADMIN]}>
-          <AdminPayments />
-        </RoleGuard>
-      }
-    />
-    <Route
-      path="/admin/reports"
-      element={
-        <RoleGuard allowedRoles={[ROLES.ADMIN]}>
-          <AdminReports />
-        </RoleGuard>
-      }
-    />
-    <Route
-      path="/admin/analytics"
-      element={
-        <RoleGuard allowedRoles={[ROLES.ADMIN]}>
-          <AdminAnalytics />
-        </RoleGuard>
-      }
-    />
-    <Route
-      path="/admin/cms"
-      element={
-        <RoleGuard allowedRoles={[ROLES.ADMIN]}>
-          <AdminCms />
-        </RoleGuard>
-      }
-    />
-    <Route
-      path="/admin/settings"
-      element={
-        <RoleGuard allowedRoles={[ROLES.ADMIN]}>
-          <AdminSettings />
-        </RoleGuard>
-      }
-    />
-  </>
+  <Route element={<RoleGuard allowedRoles={[ROLES.ADMIN]} />}>
+    <Route path="/admin/dashboard" element={<AdminDashboard />} />
+    <Route path="/admin/users" element={<AdminUsers />} />
+    <Route path="/admin/agencies" element={<AdminAgencies />} />
+    <Route path="/admin/clients" element={<AdminClients />} />
+    <Route path="/admin/freelancers" element={<AdminFreelancers />} />
+    <Route path="/admin/projects" element={<AdminProjects />} />
+    <Route path="/admin/payments" element={<AdminPayments />} />
+    <Route path="/admin/reports" element={<AdminReports />} />
+    <Route path="/admin/analytics" element={<AdminAnalytics />} />
+    <Route path="/admin/cms" element={<AdminCms />} />
+    <Route path="/admin/settings" element={<AdminSettings />} />
+  </Route>
 );
 
 export default adminRoutes;

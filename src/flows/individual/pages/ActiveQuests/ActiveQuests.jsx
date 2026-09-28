@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { DashboardLayout } from "@/Components";
-import { contractsApi } from "@/features/contracts/api/contractsApi";
-import { milestonesApi } from "@/features/milestones/api/milestonesApi";
-import { submissionsApi } from "@/features/submissions/api/submissionsApi";
+import { contractsApi, submissionsApi } from "@/services/api";
 import "./activeQuests.css";
 
 export default function ActiveQuests() {
@@ -17,11 +15,7 @@ export default function ActiveQuests() {
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState({ type: "", text: "" });
 
-  useEffect(() => {
-    fetchActiveContracts();
-  }, []);
-
-  const fetchActiveContracts = async () => {
+  const fetchActiveContracts = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -35,7 +29,11 @@ export default function ActiveQuests() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchActiveContracts();
+  }, [fetchActiveContracts]);
 
   const handleOpenSubmitModal = (milestone) => {
     setSelectedMilestone(milestone);

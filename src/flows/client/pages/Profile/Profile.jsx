@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Navbar, Cards, Header, PrimaryButton, SecondaryButton, TextInput, Stepper } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import { useAuth } from "@/context/AuthContext";
-import { profileApi } from "@/features/profile/api/profileApi";
+import { profileApi } from "@/services/api";
 import { ICON_SIZES } from "@/constants/sizes";
 import dashboardBg from "@/assets/dashboard.bg.png";
 import "@/flows/individual/pages/DashBoard/dashboard.css";

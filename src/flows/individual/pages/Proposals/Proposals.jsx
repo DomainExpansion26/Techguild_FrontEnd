@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { DashboardLayout } from "@/Components";
-import { applicationsApi } from "@/features/applications/api/applicationsApi";
+import { applicationsApi } from "@/services/api";
 import "./proposals.css";
 
 export default function Proposals() {
@@ -9,11 +9,7 @@ export default function Proposals() {
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState("all");
 
-  useEffect(() => {
-    fetchProposals();
-  }, []);
-
-  const fetchProposals = async () => {
+  const fetchProposals = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -27,7 +23,11 @@ export default function Proposals() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchProposals();
+  }, [fetchProposals]);
 
   const handleWithdraw = async (id) => {
     if (!window.confirm("Are you sure you want to withdraw this proposal?")) return;

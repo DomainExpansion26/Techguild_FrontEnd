@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Icon from "@/Components/icons/Icon";
 import { useAuth } from "@/context/AuthContext";
@@ -53,30 +53,15 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
     currentPath.startsWith("/agency/settings") ||
     currentPath.startsWith("/admin/settings");
 
-  const [isSettingsMode, setIsSettingsMode] = useState(isSettingsPath);
-  const [currentTab, setCurrentTab] = useState(activeSettingsTab || "profile");
+  const [userSettingsMode, setUserSettingsMode] = useState(null);
+  const isSettingsMode = userSettingsMode !== null ? userSettingsMode : isSettingsPath;
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-  useEffect(() => {
-    if (isSettingsPath) {
-      setIsSettingsMode(true);
-      const pathParts = currentPath.split("/").filter(Boolean);
-      if (pathParts.length >= 2) {
-        setCurrentTab(pathParts[pathParts.length - 1]);
-      } else {
-        setCurrentTab("profile");
-      }
-    }
-  }, [currentPath, isSettingsPath]);
-
-  useEffect(() => {
-    if (activeSettingsTab) {
-      setCurrentTab(activeSettingsTab);
-    }
-  }, [activeSettingsTab]);
+  const pathParts = currentPath.split("/").filter(Boolean);
+  const pathTab = isSettingsPath && pathParts.length >= 2 ? pathParts[pathParts.length - 1] : "profile";
+  const activeTabId = activeSettingsTab || pathTab;
 
   const handleSettingsSubClick = (subItem) => {
-    setCurrentTab(subItem.id);
     if (onSelectSettingsTab) {
       onSelectSettingsTab(subItem.id);
     }
@@ -89,17 +74,15 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
       e.preventDefault();
       const settingsTarget = isClientFlow ? "/client-settings/profile" : "/settings/profile";
       if (!isSettingsPath) {
-        setIsSettingsMode(true);
+        setUserSettingsMode(true);
         navigate(settingsTarget);
       } else {
-        setIsSettingsMode(!isSettingsMode);
+        setUserSettingsMode(!isSettingsMode);
       }
     } else {
-      setIsSettingsMode(false);
+      setUserSettingsMode(false);
     }
   };
-
-  const activeTabId = activeSettingsTab || currentTab;
 
   return (
     <>
@@ -292,7 +275,7 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
                               handleMainItemClick(item, e);
                             } else {
                               setIsMobileOpen(false);
-                              setIsSettingsMode(false);
+                              setUserSettingsMode(false);
                             }
                           }}
                         >

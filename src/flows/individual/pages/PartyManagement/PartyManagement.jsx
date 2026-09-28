@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { DashboardLayout } from "@/Components";
-import { teamsApi } from "@/features/teams/api/teamsApi";
+import { teamsApi } from "@/services/api";
 import { showSnackbar } from "@/store";
 
 export default function PartyManagement() {
@@ -23,11 +23,7 @@ export default function PartyManagement() {
   const [inviting, setInviting] = useState(false);
   const [feedbackMsg, setFeedbackMsg] = useState({ type: "", text: "" });
 
-  useEffect(() => {
-    fetchTeams();
-  }, []);
-
-  const fetchTeams = async () => {
+  const fetchTeams = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -41,7 +37,11 @@ export default function PartyManagement() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchTeams();
+  }, [fetchTeams]);
 
   const handleCreateTeam = async (e) => {
     e.preventDefault();

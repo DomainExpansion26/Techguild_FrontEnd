@@ -11,9 +11,9 @@ import {
 } from "lucide-react";
 import { DashboardLayout, Cards } from "@/Components";
 import { useAuth } from "@/context/AuthContext";
-import { profileApi } from "@/features/profile/api/profileApi";
+import { profileApi } from "@/services/api";
 import { showSnackbar } from "@/store";
-import "../settings.css";
+import "@/flows/shared/settings/settings.css";
 import "./ClientProfileSetting.css";
 
 const INDUSTRY_OPTIONS = [
@@ -72,8 +72,7 @@ export default function ClientProfileSetting() {
     kyc: false,
   });
 
-  const fetchClientProfile = async () => {
-    setLoading(true);
+  const fetchClientProfile = useCallback(async () => {
     try {
       const res = await profileApi.getProfile();
       const client = res?.client || res?.data?.client || {};
@@ -99,11 +98,11 @@ export default function ClientProfileSetting() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user?.name]);
 
   useEffect(() => {
     fetchClientProfile();
-  }, []);
+  }, [fetchClientProfile]);
 
   const handleLogoUpload = async (e) => {
     const file = e.target.files?.[0];

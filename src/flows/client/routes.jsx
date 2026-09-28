@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 
 const ClientDashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
 const ClientProfile = lazy(() => import("./pages/Profile/Profile"));
-const ClientWholeProfile = lazy(() => import("./pages/whole_Profile"));
+const ClientWholeProfile = lazy(() => import("./pages/WholeProfile/WholeProfile"));
 const ClientQuestBoard = lazy(() => import("./pages/QuestBoard/QuestBoard"));
 const ClientApplications = lazy(() => import("./pages/Applications/Applications"));
 const ClientActiveQuests = lazy(() => import("./pages/ActiveQuests/ActiveQuests"));

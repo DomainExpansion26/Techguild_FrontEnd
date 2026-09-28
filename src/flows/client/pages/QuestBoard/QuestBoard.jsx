@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { DashboardLayout } from "@/Components";
-import { projectsApi } from "@/features/projects/api/projectsApi";
+import { projectsApi } from "@/services/api";
 import { showSnackbar } from "@/store";
 
 export default function QuestBoard() {
@@ -28,11 +28,7 @@ export default function QuestBoard() {
   const [deadline, setDeadline] = useState("");
   const [creating, setCreating] = useState(false);
 
-  useEffect(() => {
-    fetchMyProjects();
-  }, []);
-
-  const fetchMyProjects = async () => {
+  const fetchMyProjects = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -46,7 +42,11 @@ export default function QuestBoard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchMyProjects();
+  }, [fetchMyProjects]);
 
   const handleCreateQuest = async (e) => {
     e.preventDefault();

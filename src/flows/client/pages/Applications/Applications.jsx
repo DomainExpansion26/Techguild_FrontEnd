@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { DashboardLayout } from "@/Components";
-import { projectsApi } from "@/features/projects/api/projectsApi";
-import { applicationsApi } from "@/features/applications/api/applicationsApi";
+import { projectsApi, applicationsApi } from "@/services/api";
 
 export default function Applications() {
   const [projects, setProjects] = useState([]);
@@ -11,11 +10,23 @@ export default function Applications() {
   const [actionLoading, setActionLoading] = useState(null);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetchClientProjects();
+  const fetchProjectApplications = useCallback(async (projectId) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await applicationsApi.getProjectApplications(projectId);
+      const list = res?.data?.applications || res?.data || res?.applications || [];
+      setApplications(Array.isArray(list) ? list : []);
+    } catch (err) {
+      console.error("Failed to load applications for project:", err);
+      setError(err?.message || "Failed to load candidate proposals.");
+      setApplications([]);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  const fetchClientProjects = async () => {
+  const fetchClientProjects = useCallback(async () => {
     setLoading(true);
     try {
       const res = await projectsApi.getMyProjects();
@@ -34,23 +45,11 @@ export default function Applications() {
       setError(err?.message || "Failed to load projects.");
       setLoading(false);
     }
-  };
+  }, [fetchProjectApplications]);
 
-  const fetchProjectApplications = async (projectId) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await applicationsApi.getProjectApplications(projectId);
-      const list = res?.data?.applications || res?.data || res?.applications || [];
-      setApplications(Array.isArray(list) ? list : []);
-    } catch (err) {
-      console.error("Failed to load applications for project:", err);
-      setError(err?.message || "Failed to load candidate proposals.");
-      setApplications([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+  useEffect(() => {
+    fetchClientProjects();
+  }, [fetchClientProjects]);
 
   const handleProjectChange = (e) => {
     const id = e.target.value;

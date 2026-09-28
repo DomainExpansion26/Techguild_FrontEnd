@@ -7,10 +7,10 @@ const WholeProfile = lazy(() => import("./pages/WholeProfile/WholeProfile"));
 const Verification = lazy(() => import("./pages/Verification/Verification"));
 const Projects = lazy(() => import("./pages/Projects/Projects"));
 const Proposals = lazy(() => import("./pages/Proposals/Proposals"));
+const Messages = lazy(() => import("./pages/Messages/Messages"));
 const ActiveQuests = lazy(() => import("./pages/ActiveQuests/ActiveQuests"));
 const PartyManagement = lazy(() => import("./pages/PartyManagement/PartyManagement"));
 const ReputationRank = lazy(() => import("./pages/ReputationRank/ReputationRank"));
-const VerificationHub = lazy(() => import("./pages/VerificationHub/VerificationHub"));
 const Earnings = lazy(() => import("./pages/Earnings/Earnings"));
 const Reviews = lazy(() => import("./pages/Reviews/Reviews"));
 const Notifications = lazy(() => import("./pages/Notifications/Notifications"));
@@ -29,15 +29,15 @@ export const individualRoutes = (
     <Route path="/quest-board" element={<Projects />} />
     <Route path="/quest-board/:questId" element={<Projects />} />
     <Route path="/my-applications" element={<Proposals />} />
-    <Route path="/communication" element={<Proposals />} />
+    <Route path="/communication" element={<Messages />} />
     <Route path="/active-quests" element={<ActiveQuests />} />
     <Route path="/task-management" element={<ActiveQuests />} />
     <Route path="/party-management" element={<PartyManagement />} />
     <Route path="/party-formation" element={<PartyManagement />} />
     <Route path="/reputation-rank" element={<ReputationRank />} />
     <Route path="/analytics" element={<ReputationRank />} />
-    <Route path="/verification-hub" element={<VerificationHub />} />
-    <Route path="/subscription" element={<VerificationHub />} />
+    <Route path="/verification-hub" element={<Verification />} />
+    <Route path="/subscription" element={<Verification />} />
     <Route path="/earnings-payouts" element={<Earnings />} />
     <Route path="/finance" element={<Earnings />} />
     <Route path="/reviews-feedback" element={<Reviews />} />
