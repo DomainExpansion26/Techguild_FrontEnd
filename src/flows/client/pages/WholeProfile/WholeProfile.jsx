@@ -13,6 +13,7 @@ import { showSnackbar } from "@/store";
 import { ICON_SIZES } from "@/constants/sizes";
 import "./WholeProfile.css";
 
+
 const TRUST_RANKS = [
   { rank: "F", min: 0, max: 99 },
   { rank: "E", min: 100, max: 249 },
