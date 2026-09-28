@@ -1,3 +1,4 @@
+// [TechGuild Update: 28-09-26] Added Copy icon export for public profile link copy action
 import LayoutDashboard from "../../assets/icons/layout-dashboard.svg?react";
 import User2 from "../../assets/icons/user2.svg?react";
 import User from "../../assets/icons/user.svg?react";
@@ -73,6 +74,7 @@ import MonitorSpeaker from "../../assets/icons/monitor-speaker.svg?react";
 import RectangleVertical from "../../assets/icons/rectangle-vertical.svg?react";
 import TvMinimal from "../../assets/icons/tv-minimal.svg?react";
 import QrCode from "../../assets/icons/qr-code.svg?react";
+// [28-09-26] Copy icon for copy-link buttons
 import Copy from "../../assets/icons/copy.svg?react";
 import Palette from "../../assets/icons/palette.svg?react";
 import Tag from "../../assets/icons/tag.svg?react";
@@ -156,6 +158,7 @@ export {
   RectangleVertical,
   TvMinimal,
   QrCode,
+  // [28-09-26] Copy icon export
   Copy,
   Palette,
   Tag,
