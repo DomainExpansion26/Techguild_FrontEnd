@@ -1,4 +1,5 @@
 // [TechGuild Update: 21-09-2026] Client whole profile page, LinkedIn/GitHub edit inputs, live logo/banner sync & points journey
+// [TechGuild Update: 28-09-26] Scoped edit modal (about/hiring/details/links/all), slugify handle, public URL card, logo menu
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -43,7 +44,7 @@ const isValidImageUrl = (url) => {
   return true;
 };
 
-// Slugify any free-form value into a website-safe handle, e.g. "Techstart Inc" -> "techstart-inc"
+// [28-09-26] Slugify any free-form value into a website-safe handle, e.g. "Techstart Inc" -> "techstart-inc"
 const slugifyHandle = (value = "") =>
   `${value || ""}`
     .toLowerCase()
@@ -53,13 +54,13 @@ const slugifyHandle = (value = "") =>
     .replace(/-+/g, "-")
     .replace(/^-+|-+$/g, "");
 
-// Full public profile URL (shareable / copyable)
+// [28-09-26] Full public profile URL (shareable / copyable)
 const buildPublicUrl = (slug = "") => {
   const origin = typeof window !== "undefined" ? window.location.origin : "";
   return `${origin}/u/${slug}`;
 };
 
-// Website-style display URL, e.g. "techguild.com/u/techstart-inc"
+// [28-09-26] Website-style display URL, e.g. "techguild.com/u/techstart-inc"
 const buildPublicDisplayUrl = (slug = "") => {
   const host = typeof window !== "undefined" ? window.location.host : "techguild.com";
   return `${host}/u/${slug}`;
@@ -88,6 +89,7 @@ export default function WholeProfile() {
   const [exporting, setExporting] = useState(false);
   const [inlineAlert, setInlineAlert] = useState(null);
   const [copiedLink, setCopiedLink] = useState(false);
+  // [28-09-26] Logo edit menu state (update/remove) + just-applied tick
   const [logoMenuOpen, setLogoMenuOpen] = useState(false);
   const [logoJustApplied, setLogoJustApplied] = useState(false);
   const logoWrapRef = useRef(null);
@@ -106,10 +108,11 @@ export default function WholeProfile() {
   // Modal States
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [modalTab, setModalTab] = useState("general");
+  // [28-09-26] Scoped edit: section cards pass single scope, header passes "all" with tabs
   const [editScope, setEditScope] = useState("all");
   const [isSlugModalOpen, setIsSlugModalOpen] = useState(false);
 
-  // Section edit (single-section) vs Edit All (full profile in header).
+  // [28-09-26] Section edit (single-section) vs Edit All (full profile in header).
   // Section cards pass "about" | "hiring" | "details" | "links",
   // header "Edit Profile" passes "all" with tabs.
   const openEdit = (scope = "all", tab = "general") => {

@@ -1,4 +1,5 @@
 /* [TechGuild Update: 21-09-2026] Client whole profile stylesheet, layout tokens & modal styling */
+/* [TechGuild Update: 28-09-26] Scoped edit modal, slug/URL card, logo menu, banner/avatar sync & responsive polish */
 /* ===== whole_Profile.css =====
    Consolidated responsive rewrite.
    One breakpoint system, no duplicate/conflicting layers.
@@ -303,6 +304,7 @@ body,
   height: 14px !important;
 }
 
+/* [28-09-26] Logo edit dropdown menu (update/remove) */
 .wp-logo-menu {
   position: absolute;
   top: calc(100% + 10px);
@@ -3182,7 +3184,7 @@ body,
   margin-left: 2px;
 }
 
-/* Slug modal — website-style input + hint + live URL card */
+/* [28-09-26] Slug modal — website-style input + hint + live URL card */
 .wp-slug-hint {
   margin: 0;
   font-size: 0.82rem;
