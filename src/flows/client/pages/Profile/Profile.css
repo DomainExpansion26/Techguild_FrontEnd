@@ -1,5 +1,6 @@
 /* [TechGuild Update: 30-09-2026] Fallback paint color behind bg (no visual change). */
 /* [TechGuild Update: 21-09-2026] Client profile wizard styling, label weights & scroll clearance */
+/* [TechGuild Update: 28-09-26] Phone flag picker, dial-code input, currency-synced budget & responsive fixes */
 /* =========================================
    CLIENT PROFILE (Complete Your Profile)
    -----------------------------------------
@@ -401,7 +402,7 @@
   font-weight: 400;
 }
 
-/* Remove Chrome's pale-blue autofill background inside profile inputs */
+/* [28-09-26] Remove Chrome's pale-blue autofill background inside profile inputs */
 .client-profile-page input:-webkit-autofill,
 .client-profile-page input:-webkit-autofill:hover,
 .client-profile-page input:-webkit-autofill:focus,
@@ -418,7 +419,7 @@
   border-color: #dc2626 !important;
 }
 
-/* Error state matches the design reference: light-red field background,
+/* [28-09-26] Error state matches the design reference: light-red field background,
    red border, and a red message with an icon badge below the field. */
 .client-profile-page .custom-dropdown-box.dropdown-error {
   border-color: #dc2626 !important;
