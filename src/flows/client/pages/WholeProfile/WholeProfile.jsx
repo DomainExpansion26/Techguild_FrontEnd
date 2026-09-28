@@ -400,7 +400,7 @@ export default function WholeProfile() {
     TRUST_RANKS.slice().reverse().find((r) => trustPoints >= r.min) || TRUST_RANKS[0];
   const currentRankIndex = TRUST_RANKS.findIndex((r) => r.rank === currentRankObj.rank);
   const nextRankObj = TRUST_RANKS[currentRankIndex + 1] || null;
-  const rankProgressPct = nextRankObj
+  const _rankProgressPct = nextRankObj
     ? Math.min(100, Math.max(0, Math.round(((trustPoints - currentRankObj.min) / (nextRankObj.min - currentRankObj.min)) * 100)))
     : 100;
 
