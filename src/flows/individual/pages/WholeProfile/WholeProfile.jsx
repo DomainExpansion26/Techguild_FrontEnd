@@ -4,9 +4,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { DashboardLayout, Cards, PrimaryButton, SecondaryButton } from "@/Components";
+import { useDispatch } from "react-redux";
+import { DashboardLayout, Cards, PrimaryButton, SecondaryButton } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import { GuildCard } from "@/Components/Cards/variants";
 import { useAuth } from "@/context/AuthContext";
+import { profileApi } from "@/features/profile/api/profileApi";
+import { showSnackbar } from "@/store";
 import { profileApi } from "@/features/profile/api/profileApi";
 import { showSnackbar } from "@/store";
 import { ICON_SIZES } from "@/constants/sizes";
@@ -509,6 +513,12 @@ export default function WholeProfile() {
             <div className="ind-wp-grid-2">
               <Cards variant="base" className="ind-wp-card" padding="0">
                 <div className="ind-wp-card-inner">
+                  <div className="ind-wp-card-head">
+                    <h3 className="ind-wp-card-title">About Me</h3>
+                    <button type="button" className="ind-wp-link" onClick={() => openEdit("about")}>
+                      <Icon name="Pencil" size={ICON_SIZES.XS} /> Edit
+                    </button>
+                  </div>
                   <div className="ind-wp-card-head">
                     <h3 className="ind-wp-card-title">About Me</h3>
                     <button type="button" className="ind-wp-link" onClick={() => openEdit("about")}>
