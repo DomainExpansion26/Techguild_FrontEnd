@@ -10,6 +10,8 @@ export default function GuildCard({
   category,
   subtitle,
   logoInitials,
+  logoUrl,
+  logo,
   starRating,
   verifiedText = APP_STRINGS.CARDS.GUILD.VERIFIED_CLIENT,
   location,
@@ -40,6 +42,14 @@ export default function GuildCard({
         ? displayName.trim().split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase()
         : (displayName.toUpperCase().startsWith('NEX') ? STRINGS.DEFAULT_INITIALS : displayName.slice(0, 2).toUpperCase()))
       : STRINGS.DEFAULT_INITIALS);
+  const rawLogo = logoUrl || logo || g.logoUrl || g.logo_url || g.logo || null;
+  const displayLogo =
+    typeof rawLogo === 'string' &&
+    rawLogo.trim() &&
+    !['logo_url', 'avatar_url', 'string', 'null', 'undefined'].includes(rawLogo.trim()) &&
+    !rawLogo.startsWith('https://storage.example.com/')
+      ? rawLogo
+      : null;
   const displayStars = starRating !== undefined ? starRating : (g.starRating !== undefined ? g.starRating : 4);
   const displayLocation = location || g.location || STRINGS.DEFAULT_LOCATION;
 
@@ -184,9 +194,19 @@ export default function GuildCard({
                 fontWeight: 800,
                 letterSpacing: '-0.01em',
                 lineHeight: 1,
+                overflow: 'hidden',
               }}
             >
-              {displayInitials}
+              {displayLogo ? (
+                <img
+                  src={displayLogo}
+                  alt={displayName}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '25.56px', display: 'block' }}
+                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                />
+              ) : (
+                displayInitials
+              )}
             </div>
           </div>
 
