@@ -1,3 +1,4 @@
+// [TechGuild Update: 30-09-2026] Reduced card stagger delays so styled content appears instantly (end state unchanged).
 import React from "react";
 import { DashboardLayout, Cards, WelcomeBanner } from "@/Components";
 import { APP_STRINGS } from "@/constants/string";
@@ -11,28 +12,28 @@ const metricsData = [
     icon: "Files",
     value: "0",
     description: DASHBOARD_STRINGS.METRICS.ACTIVE_QUESTS_DESC,
-    delay: "0.12s",
+    delay: "0.03s",
   },
   {
     title: DASHBOARD_STRINGS.METRICS.APPLICATION_SENT_TITLE,
     icon: "FileText",
     value: "0",
     description: DASHBOARD_STRINGS.METRICS.APPLICATION_SENT_DESC,
-    delay: "0.16s",
+    delay: "0.05s",
   },
   {
     title: DASHBOARD_STRINGS.METRICS.TOTAL_EARNINGS_TITLE,
     icon: "IndianRupee",
     value: DASHBOARD_STRINGS.METRICS.TOTAL_EARNINGS_DEFAULT,
     description: DASHBOARD_STRINGS.METRICS.TOTAL_EARNINGS_DESC,
-    delay: "0.2s",
+    delay: "0.07s",
   },
   {
     title: DASHBOARD_STRINGS.METRICS.TOTAL_REVIEWS_TITLE,
     icon: "Star",
     value: "0",
     description: DASHBOARD_STRINGS.METRICS.TOTAL_REVIEWS_DESC,
-    delay: "0.24s",
+    delay: "0.09s",
   },
 ];
 
@@ -45,7 +46,7 @@ export default function DashBoard() {
           <WelcomeBanner />
           <Cards
             variant="trust"
-            delay="0.08s"
+            delay="0.02s"
           />
         </div>
 
@@ -72,7 +73,7 @@ export default function DashBoard() {
             icon="Clock9"
             title={DASHBOARD_STRINGS.ACTIVITY.NO_RECENT_ACTIVITY_TITLE}
             description={DASHBOARD_STRINGS.ACTIVITY.NO_RECENT_ACTIVITY_DESC}
-            delay="0.28s"
+            delay="0.1s"
           />
 
           <Cards
@@ -81,7 +82,7 @@ export default function DashBoard() {
             title={DASHBOARD_STRINGS.ACTIVITY.NO_QUESTS_TITLE}
             description={DASHBOARD_STRINGS.ACTIVITY.NO_QUESTS_DESC}
             buttonText={DASHBOARD_STRINGS.ACTIVITY.BROWSE_QUESTS_BUTTON}
-            delay="0.32s"
+            delay="0.12s"
           />
         </div>
 
@@ -92,7 +93,7 @@ export default function DashBoard() {
             message={DASHBOARD_STRINGS.TIP_BANNER.MESSAGE}
             actionText={DASHBOARD_STRINGS.TIP_BANNER.ACTION_TEXT}
             actionHref="/profile/basic-info"
-            delay="0.36s"
+            delay="0.14s"
           />
         </div>
       </div>

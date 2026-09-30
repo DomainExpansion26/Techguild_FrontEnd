@@ -1,3 +1,4 @@
+// [TechGuild Update: 30-09-2026] Bg uses existing img1.png (no visual change).
 import React from "react";
 import "./authhomescreen.css";
 import img1 from "@/assets/img1.png";

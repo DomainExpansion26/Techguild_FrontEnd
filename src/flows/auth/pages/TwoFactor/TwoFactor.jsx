@@ -1,3 +1,4 @@
+// [TechGuild Update: 30-09-2026] Bg uses existing img1.png + prefetch before dashboard navigation (no visual change).
 import { useCallback, useEffect, useReducer } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BrandLogo, OtpInput, PrimaryButton } from "@/Components";
@@ -15,6 +16,7 @@ import {
 } from "@/constants/string";
 import { AUTH_ROUTES } from "@/constants/navigation";
 import { ROLES } from "@/permissions/roles";
+import { prefetchPostLogin } from "@/app/prefetch";
 import authBg from "@/assets/img1.png";
 import "./TwoFactor.css";
 
@@ -203,6 +205,7 @@ export default function TwoFactor() {
           type: "success",
         })
       );
+      prefetchPostLogin(role);
       navigate(resolveDashboardPath(role), { replace: true });
     } catch (err) {
       fail(err?.message || FORM_ERRORS.AUTH.TWO_FA_FAILED);

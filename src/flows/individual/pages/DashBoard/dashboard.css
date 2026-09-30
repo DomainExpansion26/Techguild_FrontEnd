@@ -1,3 +1,4 @@
+/* [TechGuild Update: 30-09-2026] Fallback paint color; faster fade-in (no visual change). */
 *,
 *::before,
 *::after {
@@ -11,6 +12,7 @@
   padding: clamp(16px, 1.6vw, 32px);
   gap: clamp(16px, 1.6vw, 32px);
   overflow: hidden;
+  background-color: #dbe4fb;
   background-image: url('../../../../assets/dashboard.bg.png');
   background-size: cover;
   background-position: center;
@@ -416,7 +418,13 @@
 }
 
 .animate-fade-in {
-  animation: fadeInUp 0.35s ease both;
+  animation: fadeInUp 0.25s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in {
+    animation: none;
+  }
 }
 
 @media (min-width: 768px) and (max-height: 800px) {

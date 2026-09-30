@@ -1,8 +1,10 @@
+// [TechGuild Update: 30-09-2026] Prefetch before dashboard navigation (no visual change).
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { oauthApi } from "@/services/api";
 import { LoadingSpinner } from "@/Components/feedback";
+import { prefetchPostLogin } from "@/app/prefetch";
 import { APP_STRINGS } from "@/constants/string";
 
 export default function OAuthCallback() {
@@ -32,8 +34,10 @@ export default function OAuthCallback() {
             result.access_token,
             result.user?.role
           );
+          prefetchPostLogin(result.user?.role);
           navigate("/dashboard");
         } else {
+          prefetchPostLogin();
           navigate("/dashboard");
         }
       } catch (err) {
@@ -49,6 +53,7 @@ export default function OAuthCallback() {
       const token = searchParams.get("token") || searchParams.get("access_token");
       if (token) {
         login({ name: "User" }, token);
+        prefetchPostLogin();
         navigate("/dashboard");
       } else {
         navigate("/login");
