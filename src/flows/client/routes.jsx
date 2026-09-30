@@ -24,11 +24,20 @@ export const clientRoutes = (
     <Route path="/client-profile/whole" element={<ClientWholeProfile />} />
     <Route path="/client-quest-board" element={<ClientQuestBoard />} />
     <Route path="/client-quest-board/:questId" element={<ClientQuestBoard />} />
+    {/* Semantic menu paths (parallel to Individual); implementation paths kept as aliases */}
+    <Route path="/client-communication" element={<ClientApplications />} />
     <Route path="/client-applications" element={<ClientApplications />} />
+    <Route path="/client-task-management" element={<ClientActiveQuests />} />
     <Route path="/client-active-quests" element={<ClientActiveQuests />} />
+    <Route path="/client-party-formation" element={<ClientActiveQuests />} />
+    <Route path="/client-analytics" element={<ClientCompanyReputation />} />
     <Route path="/client-company-reputation" element={<ClientCompanyReputation />} />
+    <Route path="/client-subscription" element={<ClientVerificationHub />} />
+    <Route path="/client-verification" element={<ClientVerificationHub />} />
     <Route path="/client-verification-hub" element={<ClientVerificationHub />} />
+    <Route path="/client-finance" element={<ClientPayouts />} />
     <Route path="/client-payouts" element={<ClientPayouts />} />
+    <Route path="/client-guild-hall" element={<ClientNotifications />} />
     <Route path="/client-notifications" element={<ClientNotifications />} />
     <Route path="/client-help-support" element={<ClientHelpSupport />} />
     <Route path="/client-settings" element={<ClientSettingsWrapper />} />
@@ -41,11 +50,19 @@ export const clientRoutes = (
     <Route path="/client/whole-profile" element={<ClientWholeProfile />} />
     <Route path="/client/quest-board" element={<ClientQuestBoard />} />
     <Route path="/client/projects" element={<ClientQuestBoard />} />
+    <Route path="/client/communication" element={<ClientApplications />} />
     <Route path="/client/applications" element={<ClientApplications />} />
+    <Route path="/client/task-management" element={<ClientActiveQuests />} />
     <Route path="/client/active-quests" element={<ClientActiveQuests />} />
+    <Route path="/client/party-formation" element={<ClientActiveQuests />} />
+    <Route path="/client/analytics" element={<ClientCompanyReputation />} />
     <Route path="/client/company-reputation" element={<ClientCompanyReputation />} />
+    <Route path="/client/subscription" element={<ClientVerificationHub />} />
+    <Route path="/client/verification" element={<ClientVerificationHub />} />
     <Route path="/client/verification-hub" element={<ClientVerificationHub />} />
+    <Route path="/client/finance" element={<ClientPayouts />} />
     <Route path="/client/payouts" element={<ClientPayouts />} />
+    <Route path="/client/guild-hall" element={<ClientNotifications />} />
     <Route path="/client/notifications" element={<ClientNotifications />} />
     <Route path="/client/help-support" element={<ClientHelpSupport />} />
     <Route path="/client/settings" element={<ClientSettingsWrapper />} />
