@@ -1,5 +1,6 @@
 /* [TechGuild Update: 21-09-2026] Client profile wizard styling, label weights & scroll clearance */
 /* [TechGuild Update: 28-09-26] Phone flag picker, dial-code input, currency-synced budget & responsive fixes */
+/* [TechGuild Update: 30-09-2026] Hide profile card scrollbar while keeping scroll */
 /* =========================================
    CLIENT PROFILE (Complete Your Profile)
    -----------------------------------------
@@ -89,6 +90,15 @@
   background-repeat: no-repeat;
   padding: 12px !important;
   gap: 12px !important;
+  /* [30-09-2026] Hide visible scrollbar, keep scroll behavior */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.client-profile-page.dashboard-layout::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }
 
 .client-profile-page .main-workspace {
@@ -127,16 +137,23 @@
   flex-direction: column;
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
+  /* [30-09-2026] Hide visible scrollbar, keep scroll behavior */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .client-profile-page .profile-card-inner::-webkit-scrollbar {
-  width: 5px;
+  width: 0;
+  height: 0;
+  display: none;
 }
 
 .client-profile-page .profile-card-inner::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.12);
-  border-radius: 4px;
+  background: transparent;
 }
+
+/* [30-09-2026] Hide outer layout scrollbar (mobile scroll container) */
 
 /* Centered content column — keeps the heading, stepper, fields and the
    Continue button on one shared left/right edge (as per the design). */
