@@ -1,3 +1,4 @@
+// [TechGuild Update: 30-09-2026] Single upfront CSS bundle (cssCodeSplit:false) so post-login navigation never refetches styles (no visual change).
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
@@ -45,5 +46,13 @@ export default defineConfig({
       '/milestones': createProxyRoute(),
       '/oauth': createProxyRoute(),
     },
+  },
+  build: {
+    // Single CSS bundle: every lazy route currently ships its own CSS chunk,
+    // so navigating after sign-in flashes unstyled HTML until that chunk
+    // arrives. One upfront stylesheet removes the per-page CSS waterfall.
+    cssCodeSplit: false,
+    assetsInlineLimit: 4096,
+    chunkSizeWarningLimit: 1000,
   },
 })

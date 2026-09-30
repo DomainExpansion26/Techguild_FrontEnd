@@ -1,3 +1,4 @@
+/* [TechGuild Update: 30-09-2026] Fallback paint color behind bg (no visual change). */
 /* [TechGuild Update: 21-09-2026] Client profile wizard styling, label weights & scroll clearance */
 /* =========================================
    CLIENT PROFILE (Complete Your Profile)
@@ -82,6 +83,7 @@
    BASE LAYOUT & CONTAINERS
    ========================================= */
 .client-profile-page.dashboard-layout {
+  background-color: #dbe4fb;
   background-image: url('../../../../assets/dashboard.bg.png');
   background-size: cover;
   background-position: center;

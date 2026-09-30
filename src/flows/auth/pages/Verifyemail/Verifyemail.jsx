@@ -1,3 +1,4 @@
+// [TechGuild Update: 30-09-2026] Bg uses existing img2.png (no visual change).
 import { useEffect, useReducer, useState, useCallback } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import SignupCard from "@/Components/SignupCard/SignupCard";
