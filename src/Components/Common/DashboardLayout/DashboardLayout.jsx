@@ -19,15 +19,17 @@ export default function DashboardLayout({
   hideNavbar = false,
   customHeader,
   navbarItems,
+  userRole,
   activeSettingsTab,
   onSelectSettingsTab,
   mainWorkspaceClass = "",
   containerClass = "",
   style = {},
 }) {
-  const { user } = useAuth();
+  const { user, role } = useAuth();
   const displayName = user?.name || (user?.first_name ? `${user.first_name} ${user.last_name || ""}`.trim() : null) || user?.email || "U";
   const resolvedAvatar = avatarInitial || user?.avatar || displayName.charAt(0).toUpperCase();
+  const resolvedUserRole = userRole || role;
   return (
     <div
       className={`dashboard-layout ${containerClass}`}
@@ -36,6 +38,7 @@ export default function DashboardLayout({
       {!hideNavbar && (
         <Navbar
           items={navbarItems}
+          userRole={resolvedUserRole}
           activeSettingsTab={activeSettingsTab}
           onSelectSettingsTab={onSelectSettingsTab}
         />
@@ -53,6 +56,7 @@ export default function DashboardLayout({
               onBellClick={onBellClick}
               onMailClick={onMailClick}
               onAvatarClick={onAvatarClick}
+              userRole={resolvedUserRole}
             />
           ))}
 
