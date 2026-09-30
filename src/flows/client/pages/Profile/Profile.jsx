@@ -1,12 +1,11 @@
 // [TechGuild Update: 21-09-2026] Client profile onboarding wizard & OpenAPI step-save integration
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Navbar, Cards, Header, PrimaryButton, SecondaryButton, TextInput, Stepper } from "@/Components";
+import { DashboardLayout, Cards, PrimaryButton, SecondaryButton, TextInput, Stepper } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import { useAuth } from "@/context/AuthContext";
 import { profileApi } from "@/services/api";
 import { ICON_SIZES } from "@/constants/sizes";
-import dashboardBg from "@/assets/dashboard.bg.png";
 import "@/flows/individual/pages/DashBoard/dashboard.css";
 import "./Profile.css";
 
@@ -21,20 +20,6 @@ import "./Profile.css";
  * 5. Completion Reward Banner                -> Trust Points milestone notification
  * ============================================================================
  */
-
-const clientNavItems = [
-  { id: "dashboard", label: "Dashboard", icon: "LayoutDashboard", path: "/client-dashboard" },
-  { id: "profile", label: "Profile (Guild Card)", icon: "User2", path: "/client-profile" },
-  { id: "quest-board", label: "Quest Board", icon: "Files", path: "/client-quest-board" },
-  { id: "applications", label: "Applications", icon: "FileText", path: "/client-applications" },
-  { id: "active-quests", label: "Active Quests", icon: "Files", path: "/client-active-quests" },
-  { id: "company-reputation", label: "Company Reputation", icon: "Verified", path: "/client-company-reputation" },
-  { id: "verification-hub", label: "Verification Hub", icon: "Bookmark", path: "/client-verification-hub" },
-  { id: "payouts", label: "Payouts", icon: "IndianRupee", path: "/client-payouts" },
-  { id: "notifications", label: "Notifications", icon: "Bell", path: "/client-notifications" },
-  { id: "settings", label: "Settings", icon: "Settings", path: "/client-settings" },
-  { id: "help-support", label: "Help & Support", icon: "CircleQuestionMark", path: "/client-help-support" },
-];
 
 const clientStepSlugMap = {
   1: "company-info",
@@ -612,16 +597,11 @@ export default function ClientProfile() {
   );
 
   return (
-    <div
-      className="dashboard-layout client-profile-page"
-      style={{ backgroundImage: `url(${dashboardBg})` }}
+    <DashboardLayout
+      containerClass="client-profile-page"
+      mainWorkspaceClass="d-flex flex-column h-100"
     >
-      <Navbar items={clientNavItems} userRole="Client" />
-
-      <main className="main-workspace d-flex flex-column h-100">
-        <Header />
-
-        <div className="profile-page-wrapper">
+      <div className="profile-page-wrapper">
           {/* 
             CARD COMPONENT: Profile Main Card (Core Layout Container)
             - Variant: variant="base" (BaseCard)
@@ -671,7 +651,6 @@ export default function ClientProfile() {
             </div>
           </Cards>
         </div>
-      </main>
-    </div>
+    </DashboardLayout>
   );
 }

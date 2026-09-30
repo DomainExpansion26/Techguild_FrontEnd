@@ -20,15 +20,16 @@ export const settingsSubMenuItems = SETTINGS_SUBMENU_ITEMS;
 export default function Navbar({ items, userRole, activeSettingsTab, onSelectSettingsTab }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, role: contextRole } = useAuth();
   const currentPath = location.pathname;
 
   const displayName = user?.name || (user?.first_name ? `${user.first_name} ${user.last_name || ""}`.trim() : null) || user?.email?.split("@")[0] || "User";
   const displayAvatar = user?.avatar || displayName.charAt(0).toUpperCase();
 
-  const isAdminFlow = userRole === "admin" || userRole === "Admin" || currentPath.startsWith("/admin");
-  const isAgencyFlow = userRole === "agency" || userRole === "Agency" || currentPath.startsWith("/agency");
-  const isClientFlow = userRole === "client" || userRole === "Client" || currentPath.startsWith("/client");
+  const effectiveRole = userRole || contextRole;
+  const isAdminFlow = effectiveRole === "admin" || effectiveRole === "Admin" || currentPath.startsWith("/admin");
+  const isAgencyFlow = effectiveRole === "agency" || effectiveRole === "Agency" || currentPath.startsWith("/agency");
+  const isClientFlow = effectiveRole === "client" || effectiveRole === "Client" || currentPath.startsWith("/client") || currentPath.startsWith("/client-");
 
   const resolvedMenuItems = isAdminFlow
     ? adminMenuItems
@@ -61,18 +62,49 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
   const pathTab = isSettingsPath && pathParts.length >= 2 ? pathParts[pathParts.length - 1] : "profile";
   const activeTabId = activeSettingsTab || pathTab;
 
+  const settingsProfilePath = isAdminFlow
+    ? "/admin/settings/profile"
+    : isAgencyFlow
+    ? "/agency/settings/profile"
+    : isClientFlow
+    ? "/client-settings/profile"
+    : "/settings/profile";
+
+  const getItemTarget = (item) =>
+    item.path || (item.id === "dashboard" ? "/dashboard" : `/${item.id}`);
+
+  // Active when on the item path, its param sub-routes (/quest-board/:questId,
+  // /profile/:step), or one of its declared aliases (e.g. /client-applications
+  // is an alias of /client-communication). Keeps highlight correct no matter
+  // which alias route rendered the page.
+  const isMenuItemActive = (item) => {
+    const targetPath = getItemTarget(item);
+    if (currentPath === targetPath) return true;
+    if (currentPath.startsWith(`${targetPath}/`)) return true;
+    if (item.id === "dashboard" && currentPath === "/") return true;
+    const aliases = item.aliases || [];
+    if (aliases.includes(currentPath)) return true;
+    return aliases.some((a) => currentPath.startsWith(`${a}/`));
+  };
+
   const handleSettingsSubClick = (subItem) => {
     if (onSelectSettingsTab) {
       onSelectSettingsTab(subItem.id);
     }
-    const target = isClientFlow ? subItem.clientPath : subItem.path;
+    const target = isAdminFlow
+      ? subItem.adminPath || subItem.path
+      : isAgencyFlow
+      ? subItem.agencyPath || subItem.path
+      : isClientFlow
+      ? subItem.clientPath || subItem.path
+      : subItem.path;
     navigate(target);
   };
 
   const handleMainItemClick = (item, e) => {
     if (item.id === "settings") {
       e.preventDefault();
-      const settingsTarget = isClientFlow ? "/client-settings/profile" : "/settings/profile";
+      const settingsTarget = settingsProfilePath;
       if (!isSettingsPath) {
         setUserSettingsMode(true);
         navigate(settingsTarget);
@@ -108,7 +140,7 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
           <div
             className="header-avatar"
             style={{ cursor: "pointer" }}
-            onClick={() => navigate(isClientFlow ? "/client-settings/profile" : "/settings/profile")}
+            onClick={() => navigate(settingsProfilePath)}
           >
             {displayAvatar}
           </div>
@@ -133,9 +165,8 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
               <div className="sidebar-menu-container flex-grow-1">
                 <ul className="sidebar-menu">
                   {menuItems.map((item) => {
-                    const isDashboard = item.id === "dashboard";
-                    const targetPath = item.path || (isDashboard ? "/dashboard" : `/${item.id}`);
-                    const isActive = currentPath === targetPath || (isDashboard && currentPath === "/");
+                    const targetPath = getItemTarget(item);
+                    const isActive = isMenuItemActive(item);
                     return (
                       <li key={item.id}>
                         <Link
@@ -156,7 +187,7 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
                 className="sidebar-footer"
                 style={{ cursor: "pointer" }}
                 title="View Profile & Settings"
-                onClick={() => navigate(isClientFlow ? "/client-settings/profile" : "/settings/profile")}
+                onClick={() => navigate(settingsProfilePath)}
               >
                 <div className="sidebar-avatar">{displayAvatar}</div>
                 <div className="sidebar-user-info">
@@ -174,10 +205,9 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
               <div className="sidebar-rail">
                 <ul className="sidebar-rail-menu">
                   {menuItems.map((item) => {
-                    const isDashboard = item.id === "dashboard";
-                    const targetPath = item.path || (isDashboard ? "/dashboard" : `/${item.id}`);
+                    const targetPath = getItemTarget(item);
                     const isSettingsItem = item.id === "settings";
-                    const isActive = isSettingsItem || currentPath === targetPath;
+                    const isActive = isSettingsItem || isMenuItemActive(item);
                     return (
                       <li key={item.id}>
                         <Link
@@ -250,7 +280,7 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   setIsMobileOpen(false);
-                  navigate(isClientFlow ? "/client-settings/profile" : "/settings/profile");
+                  navigate(settingsProfilePath);
                 }}
               >
                 {displayAvatar}
@@ -261,9 +291,8 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
             <div className="mobile-drawer-body flex-grow-1 overflow-y-auto">
               <ul className="mobile-drawer-menu">
                 {menuItems.map((item) => {
-                  const isDashboard = item.id === "dashboard";
-                  const targetPath = item.path || (isDashboard ? "/dashboard" : `/${item.id}`);
-                  const isActive = currentPath === targetPath || (isDashboard && currentPath === "/");
+                  const targetPath = getItemTarget(item);
+                  const isActive = isMenuItemActive(item);
                   return (
                     <React.Fragment key={item.id}>
                       <li>
@@ -323,7 +352,7 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
             style={{ cursor: "pointer" }}
             onClick={() => {
               setIsMobileOpen(false);
-              navigate(isClientFlow ? "/client-settings/profile" : "/settings/profile");
+              navigate(settingsProfilePath);
             }}
           >
             <div className="d-flex align-items-center gap-2">

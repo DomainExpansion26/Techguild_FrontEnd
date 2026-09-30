@@ -21,15 +21,27 @@ export default function Header({
   customSearchBar,
   customActions,
   headerCardClass = "",
+  userRole,
 }) {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const { user, logout } = useAuth();
+  const { user, role: contextRole, logout } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const isClientFlow = location.pathname.startsWith("/client");
+  const effectiveRole = userRole || contextRole;
+  const currentPath = location.pathname;
+  const isAdminFlow = effectiveRole === "admin" || effectiveRole === "Admin" || currentPath.startsWith("/admin");
+  const isAgencyFlow = effectiveRole === "agency" || effectiveRole === "Agency" || currentPath.startsWith("/agency");
+  const isClientFlow = effectiveRole === "client" || effectiveRole === "Client" || currentPath.startsWith("/client") || currentPath.startsWith("/client-");
+  const settingsBase = isAdminFlow
+    ? "/admin/settings"
+    : isAgencyFlow
+    ? "/agency/settings"
+    : isClientFlow
+    ? "/client-settings"
+    : "/settings";
   const displayName = user?.name || (user?.first_name ? `${user.first_name} ${user.last_name || ""}`.trim() : null) || user?.email?.split("@")[0] || "My Account";
   const displayAvatar = avatarInitial || user?.avatar || displayName.charAt(0).toUpperCase();
 
@@ -112,7 +124,7 @@ export default function Header({
                       className="dropdown-item"
                       onClick={() => {
                         setDropdownOpen(false);
-                        navigate(isClientFlow ? "/client-settings/profile" : "/settings/profile");
+                        navigate(`${settingsBase}/profile`);
                       }}
                     >
                       <Icon name="User" size={16} />
@@ -123,7 +135,7 @@ export default function Header({
                       className="dropdown-item"
                       onClick={() => {
                         setDropdownOpen(false);
-                        navigate(isClientFlow ? "/client-settings/account-security" : "/settings/account-security");
+                        navigate(`${settingsBase}/account-security`);
                       }}
                     >
                       <Icon name="ShieldCheck" size={16} />
