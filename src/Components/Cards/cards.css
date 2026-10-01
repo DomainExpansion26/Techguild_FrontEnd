@@ -292,21 +292,19 @@
   flex-wrap: wrap;
 }
 
-/* Animations */
+/* Animations - smooth opacity fade without layout jitter */
 @keyframes cardFadeInUp {
   from {
     opacity: 0;
-    transform: translateY(8px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
 .animate-fade-in {
-  animation: cardFadeInUp 0.35s ease both;
+  animation: cardFadeInUp 0.28s ease both;
 }
 
 /* Card Fill Utility */
@@ -314,4 +312,255 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+
+/* ==========================================================================
+   Universal Card Variants Styling
+   (TrustCard, MetricCard, EmptyStateCard, QuestsCard, ActivityCard)
+   ========================================================================== */
+
+/* Card Element Base Paddings */
+.trust-card-element {
+  padding: clamp(14px, 1.4vw, 24px) clamp(16px, 1.6vw, 28px) !important;
+}
+
+.metric-card-element {
+  padding: clamp(14px, 1.5vw, 28px) clamp(16px, 1.8vw, 32px) !important;
+}
+
+.activity-card-element {
+  padding: clamp(14px, 1.5vw, 28px) clamp(16px, 1.8vw, 32px) !important;
+}
+
+.quests-card-element {
+  padding: clamp(14px, 1.5vw, 28px) clamp(16px, 1.8vw, 32px) !important;
+}
+
+/* Trust Card Sub-elements */
+.trust-card-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  gap: 0;
+}
+
+.trust-card-title {
+  font-size: clamp(0.78rem, 0.85vw, 1.1rem);
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.trust-card-value-container {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(3px, 0.3vw, 6px);
+}
+
+.trust-card-value {
+  font-size: clamp(1.6rem, 2.2vw, 3.0rem);
+  font-weight: 800;
+  color: #111827;
+  line-height: 1;
+}
+
+.trust-card-unit {
+  font-size: clamp(0.7rem, 0.75vw, 1.0rem);
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+.trust-card-rank {
+  font-size: clamp(0.7rem, 0.75vw, 1.0rem);
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+.trust-card-badge {
+  display: flex;
+  align-items: center;
+  gap: clamp(4px, 0.4vw, 8px);
+}
+
+.trust-badge-icon {
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+.trust-card-badge svg {
+  width: clamp(13px, 1.1vw, 20px) !important;
+  height: clamp(13px, 1.1vw, 20px) !important;
+}
+
+.trust-badge-text {
+  font-size: clamp(0.72rem, 0.8vw, 1.0rem);
+  font-weight: 400;
+  color: #374151;
+}
+
+.trust-card-desc {
+  font-size: clamp(0.68rem, 0.75vw, 1.0rem);
+  color: #6b7280;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.trust-card-link {
+  font-size: clamp(0.7rem, 0.78vw, 1.0rem);
+  color: #103ca4;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  transition: color 0.15s ease;
+  width: fit-content;
+}
+
+.trust-card-link:hover {
+  color: #0c2b7a;
+}
+
+.trust-card-arrow {
+  font-weight: 700;
+  font-size: 0.66rem;
+}
+
+/* Metric Card Sub-elements */
+.metric-card-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  gap: 0;
+}
+
+.metric-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.metric-card-title {
+  font-size: clamp(0.8rem, 0.88vw, 1.18rem);
+  font-weight: 600;
+  color: #565353;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.metric-card-icon {
+  color: #4b5563;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.metric-card-icon svg,
+.metric-card-icon img {
+  width: clamp(15px, 1.4vw, 28px) !important;
+  height: clamp(15px, 1.4vw, 28px) !important;
+}
+
+.metric-card-value {
+  font-size: clamp(1.6rem, 2.2vw, 3.0rem);
+  font-weight: 700;
+  color: #111827;
+  line-height: 1;
+  margin: 0;
+}
+
+.metric-card-desc {
+  font-size: clamp(0.7rem, 0.76vw, 1.02rem);
+  color: #9ca3af;
+  line-height: 1.38;
+  margin: 0;
+  max-width: 100%;
+}
+
+/* Activity & Empty State Sub-elements */
+.activity-card-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.activity-card-title {
+  font-size: clamp(0.83rem, 0.9vw, 1.25rem);
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.activity-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: clamp(8px, 1.2vh, 20px);
+}
+
+.quests-card-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: clamp(8px, 1.2vh, 20px);
+}
+
+.activity-card-icon-centered {
+  color: #6a717d !important;
+  flex-shrink: 0;
+}
+
+.activity-card-body svg {
+  width: clamp(18px, 2.2vw, 46px) !important;
+  height: clamp(18px, 2.2vw, 46px) !important;
+}
+
+.quests-card-icon-centered {
+  color: #c7c7cc !important;
+  flex-shrink: 0;
+}
+
+.quests-card-inner svg {
+  width: clamp(18px, 2.2vw, 46px) !important;
+  height: clamp(18px, 2.2vw, 46px) !important;
+}
+
+.activity-card-text-main,
+.quests-card-text-main {
+  font-size: clamp(0.78rem, 0.9vw, 1.2rem);
+  font-weight: 500;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.activity-card-text-sub,
+.quests-card-text-sub {
+  font-size: clamp(0.72rem, 0.78vw, 1.04rem);
+  color: #9ca3af;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.quests-card-text-sub {
+  max-width: clamp(200px, 22vw, 400px);
+}
+
+.quests-card-btn {
+  width: auto !important;
+  min-width: 150px;
+  height: 42px;
+  padding: 0 clamp(18px, 2.0vw, 36px) !important;
+  font-size: clamp(0.85rem, 0.9vw, 1rem) !important;
+  margin-top: 4px;
 }

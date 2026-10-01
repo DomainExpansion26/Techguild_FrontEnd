@@ -6,7 +6,6 @@ import Icon from "@/Components/icons/Icon";
 import { useAuth } from "@/context/AuthContext";
 import { profileApi } from "@/services/api";
 import { ICON_SIZES } from "@/constants/sizes";
-import "@/flows/individual/pages/DashBoard/dashboard.css";
 import "./Profile.css";
 
 /**

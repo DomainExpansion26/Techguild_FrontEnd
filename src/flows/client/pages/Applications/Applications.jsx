@@ -88,7 +88,7 @@ export default function Applications() {
 
   return (
     <DashboardLayout>
-      <div style={{ padding: "32px 40px", maxWidth: "1380px", margin: "0 auto" }}>
+      <div style={{ padding: "32px 40px", maxWidth: "1380px", margin: "0 auto", width: "100%", flex: 1, minHeight: 0, overflowY: "auto" }}>
         <header className="d-flex justify-content-between align-items-center mb-4">
           <div>
             <h1 className="fs-3 fw-bold mb-1">Candidate Applications</h1>

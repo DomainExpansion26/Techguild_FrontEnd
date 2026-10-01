@@ -93,7 +93,7 @@ function deriveDisplayName(cleanEmail) {
 }
 
 function resolveDashboardPath(role) {
-  if (role === ROLES.CLIENT) return "/client-quest-board";
+  if (role === ROLES.CLIENT) return "/client-dashboard";
   if (role === ROLES.AGENCY) return "/agency/dashboard";
   return "/dashboard";
 }

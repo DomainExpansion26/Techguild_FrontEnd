@@ -6,7 +6,10 @@
   padding: 32px 40px;
   max-width: 1380px;
   margin: 0 auto;
-  min-height: calc(100vh - 80px);
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .quest-board-header {
