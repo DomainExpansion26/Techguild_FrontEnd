@@ -5,7 +5,7 @@ import Icon from "@/Components/icons/Icon";
 export default function Notifications() {
   return (
     <DashboardLayout>
-      <div className="dashboard-content d-flex align-items-center justify-content-center p-4" style={{ height: "calc(100% - 70px)" }}>
+      <div className="dashboard-content d-flex align-items-center justify-content-center p-4" style={{ width: "100%", flex: 1, minHeight: 0, overflowY: "auto" }}>
         <Cards className="text-center p-5" style={{ maxWidth: "480px" }}>
           <div className="mb-3 d-inline-flex p-3 rounded-circle bg-light text-primary">
             <Icon name="Bell" size={32} />

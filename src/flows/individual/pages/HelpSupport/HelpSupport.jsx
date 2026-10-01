@@ -12,7 +12,7 @@ export default function HelpSupport() {
 
   return (
     <DashboardLayout>
-      <div className="dashboard-content p-4" style={{ maxWidth: "1000px", margin: "0 auto" }}>
+      <div className="dashboard-content p-4" style={{ maxWidth: "1000px", margin: "0 auto", width: "100%", flex: 1, minHeight: 0, overflowY: "auto" }}>
         <h1 style={{ fontSize: "22px", fontWeight: "700", color: "#111827", marginBottom: "4px" }}>
           Help Center & Community Support
         </h1>

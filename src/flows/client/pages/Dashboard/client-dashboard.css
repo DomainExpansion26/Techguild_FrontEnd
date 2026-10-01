@@ -7,6 +7,10 @@
    DASHBOARD CONTENT
    ========================================================= */
 
+.client-dashboard-workspace {
+  gap: 12px !important;
+}
+
 .client-dashboard-content {
   width: 100%;
   min-width: 0;
@@ -81,6 +85,22 @@
   max-height: 242px !important;
 
   box-sizing: border-box;
+}
+
+.trust-points-wrapper .trust-card-element {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  padding: clamp(14px, 1.3vw, 22px) clamp(16px, 1.5vw, 26px) !important;
+  box-sizing: border-box !important;
+}
+
+.trust-points-wrapper .trust-card-inner {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  height: 100% !important;
+  width: 100% !important;
 }
 
 
@@ -886,13 +906,4 @@
   .dashboard-tip-section > * {
     min-height: 48px;
   }
-}
-
-/* ==================================================================================== */
-.client-dashboard-workspace {
-  gap: 0;
-}
-
-.client-dashboard-workspace > :first-child {
-  margin-bottom: -3px;
 }

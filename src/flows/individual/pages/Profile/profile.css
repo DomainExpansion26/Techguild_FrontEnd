@@ -1,5 +1,15 @@
 /* [TechGuild Update: 21-09-2026] Individual wizard styling, button actions & bottom scroll clearance */
-.profile-page-wrapper {
+@keyframes fadeInProfile {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.individual-profile-page {
+  .profile-page-wrapper {
   flex: 1;
   min-height: 0;
   display: flex;
@@ -741,17 +751,6 @@
   animation: fadeInProfile 0.3s ease-out;
 }
 
-@keyframes fadeInProfile {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 /* 1. Hero Banner Card */
 .profile-welcome-hero-card {
@@ -1254,4 +1253,5 @@
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
+}
 }

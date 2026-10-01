@@ -10,7 +10,6 @@ import { profileApi } from "@/services/api";
 import { projectsApi } from "@/services/api";
 import { showSnackbar } from "@/store";
 import { ICON_SIZES } from "@/constants/sizes";
-import "@/flows/individual/pages/DashBoard/dashboard.css";
 import "./WholeProfile.css";
 
 const TRUST_RANKS = [

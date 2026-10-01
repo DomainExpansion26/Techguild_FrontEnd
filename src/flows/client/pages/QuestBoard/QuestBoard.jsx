@@ -109,7 +109,7 @@ export default function QuestBoard() {
 
   return (
     <DashboardLayout>
-      <div style={{ padding: "32px 40px", maxWidth: "1380px", margin: "0 auto" }}>
+      <div style={{ padding: "32px 40px", maxWidth: "1380px", margin: "0 auto", width: "100%", flex: 1, minHeight: 0, overflowY: "auto" }}>
         <header className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
           <div>
             <h1 className="fs-3 fw-bold mb-1">Manage Quests &amp; Projects</h1>
