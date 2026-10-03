@@ -16,30 +16,39 @@
   overflow: hidden;
 }
 
-/* Card: 504x575, padding 40/70, radius 14 (Figma Frame 3466093 at 80,107) */
+/* Card: responsive width, balanced padding */
 .resetpass-page .auth-card-wrapper {
-  width: 504px;
-  left: 80px;
+  width: min(480px, 44vw);
+  max-width: 480px;
+  left: clamp(32px, 5vw, 80px);
   top: 50%;
+  transform: translateY(-50%);
+  box-sizing: border-box;
 }
 
-/* Pin card top to Figma y=107 on desktop (shared wrapper centers via top 50%
- * + translateY(-50%), which lands a 575px card at y≈163). Scoped to this page. */
-@media (min-width: 1025px) {
+@media (max-height: 680px) and (min-width: 768px) {
   .resetpass-page .auth-card-wrapper {
-    top: 107px;
-    transform: none;
+    top: 16px !important;
+    transform: none !important;
+    margin-bottom: 24px !important;
+  }
+
+  .resetpass-page .signup-card {
+    max-height: none !important;
+    padding: 24px 28px !important;
   }
 }
 
 .resetpass-page .signup-card {
   width: 100%;
-  min-height: 575px;
-  padding: 40px 70px;
+  min-height: auto;
+  max-height: calc(100vh - 40px);
+  padding: 28px 36px;
   border-radius: var(--reset-card-radius);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  overflow-y: auto;
 }
 
 /* Marketing text block at x=689 (Figma Frame 3466092).

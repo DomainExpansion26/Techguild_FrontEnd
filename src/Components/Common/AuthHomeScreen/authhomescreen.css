@@ -19,14 +19,14 @@
 
 .auth-home-text-block {
   position: absolute;
-  top: 11.89vh;
-  left: calc(80px + 430px + 40px);
+  top: clamp(40px, 9vh, 107px);
+  left: clamp(520px, 42vw, 680px);
   width: calc(100vw - 580px);
-  max-width: 350px;
+  max-width: 380px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 1.556vh;
+  gap: clamp(8px, 1.5vh, 16px);
   align-items: flex-start;
   text-align: left;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;

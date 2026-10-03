@@ -17,29 +17,48 @@
   overflow: hidden;
 }
 
-/* Card: 504 wide, padding 40/70, radius 14 (Figma Frame 3466089) */
+/* Card: responsive width, balanced padding */
 .forgetpass-page .auth-card-wrapper {
-  width: 504px;
-  left: 80px;
+  width: min(480px, 44vw);
+  max-width: 480px;
+  left: clamp(32px, 5vw, 80px);
   top: 50%;
+  transform: translateY(-50%);
+  box-sizing: border-box;
+}
+
+@media (max-height: 680px) and (min-width: 768px) {
+  .forgetpass-page .auth-card-wrapper {
+    top: 16px !important;
+    transform: none !important;
+    margin-bottom: 24px !important;
+  }
+
+  .forgetpass-page .signup-card {
+    max-height: none !important;
+    padding: 24px 28px !important;
+  }
 }
 
 .forgetpass-page .signup-card {
   width: 100%;
-  min-height: 614px;
-  padding: 40px 70px;
+  min-height: auto;
+  max-height: calc(100vh - 40px);
+  padding: 28px 36px;
   border-radius: var(--forget-card-radius);
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  overflow-y: auto;
 }
 
-/* Success card matches Figma frame (504x461, padding 40/70) */
+/* Success card matches Figma frame (responsive) */
 .forgetpass-page .signup-card.success-state {
-  width: 504px;
-  min-height: 461px;
+  width: 100%;
+  min-height: auto;
+  max-height: calc(100vh - 40px);
   height: auto;
-  padding: 40px 70px;
+  padding: 32px 36px;
 }
 
 /* Marketing text block: shared layout assumes a ~430px card (left 550px).
