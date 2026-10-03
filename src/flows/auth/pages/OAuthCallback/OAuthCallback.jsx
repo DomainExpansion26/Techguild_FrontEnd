@@ -1,11 +1,17 @@
-// [TechGuild Update: 30-09-2026] Prefetch before dashboard navigation (no visual change).
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
-import { oauthApi } from "@/services/api";
+import { oauthApi, profileApi } from "@/services/api";
 import { LoadingSpinner } from "@/Components/feedback";
 import { prefetchPostLogin } from "@/app/prefetch";
 import { APP_STRINGS } from "@/constants/string";
+import { ROLES } from "@/permissions/roles";
+
+function resolveDashboardPath(role) {
+  if (role === ROLES.CLIENT) return "/client-dashboard";
+  if (role === ROLES.AGENCY) return "/agency/dashboard";
+  return "/dashboard";
+}
 
 export default function OAuthCallback() {
   const STRINGS = APP_STRINGS.AUTH.OAUTH;
@@ -13,8 +19,12 @@ export default function OAuthCallback() {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [error, setError] = useState(null);
+  const processedRef = useRef(false);
 
   useEffect(() => {
+    if (processedRef.current) return;
+    processedRef.current = true;
+
     const code = searchParams.get("code");
     const state = searchParams.get("state");
     const provider = window.location.pathname.includes("github") ? "github" : "google";
@@ -29,19 +39,41 @@ export default function OAuthCallback() {
         }
 
         if (result?.access_token) {
-          await login(
-            result.user || { name: "User", email: "oauth.user@example.com" },
-            result.access_token,
-            result.user?.role
-          );
-          prefetchPostLogin(result.user?.role);
-          navigate("/dashboard");
+          let role = result.user?.role || result.user?.account_type || result?.account_type;
+
+          // Probe profile if account_type is not directly on the auth response
+          if (!role) {
+            try {
+              const profileRes = await profileApi.getProfile({ token: result.access_token });
+              if (profileRes?.account_type) {
+                role = profileRes.account_type;
+              }
+            } catch {
+              // Fallback to individual
+            }
+          }
+
+          const activeRole = role || ROLES.INDIVIDUAL;
+          const resolvedUser = result.user || {
+            name: "User",
+            email: "oauth.user@example.com",
+            role: activeRole,
+          };
+
+          await login(resolvedUser, result.access_token, activeRole);
+          prefetchPostLogin(activeRole);
+
+          if (result?.requires_account_type || result?.needs_account_type || (!role && result?.is_new_user)) {
+            navigate("/account-type");
+          } else {
+            navigate(resolveDashboardPath(activeRole));
+          }
         } else {
           prefetchPostLogin();
           navigate("/dashboard");
         }
       } catch (err) {
-        console.error("OAuth callback error:", err);
+        console.error("OAuth callback error:", err?.message || "Authentication failed");
         setError(err.message || STRINGS.DEFAULT_ERROR);
       }
     }
@@ -52,9 +84,21 @@ export default function OAuthCallback() {
       // Direct token redirect fallback
       const token = searchParams.get("token") || searchParams.get("access_token");
       if (token) {
-        login({ name: "User" }, token);
-        prefetchPostLogin();
-        navigate("/dashboard");
+        async function handleDirectToken() {
+          let role = ROLES.INDIVIDUAL;
+          try {
+            const profileRes = await profileApi.getProfile({ token });
+            if (profileRes?.account_type) {
+              role = profileRes.account_type;
+            }
+          } catch {
+            // Fallback to individual
+          }
+          await login({ name: "User", role }, token, role);
+          prefetchPostLogin(role);
+          navigate(resolveDashboardPath(role));
+        }
+        handleDirectToken();
       } else {
         navigate("/login");
       }
