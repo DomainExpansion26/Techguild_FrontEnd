@@ -1,6 +1,7 @@
 // [TechGuild Update: 30-09-2026] Single upfront CSS bundle (cssCodeSplit:false) so post-login navigation never refetches styles (no visual change).
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import svgr from 'vite-plugin-svgr'
@@ -8,12 +9,33 @@ import svgr from 'vite-plugin-svgr'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
+// Universal SPA fallback plugin: generates 404.html from index.html on build
+// Enables client-side routing on any static host (GitHub Pages, Netlify, Render, Vercel, S3, etc.)
+// without requiring host-specific configuration files.
+const universalSpaFallbackPlugin = () => ({
+  name: 'universal-spa-fallback',
+  closeBundle() {
+    const distDir = path.resolve(__dirname, 'dist')
+    const indexPath = path.join(distDir, 'index.html')
+    const fallbackPath = path.join(distDir, '404.html')
+    if (fs.existsSync(indexPath)) {
+      fs.copyFileSync(indexPath, fallbackPath)
+    }
+  },
+})
+
 const BACKEND_TARGET = 'https://techguild-backend.onrender.com'
 
 const createProxyRoute = () => ({
   target: BACKEND_TARGET,
   changeOrigin: true,
   secure: false,
+  bypass: (req) => {
+    // If the browser is requesting an HTML page (SPA navigation), bypass proxy and serve index.html
+    if (req.headers.accept && req.headers.accept.includes('text/html')) {
+      return '/index.html';
+    }
+  },
   headers: {
     origin: BACKEND_TARGET,
     referer: BACKEND_TARGET,
@@ -28,7 +50,7 @@ const createProxyRoute = () => ({
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), svgr()],
+  plugins: [react(), svgr(), universalSpaFallbackPlugin()],
   resolve: {
     alias: [
       { find: '@/services', replacement: path.resolve(__dirname, './src/services') },
