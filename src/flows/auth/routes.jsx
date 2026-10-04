@@ -32,8 +32,11 @@ export const authRoutes = (
     <Route path="/account-type" element={<AccountType />} />
     <Route path="/verify-2fa" element={<TwoFactor />} />
     <Route path="/oauth/callback" element={<OAuthCallback />} />
+    <Route path="/oauth/callback/" element={<OAuthCallback />} />
     <Route path="/oauth/google/callback" element={<OAuthCallback />} />
+    <Route path="/oauth/google/callback/" element={<OAuthCallback />} />
     <Route path="/oauth/github/callback" element={<OAuthCallback />} />
+    <Route path="/oauth/github/callback/" element={<OAuthCallback />} />
   </>
 );
 
