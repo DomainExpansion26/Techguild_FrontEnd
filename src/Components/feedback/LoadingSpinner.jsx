@@ -1,3 +1,4 @@
+// [TechGuild Update: 30-09-2026] Loader uses app tint to avoid white flash between lazy pages (loader-only change).
 import React from "react";
 
 export default function LoadingSpinner({ text = "Loading...", fullScreen = false }) {
@@ -10,7 +11,7 @@ export default function LoadingSpinner({ text = "Loading...", fullScreen = false
           alignItems: "center",
           justifyContent: "center",
           minHeight: "100vh",
-          backgroundColor: "#f9fafb",
+          backgroundColor: "#eef2ff",
           width: "100%",
         }}
       >

@@ -6,7 +6,6 @@ import Icon from "@/Components/icons/Icon";
 import { useAuth } from "@/context/AuthContext";
 import { profileApi } from "@/services/api";
 import { ICON_SIZES } from "@/constants/sizes";
-import "@/flows/individual/pages/DashBoard/dashboard.css";
 import "./Profile.css";
 
 /**
@@ -602,55 +601,55 @@ export default function ClientProfile() {
       mainWorkspaceClass="d-flex flex-column h-100"
     >
       <div className="profile-page-wrapper">
-          {/* 
+        {/* 
             CARD COMPONENT: Profile Main Card (Core Layout Container)
             - Variant: variant="base" (BaseCard)
             - Location: Main Workspace
             - Purpose: Main white elevated container enclosing the entire multi-step profile flow (Steps 1-3 & Completion Screen)
           */}
-          <Cards variant="base" radius="md" className="profile-main-card" padding="0">
-            <div className="profile-card-inner">
-              <div className="back-btn-container w-100 d-flex justify-content-start mb-3">
-                <button
-                  type="button"
-                  className="completion-back-btn"
-                  onClick={() => {
-                    if (isSubmitted) {
-                      navigate("/client-whole-profile");
-                    } else if (isEditMode) {
-                      setIsEditMode(false);
-                      goToStep(3);
-                    } else if (currentStep > 1) {
-                      goToStep(currentStep - 1);
-                    } else {
-                      navigate("/client-whole-profile");
-                    }
-                  }}
-                  aria-label="Go back"
-                >
-                  <Icon name="ArrowLeft" size={ICON_SIZES['2XL']} color="#0b38a8" />
-                </button>
-              </div>
-
-              {isSubmitted ? (
-                renderCompletionScreen()
-              ) : (
-                <div className="profile-content-column">
-                  <div className="profile-header-section">
-                    <h1 className="profile-main-title">Complete Your Profile</h1>
-                    <p className="profile-main-subtitle">Lets build your profile step by step.</p>
-                  </div>
-
-                  {renderStepper()}
-
-                  {currentStep === 1 && renderStep1()}
-                  {currentStep === 2 && renderStep2()}
-                  {currentStep === 3 && renderStep3()}
-                </div>
-              )}
+        <Cards variant="base" radius="md" className="profile-main-card" padding="0">
+          <div className="profile-card-inner">
+            <div className="back-btn-container w-100 d-flex justify-content-start mb-3">
+              <button
+                type="button"
+                className="completion-back-btn"
+                onClick={() => {
+                  if (isSubmitted) {
+                    navigate("/client-whole-profile");
+                  } else if (isEditMode) {
+                    setIsEditMode(false);
+                    goToStep(3);
+                  } else if (currentStep > 1) {
+                    goToStep(currentStep - 1);
+                  } else {
+                    navigate("/client-whole-profile");
+                  }
+                }}
+                aria-label="Go back"
+              >
+                <Icon name="ArrowLeft" size={ICON_SIZES['2XL']} color="#0b38a8" />
+              </button>
             </div>
-          </Cards>
-        </div>
+
+            {isSubmitted ? (
+              renderCompletionScreen()
+            ) : (
+              <div className="profile-content-column">
+                <div className="profile-header-section">
+                  <h1 className="profile-main-title">Complete Your Profile</h1>
+                  <p className="profile-main-subtitle">Lets build your profile step by step.</p>
+                </div>
+
+                {renderStepper()}
+
+                {currentStep === 1 && renderStep1()}
+                {currentStep === 2 && renderStep2()}
+                {currentStep === 3 && renderStep3()}
+              </div>
+            )}
+          </div>
+        </Cards>
+      </div>
     </DashboardLayout>
   );
 }

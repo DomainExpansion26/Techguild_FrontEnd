@@ -1,3 +1,4 @@
+// [TechGuild Update: 30-09-2026] Bg uses existing img2.png (no visual change).
 import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";

@@ -1,3 +1,4 @@
+// [TechGuild Update: 30-09-2026] Prefetch likely post-login chunks on mount (no visual change).
 import { useEffect, useReducer, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -19,6 +20,7 @@ import { oauthApi } from "@/services/api";
 import { APP_STRINGS, APP_CONFIG, TOAST_MESSAGES, FORM_ERRORS } from "@/constants/string";
 import { AUTH_ROUTES } from "@/constants/navigation";
 import { ICON_SIZES } from "@/constants/sizes";
+import { prefetchOnPublicPage } from "@/app/prefetch";
 
 const { STORAGE_KEYS, PASSWORD_MIN_LENGTH, SIGNUP_REDIRECT_DELAY_MS } = APP_CONFIG.AUTH;
 
@@ -57,6 +59,7 @@ export default function Signup() {
   const { firstName, lastName, email, password, termsAccepted, showPassword, loading } = state;
 
   useEffect(() => {
+    prefetchOnPublicPage();
     return () => {
       if (navigateTimer.current) {
         clearTimeout(navigateTimer.current);

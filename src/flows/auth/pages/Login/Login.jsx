@@ -1,3 +1,4 @@
+// [TechGuild Update: 30-09-2026] Prefetch post-login chunks + shell bg while user types / on success (no visual change).
 import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Google, GitHub, Mail, Lock, Eye, EyeOff } from "@/Components/icons";
@@ -19,6 +20,7 @@ import { useDispatch } from "react-redux";
 import { showSnackbar } from "@/store";
 import { APP_STRINGS, APP_CONFIG, TOAST_MESSAGES, FORM_ERRORS } from "@/constants/string";
 import { ROLES } from "@/permissions/roles";
+import { prefetchOnPublicPage, prefetchPostLogin } from "@/app/prefetch";
 
 const REMEMBERED_EMAIL_KEY = "techguild_remembered_email";
 const PENDING_USER_KEY = "techguild_pending_user";
@@ -96,7 +98,7 @@ function deriveDisplayName(cleanEmail) {
 }
 
 function resolveDashboardPath(role) {
-  if (role === ROLES.CLIENT) return "/client-quest-board";
+  if (role === ROLES.CLIENT) return "/client-dashboard";
   if (role === ROLES.AGENCY) return "/agency/dashboard";
   return "/dashboard";
 }
@@ -113,7 +115,10 @@ export default function Login() {
   const redirectTimer = useRef(null);
 
   // Restore remembered email (rememberMe now actually persists).
+  // Also warm the post-login dashboard chunks + shell background while
+  // the user types, so the first protected navigation is instant.
   useEffect(() => {
+    prefetchOnPublicPage();
     const remembered = localStorage.getItem(REMEMBERED_EMAIL_KEY);
     if (remembered) {
       formDispatch({ type: "HYDRATE_REMEMBERED", email: remembered });
@@ -226,6 +231,9 @@ export default function Login() {
           })
         );
 
+        // Fire-and-forget: warm the role's landing + neighbour pages
+        // before navigating so protected pages paint instantly.
+        prefetchPostLogin(role);
         navigate(resolveDashboardPath(role));
       } catch (err) {
         const isUnverified =
