@@ -39,34 +39,33 @@ export default function OAuthCallback() {
         }
 
         if (result?.access_token) {
-          let role = result.user?.role || result.user?.account_type || result?.account_type;
-
-          // Probe profile if account_type is not directly on the auth response
-          if (!role) {
-            try {
-              const profileRes = await profileApi.getProfile({ token: result.access_token });
-              if (profileRes?.account_type) {
-                role = profileRes.account_type;
-              }
-            } catch {
-              // Fallback to individual
-            }
-          }
-
-          const activeRole = role || ROLES.INDIVIDUAL;
+          const fallbackRole = result.user?.account_type || ROLES.INDIVIDUAL;
           const resolvedUser = result.user || {
             name: "User",
             email: "oauth.user@example.com",
-            role: activeRole,
+            role: fallbackRole,
           };
 
-          await login(resolvedUser, result.access_token, activeRole);
-          prefetchPostLogin(activeRole);
+          await login(resolvedUser, result.access_token, fallbackRole);
 
-          if (result?.requires_account_type || result?.needs_account_type || (!role && result?.is_new_user)) {
+          // Verify whether the user has actually selected an account type on the backend
+          let selectedAccountType = result.user?.account_type || null;
+          if (!selectedAccountType) {
+            try {
+              const pointsRes = await profileApi.getPoints();
+              if (pointsRes?.account_type) {
+                selectedAccountType = pointsRes.account_type;
+              }
+            } catch {
+              // Ignore failure, will fallback to selecting account type
+            }
+          }
+
+          if (!selectedAccountType || result?.requires_account_type || result?.needs_account_type) {
             navigate("/account-type");
           } else {
-            navigate(resolveDashboardPath(activeRole));
+            prefetchPostLogin(selectedAccountType);
+            navigate(resolveDashboardPath(selectedAccountType));
           }
         } else {
           prefetchPostLogin();
@@ -85,18 +84,24 @@ export default function OAuthCallback() {
       const token = searchParams.get("token") || searchParams.get("access_token");
       if (token) {
         async function handleDirectToken() {
-          let role = ROLES.INDIVIDUAL;
+          await login({ name: "User", role: ROLES.INDIVIDUAL }, token, ROLES.INDIVIDUAL);
+
+          let selectedAccountType = null;
           try {
-            const profileRes = await profileApi.getProfile({ token });
-            if (profileRes?.account_type) {
-              role = profileRes.account_type;
+            const pointsRes = await profileApi.getPoints();
+            if (pointsRes?.account_type) {
+              selectedAccountType = pointsRes.account_type;
             }
           } catch {
-            // Fallback to individual
+            // Ignore
           }
-          await login({ name: "User", role }, token, role);
-          prefetchPostLogin(role);
-          navigate(resolveDashboardPath(role));
+
+          if (!selectedAccountType) {
+            navigate("/account-type");
+          } else {
+            prefetchPostLogin(selectedAccountType);
+            navigate(resolveDashboardPath(selectedAccountType));
+          }
         }
         handleDirectToken();
       } else {
