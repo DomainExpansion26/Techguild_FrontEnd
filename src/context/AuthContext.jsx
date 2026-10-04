@@ -91,6 +91,15 @@ export function AuthProvider({ children }) {
     const activeRole = userRole || userData?.role || ROLES.INDIVIDUAL;
     setIsLoading(true);
     try {
+      if (userToken) {
+        localStorage.setItem(STORAGE_KEYS.TOKEN, userToken);
+      }
+      if (userData) {
+        localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(userData));
+      }
+      if (activeRole) {
+        localStorage.setItem(STORAGE_KEYS.ROLE, activeRole);
+      }
       // Batch-adjacent sets: one render pass commits user+token+role together.
       setUser(userData);
       setToken(userToken || null);
