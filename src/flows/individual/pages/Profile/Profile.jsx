@@ -1181,7 +1181,7 @@ export default function Profile() {
   );
 
   return (
-    <DashboardLayout>
+    <DashboardLayout containerClass="individual-profile-page">
       {!step && !isSubmitted ? (
         renderWelcomeScreen()
       ) : (

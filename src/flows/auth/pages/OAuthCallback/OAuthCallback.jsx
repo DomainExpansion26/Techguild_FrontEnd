@@ -1,9 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
-import { oauthApi } from "@/services/api";
+import { oauthApi, profileApi } from "@/services/api";
 import { LoadingSpinner } from "@/Components/feedback";
+import { prefetchPostLogin } from "@/app/prefetch";
 import { APP_STRINGS } from "@/constants/string";
+import { ROLES } from "@/permissions/roles";
+
+function resolveDashboardPath(role) {
+  if (role === ROLES.CLIENT) return "/client-dashboard";
+  if (role === ROLES.AGENCY) return "/agency/dashboard";
+  return "/dashboard";
+}
 
 export default function OAuthCallback() {
   const STRINGS = APP_STRINGS.AUTH.OAUTH;
@@ -11,8 +19,12 @@ export default function OAuthCallback() {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [error, setError] = useState(null);
+  const processedRef = useRef(false);
 
   useEffect(() => {
+    if (processedRef.current) return;
+    processedRef.current = true;
+
     const code = searchParams.get("code");
     const state = searchParams.get("state");
     const provider = window.location.pathname.includes("github") ? "github" : "google";
@@ -27,17 +39,40 @@ export default function OAuthCallback() {
         }
 
         if (result?.access_token) {
-          await login(
-            result.user || { name: "User", email: "oauth.user@example.com" },
-            result.access_token,
-            result.user?.role
-          );
-          navigate("/dashboard");
+          const fallbackRole = result.user?.account_type || ROLES.INDIVIDUAL;
+          const resolvedUser = result.user || {
+            name: "User",
+            email: "oauth.user@example.com",
+            role: fallbackRole,
+          };
+
+          await login(resolvedUser, result.access_token, fallbackRole);
+
+          // Verify whether the user has actually selected an account type on the backend
+          let selectedAccountType = result.user?.account_type || null;
+          if (!selectedAccountType) {
+            try {
+              const pointsRes = await profileApi.getPoints();
+              if (pointsRes?.account_type) {
+                selectedAccountType = pointsRes.account_type;
+              }
+            } catch {
+              // Ignore failure, will fallback to selecting account type
+            }
+          }
+
+          if (!selectedAccountType || result?.requires_account_type || result?.needs_account_type) {
+            navigate("/account-type");
+          } else {
+            prefetchPostLogin(selectedAccountType);
+            navigate(resolveDashboardPath(selectedAccountType));
+          }
         } else {
+          prefetchPostLogin();
           navigate("/dashboard");
         }
       } catch (err) {
-        console.error("OAuth callback error:", err);
+        console.error("OAuth callback error:", err?.message || "Authentication failed");
         setError(err.message || STRINGS.DEFAULT_ERROR);
       }
     }
@@ -48,8 +83,27 @@ export default function OAuthCallback() {
       // Direct token redirect fallback
       const token = searchParams.get("token") || searchParams.get("access_token");
       if (token) {
-        login({ name: "User" }, token);
-        navigate("/dashboard");
+        async function handleDirectToken() {
+          await login({ name: "User", role: ROLES.INDIVIDUAL }, token, ROLES.INDIVIDUAL);
+
+          let selectedAccountType = null;
+          try {
+            const pointsRes = await profileApi.getPoints();
+            if (pointsRes?.account_type) {
+              selectedAccountType = pointsRes.account_type;
+            }
+          } catch {
+            // Ignore
+          }
+
+          if (!selectedAccountType) {
+            navigate("/account-type");
+          } else {
+            prefetchPostLogin(selectedAccountType);
+            navigate(resolveDashboardPath(selectedAccountType));
+          }
+        }
+        handleDirectToken();
       } else {
         navigate("/login");
       }

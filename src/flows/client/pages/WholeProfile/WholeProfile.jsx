@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { Navbar, Cards, Header, PrimaryButton, SecondaryButton } from "@/Components";
+import { DashboardLayout, Cards, PrimaryButton, SecondaryButton } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import { GuildCard } from "@/Components/Cards/variants";
 import { useAuth } from "@/context/AuthContext";
@@ -10,22 +10,7 @@ import { profileApi } from "@/services/api";
 import { projectsApi } from "@/services/api";
 import { showSnackbar } from "@/store";
 import { ICON_SIZES } from "@/constants/sizes";
-import "@/flows/individual/pages/DashBoard/dashboard.css";
 import "./WholeProfile.css";
-
-const clientNavItems = [
-  { id: "dashboard", label: "Dashboard", icon: "LayoutDashboard", path: "/client-dashboard" },
-  { id: "profile", label: "Profile (Guild Card)", icon: "User2", path: "/client-profile" },
-  { id: "quest-board", label: "Quest Board", icon: "Files", path: "/client-quest-board" },
-  { id: "applications", label: "Applications", icon: "FileText", path: "/client-applications" },
-  { id: "active-quests", label: "Active Quests", icon: "Files", path: "/client-active-quests" },
-  { id: "company-reputation", label: "Company Reputation", icon: "Verified", path: "/client-company-reputation" },
-  { id: "verification-hub", label: "Verification Hub", icon: "Bookmark", path: "/client-verification-hub" },
-  { id: "payouts", label: "Payouts", icon: "IndianRupee", path: "/client-payouts" },
-  { id: "notifications", label: "Notifications", icon: "Bell", path: "/client-notifications" },
-  { id: "settings", label: "Settings", icon: "Settings", path: "/client-settings" },
-  { id: "help-support", label: "Help & Support", icon: "CircleQuestionMark", path: "/client-help-support" },
-];
 
 const TRUST_RANKS = [
   { rank: "F", min: 0, max: 99 },
@@ -918,13 +903,8 @@ export default function WholeProfile() {
   ];
 
   return (
-    <div className="dashboard-layout client-profile-page wp-page-root">
-      <Navbar items={clientNavItems} userRole="Client" />
-
-      <main className="main-workspace">
-        <Header />
-
-        {inlineAlert && (
+    <DashboardLayout containerClass="client-profile-page wp-page-root">
+      {inlineAlert && (
           <div className={`wp-inline-alert ${inlineAlert.type}`}>
             <span>{inlineAlert.text}</span>
             <button
@@ -1558,7 +1538,6 @@ export default function WholeProfile() {
             </Cards>
           </div>
         )}
-      </main>
 
       {/* ========================================================= */}
       {/* EDIT PROFILE MODAL (Connected to PATCH /v1/profile/client) */}
@@ -1975,6 +1954,6 @@ export default function WholeProfile() {
           </div>
         </div>
       )}
-    </div>
+    </DashboardLayout>
   );
 }

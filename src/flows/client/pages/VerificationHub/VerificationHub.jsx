@@ -65,7 +65,7 @@ export default function VerificationHub() {
 
   return (
     <DashboardLayout>
-      <div style={{ padding: "32px 40px", maxWidth: "900px", margin: "0 auto" }}>
+      <div style={{ padding: "32px 40px", maxWidth: "900px", margin: "0 auto", width: "100%", flex: 1, minHeight: 0, overflowY: "auto" }}>
         <header className="mb-4">
           <h1 className="fs-3 fw-bold mb-1">Business &amp; Company Verification</h1>
           <p className="text-secondary mb-0">Verify your enterprise or agency credentials to unlock verified employer badges and higher escrow limits.</p>

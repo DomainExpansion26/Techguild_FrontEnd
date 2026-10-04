@@ -1,13 +1,11 @@
 // [TechGuild Update: 21-09-2026] Client profile onboarding wizard & OpenAPI step-save integration
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Navbar, Cards, Header, PrimaryButton, SecondaryButton, TextInput, Stepper } from "@/Components";
+import { DashboardLayout, Cards, PrimaryButton, SecondaryButton, TextInput, Stepper } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import { useAuth } from "@/context/AuthContext";
 import { profileApi } from "@/services/api";
 import { ICON_SIZES } from "@/constants/sizes";
-import dashboardBg from "@/assets/dashboard.bg.png";
-import "@/flows/individual/pages/DashBoard/dashboard.css";
 import "./Profile.css";
 
 /**
@@ -21,20 +19,6 @@ import "./Profile.css";
  * 5. Completion Reward Banner                -> Trust Points milestone notification
  * ============================================================================
  */
-
-const clientNavItems = [
-  { id: "dashboard", label: "Dashboard", icon: "LayoutDashboard", path: "/client-dashboard" },
-  { id: "profile", label: "Profile (Guild Card)", icon: "User2", path: "/client-profile" },
-  { id: "quest-board", label: "Quest Board", icon: "Files", path: "/client-quest-board" },
-  { id: "applications", label: "Applications", icon: "FileText", path: "/client-applications" },
-  { id: "active-quests", label: "Active Quests", icon: "Files", path: "/client-active-quests" },
-  { id: "company-reputation", label: "Company Reputation", icon: "Verified", path: "/client-company-reputation" },
-  { id: "verification-hub", label: "Verification Hub", icon: "Bookmark", path: "/client-verification-hub" },
-  { id: "payouts", label: "Payouts", icon: "IndianRupee", path: "/client-payouts" },
-  { id: "notifications", label: "Notifications", icon: "Bell", path: "/client-notifications" },
-  { id: "settings", label: "Settings", icon: "Settings", path: "/client-settings" },
-  { id: "help-support", label: "Help & Support", icon: "CircleQuestionMark", path: "/client-help-support" },
-];
 
 const clientStepSlugMap = {
   1: "company-info",
@@ -612,66 +596,60 @@ export default function ClientProfile() {
   );
 
   return (
-    <div
-      className="dashboard-layout client-profile-page"
-      style={{ backgroundImage: `url(${dashboardBg})` }}
+    <DashboardLayout
+      containerClass="client-profile-page"
+      mainWorkspaceClass="d-flex flex-column h-100"
     >
-      <Navbar items={clientNavItems} userRole="Client" />
-
-      <main className="main-workspace d-flex flex-column h-100">
-        <Header />
-
-        <div className="profile-page-wrapper">
-          {/* 
+      <div className="profile-page-wrapper">
+        {/* 
             CARD COMPONENT: Profile Main Card (Core Layout Container)
             - Variant: variant="base" (BaseCard)
             - Location: Main Workspace
             - Purpose: Main white elevated container enclosing the entire multi-step profile flow (Steps 1-3 & Completion Screen)
           */}
-          <Cards variant="base" radius="md" className="profile-main-card" padding="0">
-            <div className="profile-card-inner">
-              <div className="back-btn-container w-100 d-flex justify-content-start mb-3">
-                <button
-                  type="button"
-                  className="completion-back-btn"
-                  onClick={() => {
-                    if (isSubmitted) {
-                      navigate("/client-whole-profile");
-                    } else if (isEditMode) {
-                      setIsEditMode(false);
-                      goToStep(3);
-                    } else if (currentStep > 1) {
-                      goToStep(currentStep - 1);
-                    } else {
-                      navigate("/client-whole-profile");
-                    }
-                  }}
-                  aria-label="Go back"
-                >
-                  <Icon name="ArrowLeft" size={ICON_SIZES['2XL']} color="#0b38a8" />
-                </button>
-              </div>
-
-              {isSubmitted ? (
-                renderCompletionScreen()
-              ) : (
-                <div className="profile-content-column">
-                  <div className="profile-header-section">
-                    <h1 className="profile-main-title">Complete Your Profile</h1>
-                    <p className="profile-main-subtitle">Lets build your profile step by step.</p>
-                  </div>
-
-                  {renderStepper()}
-
-                  {currentStep === 1 && renderStep1()}
-                  {currentStep === 2 && renderStep2()}
-                  {currentStep === 3 && renderStep3()}
-                </div>
-              )}
+        <Cards variant="base" radius="md" className="profile-main-card" padding="0">
+          <div className="profile-card-inner">
+            <div className="back-btn-container w-100 d-flex justify-content-start mb-3">
+              <button
+                type="button"
+                className="completion-back-btn"
+                onClick={() => {
+                  if (isSubmitted) {
+                    navigate("/client-whole-profile");
+                  } else if (isEditMode) {
+                    setIsEditMode(false);
+                    goToStep(3);
+                  } else if (currentStep > 1) {
+                    goToStep(currentStep - 1);
+                  } else {
+                    navigate("/client-whole-profile");
+                  }
+                }}
+                aria-label="Go back"
+              >
+                <Icon name="ArrowLeft" size={ICON_SIZES['2XL']} color="#0b38a8" />
+              </button>
             </div>
-          </Cards>
-        </div>
-      </main>
-    </div>
+
+            {isSubmitted ? (
+              renderCompletionScreen()
+            ) : (
+              <div className="profile-content-column">
+                <div className="profile-header-section">
+                  <h1 className="profile-main-title">Complete Your Profile</h1>
+                  <p className="profile-main-subtitle">Lets build your profile step by step.</p>
+                </div>
+
+                {renderStepper()}
+
+                {currentStep === 1 && renderStep1()}
+                {currentStep === 2 && renderStep2()}
+                {currentStep === 3 && renderStep3()}
+              </div>
+            )}
+          </div>
+        </Cards>
+      </div>
+    </DashboardLayout>
   );
 }

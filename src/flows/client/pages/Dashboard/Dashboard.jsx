@@ -1,3 +1,4 @@
+// [TechGuild Update: 30-09-2026] Reduced card stagger delays 0.1-0.4s -> 0.03-0.09s so styled content appears instantly (end state unchanged).
 import React from "react";
 import {
   DashboardLayout,
@@ -129,7 +130,7 @@ export default function Dashboard() {
                   icon="Files"
                   value="0"
                   description="No active projects"
-                  delay="0.1s"
+                  delay="0.03s"
                 />
               </div>
 
@@ -142,7 +143,7 @@ export default function Dashboard() {
                   icon="FileText"
                   value="0"
                   description="No proposals yet"
-                  delay="0.2s"
+                  delay="0.05s"
                 />
               </div>
 
@@ -155,7 +156,7 @@ export default function Dashboard() {
                   icon="IndianRupee"
                   value="₹0"
                   description="No payments made"
-                  delay="0.3s"
+                  delay="0.07s"
                 />
               </div>
 
@@ -168,7 +169,7 @@ export default function Dashboard() {
                   icon="CircleCheck"
                   value="0"
                   description="No completed projects"
-                  delay="0.4s"
+                  delay="0.09s"
                 />
               </div>
 

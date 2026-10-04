@@ -291,11 +291,114 @@
   -webkit-text-fill-color: #212529 !important;
 }
 
+/* ===== Login desktop / laptop wrapper placement ===== */
+.login-page .auth-card-wrapper {
+  left: clamp(32px, 5.5vw, 80px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(440px, 42vw);
+  max-width: 440px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.login-page .signup-card {
+  width: 100%;
+  min-height: auto;
+  max-height: calc(100vh - 40px);
+  padding: 26px 30px 22px 30px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* ===== Short height screens on desktop/laptop (<= 680px) ===== */
+@media (max-height: 680px) and (min-width: 768px) {
+  .login-page {
+    overflow-y: auto;
+  }
+
+  .login-page .auth-card-wrapper {
+    top: 16px !important;
+    transform: none !important;
+    margin-bottom: 24px !important;
+  }
+
+  .login-page .signup-card {
+    max-height: none !important;
+    padding: 20px 24px !important;
+  }
+}
+
+/* ===== Tablet & Small Laptop (768px to 1024px) ===== */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .login-page .auth-card-wrapper {
+    left: clamp(20px, 3.5vw, 36px);
+    width: min(420px, 46vw);
+  }
+
+  .login-page .signup-card {
+    padding: 22px 24px 18px 24px;
+  }
+}
+
+/* ===== Mobile (<= 767px) ===== */
 @media (max-width: 767px) {
   .login-page {
-    position: relative;
-    min-height: 100vh;
-    height: auto;
-    overflow-y: auto;
+    position: relative !important;
+    min-height: 100vh !important;
+    height: auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding: 32px 16px 40px 16px !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .login-page .auth-card-wrapper {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 420px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .login-page .signup-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    padding: 24px 20px !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08) !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+  }
+
+  .login-options {
+    flex-wrap: wrap;
+    gap: 8px;
   }
 }
