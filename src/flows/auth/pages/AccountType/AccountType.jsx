@@ -85,7 +85,7 @@ export default function AccountType() {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const { login, isAuthenticated, token } = useAuth();
+  const { login, updateUser, switchRole, isAuthenticated, token } = useAuth();
   const [state, selectionDispatch] = useReducer(selectionReducer, initialSelectionState);
   const { selected, loading, error } = state;
   const redirectTimer = useRef(null);
@@ -150,7 +150,11 @@ export default function AccountType() {
     if (isAuthenticated && token) {
       selectionDispatch({ type: "SUBMIT_START" });
       try {
-        await authApi.setAccountTypeAuthenticated({ account_type: selected });
+        await authApi.setAccountTypeAuthenticated({ account_type: selected, token });
+        if (switchRole) switchRole(selected);
+        if (updateUser) updateUser({ role: selected });
+        localStorage.setItem("techguild_role", selected);
+
         dispatch(
           showSnackbar({
             message: TOAST_MESSAGES.AUTH.WELCOME_ROLE(selected),
