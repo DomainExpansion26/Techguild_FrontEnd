@@ -95,9 +95,10 @@ function deriveDisplayName(cleanEmail) {
 }
 
 function resolveDashboardPath(role) {
-  if (role === ROLES.CLIENT) return "/client-dashboard";
-  if (role === ROLES.AGENCY) return "/agency/dashboard";
-  return "/dashboard";
+  if (role === ROLES.CLIENT || role === "client" || role === "client_admin" || role === "client_member") return "/client-dashboard";
+  if (role === ROLES.AGENCY || role === "agency" || role === "agency_admin") return "/agency/dashboard";
+  if (role === ROLES.INDIVIDUAL || role === "individual") return "/dashboard";
+  return "/account-type";
 }
 
 // Login-time 2FA challenge (Figma "for 6- digit code" / "for 8 digit code").
@@ -175,15 +176,33 @@ export default function TwoFactor() {
       const resolvedName =
         response?.user?.name ?? deriveDisplayName(cleanEmail);
 
-      // Role comes from the verify payload when present, otherwise probe
-      // the profile (token passed explicitly), defaulting to individual.
-      let role = response?.user?.account_type ?? ROLES.INDIVIDUAL;
-      if (!response?.user?.account_type) {
+      // Resolve role without defaulting to any role
+      let role = response?.user?.account_type || response?.account_type || null;
+      if (!role) {
+        try {
+          const pointsRes = await profileApi.getPoints({ token });
+          const resType = pointsRes?.account_type || pointsRes?.data?.account_type;
+          if (resType && typeof resType === "string" && resType.trim()) {
+            role = resType.trim();
+          }
+        } catch {
+          // Proceed to profile probe
+        }
+      }
+      if (!role) {
         try {
           const profileRes = await profileApi.getProfile({ token });
-          if (profileRes?.account_type) role = profileRes.account_type;
+          const resType =
+            profileRes?.account_type ||
+            profileRes?.data?.account_type ||
+            (profileRes?.client || profileRes?.data?.client ? ROLES.CLIENT : null) ||
+            (profileRes?.agency || profileRes?.data?.agency ? ROLES.AGENCY : null) ||
+            (profileRes?.individual || profileRes?.data?.individual ? ROLES.INDIVIDUAL : null);
+          if (resType && typeof resType === "string" && resType.trim()) {
+            role = resType.trim();
+          }
         } catch {
-          // Fallback to individual when profile is unreachable.
+          // Account type not yet selected or unreachable
         }
       }
 
@@ -191,11 +210,11 @@ export default function TwoFactor() {
         {
           email: cleanEmail,
           name: resolvedName,
-          role,
+          role: role || null,
           avatar: resolvedName.charAt(0).toUpperCase(),
         },
         token,
-        role
+        role || null
       );
       sessionStorage.removeItem(CHALLENGE_KEY);
 
@@ -205,8 +224,13 @@ export default function TwoFactor() {
           type: "success",
         })
       );
-      prefetchPostLogin(role);
-      navigate(resolveDashboardPath(role), { replace: true });
+
+      if (!role) {
+        navigate("/account-type", { replace: true, state: { email: cleanEmail } });
+      } else {
+        prefetchPostLogin(role);
+        navigate(resolveDashboardPath(role), { replace: true });
+      }
     } catch (err) {
       fail(err?.message || FORM_ERRORS.AUTH.TWO_FA_FAILED);
     } finally {

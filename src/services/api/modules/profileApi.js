@@ -310,8 +310,15 @@ export const profileApi = {
   },
 
   // Get trust points and rank -> { points, account_type, profile_complete }
-  getPoints: async () => {
-    return apiClient.get(ENDPOINTS.PROFILE.POINTS);
+  getPoints: async (options = {}) => {
+    const { token, ...rest } = options;
+    if (token) {
+      return apiClient.get(ENDPOINTS.PROFILE.POINTS, {
+        ...rest,
+        headers: { ...rest.headers, Authorization: `Bearer ${token}` },
+      });
+    }
+    return apiClient.get(ENDPOINTS.PROFILE.POINTS, rest);
   },
 
   // Export profile data -> { message, download_url, expires_in }
