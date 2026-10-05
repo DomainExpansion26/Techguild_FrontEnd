@@ -8,9 +8,45 @@ import { APP_STRINGS } from "@/constants/string";
 import { ROLES } from "@/permissions/roles";
 
 function resolveDashboardPath(role) {
-  if (role === ROLES.CLIENT) return "/client-dashboard";
-  if (role === ROLES.AGENCY) return "/agency/dashboard";
-  return "/dashboard";
+  if (role === ROLES.CLIENT || role === "client" || role === "client_admin" || role === "client_member") return "/client-dashboard";
+  if (role === ROLES.AGENCY || role === "agency" || role === "agency_admin") return "/agency/dashboard";
+  if (role === ROLES.INDIVIDUAL || role === "individual") return "/dashboard";
+  return "/account-type";
+}
+
+async function resolveUserAccountType(token, directAccountType) {
+  if (directAccountType && typeof directAccountType === "string" && directAccountType.trim()) {
+    return directAccountType.trim();
+  }
+
+  // 1. Probe points endpoint with explicit token (quickest check for user.AccountType)
+  try {
+    const pointsRes = await profileApi.getPoints({ token });
+    const resType = pointsRes?.account_type || pointsRes?.data?.account_type;
+    if (resType && typeof resType === "string" && resType.trim()) {
+      return resType.trim();
+    }
+  } catch {
+    // Ignore points check error and proceed to profile probe
+  }
+
+  // 2. Probe profile endpoint with explicit token
+  try {
+    const profileRes = await profileApi.getProfile({ token });
+    const resType =
+      profileRes?.account_type ||
+      profileRes?.data?.account_type ||
+      (profileRes?.client || profileRes?.data?.client ? ROLES.CLIENT : null) ||
+      (profileRes?.agency || profileRes?.data?.agency ? ROLES.AGENCY : null) ||
+      (profileRes?.individual || profileRes?.data?.individual ? ROLES.INDIVIDUAL : null);
+    if (resType && typeof resType === "string" && resType.trim()) {
+      return resType.trim();
+    }
+  } catch {
+    // Profile not found or account type not set yet
+  }
+
+  return null;
 }
 
 export default function OAuthCallback() {
@@ -39,37 +75,30 @@ export default function OAuthCallback() {
         }
 
         if (result?.access_token) {
-          const fallbackRole = result.user?.account_type || ROLES.INDIVIDUAL;
-          const resolvedUser = result.user || {
-            name: "User",
-            email: "oauth.user@example.com",
-            role: fallbackRole,
+          const token = result.access_token;
+          const directType = result.user?.account_type || result?.account_type || null;
+          const selectedAccountType = await resolveUserAccountType(token, directType);
+
+          const resolvedUser = {
+            name: result.user?.name || "User",
+            email: result.user?.email || "oauth.user@example.com",
+            role: selectedAccountType || null,
+            avatar: (result.user?.name || "U").charAt(0).toUpperCase(),
           };
 
-          await login(resolvedUser, result.access_token, fallbackRole);
-
-          // Verify whether the user has actually selected an account type on the backend
-          let selectedAccountType = result.user?.account_type || null;
-          if (!selectedAccountType) {
-            try {
-              const pointsRes = await profileApi.getPoints();
-              if (pointsRes?.account_type) {
-                selectedAccountType = pointsRes.account_type;
-              }
-            } catch {
-              // Ignore failure, will fallback to selecting account type
-            }
-          }
-
-          if (!selectedAccountType || result?.requires_account_type || result?.needs_account_type) {
-            navigate("/account-type");
-          } else {
+          if (selectedAccountType && !result?.requires_account_type && !result?.needs_account_type) {
+            // Existing member with role: log in with their actual role and open their role dashboard
+            await login(resolvedUser, token, selectedAccountType);
             prefetchPostLogin(selectedAccountType);
             navigate(resolveDashboardPath(selectedAccountType));
+          } else {
+            // New user without role: do not default to any role, prompt account type selection
+            await login(resolvedUser, token, null);
+            navigate("/account-type");
           }
         } else {
           prefetchPostLogin();
-          navigate("/dashboard");
+          navigate("/login");
         }
       } catch (err) {
         console.error("OAuth callback error:", err?.message || "Authentication failed");
@@ -84,23 +113,19 @@ export default function OAuthCallback() {
       const token = searchParams.get("token") || searchParams.get("access_token");
       if (token) {
         async function handleDirectToken() {
-          await login({ name: "User", role: ROLES.INDIVIDUAL }, token, ROLES.INDIVIDUAL);
+          const selectedAccountType = await resolveUserAccountType(token, null);
+          const resolvedUser = {
+            name: "User",
+            role: selectedAccountType || null,
+          };
 
-          let selectedAccountType = null;
-          try {
-            const pointsRes = await profileApi.getPoints();
-            if (pointsRes?.account_type) {
-              selectedAccountType = pointsRes.account_type;
-            }
-          } catch {
-            // Ignore
-          }
-
-          if (!selectedAccountType) {
-            navigate("/account-type");
-          } else {
+          if (selectedAccountType) {
+            await login(resolvedUser, token, selectedAccountType);
             prefetchPostLogin(selectedAccountType);
             navigate(resolveDashboardPath(selectedAccountType));
+          } else {
+            await login(resolvedUser, token, null);
+            navigate("/account-type");
           }
         }
         handleDirectToken();
