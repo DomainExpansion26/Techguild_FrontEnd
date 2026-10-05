@@ -1,6 +1,6 @@
 // [TechGuild Update: 21-09-2026] Client whole profile page, LinkedIn/GitHub edit inputs, live logo/banner sync & points journey
 // [TechGuild Update: 28-09-26] Scoped edit modal (about/hiring/details/links/all), slugify handle, public URL card, logo menu
-//updated code 5-10-2026
+//updated code 5/10/2026
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
