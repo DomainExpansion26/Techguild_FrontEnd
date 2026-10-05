@@ -1,4 +1,5 @@
 // [TechGuild Update: 21-09-2026] Profile card display, ranking & verification tags
+// [TechGuild Update: 28-09-26] Added logoUrl/logo prop support with fallback validation & logo image render in avatar block
 import Icon from '@/Components/icons/Icon';
 import { APP_STRINGS } from '@/constants/string';
 import { CARD_SIZES, ICON_SIZES } from '@/constants/sizes';
@@ -10,6 +11,9 @@ export default function GuildCard({
   category,
   subtitle,
   logoInitials,
+  // [28-09-26] New: logo image support (logoUrl/logo) with guild fallbacks
+  logoUrl,
+  logo,
   starRating,
   verifiedText = APP_STRINGS.CARDS.GUILD.VERIFIED_CLIENT,
   location,
@@ -40,6 +44,15 @@ export default function GuildCard({
         ? displayName.trim().split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase()
         : (displayName.toUpperCase().startsWith('NEX') ? STRINGS.DEFAULT_INITIALS : displayName.slice(0, 2).toUpperCase()))
       : STRINGS.DEFAULT_INITIALS);
+  // [28-09-26] Resolve display logo with placeholder/garbage-value guard
+  const rawLogo = logoUrl || logo || g.logoUrl || g.logo_url || g.logo || null;
+  const displayLogo =
+    typeof rawLogo === 'string' &&
+    rawLogo.trim() &&
+    !['logo_url', 'avatar_url', 'string', 'null', 'undefined'].includes(rawLogo.trim()) &&
+    !rawLogo.startsWith('https://storage.example.com/')
+      ? rawLogo
+      : null;
   const displayStars = starRating !== undefined ? starRating : (g.starRating !== undefined ? g.starRating : 4);
   const displayLocation = location || g.location || STRINGS.DEFAULT_LOCATION;
 
@@ -184,9 +197,21 @@ export default function GuildCard({
                 fontWeight: 800,
                 letterSpacing: '-0.01em',
                 lineHeight: 1,
+                overflow: 'hidden',
+                overflow: 'hidden',
               }}
             >
-              {displayInitials}
+              {/* [28-09-26] Render logo image when valid, else initials fallback */}
+              {displayLogo ? (
+                <img
+                  src={displayLogo}
+                  alt={displayName}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '25.56px', display: 'block' }}
+                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                />
+              ) : (
+                displayInitials
+              )}
             </div>
           </div>
 
