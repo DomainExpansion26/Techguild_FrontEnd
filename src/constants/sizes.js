@@ -10,10 +10,15 @@
 
 /** Icon size scale in pixels */
 export const ICON_SIZES = {
+  "4XS": 8,
+  "3XS": 10,
+  MICRO: 11,
+  "2.5XS": 11,
   "2XS": 12,
   XS: 14,
   SM: 15,
   MD: 16,
+  MID: 17,
   DEFAULT: 18,
   LG: 20,
   XL: 22,
@@ -127,6 +132,13 @@ export const CARD_SIZES = {
     MD: "500px",
     LG: "640px",
     XL: "800px",
+  },
+  QUEST_BOARD: {
+    CARD_RADIUS: "10px",
+    STEP_CARD_RADIUS: "10px",
+    STEP_ICON_BOX: "40px",
+    CHECKMARK_BADGE: "22px",
+    BADGE_RADIUS: "9999px",
   },
 };
 
