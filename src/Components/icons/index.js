@@ -77,6 +77,13 @@ import Palette from "../../assets/icons/palette.svg?react";
 import Tag from "../../assets/icons/tag.svg?react";
 import LifeBuoy from "../../assets/icons/life-buoy.svg?react";
 import FolderOpen from "../../assets/icons/folder-open.svg?react";
+import Heart from "../../assets/icons/heart.svg?react";
+import Share2 from "../../assets/icons/share2.svg?react";
+import MessageSquare from "../../assets/icons/message-square.svg?react";
+import Image from "../../assets/icons/image.svg?react";
+import Code from "../../assets/icons/code.svg?react";
+import Zap from "../../assets/icons/zap.svg?react";
+import ChevronLeft from "../../assets/icons/chevron-left.svg?react";
 
 export {
   ArrowLeft,
@@ -159,5 +166,12 @@ export {
   Tag,
   LifeBuoy,
   FolderOpen,
+  Heart,
+  Share2,
+  MessageSquare,
+  Image,
+  Code,
+  Zap,
+  ChevronLeft,
 };
 
