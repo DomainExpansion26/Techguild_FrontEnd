@@ -328,7 +328,17 @@ export default function Login() {
 
             {errorMessage && (
               <div className="login-error" role="alert" aria-live="assertive">
-                {errorMessage}
+                <div>{errorMessage}</div>
+                <div style={{ marginTop: "6px", fontSize: "13px", opacity: 0.95 }}>
+                  Signed up with Google or need to set a password?{" "}
+                  <Link
+                    to="/forgot-password"
+                    state={{ email }}
+                    style={{ color: "inherit", fontWeight: 600, textDecoration: "underline" }}
+                  >
+                    Set or reset password
+                  </Link>
+                </div>
               </div>
             )}
 
@@ -418,7 +428,7 @@ export default function Login() {
                     {STRINGS.REMEMBER_ME}
                   </label>
                 </div>
-                <Link to="/forgot-password" className="login-forgot">
+                <Link to="/forgot-password" state={{ email }} className="login-forgot">
                   {STRINGS.FORGOT_PASSWORD_LINK}
                 </Link>
               </div>
