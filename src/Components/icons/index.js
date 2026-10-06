@@ -99,6 +99,14 @@ import BadgeCheckFill from "../../assets/icons/badge-check-fill.svg?react";
 import UserRoundCog from "../../assets/icons/user-round-cog.svg?react";
 import Handshake from "../../assets/icons/handshake.svg?react";
 import ChartNoAxesCombined from "../../assets/icons/chart-no-axes-combined.svg?react";
+import Send from "../../assets/icons/send.svg?react";
+import ArrowUp from "../../assets/icons/arrow-up.svg?react";
+import Percent from "../../assets/icons/percent.svg?react";
+import History from "../../assets/icons/history.svg?react";
+import Funnel from "../../assets/icons/funnel.svg?react";
+import CircleX from "../../assets/icons/circle-x.svg?react";
+import Landmark from "../../assets/icons/landmark.svg?react";
+import Headphones from "../../assets/icons/headphones.svg?react";
 
 export {
   ArrowLeft,
@@ -204,6 +212,14 @@ export {
   UserRoundCog,
   Handshake,
   ChartNoAxesCombined,
+  Send,
+  ArrowUp,
+  Percent,
+  History,
+  Funnel,
+  CircleX,
+  Landmark,
+  Headphones,
 };
 
 

@@ -54,6 +54,26 @@ export const ADMIN_MENU_ITEMS = [
   { id: "settings", label: "Settings", icon: "Settings", path: "/admin/settings" },
 ];
 
+export const FINANCE_SUBMENU_ITEMS = [
+  { id: "overview", label: "Overview" },
+  { id: "escrow", label: "Escrow" },
+  { id: "transactions", label: "Transactions" },
+  { id: "payment-methods", label: "Payment Methods" },
+  { id: "tax-documents", label: "Tax Documents" },
+];
+
+/* Individual (freelancer) Finance submenu — matches Finance Dashboard mock:
+   Overview, Withdraw Funds, Withdrawal History, Escrow, Transactions, Payment Methods */
+export const INDIVIDUAL_FINANCE_SUBMENU_ITEMS = [
+  { id: "overview", label: "Overview" },
+  { id: "withdraw-funds", label: "Withdraw Funds" },
+  { id: "withdrawal-history", label: "Withdrawal History" },
+  { id: "escrow", label: "Escrow" },
+  { id: "transactions", label: "Transactions" },
+  { id: "payment-methods", label: "Payment Methods" },
+  { id: "tax-documents", label: "Tax Documents" },
+];
+
 export const SETTINGS_SUBMENU_ITEMS = [
   { id: "profile", label: "Profile", icon: "User", path: "/settings/profile", clientPath: "/client-settings/profile", agencyPath: "/agency/settings/profile", adminPath: "/admin/settings/profile" },
   { id: "account-security", label: "Account & Security", icon: "Shield", path: "/settings/account-security", clientPath: "/client-settings/account-security", agencyPath: "/agency/settings/security", adminPath: "/admin/settings/security" },
