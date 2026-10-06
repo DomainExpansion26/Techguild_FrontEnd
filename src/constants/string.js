@@ -25,6 +25,529 @@ export const APP_STRINGS = {
     CLOSE: "Close",
   },
 
+  // Quest Board Flow
+  QUEST_BOARD: {
+    HEADER: {
+      TITLE: "Quest Board",
+      SUBTITLE_LINE1: "Create a trusted project and connect with verified professionals.",
+      SUBTITLE_LINE2: "Define your requirements, set your milestones, and start building with confidence.",
+    },
+    ACTIONS: {
+      START_CREATING_QUEST: "Start Creating Quest",
+    },
+    WELCOME_CARD: {
+      BADGE: "GETTING STARTED",
+      TITLE: "Welcome to Quest Creation",
+      PARAGRAPH_1: "TechGuild is built on the pillars of transparency and institutional trust.",
+      PARAGRAPH_2: 'By posting a "Quest," you aren\'t just listing a job, you\'re initiating a secure, milestone-driven collaboration.',
+      PARAGRAPH_3: "Every Quest includes our mandatory Escrow protection, ensuring that funds are only released when you've approved the work delivered.",
+      TAG_VERIFIED: "Verified Experts",
+      TAG_ESCROW: "Escrow Protected",
+    },
+    BEFORE_YOU_BEGIN: {
+      TITLE: "Before You Begin Make Sure :",
+      CHECKLIST: [
+        "Requirements are ready.",
+        "Budget is estimated.",
+        "Timeline is decided.",
+        "Skills are identified.",
+      ],
+    },
+    PROCESS: {
+      TITLE: "How the Process Works",
+      STEPS: [
+        {
+          STEP: 1,
+          TITLE: "1. Create",
+          DESCRIPTION: "Draft your scope, requirements, and milestones.",
+          ICON: "FileText",
+        },
+        {
+          STEP: 2,
+          TITLE: "2. Choose",
+          DESCRIPTION: "Our algorithm suggests you verified professionals.",
+          ICON: "Users",
+        },
+        {
+          STEP: 3,
+          TITLE: "3. Fund",
+          DESCRIPTION: "Secure the project by funding the escrow wallet.",
+          ICON: "Lock",
+        },
+        {
+          STEP: 4,
+          TITLE: "4. Collaborate",
+          DESCRIPTION: "Work together and release funds per milestone.",
+          ICON: "CircleCheck",
+        },
+      ],
+    },
+    HELP_CARD: {
+      TITLE: "Need Help?",
+      DESCRIPTION: "Unsure about how to structure your escrow? Our guides cover best practices for client-contractor relations.",
+      LINK_TEXT: "Contact Support",
+    },
+    WHY_POST: {
+      TITLE: "Why Post a Quest on TechGuild?",
+      BENEFITS: [
+        {
+          TITLE: "Trust-Based Ranking",
+          DESCRIPTION: "View real-time reputation scores (F to S Rank) for every applicant.",
+        },
+        {
+          TITLE: "Milestone Tracking",
+          DESCRIPTION: "Break complex projects into manageable pieces with clear delivery gates.",
+        },
+        {
+          TITLE: "Verified Professionals",
+          DESCRIPTION: "Only engineers who pass our technical audits are eligible to apply.",
+        },
+        {
+          TITLE: "Secure Escrow Protection",
+          DESCRIPTION: "Your capital stays in a neutral vault until your technical criteria are met.",
+        },
+      ],
+    },
+    CREATE_QUEST: {
+      HEADER: {
+        TITLE: "Basic Information",
+      },
+      STEPS: [
+        { number: 1, label: "Basic Info" },
+        { number: 2, label: "Budget & Timeline" },
+        { number: 3, label: "Review" },
+        { number: 4, label: "Publish" },
+      ],
+      ESSENTIALS_CARD: {
+        TITLE: "Quest Essentials",
+        SUBTITLE: "Define the core identity of your technical project.",
+        TITLE_LABEL: "Quest Title",
+        TITLE_PLACEHOLDER: "Enterprise-Grade Multi-Tenant Dashboard",
+        TITLE_VALID_MSG: "Great title! It's specific and professional.",
+        TITLE_MAX_LEN: 80,
+        DESC_LABEL: "Quest Description",
+        DESC_PLACEHOLDER: "Explain the technical challenges, goals, and specific outcomes you expect from this quest...",
+        DESC_HINT: "Provide context on architecture, legacy systems, and integration points.",
+        DESC_MAX_LEN: 2000,
+        CATEGORY_LABEL: "Category",
+        CATEGORY_DEFAULT: "Full-Stack Web Development",
+        CATEGORY_OPTIONS: [
+          "Full-Stack Web Development",
+          "Frontend Web Development",
+          "Backend API & Services",
+          "Mobile App Development",
+          "DevOps & Cloud Architecture",
+          "AI & Machine Learning",
+          "Blockchain & Smart Contracts",
+        ],
+        COMPLEXITY_LABEL: "Project Complexity",
+        COMPLEXITIES: [
+          {
+            ID: "beginner",
+            TITLE: "Beginner",
+            DESCRIPTION: "Simple tasks, clear documentation provided.",
+            ICON: "Sprout",
+          },
+          {
+            ID: "intermediate",
+            TITLE: "Intermediate",
+            DESCRIPTION: "Refactoring existing code or adding modules.",
+            ICON: "Trees",
+          },
+          {
+            ID: "advanced",
+            TITLE: "Advanced",
+            DESCRIPTION: "New architecture, high security requirements.",
+            ICON: "Gem",
+          },
+          {
+            ID: "enterprise",
+            TITLE: "Enterprise",
+            DESCRIPTION: "Mission-critical systems, massive scaling needs.",
+            ICON: "Network",
+          },
+        ],
+      },
+      COMPLETION_CARD: {
+        TITLE: "Completion",
+        PERCENT: "0%",
+        STEP_TEXT: "Step 1 of 4: Core Identity",
+      },
+      SUMMARY_CARD: {
+        TITLE: "Quest Summary",
+        FIELDS: {
+          PROJECT_TITLE: "Project Title",
+          CATEGORY: "Category",
+          BUDGET: "Budget",
+          TIMELINE: "Timeline",
+          TYPE: "Type",
+          PENDING: "Pending...",
+        },
+      },
+      SUGGESTIONS_CARD: {
+        TITLE: "Techguild Suggestions :",
+        SUGGESTIONS: [
+          'Consider adding "Next.js" or "React" to your title to attract specific experts.',
+          "The description is good but could use a list of technical requirements.",
+        ],
+      },
+      ACTIONS: {
+        PREVIOUS: "Previous",
+        SAVE_DRAFT: "Save Draft",
+        NEXT_STEP: "Next Step",
+      },
+      STEP_2: {
+        HEADER: {
+          TITLE: "Budget & Timeline",
+          SUBTITLE: "Set your project budget, expected duration and quest type. TechGuild uses this information to match your quest with the most suitable verified professionals.",
+        },
+        BUDGET_SECTION: {
+          TITLE: "Project Budget",
+          LABEL: "Budget (₹)",
+          DEFAULT_VALUE: "75,000",
+          RANGE_TITLE: "ESTIMATED BUDGET RANGE",
+          RANGES: [
+            { id: "small", title: "Small", range: "10k-50k" },
+            { id: "medium", title: "Medium", range: "50k-200k" },
+            { id: "enterprise", title: "Enterprise", range: "200k+" },
+          ],
+        },
+        TIMELINE_SECTION: {
+          TITLE: "Project Timeline",
+          LABEL: "Number of Days",
+          DEFAULT_DAYS: "20",
+          DAY_OPTIONS: ["7 Days", "14 Days", "20 Days", "30 Days", "60 Days", "90 Days"],
+          COMPLETION_LABEL: "Estimated Completion Date:",
+          DEFAULT_DATE: "Nov 28, 2024",
+        },
+        QUEST_TYPE_SECTION: {
+          TITLE: "Quest Type",
+          TYPES: [
+            {
+              id: "standard",
+              title: "Standard",
+              description: "Ideal for most professional projects.",
+              icon: "ClipboardList",
+            },
+            {
+              id: "emergency",
+              title: "Emergency",
+              description: "Your quest receives higher visibility and faster responses.",
+              badge: "1.5x PRIORITY",
+              icon: "Zap",
+            },
+            {
+              id: "long-term",
+              title: "Long-Term",
+              description: "Best for ongoing collaborations and recurring work.",
+              icon: "RotateCw",
+            },
+          ],
+        },
+        COMPLETION_CARD: {
+          TITLE: "COMPLETION",
+          PERCENT: "50%",
+          STEP_TEXT: "Step 2 of 4: Budget & Timeline",
+        },
+        SUMMARY_CARD: {
+          TITLE: "Quest Summary",
+          DEFAULT_PROJECT_TITLE: "Website Redesign for FinTech Startup",
+          DEFAULT_CATEGORY: "UI/UX Design",
+          FIELDS: {
+            PROJECT_TITLE: "Project Title",
+            CATEGORY: "Category",
+            BUDGET: "Budget",
+            TIMELINE: "Timeline",
+            SKILLS: "Skills",
+            PENDING: "Pending...",
+          },
+        },
+        HELPFUL_TIPS_CARD: {
+          TITLE: "HELPFUL TIPS",
+          TIPS: [
+            "Competitive budgets attract top-tier global talent.",
+            "Emergency quests receive priority visibility in professional feeds.",
+            "Professionals often favor clearly defined 2-4 week timelines.",
+          ],
+        },
+      },
+
+      STEP_3: {
+        HEADER: {
+          TITLE: "Review & Publish",
+          SUBTITLE:
+            "Review your quest details before publishing. You can edit any section if needed.",
+        },
+        BASIC_INFO_CARD: {
+          TITLE: "Basic Information",
+          FIELDS: {
+            QUEST_TITLE_LABEL: "QUEST TITLE",
+            QUEST_TITLE_VAL: "Website Redesign for FinTech Startup",
+            CATEGORY_LABEL: "CATEGORY",
+            CATEGORY_VAL: "UI/UX Design",
+            SCOPE_LABEL: "SCOPE",
+            SCOPE_VAL: "Medium",
+            INDUSTRY_LABEL: "INDUSTRY",
+            INDUSTRY_VAL: "FinTech",
+            DESCRIPTION_LABEL: "DESCRIPTION",
+            DESCRIPTION_VAL:
+              "Project focuses on modernizing the user interface and streamlining the user experience for our flagship digital banking dashboard. We aim to achieve high conversion rates through data-driven design ...",
+            VIEW_MORE: "View More",
+          },
+        },
+        BUDGET_TIMELINE_CARD: {
+          TITLE: "Budget & Timeline",
+          FIELDS: {
+            TOTAL_BUDGET_LABEL: "TOTAL BUDGET",
+            TOTAL_BUDGET_VAL: "₹75,000",
+            TIMELINE_LABEL: "TIMELINE",
+            TIMELINE_VAL: "20 Days",
+            TYPE_LABEL: "TYPE",
+            TYPE_VAL: "Standard",
+            REC_RANK_LABEL: "REC. RANK",
+            REC_RANK_VAL: "Rank A",
+          },
+        },
+        PREVIEW_SECTION: {
+          TITLE: "QUEST PREVIEW (AS SEEN BY FREELANCERS)",
+          BADGE_QUEST: "STANDARD QUEST",
+          BADGE_RANK: "RANK A",
+          PRICE: "₹75k",
+          PROJECT_TITLE: "Website Redesign for FinTech Startup",
+          TAGS: ["UI Design", "Figma", "+5 more"],
+          CLIENT_INITIALS: "FT",
+          CLIENT_NAME: "FinTech Solutions Inc.",
+          CLIENT_VERIFIED: "VERIFIED CLIENT",
+          DURATION_LABEL: "Duration",
+          DURATION_VAL: "20 Days",
+        },
+        COMPLETION_CARD: {
+          TITLE: "COMPLETION",
+          PERCENT: "75%",
+          STEP_TEXT: "Step 3 of 4: Review & Publish",
+        },
+        READY_CARD: {
+          TITLE: "Ready to Publish",
+          ITEMS: [
+            "Quest Title & Type",
+            "Project Description",
+            "Category Selection",
+            "Total Budget Set",
+            "Timeline Specified",
+          ],
+          BANNER_TEXT: "Your quest is ready to be published.",
+        },
+        SUMMARY_CARD: {
+          TITLE: "Quest Summary",
+          DEFAULT_PROJECT_TITLE: "Website Redesign for FinTech Startup",
+          DEFAULT_CATEGORY: "UI/UX Design",
+          DEFAULT_BUDGET: "₹75,000",
+          DEFAULT_TIMELINE: "20 Days",
+          FIELDS: {
+            PROJECT_TITLE: "Project Title",
+            CATEGORY: "Category",
+            BUDGET: "Budget",
+            TIMELINE: "Timeline",
+          },
+        },
+
+        ACTIONS: {
+          PUBLISH: "Publish",
+        },
+      },
+      STEP_4: {
+        HEADER: {
+          TITLE: "Quest Published Successfully",
+          SUBTITLE:
+            "Your quest is now live and visible to verified professionals across the TechGuild ecosystem.",
+        },
+        CONGRATS_CARD: {
+          BADGE: "QUEST LIVE",
+          TITLE: "Congratulations!",
+          DESCRIPTION:
+            "Your quest has been successfully published and is now being matched with top-tier technology experts. Expect your first applications within the next 24 hours.",
+        },
+        QUEST_DETAILS_CARD: {
+          TITLE: "Website Redesign for FinTech Startup",
+          REF: "Ref: TQ-2023-9842",
+          CATEGORY: "UI/UX Design",
+          FUNDED_BADGE: "• Funded",
+          METRICS: [
+            { label: "BUDGET", value: "₹75,000" },
+            { label: "TIMELINE", value: "20 Days" },
+            { label: "STATUS", value: "Live", isGreen: true },
+            { label: "ESCROW", value: "Secure" },
+          ],
+        },
+        WHATS_NEXT: {
+          TITLE: "What's Next?",
+          STEPS: [
+            {
+              icon: "Users",
+              iconBg: "#eff6ff",
+              iconColor: "#0051DF",
+              title: "Receive Applications",
+              description: "Experts review your scope and submit bids.",
+            },
+            {
+              icon: "Search",
+              iconBg: "#f5f3ff",
+              iconColor: "#7c3aed",
+              title: "Review Candidates",
+              description: "Vett profiles, portfolios, and ratings.",
+            },
+            {
+              icon: "Handshake",
+              iconBg: "#0086781A",
+              iconColor: "#008678",
+              title: "Start Collaboration",
+              description: "Award the quest and sign contracts.",
+            },
+            {
+              icon: "ChartNoAxesCombined",
+              iconBg: "#fffbeb",
+              iconColor: "#d97706",
+              title: "Track Progress",
+              description: "Manage milestones and verify deliverables.",
+            },
+          ],
+        },
+        COMPLETION_CARD: {
+          TITLE: "COMPLETION",
+          PERCENT: "100%",
+          STEP_TEXT: "Step 4 of 4: Published!",
+        },
+        VISIBILITY_CARD: {
+          TITLE: "REAL-TIME VISIBILITY",
+          ITEMS: [
+            {
+              label: "Live Status",
+              value: "Publicly Visible",
+              dot: true,
+            },
+            {
+              icon: "Users",
+              label: "Applications",
+              value: "0 Received",
+            },
+            {
+              icon: "ShieldCheck",
+              label: "Escrow Status",
+              value: "Secured & Funded",
+              isGreen: true,
+            },
+          ],
+        },
+        ACTIONS_CARD: {
+          TITLE: "ACTIONS",
+          ITEMS: [
+            { icon: "Eye", label: "View My Quest" },
+            { icon: "UserRoundCog", label: "Manage Applications" },
+            { icon: "Share2", label: "Share Quest" },
+            { icon: "Copy", label: "Duplicate Quest" },
+          ],
+        },
+        PRO_TIP_CARD: {
+          TITLE: "Pro Tip",
+          DESCRIPTION:
+            "Sharing your quest link on LinkedIn or X (formerly Twitter) can increase visibility to elite talent outside our immediate network by up to 40%.",
+          LINK_TEXT: "Read more tips",
+        },
+        BOTTOM_BAR: {
+          VIEW_QUEST: "View My Quest",
+          GO_DASHBOARD: "Go to Dashboard",
+          CREATE_ANOTHER: "Create Another Quest",
+        },
+      },
+    },
+    VIEW_QUEST_DETAIL: {
+      HEADER: {
+        TITLE: "Website Redesign for FinTech Startup",
+        SUBTITLE:
+          "Your Quest is live. Manage progress, milestones, communication, and escrow from one place.",
+        BADGE: "Published",
+        BADGE_SUB: "Published just now",
+      },
+      ALERT_BANNER: {
+        TITLE: "Quest Published Successfully",
+        DESCRIPTION:
+          "Your Quest is now live and ₹75,000 is securely held in TechGuild Escrow.",
+        ESCROW_FUNDED_TAG: "[Escrow Funded ✓]",
+      },
+      METRICS: [
+        { label: "QUEST STATUS", value: "Published", isLive: true, dot: true },
+        { label: "ESCROW SECURED", value: "₹75,000", isBlue: true },
+        { label: "TIMELINE", value: "20 Days" },
+        { label: "MILESTONES", value: "4 Total" },
+      ],
+      OVERVIEW_CARD: {
+        TITLE: "Quest Overview",
+        VIEW_DETAILS: "View Full Details",
+        DESCRIPTION:
+          "Comprehensive redesign of the core user dashboard for our B2B FinTech platform. The goal is to improve user engagement metrics by streamlining complex financial data visualization and optimizing the transaction flow. Requires deep expertise in designing for trust and clarity in enterprise SaaS environments.",
+        SKILLS_LABEL: "REQUIRED SKILLS",
+        SKILLS: ["Figma", "UI Design", "UX Research", "Prototyping", "FinTech"],
+        TIMELINE_LABEL: "Expected Timeline: 15 Aug 2026 - 03 Sep 2026",
+      },
+      MILESTONE_PROGRESS_CARD: {
+        TITLE: "Milestone Progress",
+        COMPLETED_TEXT: "0% Completed",
+        EMPTY_TITLE: "No milestones created",
+        EMPTY_STATUS: "Not Started",
+        VIEW_BREAKDOWN: "View Full Milestone Breakdown",
+      },
+      RECENT_ACTIVITY_CARD: {
+        TITLE: "Recent Activity",
+        ACTIVITIES: [
+          {
+            title: "Freelancer matching started",
+            subtitle: "In progress",
+            type: "progress",
+          },
+          {
+            title: "Escrow securely funded (₹75,000)",
+            subtitle: "Just now",
+            type: "success",
+          },
+          {
+            title: "Quest published to network",
+            subtitle: "Just now",
+            type: "default",
+          },
+        ],
+      },
+      ESCROW_CARD: {
+        TITLE: "Escrow & Payments",
+        AMOUNT: "₹75,000",
+        STATUS: "Escrow Funded",
+        INFO_TEXT:
+          "UPI payment successful. Funds are secured and will only be released upon milestone approval.",
+        VIEW_DETAILS: "View Payment Details",
+      },
+      STATUS_CHECKLIST_CARD: {
+        TITLE: "Status Checklist",
+        ITEMS: [
+          { title: "Quest Published", status: "completed" },
+          { title: "Freelancer Matching", subtitle: "In Progress", status: "in_progress" },
+          { title: "Work Started", subtitle: "Pending", status: "pending" },
+        ],
+      },
+      COMMUNICATION_CARD: {
+        TITLE: "Communication",
+        SUBTITLE: "Keep all project communication in one trusted place.",
+        UNREAD_LABEL: "Unread Messages",
+        UNREAD_COUNT: "0",
+        CHAT_BTN: "Open Quest Chat",
+      },
+      BOTTOM_BAR: {
+        TITLE: "Website Redesign for FinTech Startup",
+        STATUS: "Live",
+        EDIT_QUEST: "Edit Quest",
+        VIEW_WORKSPACE: "View Quest Workspace",
+      },
+    },
+  },
+
   // Authentication flows
   AUTH: {
     // Left hero screen / branding

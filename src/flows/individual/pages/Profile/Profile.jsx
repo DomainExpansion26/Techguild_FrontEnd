@@ -988,7 +988,7 @@ export default function Profile() {
         <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(4)} role="button">
           {WIZARD_STRINGS.BUTTONS.EDIT}
         </span>
-      </div>
+      </Cards>
 
       {submitError && (
         <div
