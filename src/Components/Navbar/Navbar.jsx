@@ -8,14 +8,10 @@ import {
   AGENCY_MENU_ITEMS,
   ADMIN_MENU_ITEMS,
   SETTINGS_SUBMENU_ITEMS,
+  FINANCE_SUBMENU_ITEMS,
+  INDIVIDUAL_FINANCE_SUBMENU_ITEMS,
 } from "@/constants/navigation";
 import "./navbar.css";
-
-export const defaultMenuItems = INDIVIDUAL_MENU_ITEMS;
-export const clientMenuItems = CLIENT_MENU_ITEMS;
-export const agencyMenuItems = AGENCY_MENU_ITEMS;
-export const adminMenuItems = ADMIN_MENU_ITEMS;
-export const settingsSubMenuItems = SETTINGS_SUBMENU_ITEMS;
 
 export default function Navbar({ items, userRole, activeSettingsTab, onSelectSettingsTab }) {
   const location = useLocation();
@@ -32,12 +28,12 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
   const isClientFlow = effectiveRole === "client" || effectiveRole === "Client" || currentPath.startsWith("/client") || currentPath.startsWith("/client-");
 
   const resolvedMenuItems = isAdminFlow
-    ? adminMenuItems
+    ? ADMIN_MENU_ITEMS
     : isAgencyFlow
-    ? agencyMenuItems
+    ? AGENCY_MENU_ITEMS
     : isClientFlow
-    ? clientMenuItems
-    : defaultMenuItems;
+    ? CLIENT_MENU_ITEMS
+    : INDIVIDUAL_MENU_ITEMS;
 
   const menuItems = items || resolvedMenuItems;
 
@@ -49,13 +45,37 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
     ? "Client"
     : "Freelancer";
 
-  const isSettingsPath = currentPath.startsWith("/settings") ||
+  const isSettingsPath =
+    currentPath.startsWith("/settings") ||
     currentPath.startsWith("/client-settings") ||
     currentPath.startsWith("/agency/settings") ||
     currentPath.startsWith("/admin/settings");
 
-  const [userSettingsMode, setUserSettingsMode] = useState(null);
-  const isSettingsMode = userSettingsMode !== null ? userSettingsMode : isSettingsPath;
+  const isFinancePath =
+    currentPath === "/client-payouts" ||
+    currentPath.startsWith("/client-payouts/") ||
+    currentPath === "/client/payouts" ||
+    currentPath.startsWith("/client/payouts/") ||
+    currentPath === "/finance" ||
+    currentPath.startsWith("/finance/") ||
+    currentPath === "/earnings-payouts" ||
+    currentPath.startsWith("/earnings-payouts") ||
+    currentPath === "/individual/earnings" ||
+    currentPath.startsWith("/individual/earnings");
+  const isFinanceMode = isFinancePath && !isSettingsPath;
+  const isSettingsMode = isSettingsPath;
+
+  // Individual (freelancer) finance gets Withdraw tabs; client keeps payout tabs.
+  const financeSubMenuItems = isClientFlow ? FINANCE_SUBMENU_ITEMS : INDIVIDUAL_FINANCE_SUBMENU_ITEMS;
+  const settingsSubMenuItems = SETTINGS_SUBMENU_ITEMS;
+  const activeFinanceTab =
+    new URLSearchParams(location.search).get("tab") || "overview";
+
+  const handleFinanceSubClick = (subItem) => {
+    navigate(`${currentPath}?tab=${subItem.id}`);
+    setIsMobileOpen(false);
+  };
+
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const pathParts = currentPath.split("/").filter(Boolean);
@@ -86,32 +106,10 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
     return aliases.some((a) => currentPath.startsWith(`${a}/`));
   };
 
-  const handleSettingsSubClick = (subItem) => {
-    if (onSelectSettingsTab) {
-      onSelectSettingsTab(subItem.id);
-    }
-    const target = isAdminFlow
-      ? subItem.adminPath || subItem.path
-      : isAgencyFlow
-      ? subItem.agencyPath || subItem.path
-      : isClientFlow
-      ? subItem.clientPath || subItem.path
-      : subItem.path;
-    navigate(target);
-  };
-
   const handleMainItemClick = (item, e) => {
     if (item.id === "settings") {
       e.preventDefault();
-      const settingsTarget = settingsProfilePath;
-      if (!isSettingsPath) {
-        setUserSettingsMode(true);
-        navigate(settingsTarget);
-      } else {
-        setUserSettingsMode(!isSettingsMode);
-      }
-    } else {
-      setUserSettingsMode(false);
+      navigate(settingsProfilePath);
     }
   };
 
@@ -147,21 +145,23 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
       </div>
 
       {/* Desktop Sidebar (>= 768px) */}
-      <aside className={`card shadow-sm border border-light-subtle rounded-3 p-0 sidebar flex-shrink-0 d-none d-md-flex ${isSettingsMode ? "settings-mode" : ""}`}>
+      <aside className={`card shadow-sm border border-light-subtle rounded-3 p-0 sidebar shrink-0 d-none d-md-flex ${isSettingsMode ? "settings-mode" : ""} ${isFinanceMode ? "finance-mode" : ""}`}>
         <div className="card-body p-0 d-flex flex-column h-100 justify-content-between">
-          
-          {/* Logo Header Header */}
+
+          {/* Logo Header Header (hidden in Finance split mode — rail shows "T" instead) */}
+          {!isFinanceMode && (
           <div className="sidebar-logo-container">
             <div className="sidebar-logo">
               <span className="logo-tech">Tech</span>
               <span className="logo-guild">Guild</span>
             </div>
           </div>
+          )}
 
           {/* Standard Main Menu View (ss1) */}
-          {!isSettingsMode && (
+          {!isSettingsMode && !isFinanceMode && (
             <>
-              <div className="sidebar-menu-container flex-grow-1">
+              <div className="sidebar-menu-container grow">
                 <ul className="sidebar-menu">
                   {menuItems.map((item) => {
                     const targetPath = getItemTarget(item);
@@ -250,6 +250,59 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
             </div>
           )}
 
+          {/* Split Finance View — icon rail + FINANCE panel */}
+          {isFinanceMode && (
+            <div className="sidebar-split-body">
+              {/* Left Thin Icon Rail (same items as main menu) */}
+              <div className="sidebar-rail">
+                <div className="sidebar-rail-logo">T</div>
+                <ul className="sidebar-rail-menu">
+                  {menuItems.map((item) => {
+                    const isDashboard = item.id === "dashboard";
+                    const targetPath = item.path || (isDashboard ? "/dashboard" : `/${item.id}`);
+                    const isActive = item.id === "finance";
+                    return (
+                      <li key={item.id}>
+                        <Link
+                          to={targetPath}
+                          className={`sidebar-rail-item ${isActive ? "active" : ""}`}
+                          title={item.label}
+                          onClick={(e) => handleMainItemClick(item, e)}
+                        >
+                          <Icon name={item.icon} size={18} />
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+                <div className="sidebar-rail-footer">
+                  <div className="sidebar-avatar">{displayAvatar}</div>
+                </div>
+              </div>
+
+              {/* Right Finance Submenu Panel */}
+              <div className="sidebar-panel">
+                <div className="sidebar-panel-header">FINANCE</div>
+                <ul className="sidebar-sub-menu">
+                  {financeSubMenuItems.map((subItem) => {
+                    const isSubActive = subItem.id === activeFinanceTab;
+                    return (
+                      <li key={subItem.id}>
+                        <button
+                          type="button"
+                          className={`sidebar-finance-item ${isSubActive ? "active" : ""}`}
+                          onClick={() => handleFinanceSubClick(subItem)}
+                        >
+                          <span>{subItem.label}</span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
+          )}
+
         </div>
       </aside>
 
@@ -259,7 +312,7 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
         <div className="mobile-drawer-content d-flex flex-column justify-content-between">
           <div className="d-flex flex-column overflow-hidden h-100">
             {/* Drawer Header */}
-            <div className="mobile-drawer-header d-flex align-items-center justify-content-between flex-shrink-0">
+            <div className="mobile-drawer-header d-flex align-items-center justify-content-between shrink-0">
               <div className="d-flex align-items-center gap-2">
                 <div className="sidebar-logo">
                   <span className="logo-tech">Tech</span>
@@ -287,7 +340,7 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
             </div>
 
             {/* Drawer Menu List */}
-            <div className="mobile-drawer-body flex-grow-1 overflow-y-auto">
+            <div className="mobile-drawer-body grow overflow-y-auto">
               <ul className="mobile-drawer-menu">
                 {menuItems.map((item) => {
                   const targetPath = getItemTarget(item);
@@ -303,7 +356,6 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
                               handleMainItemClick(item, e);
                             } else {
                               setIsMobileOpen(false);
-                              setUserSettingsMode(false);
                             }
                           }}
                         >
@@ -311,6 +363,29 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
                           <span>{item.label}</span>
                         </Link>
                       </li>
+
+                      {/* Finance submenu expanded in Mobile Drawer */}
+                      {item.id === "finance" && isFinanceMode && (
+                        <li className="ms-3 my-1">
+                          <div className="sidebar-panel-header px-2 py-1 mb-1">FINANCE</div>
+                          <ul className="sidebar-sub-menu">
+                            {financeSubMenuItems.map((subItem) => {
+                              const isSubActive = subItem.id === activeFinanceTab;
+                              return (
+                                <li key={subItem.id}>
+                                  <button
+                                    type="button"
+                                    className={`sidebar-finance-item ${isSubActive ? "active" : ""}`}
+                                    onClick={() => handleFinanceSubClick(subItem)}
+                                  >
+                                    <span>{subItem.label}</span>
+                                  </button>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </li>
+                      )}
 
                       {/* If Settings is expanded in Mobile Drawer */}
                       {item.id === "settings" && isSettingsMode && (
@@ -347,7 +422,7 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
 
           {/* Drawer Footer User Card */}
           <div
-            className="mobile-drawer-footer d-flex align-items-center justify-content-between flex-shrink-0"
+            className="mobile-drawer-footer d-flex align-items-center justify-content-between shrink-0"
             style={{ cursor: "pointer" }}
             onClick={() => {
               setIsMobileOpen(false);
