@@ -80,17 +80,21 @@ import Palette from "../../assets/icons/palette.svg?react";
 import Tag from "../../assets/icons/tag.svg?react";
 import LifeBuoy from "../../assets/icons/life-buoy.svg?react";
 import FolderOpen from "../../assets/icons/folder-open.svg?react";
+import Heart from "../../assets/icons/heart.svg?react";
+import Share2 from "../../assets/icons/share2.svg?react";
+import MessageSquare from "../../assets/icons/message-square.svg?react";
+import Image from "../../assets/icons/image.svg?react";
+import Code from "../../assets/icons/code.svg?react";
+import Zap from "../../assets/icons/zap.svg?react";
+import ChevronLeft from "../../assets/icons/chevron-left.svg?react";
 import Sprout from "../../assets/icons/sprout.svg?react";
 import Trees from "../../assets/icons/trees.svg?react";
 import Gem from "../../assets/icons/gem.svg?react";
 import Network from "../../assets/icons/network.svg?react";
-import Zap from "../../assets/icons/zap.svg?react";
 import RotateCw from "../../assets/icons/rotate-cw.svg?react";
 import GripVertical from "../../assets/icons/grip-vertical.svg?react";
-import Share2 from "../../assets/icons/share2.svg?react";
 import Copy from "../../assets/icons/copy.svg?react";
 import Wallet from "../../assets/icons/wallet.svg?react";
-import MessageSquare from "../../assets/icons/message-square.svg?react";
 import BadgeCheckFill from "../../assets/icons/badge-check-fill.svg?react";
 import UserRoundCog from "../../assets/icons/user-round-cog.svg?react";
 import Handshake from "../../assets/icons/handshake.svg?react";
@@ -181,18 +185,22 @@ export {
   Tag,
   LifeBuoy,
   FolderOpen,
+  Heart,
+  Share2,
+  MessageSquare,
+  Image,
+  Code,
+  Zap,
+  ChevronLeft,
   Sprout,
   Trees,
   Gem,
   Network,
-  Zap,
   RotateCw,
   GripVertical,
-  Share2,
   Share2 as Share,
   Copy,
   Wallet,
-  MessageSquare,
   UserRoundCog,
   Handshake,
   ChartNoAxesCombined,

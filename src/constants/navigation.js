@@ -7,7 +7,7 @@ export const INDIVIDUAL_MENU_ITEMS = [
   { id: "analytics", label: "Analytics", icon: "BarChart3", path: "/analytics", aliases: ["/reputation-rank"] },
   { id: "finance", label: "Finance", icon: "IndianRupee", path: "/finance", aliases: ["/earnings-payouts"] },
   { id: "party-formation", label: "Party Formation", icon: "Group", path: "/party-formation", aliases: ["/party-management", "/individual/party"] },
-  { id: "guild-hall", label: "Guild Hall", icon: "Building2", path: "/guild-hall", aliases: ["/reviews-feedback"] },
+  { id: "guild-hall", label: "Guild Hall", icon: "Building2", path: "/guild-hall", aliases: ["/reviews-feedback", "/individual/guild-hall"] },
   { id: "subscription", label: "Subscription", icon: "Star", path: "/subscription", aliases: [] },
   { id: "verification", label: "Verification", icon: "Verified", path: "/verification", aliases: ["/verification-hub"] },
   { id: "settings", label: "Settings", icon: "Settings", path: "/settings", aliases: ["/individual/settings"] },
