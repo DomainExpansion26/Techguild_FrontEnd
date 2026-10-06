@@ -263,6 +263,25 @@ export default function Login() {
           navigate(resolveDashboardPath(role));
         }
       } catch (err) {
+        const errData = err?.data || err?.response?.data;
+        if (errData?.requires_2fa || errData?.temporary_token) {
+          const tempToken = errData.temporary_token || errData.temporaryToken;
+          sessionStorage.setItem(
+            APP_CONFIG.AUTH.STORAGE_KEYS.TWO_FA_CHALLENGE,
+            JSON.stringify({
+              temporaryToken: tempToken,
+              email: cleanEmail,
+            })
+          );
+          navigate("/verify-2fa", {
+            state: {
+              temporary_token: tempToken,
+              email: cleanEmail,
+            },
+          });
+          return;
+        }
+
         const isUnverified =
           err?.status === 401 && err?.message?.toLowerCase().includes("verify your email");
         const msg = isUnverified
