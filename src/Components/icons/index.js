@@ -214,7 +214,6 @@ export {
   RotateCw,
   GripVertical,
   Share2 as Share,
-  Copy,
   Wallet,
   UserRoundCog,
   Handshake,
