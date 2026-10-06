@@ -19,8 +19,17 @@ export const authRoutes = (
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgetPass />} />
-      <Route path="/reset-password" element={<ResetPass />} />
     </Route>
+
+    {/* Reset password routes: accessible regardless of session status */}
+    <Route path="/reset-password" element={<ResetPass />} />
+    <Route path="/reset-password/:token" element={<ResetPass />} />
+    <Route path="/auth/reset-password" element={<ResetPass />} />
+    <Route path="/auth/reset-password/:token" element={<ResetPass />} />
+    <Route path="/resetpassword" element={<ResetPass />} />
+    <Route path="/resetpassword/:token" element={<ResetPass />} />
+    <Route path="/reset-pass" element={<ResetPass />} />
+    <Route path="/reset-pass/:token" element={<ResetPass />} />
     <Route path="/verify-email" element={<VerifyEmail />} />
 
     <Route path="/verify-email/:token" element={<EmailVerified />} />
