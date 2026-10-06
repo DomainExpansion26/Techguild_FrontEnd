@@ -1,66 +1,39 @@
+import { apiClient } from "@/services/api";
+import { ENDPOINTS } from "@/services/api/endpoints";
+
 /**
- * TWO-FACTOR AUTHENTICATION SERVICE (AWAITING BACKEND SPECIFICATION)
- *
- * IMPORTANT:
- * The official TechGuild backend documentation specifies that during login:
- *   POST /auth/login
- * Can return:
- *   {
- *     "requires_2fa": true,
- *     "temporary_token": "<token>"
- *   }
- *
- * However, the backend documentation does NOT provide the actual 2FA verification
- * endpoints, request body schemas, or parameter names (e.g. OTP verification endpoint,
- * recovery code endpoint, setup, disable, or resend OTP).
- *
- * Per instructions:
- * DO NOT invent fake endpoints or request schemas.
- * This service defines the frontend architecture and placeholder interface ready
- * to be wired up as soon as the backend contract is supplied.
+ * Two-Factor Authentication (2FA) API layer.
+ * Connects to documented backend endpoints for TOTP setup, verification, login challenge, and recovery codes.
  */
-
 export const twoFaApi = {
-  // TODO: Connect to backend 2FA verification endpoint once documented
-  verifyLogin: async ({ temporary_token, code }) => {
-    throw new Error(
-      "Two-factor authentication verification endpoint contract has not yet been documented in the TechGuild API spec. Please configure the verified endpoint once provided."
-    );
-  },
-
-  // TODO: Connect to backend recovery code verification endpoint once documented
-  verifyRecoveryCode: async ({ temporary_token, code }) => {
-    throw new Error(
-      "Two-factor authentication recovery code endpoint contract has not yet been documented in the TechGuild API spec. Please configure the verified endpoint once provided."
-    );
-  },
-
-  // TODO: Connect to backend 2FA setup endpoint once documented
+  // Generate a fresh TOTP secret and QR provisioning URI
   setup: async () => {
-    throw new Error(
-      "2FA setup endpoint contract is pending backend API specification."
-    );
+    return apiClient.post(ENDPOINTS.AUTH.TWO_FA.SETUP);
   },
 
-  // TODO: Connect to backend 2FA verify-setup endpoint once documented
+  // Verify the initial TOTP code and enable 2FA (returns recovery codes)
   verifySetup: async ({ code }) => {
-    throw new Error(
-      "2FA verify setup endpoint contract is pending backend API specification."
-    );
+    return apiClient.post(ENDPOINTS.AUTH.TWO_FA.VERIFY_SETUP, { code });
   },
 
-  // TODO: Connect to backend 2FA disable endpoint once documented
+  // Disable 2FA after verifying password and TOTP
   disable: async ({ password, code }) => {
-    throw new Error(
-      "2FA disable endpoint contract is pending backend API specification."
-    );
+    return apiClient.post(ENDPOINTS.AUTH.TWO_FA.DISABLE, { password, code });
   },
 
-  // TODO: Connect to backend regenerate recovery codes endpoint once documented
+  // Invalidate old recovery codes and generate new ones
   regenerateRecoveryCodes: async ({ password }) => {
-    throw new Error(
-      "2FA regenerate recovery codes endpoint contract is pending backend API specification."
-    );
+    return apiClient.post(ENDPOINTS.AUTH.TWO_FA.REGENERATE_RECOVERY_CODES, { password });
+  },
+
+  // Verify TOTP during login-time 2FA challenge (email/password or OAuth)
+  verifyLogin: async ({ temporary_token, code }) => {
+    return apiClient.post(ENDPOINTS.AUTH.TWO_FA.VERIFY_LOGIN, { temporary_token, code });
+  },
+
+  // Authenticate using a single-use recovery code
+  verifyRecoveryCode: async ({ temporary_token, code }) => {
+    return apiClient.post(ENDPOINTS.AUTH.TWO_FA.VERIFY_RECOVERY_CODE, { temporary_token, code });
   },
 };
 
