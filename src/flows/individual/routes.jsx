@@ -13,6 +13,7 @@ const PartyManagement = lazy(() => import("./pages/PartyManagement/PartyManageme
 const ReputationRank = lazy(() => import("./pages/ReputationRank/ReputationRank"));
 const Earnings = lazy(() => import("./pages/Earnings/Earnings"));
 const Reviews = lazy(() => import("./pages/Reviews/Reviews"));
+const GuildHall = lazy(() => import("./pages/GuildHall/GuildHall"));
 const Notifications = lazy(() => import("./pages/Notifications/Notifications"));
 const HelpSupport = lazy(() => import("./pages/HelpSupport/HelpSupport"));
 const IndividualSettingsWrapper = lazy(() => import("./pages/Settings/Settings"));
@@ -41,7 +42,7 @@ export const individualRoutes = (
     <Route path="/earnings-payouts" element={<Earnings />} />
     <Route path="/finance" element={<Earnings />} />
     <Route path="/reviews-feedback" element={<Reviews />} />
-    <Route path="/guild-hall" element={<Reviews />} />
+    <Route path="/guild-hall" element={<GuildHall />} />
     <Route path="/notifications" element={<Notifications />} />
     <Route path="/help-support" element={<HelpSupport />} />
     <Route path="/settings" element={<IndividualSettingsWrapper />} />
@@ -59,6 +60,7 @@ export const individualRoutes = (
     <Route path="/individual/party" element={<PartyManagement />} />
     <Route path="/individual/earnings" element={<Earnings />} />
     <Route path="/individual/reviews" element={<Reviews />} />
+    <Route path="/individual/guild-hall" element={<GuildHall />} />
     <Route path="/individual/settings" element={<IndividualSettingsWrapper />} />
     <Route path="/individual/settings/:tab" element={<IndividualSettingsWrapper />} />
   </>
