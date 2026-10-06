@@ -97,6 +97,8 @@ import Gem from "../../assets/icons/gem.svg?react";
 import Network from "../../assets/icons/network.svg?react";
 import RotateCw from "../../assets/icons/rotate-cw.svg?react";
 import GripVertical from "../../assets/icons/grip-vertical.svg?react";
+import Share2 from "../../assets/icons/share2.svg?react";
+import Copy from "../../assets/icons/copy.svg?react";
 import Wallet from "../../assets/icons/wallet.svg?react";
 import BadgeCheckFill from "../../assets/icons/badge-check-fill.svg?react";
 import UserRoundCog from "../../assets/icons/user-round-cog.svg?react";
