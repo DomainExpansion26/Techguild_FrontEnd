@@ -13,6 +13,7 @@ import Settings from "../../assets/icons/settings.svg?react";
 import CircleQuestionMark from "../../assets/icons/circle-question-mark.svg?react";
 import Focus from "../../assets/icons/focus.svg?react";
 import CircleCheck from "../../assets/icons/circle-check.svg?react";
+import CircleCheckFill from "../../assets/icons/circle-check-fill.svg?react";
 import Mail from "../../assets/icons/mail.svg?react";
 import Check from "../../assets/icons/check.svg?react";
 import ArrowLeft from "../../assets/icons/arrow-left.svg?react";
@@ -37,6 +38,7 @@ import Eye from "../../assets/icons/eye.svg?react";
 import EyeOff from "../../assets/icons/eye-off.svg?react";
 import Building2 from "../../assets/icons/building2.svg?react";
 import Shield from "../../assets/icons/shield.svg?react";
+import ShieldCheck from "../../assets/icons/shield-check.svg?react";
 import Trash from "../../assets/icons/trash.svg?react";
 import LogOut from "../../assets/icons/log-out.svg?react";
 import MessageSquareMore from "../../assets/icons/message-square-more.svg?react";
@@ -57,6 +59,7 @@ import Globe from "../../assets/icons/globe.svg?react";
 import Users from "../../assets/icons/users.svg?react";
 import Hash from "../../assets/icons/hash.svg?react";
 import Linkedin from "../../assets/icons/linkedin.svg?react";
+import Info from "../../assets/icons/info.svg?react";
 import Circle from "../../assets/icons/circle.svg?react";
 import Layers from "../../assets/icons/layers.svg?react";
 import Clock from "../../assets/icons/clock.svg?react";
@@ -77,6 +80,21 @@ import Palette from "../../assets/icons/palette.svg?react";
 import Tag from "../../assets/icons/tag.svg?react";
 import LifeBuoy from "../../assets/icons/life-buoy.svg?react";
 import FolderOpen from "../../assets/icons/folder-open.svg?react";
+import Sprout from "../../assets/icons/sprout.svg?react";
+import Trees from "../../assets/icons/trees.svg?react";
+import Gem from "../../assets/icons/gem.svg?react";
+import Network from "../../assets/icons/network.svg?react";
+import Zap from "../../assets/icons/zap.svg?react";
+import RotateCw from "../../assets/icons/rotate-cw.svg?react";
+import GripVertical from "../../assets/icons/grip-vertical.svg?react";
+import Share2 from "../../assets/icons/share2.svg?react";
+import Copy from "../../assets/icons/copy.svg?react";
+import Wallet from "../../assets/icons/wallet.svg?react";
+import MessageSquare from "../../assets/icons/message-square.svg?react";
+import BadgeCheckFill from "../../assets/icons/badge-check-fill.svg?react";
+import UserRoundCog from "../../assets/icons/user-round-cog.svg?react";
+import Handshake from "../../assets/icons/handshake.svg?react";
+import ChartNoAxesCombined from "../../assets/icons/chart-no-axes-combined.svg?react";
 
 export {
   ArrowLeft,
@@ -101,6 +119,7 @@ export {
   CircleQuestionMark,
   Focus,
   CircleCheck,
+  CircleCheckFill,
   Mail,
   Check,
   Clock9,
@@ -119,12 +138,14 @@ export {
   EyeOff,
   Building2,
   Shield,
+  ShieldCheck,
   Trash,
   LogOut,
   MessageSquareMore,
   NotebookText,
   BarChart3,
   BadgeCheck,
+  BadgeCheckFill,
   Laptop,
   Monitor,
   Smartphone,
@@ -146,6 +167,7 @@ export {
   Plus,
   UserPlus,
   ClipboardList,
+  Info,
   Download,
   ExternalLink,
   ArrowDown,
@@ -159,5 +181,21 @@ export {
   Tag,
   LifeBuoy,
   FolderOpen,
+  Sprout,
+  Trees,
+  Gem,
+  Network,
+  Zap,
+  RotateCw,
+  GripVertical,
+  Share2,
+  Share2 as Share,
+  Copy,
+  Wallet,
+  MessageSquare,
+  UserRoundCog,
+  Handshake,
+  ChartNoAxesCombined,
 };
+
 
