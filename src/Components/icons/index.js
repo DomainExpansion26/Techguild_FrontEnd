@@ -77,6 +77,17 @@ import Palette from "../../assets/icons/palette.svg?react";
 import Tag from "../../assets/icons/tag.svg?react";
 import LifeBuoy from "../../assets/icons/life-buoy.svg?react";
 import FolderOpen from "../../assets/icons/folder-open.svg?react";
+import Send from "../../assets/icons/send.svg?react";
+import ArrowUp from "../../assets/icons/arrow-up.svg?react";
+import Info from "../../assets/icons/info.svg?react";
+import Percent from "../../assets/icons/percent.svg?react";
+import History from "../../assets/icons/history.svg?react";
+import Funnel from "../../assets/icons/funnel.svg?react";
+import CircleX from "../../assets/icons/circle-x.svg?react";
+import Landmark from "../../assets/icons/landmark.svg?react";
+import ShieldCheck from "../../assets/icons/shield-check.svg?react";
+import Copy from "../../assets/icons/copy.svg?react";
+import Headphones from "../../assets/icons/headphones.svg?react";
 
 export {
   ArrowLeft,
@@ -159,5 +170,16 @@ export {
   Tag,
   LifeBuoy,
   FolderOpen,
+  Send,
+  ArrowUp,
+  Info,
+  Percent,
+  History,
+  Funnel,
+  CircleX,
+  Landmark,
+  ShieldCheck,
+  Copy,
+  Headphones,
 };
 
