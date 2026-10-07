@@ -35,7 +35,45 @@ const buildDefaults = (formatId) => {
   return values;
 };
 
-export default function CreatePostModal({ open = false, onClose = () => {}, initialFormat = null }) {
+// Maps a filled form to the feed-post content shape consumed by PostCard.
+// GuildHall adds id/author/stats on top of this draft.
+const buildPostDraft = (formatId, values = {}) => {
+  const withHash = (tags) =>
+    (tags || [])
+      .map((tag) => tag.trim())
+      .filter(Boolean)
+      .map((tag) => (tag.startsWith("#") ? tag : `#${tag}`));
+
+  switch (formatId) {
+    case "question":
+      return { type: "question", title: values.question, body: values.context, tags: withHash(values.tags) };
+    case "project":
+      return { type: "project", title: values.name, body: values.description, tags: withHash(values.stack) };
+    case "poll": {
+      const options = (values.options || []).map((label) => label.trim()).filter(Boolean);
+      return {
+        type: "poll",
+        title: values.question,
+        poll: {
+          options: options.map((label) => ({ label, votes: 0 })),
+          daysLeft: `${values.duration} left`,
+        },
+      };
+    }
+    case "opportunity": {
+      const facts = (values.facts || []).map((fact) => fact.trim()).filter(Boolean);
+      const body = [values.details, facts.join(" • ")].filter(Boolean).join("  ·  ");
+      return { type: "opportunity", title: values.looking, body, tags: withHash(values.tags) };
+    }
+    case "photo":
+      return { type: "photo", title: values.caption, media: values.media || null };
+    case "discussion":
+    default:
+      return { type: "discussion", title: values.title, body: values.details, tags: withHash(values.tags) };
+  }
+};
+
+export default function CreatePostModal({ open = false, onClose = () => {}, onPublish = () => {}, initialFormat = null }) {
   const [step, setStep] = useState(() => (safeFormat(initialFormat) ? 2 : 1));
   const [formatId, setFormatId] = useState(() => safeFormat(initialFormat));
   const [values, setValues] = useState(() => {
@@ -371,6 +409,12 @@ export default function CreatePostModal({ open = false, onClose = () => {}, init
 
   const valid = step === 2 && isFormValid();
 
+  const handlePublish = () => {
+    if (!valid || !formatId) return;
+    onPublish(buildPostDraft(formatId, formValues));
+    onClose();
+  };
+
   const footer = (
     <>
       <span className="cp-hint">
@@ -392,7 +436,7 @@ export default function CreatePostModal({ open = false, onClose = () => {}, init
             text={C.PUBLISH}
             className="cp-btn"
             disabled={!valid}
-            onClick={onClose}
+            onClick={handlePublish}
           />
         )}
       </div>
