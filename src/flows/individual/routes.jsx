@@ -13,7 +13,7 @@ const PartyManagement = lazy(() => import("./pages/PartyManagement/PartyManageme
 const ReputationRank = lazy(() => import("./pages/ReputationRank/ReputationRank"));
 const Earnings = lazy(() => import("./pages/Earnings/Earnings"));
 const Reviews = lazy(() => import("./pages/Reviews/Reviews"));
-const GuildHall = lazy(() => import("./pages/GuildHall/GuildHall"));
+const GuildHall = lazy(() => import("../shared/GuildHall/GuildHall"));
 const Notifications = lazy(() => import("./pages/Notifications/Notifications"));
 const HelpSupport = lazy(() => import("./pages/HelpSupport/HelpSupport"));
 const IndividualSettingsWrapper = lazy(() => import("./pages/Settings/Settings"));
