@@ -14,6 +14,18 @@
   overflow-x: hidden;
 }
 
+/* Scrollbar (hidden visual scrollbar while retaining scroll functionality) */
+.gh-page {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.gh-page::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 /* Column children must never shrink to fit the viewport — the page scrolls
    instead (composer/tabs otherwise collapse to ~0 height). */
 .gh-page > * {
@@ -296,6 +308,14 @@
   align-items: stretch;
   height: 50px;
   overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.gh-tabs::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .gh-tab {
@@ -472,6 +492,23 @@
   font-weight: 600;
   line-height: 16.5px;
   letter-spacing: 0.064px;
+  color: #103ca4;
+}
+
+.gh-post-media {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  margin-top: 8px;
+  padding: 5px 10px;
+  border: 1px dashed #b9cbf3;
+  border-radius: 8px;
+  background-color: #f7faff;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 17px;
+  letter-spacing: -0.048px;
   color: #103ca4;
 }
 
