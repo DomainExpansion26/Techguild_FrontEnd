@@ -76,10 +76,12 @@ export default function AccountSecurity() {
   const [smsBackup, setSmsBackup] = useState(false);
   const [email, setEmail] = useState(user?.email || "arjun.mehta@gmail.com");
   const emailTouchedRef = useRef(false);
-  const [currentPassword, setCurrentPassword] = useState("MySecurePass123");
+  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [passwordLoading, setPasswordLoading] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
 
   // Auth session can resolve after mount on fresh reload — fill the email
   // then, unless the user already typed something.
@@ -89,15 +91,74 @@ export default function AccountSecurity() {
     }
   }, [user?.email]);
 
+  const handleUpdatePassword = async () => {
+    setPasswordError("");
+
+    if (!currentPassword) {
+      const msg = "Current password is required.";
+      setPasswordError(msg);
+      dispatch(showSnackbar({ message: msg, type: "error" }));
+      return;
+    }
+
+    if (!newPassword) {
+      const msg = "New password is required.";
+      setPasswordError(msg);
+      dispatch(showSnackbar({ message: msg, type: "error" }));
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      const msg = "New password must be at least 8 characters.";
+      setPasswordError(msg);
+      dispatch(showSnackbar({ message: msg, type: "error" }));
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      const msg = "New password and confirmation password do not match.";
+      setPasswordError(msg);
+      dispatch(showSnackbar({ message: msg, type: "error" }));
+      return;
+    }
+
+    setPasswordLoading(true);
+    try {
+      // POST /auth/change-password with old_password and new_password
+      const res = await authApi.changePassword({
+        old_password: currentPassword,
+        new_password: newPassword,
+      });
+
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+
+      dispatch(
+        showSnackbar({
+          message: res?.message || "Password changed successfully",
+          type: "success",
+        })
+      );
+    } catch (err) {
+      const errorMsg = err?.message || "Failed to update password.";
+      setPasswordError(errorMsg);
+      dispatch(showSnackbar({ message: errorMsg, type: "error" }));
+    } finally {
+      setPasswordLoading(false);
+    }
+  };
+
   const handleSignOut = async () => {
     try {
-      await authApi.logout().catch(() => {});
+      await logout();
     } finally {
-      logout();
-      dispatch(showSnackbar({
-        message: "You have been signed out.",
-        type: "info",
-      }));
+      dispatch(
+        showSnackbar({
+          message: "You have been signed out.",
+          type: "info",
+        })
+      );
       navigate("/login");
     }
   };
@@ -238,11 +299,17 @@ export default function AccountSecurity() {
                 />
               </div>
             </div>
+            {passwordError && (
+              <div className="account-security-error mt-2 mb-2 text-danger small" role="alert">
+                {passwordError}
+              </div>
+            )}
             <div className="account-security-actions">
               <PrimaryButton
-                text="Update Password"
+                text={passwordLoading ? "Updating Password..." : "Update Password"}
                 className="account-security-primary-button"
-                onClick={() => {}}
+                disabled={passwordLoading}
+                onClick={handleUpdatePassword}
               />
             </div>
           </Cards>

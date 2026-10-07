@@ -94,10 +94,30 @@ function deriveDisplayName(cleanEmail) {
     .replace(/\b\w/g, (l) => l.toUpperCase());
 }
 
+function decodeJwtPayload(token) {
+  try {
+    if (!token || typeof token !== "string") return null;
+    const parts = token.split(".");
+    if (parts.length !== 3) return null;
+    const base64 = parts[1].replace(/-/g, "+").replace(/_/g, "/");
+    const json = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+    return JSON.parse(json);
+  } catch {
+    return null;
+  }
+}
+
 function resolveDashboardPath(role) {
-  if (role === ROLES.CLIENT) return "/client-dashboard";
-  if (role === ROLES.AGENCY) return "/agency/dashboard";
-  return "/dashboard";
+  if (role === ROLES.CLIENT || role === "client" || role === "client_admin" || role === "client_member") return "/client-dashboard";
+  if (role === ROLES.AGENCY || role === "agency" || role === "agency_admin") return "/agency/dashboard";
+  if (role === ROLES.INDIVIDUAL || role === "individual") return "/dashboard";
+  if (role === ROLES.ADMIN || role === "admin") return "/admin/dashboard";
+  return "/account-type";
 }
 
 // Login-time 2FA challenge (Figma "for 6- digit code" / "for 8 digit code").
@@ -164,38 +184,113 @@ export default function TwoFactor() {
               code: joined,
             });
 
-      const token = response?.access_token ?? response?.token;
+      const token =
+        response?.access_token ??
+        response?.token ??
+        response?.data?.access_token ??
+        response?.data?.token;
+
       if (!token) {
         throw new Error(response?.message || "Verification failed: no session returned.");
       }
 
-      const cleanEmail = (challenge.email || response?.user?.email || "")
+      const cleanEmail = (
+        challenge.email ||
+        response?.user?.email ||
+        response?.data?.user?.email ||
+        response?.email ||
+        ""
+      )
         .trim()
         .toLowerCase();
-      const resolvedName =
-        response?.user?.name ?? deriveDisplayName(cleanEmail);
 
-      // Role comes from the verify payload when present, otherwise probe
-      // the profile (token passed explicitly), defaulting to individual.
-      let role = response?.user?.account_type ?? ROLES.INDIVIDUAL;
-      if (!response?.user?.account_type) {
-        try {
-          const profileRes = await profileApi.getProfile({ token });
-          if (profileRes?.account_type) role = profileRes.account_type;
-        } catch {
-          // Fallback to individual when profile is unreachable.
+      const resolvedName =
+        response?.user?.name ??
+        response?.data?.user?.name ??
+        deriveDisplayName(cleanEmail);
+
+      // Resolve role without defaulting to any role
+      let role =
+        response?.user?.account_type ||
+        response?.account_type ||
+        response?.user?.role ||
+        response?.role ||
+        response?.data?.user?.account_type ||
+        response?.data?.user?.role ||
+        null;
+
+      if (!role) {
+        const jwtPayload = decodeJwtPayload(token);
+        const jwtRole =
+          jwtPayload?.account_type ||
+          jwtPayload?.role ||
+          jwtPayload?.user?.account_type ||
+          jwtPayload?.user?.role;
+        if (jwtRole && typeof jwtRole === "string" && jwtRole.trim()) {
+          role = jwtRole.trim().toLowerCase();
         }
       }
+
+      if (!role) {
+        try {
+          const pointsRes = await profileApi.getPoints({ token });
+          const resType =
+            pointsRes?.account_type ||
+            pointsRes?.data?.account_type ||
+            pointsRes?.role ||
+            pointsRes?.data?.role;
+          if (resType && typeof resType === "string" && resType.trim()) {
+            role = resType.trim().toLowerCase();
+          }
+        } catch {
+          // Proceed to profile probe
+        }
+      }
+
+      if (!role) {
+        try {
+          const profileRes = await profileApi.getProfile({ token });
+          const resType =
+            profileRes?.account_type ||
+            profileRes?.data?.account_type ||
+            profileRes?.role ||
+            profileRes?.data?.role ||
+            profileRes?.user?.account_type ||
+            profileRes?.user?.role ||
+            profileRes?.data?.user?.account_type ||
+            profileRes?.data?.user?.role ||
+            (profileRes?.client || profileRes?.data?.client ? ROLES.CLIENT : null) ||
+            (profileRes?.agency || profileRes?.data?.agency ? ROLES.AGENCY : null) ||
+            (profileRes?.individual || profileRes?.data?.individual ? ROLES.INDIVIDUAL : null);
+          if (resType && typeof resType === "string" && resType.trim()) {
+            role = resType.trim().toLowerCase();
+          }
+        } catch {
+          // Account type not yet selected or unreachable
+        }
+      }
+
+      const refreshToken =
+        response?.refresh_token ||
+        response?.data?.refresh_token ||
+        null;
+      const expiresIn =
+        response?.expires_in ||
+        response?.data?.expires_in ||
+        null;
 
       await login(
         {
           email: cleanEmail,
           name: resolvedName,
-          role,
+          role: role || null,
           avatar: resolvedName.charAt(0).toUpperCase(),
+          two_factor_enabled: true,
         },
         token,
-        role
+        role || null,
+        refreshToken,
+        expiresIn
       );
       sessionStorage.removeItem(CHALLENGE_KEY);
 
@@ -205,8 +300,13 @@ export default function TwoFactor() {
           type: "success",
         })
       );
-      prefetchPostLogin(role);
-      navigate(resolveDashboardPath(role), { replace: true });
+
+      if (!role) {
+        navigate("/account-type", { replace: true, state: { email: cleanEmail } });
+      } else {
+        prefetchPostLogin(role);
+        navigate(resolveDashboardPath(role), { replace: true });
+      }
     } catch (err) {
       fail(err?.message || FORM_ERRORS.AUTH.TWO_FA_FAILED);
     } finally {

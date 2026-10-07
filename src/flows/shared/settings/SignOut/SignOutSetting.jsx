@@ -14,10 +14,8 @@ export default function SignOutSetting() {
 
   const handleConfirmSignOut = async () => {
     try {
-      // Optional backend logout notification
-      await authApi.logout().catch(() => {});
+      await logout();
     } finally {
-      logout();
       dispatch(showSnackbar({
         message: "You have been signed out successfully.",
         type: "info",

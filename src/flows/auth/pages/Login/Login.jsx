@@ -98,9 +98,10 @@ function deriveDisplayName(cleanEmail) {
 }
 
 function resolveDashboardPath(role) {
-  if (role === ROLES.CLIENT) return "/client-dashboard";
-  if (role === ROLES.AGENCY) return "/agency/dashboard";
-  return "/dashboard";
+  if (role === ROLES.CLIENT || role === "client" || role === "client_admin" || role === "client_member") return "/client-dashboard";
+  if (role === ROLES.AGENCY || role === "agency" || role === "agency_admin") return "/agency/dashboard";
+  if (role === ROLES.INDIVIDUAL || role === "individual") return "/dashboard";
+  return "/account-type";
 }
 
 export default function Login() {
@@ -194,28 +195,51 @@ export default function Login() {
 
         const resolvedName = deriveDisplayName(cleanEmail);
 
-        // Single write path: AuthContext.login persists token/user/role.
-        // Probe profile first (token passed explicitly so apiClient doesn't
-        // depend on storage ordering), defaulting to individual.
-        let role = ROLES.INDIVIDUAL;
-        try {
-          const profileRes = await profileApi.getProfile({ token });
-          if (profileRes?.account_type) {
-            role = profileRes.account_type;
+        // Resolve the user's selected account type without assuming a default role
+        let role = response?.user?.account_type || response?.account_type || null;
+
+        // 1. Probe points endpoint with explicit token (direct DB check for user.AccountType)
+        if (!role) {
+          try {
+            const pointsRes = await profileApi.getPoints({ token });
+            const resType = pointsRes?.account_type || pointsRes?.data?.account_type;
+            if (resType && typeof resType === "string" && resType.trim()) {
+              role = resType.trim();
+            }
+          } catch {
+            // Ignore points failure, proceed to profile probe
           }
-        } catch {
-          // Fallback to individual when profile is unreachable.
+        }
+
+        // 2. Probe profile endpoint with explicit token
+        if (!role) {
+          try {
+            const profileRes = await profileApi.getProfile({ token });
+            const resType =
+              profileRes?.account_type ||
+              profileRes?.data?.account_type ||
+              (profileRes?.client || profileRes?.data?.client ? ROLES.CLIENT : null) ||
+              (profileRes?.agency || profileRes?.data?.agency ? ROLES.AGENCY : null) ||
+              (profileRes?.individual || profileRes?.data?.individual ? ROLES.INDIVIDUAL : null);
+            if (resType && typeof resType === "string" && resType.trim()) {
+              role = resType.trim();
+            }
+          } catch {
+            // Fallback: profile unreachable or account type not yet selected
+          }
         }
 
         await login(
           {
             email: cleanEmail,
             name: resolvedName,
-            role,
+            role: role || null,
             avatar: resolvedName.charAt(0).toUpperCase(),
           },
           token,
-          role
+          role || null,
+          response?.refresh_token,
+          response?.expires_in
         );
 
         if (rememberMe) {
@@ -231,11 +255,33 @@ export default function Login() {
           })
         );
 
-        // Fire-and-forget: warm the role's landing + neighbour pages
-        // before navigating so protected pages paint instantly.
-        prefetchPostLogin(role);
-        navigate(resolveDashboardPath(role));
+        // If the user has not chosen an account type yet, navigate to account-type
+        if (!role) {
+          navigate("/account-type", { state: { email: cleanEmail } });
+        } else {
+          prefetchPostLogin(role);
+          navigate(resolveDashboardPath(role));
+        }
       } catch (err) {
+        const errData = err?.data || err?.response?.data;
+        if (errData?.requires_2fa || errData?.temporary_token) {
+          const tempToken = errData.temporary_token || errData.temporaryToken;
+          sessionStorage.setItem(
+            APP_CONFIG.AUTH.STORAGE_KEYS.TWO_FA_CHALLENGE,
+            JSON.stringify({
+              temporaryToken: tempToken,
+              email: cleanEmail,
+            })
+          );
+          navigate("/verify-2fa", {
+            state: {
+              temporary_token: tempToken,
+              email: cleanEmail,
+            },
+          });
+          return;
+        }
+
         const isUnverified =
           err?.status === 401 && err?.message?.toLowerCase().includes("verify your email");
         const msg = isUnverified
@@ -282,7 +328,17 @@ export default function Login() {
 
             {errorMessage && (
               <div className="login-error" role="alert" aria-live="assertive">
-                {errorMessage}
+                <div>{errorMessage}</div>
+                <div style={{ marginTop: "6px", fontSize: "13px", opacity: 0.95 }}>
+                  Signed up with Google or need to set a password?{" "}
+                  <Link
+                    to="/forgot-password"
+                    state={{ email }}
+                    style={{ color: "inherit", fontWeight: 600, textDecoration: "underline" }}
+                  >
+                    Set or reset password
+                  </Link>
+                </div>
               </div>
             )}
 
@@ -372,7 +428,7 @@ export default function Login() {
                     {STRINGS.REMEMBER_ME}
                   </label>
                 </div>
-                <Link to="/forgot-password" className="login-forgot">
+                <Link to="/forgot-password" state={{ email }} className="login-forgot">
                   {STRINGS.FORGOT_PASSWORD_LINK}
                 </Link>
               </div>

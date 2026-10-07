@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Google, GitHub, Mail } from "@/Components/icons";
 import mailImage from "@/assets/mail.png";
 import "./forgetpass.css";
@@ -23,7 +23,8 @@ function validateEmail(rawValue) {
 
 export default function ForgetPass() {
   const STRINGS = APP_STRINGS.AUTH.FORGOT_PASSWORD;
-  const [email, setEmail] = useState("");
+  const location = useLocation();
+  const [email, setEmail] = useState(location?.state?.email || "");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -124,6 +125,12 @@ export default function ForgetPass() {
                   >
                     {loading ? STRINGS.SUBMIT_BTN_LOADING : STRINGS.SUBMIT_BTN}
                   </button>
+
+                  {loading && (
+                    <p style={{ textAlign: "center", fontSize: "13px", color: "#6A717D", marginTop: "8px", marginBottom: "0" }}>
+                      Sending reset link to your email, please wait...
+                    </p>
+                  )}
 
                   <div className="forget-divider">
                     <div className="forget-divider-line"></div>

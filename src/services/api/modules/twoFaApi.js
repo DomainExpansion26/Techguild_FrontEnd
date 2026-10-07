@@ -1,6 +1,10 @@
 import { apiClient } from "@/services/api";
 import { ENDPOINTS } from "@/services/api/endpoints";
 
+/**
+ * Two-Factor Authentication (2FA) API layer.
+ * Connects to documented backend endpoints for TOTP setup, verification, login challenge, and recovery codes.
+ */
 export const twoFaApi = {
   // Generate a fresh TOTP secret and QR provisioning URI
   setup: async () => {
@@ -22,16 +26,12 @@ export const twoFaApi = {
     return apiClient.post(ENDPOINTS.AUTH.TWO_FA.REGENERATE_RECOVERY_CODES, { password });
   },
 
-  // Verify TOTP during the login-time 2FA challenge (wired: /verify-2fa).
-  // Backend contract (OpenAPI): body { temporary_token, code }, security []
-  // (no Authorization header) — matches the working Zudoku request exactly.
+  // Verify TOTP during login-time 2FA challenge (email/password or OAuth)
   verifyLogin: async ({ temporary_token, code }) => {
     return apiClient.post(ENDPOINTS.AUTH.TWO_FA.VERIFY_LOGIN, { temporary_token, code });
   },
 
-  // Authenticate using a single-use recovery code (wired: /verify-2fa).
-  // Same contract: body only, no auth header. Backend example codes look
-  // like "ABCD-EFGH" (alphanumeric + dash), NOT plain digits.
+  // Authenticate using a single-use recovery code
   verifyRecoveryCode: async ({ temporary_token, code }) => {
     return apiClient.post(ENDPOINTS.AUTH.TWO_FA.VERIFY_RECOVERY_CODE, { temporary_token, code });
   },

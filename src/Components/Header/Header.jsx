@@ -66,9 +66,8 @@ export default function Header({
   const handleSignOut = async () => {
     setDropdownOpen(false);
     try {
-      await authApi.logout().catch(() => {});
+      await logout();
     } finally {
-      logout();
       dispatch(showSnackbar({
         message: "You have been signed out.",
         type: "info",

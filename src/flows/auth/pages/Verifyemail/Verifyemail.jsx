@@ -137,18 +137,27 @@ export default function VerifyEmail() {
     return () => clearInterval(interval);
   }, [email, pendingPassword, checkVerifiedStatus]);
 
+  const [cooldown, setCooldown] = useState(0);
+
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const timer = setTimeout(() => setCooldown((prev) => prev - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [cooldown]);
+
   const handleResend = async () => {
-    if (resending) return;
+    if (resending || cooldown > 0) return;
     if (!email) {
       dispatch({ type: "RESEND_ERROR", message: STRINGS.NO_EMAIL });
       return;
     }
     dispatch({ type: "RESEND_START" });
     try {
-      await authApi.resendVerification({ email });
+      const res = await authApi.resendVerification({ email });
+      setCooldown(60);
       dispatch({
         type: "RESEND_SUCCESS",
-        message: "New verification email sent! Please check your inbox and Spam / Promotions folder.",
+        message: res?.message || "Verification email sent! Please check your inbox and Spam / Promotions folder.",
       });
     } catch (err) {
       dispatch({
@@ -217,10 +226,14 @@ export default function VerifyEmail() {
             <button
               type="button"
               onClick={handleResend}
-              disabled={resending}
+              disabled={resending || cooldown > 0}
               className="verify-btn-outline"
             >
-              {resending ? STRINGS.SENDING_BTN : STRINGS.SEND_AGAIN_BTN}
+              {cooldown > 0
+                ? `Resend in ${cooldown}s`
+                : resending
+                ? STRINGS.SENDING_BTN
+                : "Resend verification email"}
             </button>
             <button
               type="button"

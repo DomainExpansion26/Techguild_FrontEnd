@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import { Route } from "react-router-dom";
+import { GuestGuard } from "@/permissions";
 
 const SignUp = lazy(() => import("./pages/Register/SignUp"));
 const Login = lazy(() => import("./pages/Login/Login"));
@@ -13,11 +14,24 @@ const OAuthCallback = lazy(() => import("./pages/OAuthCallback/OAuthCallback"));
 
 export const authRoutes = (
   <>
-    <Route path="/signup" element={<SignUp />} />
-    <Route path="/login" element={<Login />} />
-    <Route path="/forgot-password" element={<ForgetPass />} />
+    {/* Public-only routes: logged in users are redirected to dashboard */}
+    <Route element={<GuestGuard />}>
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/forgot-password" element={<ForgetPass />} />
+    </Route>
+
+    {/* Reset password routes: accessible regardless of session status */}
     <Route path="/reset-password" element={<ResetPass />} />
+    <Route path="/reset-password/:token" element={<ResetPass />} />
+    <Route path="/auth/reset-password" element={<ResetPass />} />
+    <Route path="/auth/reset-password/:token" element={<ResetPass />} />
+    <Route path="/resetpassword" element={<ResetPass />} />
+    <Route path="/resetpassword/:token" element={<ResetPass />} />
+    <Route path="/reset-pass" element={<ResetPass />} />
+    <Route path="/reset-pass/:token" element={<ResetPass />} />
     <Route path="/verify-email" element={<VerifyEmail />} />
+
     <Route path="/verify-email/:token" element={<EmailVerified />} />
     <Route path="/verify" element={<EmailVerified />} />
     <Route path="/verify/:token" element={<EmailVerified />} />
