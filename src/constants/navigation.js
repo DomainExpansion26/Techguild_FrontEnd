@@ -23,7 +23,7 @@ export const CLIENT_MENU_ITEMS = [
   { id: "analytics", label: "Analytics", icon: "BarChart3", path: "/client-analytics", aliases: ["/client-company-reputation", "/client/company-reputation", "/client/analytics"] },
   { id: "finance", label: "Finance", icon: "IndianRupee", path: "/client-finance", aliases: ["/client-payouts", "/client/payouts", "/client/finance"] },
   { id: "party-formation", label: "Party Formation", icon: "Group", path: "/client-party-formation", aliases: ["/client/party-formation"] },
-  { id: "guild-hall", label: "Guild Hall", icon: "Building2", path: "/client-guild-hall", aliases: ["/client-notifications", "/client/notifications", "/client/guild-hall"] },
+  { id: "guild-hall", label: "Guild Hall", icon: "Building2", path: "/client-guild-hall", aliases: ["/client/guild-hall"] },
   { id: "subscription", label: "Subscription", icon: "Star", path: "/client-subscription", aliases: ["/client/subscription"] },
   { id: "verification", label: "Verification", icon: "Verified", path: "/client-verification", aliases: ["/client-verification-hub", "/client/verification-hub", "/client/verification"] },
   { id: "settings", label: "Settings", icon: "Settings", path: "/client-settings", aliases: ["/client/settings"] },
