@@ -8,11 +8,13 @@ const ClientQuestBoard = lazy(() => import("./pages/QuestBoard/QuestBoard"));
 const ClientApplications = lazy(() => import("./pages/Applications/Applications"));
 const ClientActiveQuests = lazy(() => import("./pages/ActiveQuests/ActiveQuests"));
 const ClientCompanyReputation = lazy(() => import("./pages/CompanyReputation/CompanyReputation"));
-const ClientVerificationHub = lazy(() => import("./pages/VerificationHub/VerificationHub"));
 const ClientPayouts = lazy(() => import("./pages/Payouts/Payouts"));
 const ClientNotifications = lazy(() => import("./pages/Notifications/Notifications"));
 const ClientHelpSupport = lazy(() => import("./pages/HelpSupport/HelpSupport"));
 const ClientSettingsWrapper = lazy(() => import("./pages/Settings/Settings"));
+
+// Consolidated Client Verification Flow
+const ClientFlow = lazy(() => import("./pages/VerificationHub/clientflow"));
 
 export const clientRoutes = (
   <>
@@ -35,9 +37,7 @@ export const clientRoutes = (
     <Route path="/client-party-formation" element={<ClientActiveQuests />} />
     <Route path="/client-analytics" element={<ClientCompanyReputation />} />
     <Route path="/client-company-reputation" element={<ClientCompanyReputation />} />
-    <Route path="/client-subscription" element={<ClientVerificationHub />} />
-    <Route path="/client-verification" element={<ClientVerificationHub />} />
-    <Route path="/client-verification-hub" element={<ClientVerificationHub />} />
+    <Route path="/client-subscription" element={<ClientFlow defaultStep="hub" />} />
     <Route path="/client-finance" element={<ClientPayouts />} />
     <Route path="/client-payouts" element={<ClientPayouts />} />
     <Route path="/client-guild-hall" element={<ClientNotifications />} />
@@ -45,6 +45,23 @@ export const clientRoutes = (
     <Route path="/client-help-support" element={<ClientHelpSupport />} />
     <Route path="/client-settings" element={<ClientSettingsWrapper />} />
     <Route path="/client-settings/:tab" element={<ClientSettingsWrapper />} />
+
+    {/* Client / Business Verification Flow */}
+    <Route path="/client-verification-hub" element={<ClientFlow defaultStep="hub" />} />
+    <Route path="/client-verification" element={<ClientFlow defaultStep="hub" />} />
+    <Route path="/client-verification-business" element={<ClientFlow defaultStep="intro" />} />
+    <Route path="/verification" element={<ClientFlow defaultStep="hub" />} />
+    <Route path="/verification/business" element={<ClientFlow defaultStep="intro" />} />
+    <Route path="/verification/identity" element={<ClientFlow defaultStep="identity" />} />
+    <Route path="/verification/documents" element={<ClientFlow defaultStep="documents" />} />
+    <Route path="/verification/bank-details" element={<ClientFlow defaultStep="bank-details" />} />
+    <Route path="/verification/review" element={<ClientFlow defaultStep="review" />} />
+    <Route path="/verification/submitted" element={<ClientFlow defaultStep="submitted" />} />
+    <Route path="/verification/under-review" element={<ClientFlow defaultStep="under-review" />} />
+    <Route path="/verification/complete" element={<ClientFlow defaultStep="complete" />} />
+    <Route path="/verification/success" element={<ClientFlow defaultStep="success" />} />
+    <Route path="/verification/business/success" element={<ClientFlow defaultStep="success" />} />
+    <Route path="/client-verification/success" element={<ClientFlow defaultStep="success" />} />
 
     {/* Namespaced /client/* aliases */}
     <Route path="/client/dashboard" element={<ClientDashboard />} />
@@ -68,9 +85,13 @@ export const clientRoutes = (
     <Route path="/client/party-formation" element={<ClientActiveQuests />} />
     <Route path="/client/analytics" element={<ClientCompanyReputation />} />
     <Route path="/client/company-reputation" element={<ClientCompanyReputation />} />
-    <Route path="/client/subscription" element={<ClientVerificationHub />} />
-    <Route path="/client/verification" element={<ClientVerificationHub />} />
-    <Route path="/client/verification-hub" element={<ClientVerificationHub />} />
+    <Route path="/client/subscription" element={<ClientFlow defaultStep="hub" />} />
+    <Route path="/client/verification-hub" element={<ClientFlow defaultStep="hub" />} />
+    <Route path="/client/verification" element={<ClientFlow defaultStep="hub" />} />
+    <Route path="/client/verification/business" element={<ClientFlow defaultStep="intro" />} />
+    <Route path="/client/verification-business" element={<ClientFlow defaultStep="intro" />} />
+    <Route path="/client/verification/success" element={<ClientFlow defaultStep="success" />} />
+    <Route path="/client/verification-success" element={<ClientFlow defaultStep="success" />} />
     <Route path="/client/finance" element={<ClientPayouts />} />
     <Route path="/client/payouts" element={<ClientPayouts />} />
     <Route path="/client/guild-hall" element={<ClientNotifications />} />
