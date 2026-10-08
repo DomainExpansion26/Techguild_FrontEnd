@@ -1,0 +1,42 @@
+name: Deploy TechGuild Frontend to S3
+
+on:
+  push:
+    branches:
+      - preprod
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    name: Build and Deploy Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: npm run build
+        env:
+          VITE_API_BASE_URL: https://api-preprod.techguild.in
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: arn:aws:iam::285829734686:role/TechGuild-Frontend-GitHubActions-Role
+          aws-region: ap-south-1
+
+      - name: Deploy frontend to S3
+        run: aws s3 sync dist/ s3://techguild-frontend --delete
