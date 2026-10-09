@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { DashboardLayout, Cards, PrimaryButton, SecondaryButton, TextInput } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import { APP_STRINGS } from "@/constants/string";
+import { showSnackbar } from "@/store";
+import { useAuth } from "@/context/AuthContext";
 import "./guildhall.css";
 import "./commentsection.css";
 import CreatePostModal from "./CreatePostModal";
@@ -20,11 +23,11 @@ const CHIP_FORMAT = {
 
 const DEFAULT_COMMENTS_POST = "first-freelance-project";
 
-// Deep link: /guild-hall?create opens the format picker,
-// /guild-hall?create=<formatId> opens step 2 for that format,
-// /guild-hall?comments=<postId> opens that post's comment section.
-// /guild-hall?halls=1 opens the halls list popup,
-// /guild-hall?halls=detail opens the halls popup on the hall detail view.
+// Deep links (search params, so they work on every role's path — /guild-hall,
+// /individual/guild-hall, /client-guild-hall, /client/guild-hall):
+// ?create opens the format picker, ?create=<formatId> opens step 2 for that format,
+// ?comments=<postId> opens that post's comment section,
+// ?halls=1 opens the halls list popup, ?halls=detail opens the hall detail view.
 const readUrlParams = () => {
   const params = new URLSearchParams(window.location.search);
   const hasCreate = params.has("create");
@@ -373,7 +376,7 @@ function PollBlock({ poll }) {
       <div className="gh-poll" data-poll-state={mode}>
         <div className="gh-poll-list gh-poll-list--results" role="group" aria-label={poll.title}>
           {poll.options.map((option, index) => {
-            const pct = Math.round((votes[index] / total) * 100);
+            const pct = total ? Math.round((votes[index] / total) * 100) : 0;
             const mine = mode === "voted" && votedFor === index;
             return (
               <button
@@ -613,6 +616,13 @@ function PostCard({ post, commentsOpen, onToggleComments, onOpenComments }) {
         </div>
       )}
 
+      {post.media && (
+        <span className="gh-post-media">
+          <Icon name="Image" size={13} color="#103ca4" strokeWidth={1.7} />
+          {post.media}
+        </span>
+      )}
+
       {post.poll && <PollBlock poll={post.poll} />}
       {post.reply && <ReplyBlock reply={post.reply} />}
       {post.event && <EventBlock event={post.event} />}
@@ -629,8 +639,11 @@ function PostCard({ post, commentsOpen, onToggleComments, onOpenComments }) {
 }
 
 export default function GuildHall() {
+  const dispatch = useDispatch();
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState(G.TABS[0]);
   const [composerText, setComposerText] = useState("");
+  const [feedPosts, setFeedPosts] = useState(POSTS);
   const [createOpen, setCreateOpen] = useState(() => readUrlParams().createOpen);
   const [presetFormat, setPresetFormat] = useState(() => readUrlParams().presetFormat);
   const [openComments, setOpenComments] = useState(() => readUrlParams().comments);
@@ -643,11 +656,38 @@ export default function GuildHall() {
     setCreateOpen(true);
   };
 
+  // Local optimistic publish: prepend to the in-memory feed (session-only,
+  // swap for a posts API call + refetch when an endpoint exists).
+  const handlePublish = (draft) => {
+    const name = user?.name || "Aarav Sharma";
+    const initials = name
+      .split(/\s+/)
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase() || "")
+      .join("");
+    setFeedPosts((current) => [
+      {
+        id: `post-${Date.now()}`,
+        author: {
+          name,
+          initials: initials || "AM",
+          color: AVATAR.MINT,
+          role: "Member • just now",
+          verified: false,
+        },
+        stats: { likes: 0, comments: 0 },
+        ...draft,
+      },
+      ...current,
+    ]);
+    dispatch(showSnackbar({ message: "Post published to your feed.", type: "success" }));
+  };
+
   const toggleComments = (postId) => {
     setOpenComments((current) => (current === postId ? null : postId));
   };
 
-  // Deep-link anchors: /guild-hall#comments-<postId> scrolls to the section
+  // Deep-link anchors: <any-route>#<post-id> scrolls to that post's section
   // after the SPA mounts (the browser can't hash-scroll an element that
   // doesn't exist at initial load).
   useEffect(() => {
@@ -719,7 +759,7 @@ export default function GuildHall() {
 
         <div className="gh-main">
           <div className="gh-feed">
-            {POSTS.map((post) => (
+            {feedPosts.map((post) => (
               <React.Fragment key={post.id}>
                 <PostCard
                   post={post}
@@ -915,6 +955,7 @@ export default function GuildHall() {
       <CreatePostModal
         open={createOpen}
         onClose={() => setCreateOpen(false)}
+        onPublish={handlePublish}
         initialFormat={presetFormat}
       />
 
