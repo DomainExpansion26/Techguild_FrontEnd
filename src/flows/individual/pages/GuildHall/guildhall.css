@@ -1,0 +1,1716 @@
+/* ==========================================================================
+   Guild Hall (individual community feed) — built from Figma frame
+   "Feed - Client" (node 168:93, 1440x2252)
+   ========================================================================== */
+
+.gh-page {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 4px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Column children must never shrink to fit the viewport — the page scrolls
+   instead (composer/tabs otherwise collapse to ~0 height). */
+.gh-page > * {
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Page header row
+   -------------------------------------------------------------------------- */
+
+.gh-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.gh-top-text {
+  min-width: 0;
+}
+
+.gh-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 42px;
+  letter-spacing: -0.117px;
+  color: #103ca4;
+}
+
+.gh-subtitle {
+  margin: 3px 0 0;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 19.5px;
+  letter-spacing: -0.076px;
+  color: #71809f;
+}
+
+.gh-btn-create {
+  width: auto;
+  height: auto;
+  flex-shrink: 0;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px 0 rgba(33, 97, 234, 0.25);
+}
+
+/* --------------------------------------------------------------------------
+   Shared card shell / avatars / pills
+   -------------------------------------------------------------------------- */
+
+.gh-card {
+  padding: 16px;
+}
+
+.gh-avatar {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.073px;
+  color: #ffffff;
+  user-select: none;
+}
+
+.gh-avatar--me {
+  background-color: #103ca4;
+}
+
+.gh-avatar--sm {
+  width: 34px;
+  height: 34px;
+  font-size: 12px;
+}
+
+.gh-avatar--reply {
+  width: 28px;
+  height: 28px;
+  font-size: 10px;
+}
+
+.gh-verified {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background-color: #103ca4;
+}
+
+.gh-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background-color: #eaf1ff;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  color: #103ca4;
+  white-space: nowrap;
+}
+
+.gh-pill--event {
+  background-color: #e8f7ee;
+  color: #12a150;
+}
+
+.gh-pill--top {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.gh-stack {
+  display: inline-flex;
+  align-items: center;
+}
+
+.gh-stack-item {
+  width: 24px;
+  height: 24px;
+  box-sizing: border-box;
+  display: inline-block;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+}
+
+.gh-stack-item + .gh-stack-item {
+  margin-left: -8px;
+}
+
+.gh-spacer {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.gh-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  color: #103ca4;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.gh-link-btn:hover {
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   Composer
+   -------------------------------------------------------------------------- */
+
+.gh-composer {
+  padding: 14px 16px;
+}
+
+.gh-composer-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gh-composer-input {
+  width: auto;
+  flex: 1;
+  min-width: 0;
+}
+
+.gh-composer-input .text-input-wrapper {
+  height: auto;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+.gh-composer-input .text-input-wrapper:focus-within {
+  border: none;
+  box-shadow: none;
+}
+
+.gh-composer-input .text-input-field {
+  padding: 0;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: -0.15px;
+  color: #374151;
+}
+
+.gh-composer-input .text-input-field::placeholder {
+  color: #a0aabb;
+  font-size: 14px;
+}
+
+.gh-composer-chips {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f3;
+}
+
+.gh-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 19.5px;
+  letter-spacing: -0.076px;
+  color: #71809f;
+  cursor: pointer;
+}
+
+.gh-chip:hover {
+  background-color: #f3f6fc;
+}
+
+.gh-chip-dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.gh-btn-post {
+  width: auto;
+  height: auto;
+  padding: 6px 18px;
+  border: none;
+  border-radius: 8px;
+  background-color: #dbeafe;
+  font-size: 13px;
+  font-weight: 700;
+  color: #103ca4;
+}
+
+.gh-btn-post:hover:not(:disabled) {
+  background-color: #cfe0fd;
+  border-color: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   Feed tabs
+   -------------------------------------------------------------------------- */
+
+.gh-tabs-card {
+  padding: 0 16px;
+}
+
+.gh-tabs {
+  display: flex;
+  align-items: stretch;
+  height: 50px;
+  overflow-x: auto;
+}
+
+.gh-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  background: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 19.5px;
+  letter-spacing: -0.076px;
+  color: #71809f;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.gh-tab:hover:not(.is-active) {
+  color: #103ca4;
+}
+
+.gh-tab.is-active {
+  border-color: #103ca4;
+  font-weight: 700;
+  color: #103ca4;
+}
+
+/* --------------------------------------------------------------------------
+   Feed + rail layout
+   -------------------------------------------------------------------------- */
+
+.gh-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.gh-feed {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.gh-rail {
+  flex: 0 0 341px;
+  width: 341px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   Post cards
+   -------------------------------------------------------------------------- */
+
+.gh-post {
+  gap: 6px;
+  padding: 16px;
+}
+
+.gh-post-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.gh-post-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.gh-post-author-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.gh-post-name-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.gh-post-name {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 21px;
+  letter-spacing: -0.15px;
+  color: #103ca4;
+}
+
+.gh-post-role {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #71809f;
+}
+
+.gh-post-head-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.gh-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.gh-post-title {
+  margin: 10px 0 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 22.5px;
+  letter-spacing: -0.234px;
+  color: #103ca4;
+}
+
+.gh-post-body {
+  margin: 6px 0 0;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 20.8px;
+  letter-spacing: -0.076px;
+  color: #71809f;
+}
+
+.gh-see-more {
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 20.8px;
+  color: #103ca4;
+  cursor: pointer;
+}
+
+.gh-see-more:hover {
+  text-decoration: underline;
+}
+
+.gh-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.gh-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background-color: #eaf1ff;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 16.5px;
+  letter-spacing: 0.064px;
+  color: #103ca4;
+}
+
+/* Poll */
+
+.gh-poll {
+  display: flex;
+  flex-direction: column;
+}
+
+.gh-poll-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+.gh-poll-option {
+  display: flex;
+  align-items: center;
+  gap: 10.74px;
+  min-height: 37px;
+  padding: 7.16px 14.32px;
+  border: 1.342px solid #dde5f4;
+  border-radius: 8.95px;
+  background-color: #ffffff;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.gh-poll-option.is-selected {
+  background-color: #f0f5ff;
+  border: 1.5px solid #103ca4;
+}
+
+.gh-poll-radio {
+  width: 17.9px;
+  height: 17.9px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.79px solid #c5d2e8;
+  border-radius: 50%;
+  background-color: #ffffff;
+}
+
+.gh-poll-option.is-selected .gh-poll-radio {
+  border-color: #103ca4;
+  background-color: #103ca4;
+}
+
+.gh-poll-option.is-selected .gh-poll-radio::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ffffff;
+}
+
+.gh-poll-opt-label {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20.13px;
+  color: #10244a;
+}
+
+.gh-poll-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 99.5px;
+  padding-top: 8px;
+}
+
+.gh-poll-actions > * {
+  flex-shrink: 0;
+}
+
+.gh-poll-cast {
+  align-self: flex-start;
+  width: 154px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 10px;
+  background-color: #b8ccef;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 22.5px;
+  letter-spacing: -0.234px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.gh-poll-cast:not(:disabled) {
+  background-color: #103ca4;
+  font-size: 15px;
+}
+
+.gh-poll-cast:disabled {
+  cursor: default;
+}
+
+.gh-poll-meta {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #6b7a99;
+}
+
+.gh-poll-meta-strong {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  color: #10244a;
+}
+
+.gh-poll-meta-item {
+  font-size: 12px;
+  line-height: 16px;
+  color: #6b7a99;
+}
+
+.gh-poll-sep {
+  width: 16px;
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 13px;
+  color: #6b7a99;
+}
+
+.gh-poll-sep--wide {
+  width: 20px;
+}
+
+.gh-poll-link {
+  align-self: flex-start;
+  padding: 0 0 0 3px;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 19.5px;
+  color: var(--gh-accent);
+  text-align: left;
+  cursor: pointer;
+}
+
+.gh-poll-actions .gh-poll-link {
+  margin-top: 4px;
+}
+
+/* Font-metric compensation: Inter sits higher than the frame's SF Pro
+   inside the same line boxes; visual-only, no layout impact. */
+.gh-poll-actions .gh-poll-meta {
+  position: relative;
+  top: 2px;
+}
+
+.gh-poll-link:hover {
+  text-decoration: underline;
+}
+
+/* Poll results (voted / peek states) */
+
+.gh-poll-list--results {
+  gap: 10px;
+  padding-top: 16px;
+}
+
+.gh-poll-result {
+  display: flex;
+  flex-direction: column;
+  min-height: 64px;
+  padding: 10.4px 16px 10.4px 17px;
+  border: 1.5px solid #dde5f4;
+  border-radius: 10px;
+  background-color: #ffffff;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.gh-poll-result.is-mine {
+  background-color: #f0f5ff;
+  border-color: #2161ea;
+}
+
+.gh-poll-result-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 8px;
+}
+
+.gh-poll-result-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gh-poll-result-label {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 23px;
+  letter-spacing: -0.12px;
+  color: #10244a;
+}
+
+.gh-poll-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background-color: #dcfce7;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 17.25px;
+  letter-spacing: 0.034px;
+  color: #16a34a;
+}
+
+.gh-poll-result-votes {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 19.5px;
+  color: #6b7a99;
+}
+
+.gh-poll-result-pct {
+  padding-left: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 23px;
+  letter-spacing: -0.234px;
+  color: #2161ea;
+}
+
+.gh-poll-bar {
+  height: 6px;
+  border-radius: 3px;
+  background-color: #e8eef8;
+  overflow: hidden;
+}
+
+.gh-poll-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background-color: #2161ea;
+}
+
+.gh-poll-meta-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 16px;
+}
+
+.gh-poll-meta-block .gh-poll-meta,
+.gh-poll-meta-block .gh-poll-meta-strong,
+.gh-poll-meta-block .gh-poll-meta-item {
+  font-size: 13px;
+}
+
+.gh-poll-youvoted {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 8px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background-color: #dcfce7;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 18.75px;
+  color: #16a34a;
+}
+
+.gh-poll-hint {
+  font-size: 13px;
+  color: #6b7a99;
+}
+
+.gh-poll-link--undo {
+  padding-left: 0;
+  font-size: 13px;
+  line-height: 21px;
+  color: #2161ea;
+}
+
+/* Embedded reply */
+
+.gh-reply-wrap {
+  margin-top: 12px;
+}
+
+.gh-reply {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #f3f6fc;
+}
+
+.gh-reply-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gh-reply-name {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 19.5px;
+  color: #103ca4;
+}
+
+.gh-reply-quote {
+  margin: 6px 0 0;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 20.15px;
+  letter-spacing: -0.076px;
+  color: #71809f;
+}
+
+.gh-reply-link {
+  align-self: flex-start;
+  margin-top: 6px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  color: #103ca4;
+  cursor: pointer;
+}
+
+.gh-reply-link:hover {
+  text-decoration: underline;
+}
+
+/* Event block */
+
+.gh-event-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 10px;
+  padding-top: 4px;
+}
+
+.gh-event-date {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background-color: #103ca4;
+}
+
+.gh-event-month {
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 15px;
+  letter-spacing: 0.917px;
+  color: #ffffff;
+  opacity: 0.85;
+}
+
+.gh-event-day {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 24.2px;
+  letter-spacing: -0.258px;
+  color: #ffffff;
+}
+
+.gh-event-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.gh-event-meta-line {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #71809f;
+}
+
+.gh-event-meta-line + .gh-event-meta-line {
+  margin-top: 3px;
+}
+
+.gh-event-going {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.gh-event-going-text {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 19.5px;
+  color: #71809f;
+}
+
+.gh-btn-rsvp {
+  width: auto;
+  height: auto;
+  flex-shrink: 0;
+  margin-left: auto;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: none;
+}
+
+/* Post footer */
+
+.gh-post-footer {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f3;
+}
+
+.gh-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.gh-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 19.5px;
+  color: #71809f;
+  cursor: pointer;
+}
+
+.gh-action:hover {
+  color: #103ca4;
+}
+
+.gh-action:hover svg {
+  stroke: #103ca4;
+}
+
+.gh-action.is-active {
+  color: #103ca4;
+}
+
+.gh-btn-join-conv {
+  width: auto;
+  height: auto;
+  margin-left: auto;
+  gap: 4px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #eaf1ff;
+  font-size: 13px;
+  font-weight: 600;
+  color: #103ca4;
+  white-space: nowrap;
+}
+
+.gh-btn-join-conv:hover:not(:disabled) {
+  background-color: #dfeaff;
+  border-color: transparent;
+}
+
+/* Poll post frame overrides (head, title, pill, footer) */
+
+.gh-post--poll {
+  --gh-accent: #103ca4;
+  gap: 0;
+  padding: 16.5px 26.5px 18px 28px;
+}
+
+.gh-post--poll:has(.gh-poll[data-poll-state="voted"]),
+.gh-post--poll:has(.gh-poll[data-poll-state="peek"]) {
+  --gh-accent: #2161ea;
+  padding-top: 22.5px;
+  padding-bottom: 20px;
+}
+
+/* Frame 175:87: actions block grows to 107 (link not clipped) and the
+   bottom padding tightens to 10 so the card keeps the same height. */
+.gh-post--poll:has(.gh-poll[data-poll-state="selected"]) {
+  padding-bottom: 10px;
+}
+
+.gh-post--poll:has(.gh-poll[data-poll-state="selected"]) .gh-poll-actions {
+  height: 107.5px;
+}
+
+/* Voted / peek (frame 175:172): 1.7px extra between the title and the
+   results list so rows, meta block, divider and pill land on frame y. */
+.gh-post--poll:has(.gh-poll[data-poll-state="voted"]) .gh-poll,
+.gh-post--poll:has(.gh-poll[data-poll-state="peek"]) .gh-poll {
+  margin-top: 1.7px;
+}
+
+.gh-post--poll:has(.gh-poll[data-poll-state="voted"]) .gh-post-title,
+.gh-post--poll:has(.gh-poll[data-poll-state="peek"]) .gh-post-title {
+  height: auto;
+  margin-top: 18px;
+  font-size: 17px;
+  letter-spacing: -0.14px;
+  top: 2px;
+}
+
+.gh-post--poll:has(.gh-poll[data-poll-state="voted"]) .gh-btn-join-conv,
+.gh-post--poll:has(.gh-poll[data-poll-state="peek"]) .gh-btn-join-conv {
+  color: var(--gh-accent);
+  padding-top: 10.5px;
+  padding-bottom: 7.5px;
+  padding-right: 20px;
+}
+
+.gh-post--poll:has(.gh-poll[data-poll-state="voted"]) .gh-pill--poll,
+.gh-post--poll:has(.gh-poll[data-poll-state="peek"]) .gh-pill--poll {
+  font-size: 13px;
+}
+
+.gh-post--poll .gh-post-author {
+  gap: 12px;
+}
+
+.gh-post--poll .gh-avatar {
+  width: 44px;
+  height: 44px;
+  font-size: 15px;
+  letter-spacing: -0.234px;
+  color: #0f766e;
+}
+
+.gh-post--poll .gh-post-name {
+  font-size: 15px;
+  line-height: 19.5px;
+  letter-spacing: -0.234px;
+  color: #10244a;
+}
+
+.gh-post--poll .gh-post-role {
+  font-size: 13px;
+  line-height: 19.5px;
+  letter-spacing: -0.076px;
+  color: #6b7a99;
+}
+
+.gh-post--poll .gh-post-head-right {
+  gap: 12px;
+}
+
+.gh-pill--poll {
+  gap: 5px;
+  padding: 5px 12px;
+  background-color: #fef3c7;
+  font-size: 12px;
+  line-height: 19.5px;
+  letter-spacing: -0.076px;
+  color: #d97706;
+}
+
+.gh-post--poll .gh-post-title {
+  height: 18px;
+  margin: 10px 0 0;
+  position: relative;
+  top: 1px;
+  font-size: 16px;
+  line-height: 23.8px;
+  letter-spacing: -0.17px;
+  color: #10244a;
+}
+
+.gh-post--poll .gh-post-footer {
+  gap: 20px;
+  margin-top: 0;
+  padding-top: 10px;
+  border-top: none;
+}
+
+.gh-post--poll:has(.gh-poll[data-poll-state="voted"]) .gh-post-footer,
+.gh-post--poll:has(.gh-poll[data-poll-state="peek"]) .gh-post-footer {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid #dde5f4;
+}
+
+.gh-post--poll .gh-actions {
+  gap: 20px;
+}
+
+.gh-post--poll .gh-action {
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.gh-post--poll .gh-action svg {
+  width: 18px;
+  height: 18px;
+}
+
+.gh-post--poll .gh-action--comment,
+.gh-post--poll .gh-action--comment:hover {
+  color: var(--gh-accent);
+}
+
+.gh-post--poll .gh-action--comment svg {
+  stroke: var(--gh-accent);
+}
+
+.gh-post--poll .gh-action--save span {
+  display: none;
+}
+
+.gh-post--poll .gh-btn-join-conv {
+  gap: 3px;
+  padding: 7.5px 18px 10.5px 19px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 21px;
+}
+
+.gh-post--poll .gh-btn-join-conv svg {
+  stroke: var(--gh-accent);
+}
+
+.gh-post--poll .gh-btn-join-conv .btn-icon {
+  position: relative;
+  top: -1.5px;
+}
+
+/* --------------------------------------------------------------------------
+   Right rail
+   -------------------------------------------------------------------------- */
+
+.gh-active-card {
+  padding: 10px 14px;
+}
+
+.gh-active-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.gh-active-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.gh-active-dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: #12a150;
+}
+
+.gh-active-text {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 19.5px;
+  color: #103ca4;
+  white-space: nowrap;
+}
+
+.gh-rail-card {
+  padding: 16px;
+}
+
+.gh-rail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.gh-rail-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 21px;
+  letter-spacing: -0.15px;
+  color: #103ca4;
+}
+
+/* People to connect with */
+
+.gh-person {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.gh-person.is-last {
+  padding-bottom: 12px;
+}
+
+.gh-person-text {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.gh-person-name {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 19.5px;
+  color: #103ca4;
+}
+
+.gh-person-role {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 16.5px;
+  letter-spacing: 0.064px;
+  color: #71809f;
+}
+
+.gh-person-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 3px;
+}
+
+.gh-skill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background-color: #eaf1ff;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16.5px;
+  letter-spacing: 0.064px;
+  color: #71809f;
+}
+
+.gh-btn-connect {
+  width: auto;
+  height: auto;
+  flex-shrink: 0;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: none;
+}
+
+/* Trending */
+
+.gh-trend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e2e8f3;
+}
+
+.gh-trend:first-of-type {
+  margin-top: 12px;
+}
+
+.gh-trend.is-last {
+  padding-top: 10px;
+  padding-bottom: 20px;
+  border-bottom: none;
+}
+
+.gh-trend-rank {
+  width: 18px;
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 16.5px;
+  letter-spacing: 0.064px;
+  color: #71809f;
+}
+
+.gh-trend-text {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.gh-trend-title {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 19.5px;
+  color: #103ca4;
+}
+
+.gh-trend-meta {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 16.5px;
+  color: #71809f;
+}
+
+.gh-trend-delta {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 18px;
+  color: #12a150;
+}
+
+/* Upcoming events */
+
+.gh-upcoming {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e2e8f3;
+}
+
+.gh-upcoming:first-of-type {
+  margin-top: 12px;
+}
+
+.gh-upcoming.is-last {
+  padding-top: 12px;
+  padding-bottom: 24px;
+  border-bottom: none;
+}
+
+.gh-upcoming-date {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background-color: #eaf1ff;
+}
+
+.gh-upcoming-month {
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 13.5px;
+  letter-spacing: 0.707px;
+  color: #103ca4;
+}
+
+.gh-upcoming-day {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 18px;
+  letter-spacing: -0.439px;
+  color: #103ca4;
+}
+
+.gh-upcoming-text {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.gh-upcoming-title {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 19.5px;
+  color: #103ca4;
+}
+
+.gh-upcoming-meta {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 16.5px;
+  color: #71809f;
+}
+
+.gh-upcoming-going {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.gh-upcoming-going-text {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 16.5px;
+  color: #71809f;
+}
+
+.gh-btn-rsvp-outline {
+  width: auto;
+  height: auto;
+  flex-shrink: 0;
+  padding: 5px 12px;
+  border: 1.5px solid #e2e8f3;
+  border-radius: 8px;
+  background-color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  color: #103ca4;
+}
+
+.gh-btn-rsvp-outline:hover:not(:disabled) {
+  background-color: #f5f8ff;
+  border-color: #cbd5e1;
+}
+
+/* Featured resources */
+
+.gh-resource {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e2e8f3;
+}
+
+.gh-resource:first-of-type {
+  margin-top: 12px;
+}
+
+.gh-resource.is-last {
+  padding-top: 10px;
+  padding-bottom: 20px;
+  border-bottom: none;
+}
+
+.gh-resource-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background-color: #eaf1ff;
+}
+
+.gh-resource-icon.is-amber {
+  background-color: #fef3c7;
+}
+
+.gh-resource-text {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.gh-resource-title {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 19.5px;
+  color: #103ca4;
+}
+
+.gh-resource-meta {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 16.5px;
+  color: #71809f;
+}
+
+/* --------------------------------------------------------------------------
+   Communities section
+   -------------------------------------------------------------------------- */
+
+.gh-communities-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gh-section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.gh-section-head-text {
+  min-width: 0;
+}
+
+.gh-section-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 27px;
+  letter-spacing: -0.739px;
+  color: #103ca4;
+}
+
+.gh-section-subtitle {
+  margin: 2px 0 0;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 19.5px;
+  letter-spacing: -0.076px;
+  color: #71809f;
+}
+
+.gh-communities {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.gh-community {
+  flex: 1 1 0;
+  min-width: 170px;
+  gap: 8px;
+  padding: 16px;
+}
+
+.gh-community-icon {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background-color: #e1ebff;
+}
+
+.gh-community-name {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 19.5px;
+  color: #103ca4;
+}
+
+.gh-community-meta {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 16.5px;
+  color: #71809f;
+}
+
+.gh-btn-join {
+  width: 100%;
+  height: 33px;
+  margin-top: 4px;
+  padding: 6px;
+  border: 1.5px solid #e2e8f3;
+  border-radius: 8px;
+  background-color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  color: #103ca4;
+}
+
+.gh-btn-join:hover:not(:disabled) {
+  background-color: #f5f8ff;
+  border-color: #cbd5e1;
+}
+
+/* --------------------------------------------------------------------------
+   Bottom CTA banner
+   -------------------------------------------------------------------------- */
+
+.gh-cta {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 28px;
+}
+
+.gh-cta-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.18);
+}
+
+.gh-cta-text {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.gh-cta-title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: -0.3125px;
+  color: #ffffff;
+}
+
+.gh-cta-subtitle {
+  margin-top: 3px;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 19.5px;
+  letter-spacing: -0.076px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.gh-btn-cta {
+  width: auto;
+  height: auto;
+  flex-shrink: 0;
+  gap: 6px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  color: #103ca4;
+}
+
+.gh-btn-cta:hover:not(:disabled) {
+  background-color: #f0f4ff;
+  border-color: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   Focus visibility
+   -------------------------------------------------------------------------- */
+
+.gh-page button:focus-visible {
+  outline: 2px solid rgba(16, 60, 164, 0.55);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1199px) {
+  .gh-main {
+    flex-direction: column;
+  }
+
+  .gh-feed,
+  .gh-rail {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .gh-communities {
+    flex-wrap: wrap;
+  }
+
+  .gh-community {
+    flex: 1 1 200px;
+  }
+}
+
+@media (max-width: 767px) {
+  .gh-page {
+    gap: 16px;
+  }
+
+  .gh-top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .gh-btn-create {
+    align-self: flex-start;
+  }
+
+  .gh-post-footer {
+    flex-wrap: wrap;
+  }
+
+  .gh-btn-join-conv {
+    margin-left: 0;
+  }
+
+  .gh-event-row {
+    flex-wrap: wrap;
+  }
+
+  .gh-btn-rsvp {
+    margin-left: 0;
+  }
+
+  .gh-cta {
+    flex-wrap: wrap;
+    padding: 18px 20px;
+  }
+
+  .gh-cta-text {
+    flex-basis: calc(100% - 62px);
+  }
+
+  .gh-btn-cta {
+    margin-left: 62px;
+  }
+}
