@@ -17,6 +17,9 @@ const Notifications = lazy(() => import("./pages/Notifications/Notifications"));
 const HelpSupport = lazy(() => import("./pages/HelpSupport/HelpSupport"));
 const IndividualSettingsWrapper = lazy(() => import("./pages/Settings/Settings"));
 
+// Consolidated Individual Identity Verification Flow
+const IndividualFlow = lazy(() => import("../client/pages/VerificationHub/individualflow"));
+
 export const individualRoutes = (
   <>
     {/* Standard Individual URLs */}
@@ -36,7 +39,7 @@ export const individualRoutes = (
     <Route path="/party-formation" element={<PartyManagement />} />
     <Route path="/reputation-rank" element={<ReputationRank />} />
     <Route path="/analytics" element={<ReputationRank />} />
-    <Route path="/verification-hub" element={<Verification />} />
+    <Route path="/verification-hub" element={<IndividualFlow defaultStep="intro" />} />
     <Route path="/subscription" element={<Verification />} />
     <Route path="/earnings-payouts" element={<Earnings />} />
     <Route path="/finance" element={<Earnings />} />
@@ -46,6 +49,27 @@ export const individualRoutes = (
     <Route path="/help-support" element={<HelpSupport />} />
     <Route path="/settings" element={<IndividualSettingsWrapper />} />
     <Route path="/settings/:tab" element={<IndividualSettingsWrapper />} />
+
+    {/* Individual Identity Verification Flow */}
+    <Route path="/individual-verification" element={<IndividualFlow defaultStep="intro" />} />
+    <Route path="/individual-verification/identity" element={<IndividualFlow defaultStep="identity" />} />
+    <Route path="/individual-verification/upload" element={<IndividualFlow defaultStep="upload" />} />
+    <Route path="/individual-verification/selfie" element={<IndividualFlow defaultStep="selfie" />} />
+    <Route path="/individual-verification/review" element={<IndividualFlow defaultStep="review" />} />
+    <Route path="/individual-verification/submitted" element={<IndividualFlow defaultStep="submitted" />} />
+    <Route path="/individual-verification/under-review" element={<IndividualFlow defaultStep="under-review" />} />
+    <Route path="/individual-verification/complete" element={<IndividualFlow defaultStep="complete" />} />
+    <Route path="/individual-verification/success" element={<IndividualFlow defaultStep="success" />} />
+
+    <Route path="/verification/individual" element={<IndividualFlow defaultStep="intro" />} />
+    <Route path="/verification/individual/identity" element={<IndividualFlow defaultStep="identity" />} />
+    <Route path="/verification/individual/upload" element={<IndividualFlow defaultStep="upload" />} />
+    <Route path="/verification/individual/selfie" element={<IndividualFlow defaultStep="selfie" />} />
+    <Route path="/verification/individual/review" element={<IndividualFlow defaultStep="review" />} />
+    <Route path="/verification/individual/submitted" element={<IndividualFlow defaultStep="submitted" />} />
+    <Route path="/verification/individual/under-review" element={<IndividualFlow defaultStep="under-review" />} />
+    <Route path="/verification/individual/complete" element={<IndividualFlow defaultStep="complete" />} />
+    <Route path="/verification/individual/success" element={<IndividualFlow defaultStep="success" />} />
 
     {/* Namespaced /individual/* aliases */}
     <Route path="/individual/dashboard" element={<DashBoard />} />
@@ -59,6 +83,8 @@ export const individualRoutes = (
     <Route path="/individual/party" element={<PartyManagement />} />
     <Route path="/individual/earnings" element={<Earnings />} />
     <Route path="/individual/reviews" element={<Reviews />} />
+    <Route path="/individual/verification" element={<IndividualFlow defaultStep="intro" />} />
+    <Route path="/individual/verification-hub" element={<IndividualFlow defaultStep="intro" />} />
     <Route path="/individual/settings" element={<IndividualSettingsWrapper />} />
     <Route path="/individual/settings/:tab" element={<IndividualSettingsWrapper />} />
   </>
