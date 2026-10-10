@@ -9,9 +9,9 @@ import svgr from 'vite-plugin-svgr'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-// Universal SPA fallback plugin: generates 404.html from index.html on build
-// Enables client-side routing on any static host (GitHub Pages, Netlify, Render, Vercel, S3, etc.)
-// without requiring host-specific configuration files.
+// Universal SPA fallback plugin: generates 404.html and static route entrypoints from index.html on build
+// Enables client-side routing on any static host (AWS S3, CloudFront, GitHub Pages, Netlify, Render, Vercel)
+// without returning 404 NoSuchKey on direct navigation or provider redirects.
 const universalSpaFallbackPlugin = () => ({
   name: 'universal-spa-fallback',
   closeBundle() {
@@ -20,6 +20,25 @@ const universalSpaFallbackPlugin = () => ({
     const fallbackPath = path.join(distDir, '404.html')
     if (fs.existsSync(indexPath)) {
       fs.copyFileSync(indexPath, fallbackPath)
+
+      const spaRoutes = [
+        'login',
+        'signup',
+        'forgot-password',
+        'account-type',
+        'verify-2fa',
+        'oauth/callback',
+        'oauth/google/callback',
+        'oauth/github/callback',
+      ]
+
+      for (const route of spaRoutes) {
+        const routeDir = path.join(distDir, ...route.split('/'))
+        if (!fs.existsSync(routeDir)) {
+          fs.mkdirSync(routeDir, { recursive: true })
+        }
+        fs.copyFileSync(indexPath, path.join(routeDir, 'index.html'))
+      }
     }
   },
 })

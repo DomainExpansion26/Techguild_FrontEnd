@@ -1,6 +1,6 @@
 // [TechGuild Update: 30-09-2026] Prefetch post-login chunks + shell bg while user types / on success (no visual change).
 import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Google, GitHub, Mail, Lock, Eye, EyeOff } from "@/Components/icons";
 import "./login.css";
 import {
@@ -113,7 +113,29 @@ export default function Login() {
 
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const redirectTimer = useRef(null);
+
+  // Display OAuth redirect error if returned from provider callback
+  useEffect(() => {
+    const errorParam = searchParams.get("error");
+    if (errorParam) {
+      let friendlyMsg = "Authentication failed. Please try again.";
+      if (errorParam === "oauth_exchange_failed") {
+        friendlyMsg = "Social login authorization failed. Please try again.";
+      } else if (errorParam === "invalid_state") {
+        friendlyMsg = "Authentication session expired or invalid. Please try again.";
+      } else if (errorParam === "missing_code" || errorParam === "missing_state") {
+        friendlyMsg = "Authentication was interrupted. Please try again.";
+      } else if (errorParam === "email_not_verified") {
+        friendlyMsg = "Your social account's primary email address is not verified.";
+      } else if (errorParam === "login_failed") {
+        friendlyMsg = "Account sign-in failed. Please try again.";
+      }
+      formDispatch({ type: "SUBMIT_ERROR", message: friendlyMsg });
+      dispatch(showSnackbar({ message: friendlyMsg, type: "error" }));
+    }
+  }, [searchParams, dispatch]);
 
   // Restore remembered email (rememberMe now actually persists).
   // Also warm the post-login dashboard chunks + shell background while

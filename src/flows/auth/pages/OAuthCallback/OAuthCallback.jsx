@@ -101,10 +101,17 @@ export default function OAuthCallback() {
     if (processedRef.current) return;
     processedRef.current = true;
 
+    const errorParam = searchParams.get("error");
+    if (errorParam) {
+      navigate(`/login?error=${encodeURIComponent(errorParam)}`, { replace: true });
+      return;
+    }
+
     const code = searchParams.get("code");
     const state = searchParams.get("state");
     const directToken = searchParams.get("token") || searchParams.get("access_token");
-    const provider = window.location.pathname.includes("github") ? "github" : "google";
+    const providerParam = searchParams.get("provider");
+    const provider = providerParam || (window.location.pathname.includes("github") ? "github" : "google");
 
     async function processOAuth() {
       try {
