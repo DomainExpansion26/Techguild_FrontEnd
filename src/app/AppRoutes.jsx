@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { LoadingSpinner, NotFound } from "@/Components/feedback";
 import { AuthGuard } from "@/permissions";
 
@@ -14,9 +14,6 @@ export default function AppRoutes() {
   return (
     <Suspense fallback={<LoadingSpinner fullScreen text="Loading TechGuild..." />}>
       <Routes>
-        {/* Default Landing / Auth Redirect */}
-        <Route path="/" element={<Navigate to="/signup" replace />} />
-
         {/* Public Marketing & Landing Flow */}
         {landingRoutes}
 
