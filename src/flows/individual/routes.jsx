@@ -6,6 +6,7 @@ const Profile = lazy(() => import("./pages/Profile/Profile"));
 const WholeProfile = lazy(() => import("./pages/WholeProfile/WholeProfile"));
 const Verification = lazy(() => import("./pages/Verification/Verification"));
 const Projects = lazy(() => import("./pages/Projects/Projects"));
+const QuestBoard = lazy(() => import("./pages/QuestBoard/QuestBoard"));
 const Proposals = lazy(() => import("./pages/Proposals/Proposals"));
 const Messages = lazy(() => import("./pages/Messages/Messages"));
 const ActiveQuests = lazy(() => import("./pages/ActiveQuests/ActiveQuests"));
@@ -27,8 +28,8 @@ export const individualRoutes = (
     <Route path="/whole-profile" element={<WholeProfile />} />
     <Route path="/wholeprofile" element={<WholeProfile />} />
     <Route path="/verification" element={<Verification />} />
-    <Route path="/quest-board" element={<Projects />} />
-    <Route path="/quest-board/:questId" element={<Projects />} />
+    <Route path="/quest-board" element={<QuestBoard />} />
+    <Route path="/quest-board/:questId" element={<QuestBoard />} />
     <Route path="/my-applications" element={<Proposals />} />
     <Route path="/communication" element={<Messages />} />
     <Route path="/active-quests" element={<ActiveQuests />} />
@@ -53,8 +54,8 @@ export const individualRoutes = (
     <Route path="/individual/profile" element={<Profile />} />
     <Route path="/individual/profile/:step" element={<Profile />} />
     <Route path="/individual/whole-profile" element={<WholeProfile />} />
-    <Route path="/individual/quest-board" element={<Projects />} />
-    <Route path="/individual/projects" element={<Projects />} />
+    <Route path="/individual/quest-board" element={<QuestBoard />} />
+    <Route path="/individual/projects" element={<QuestBoard />} />
     <Route path="/individual/proposals" element={<Proposals />} />
     <Route path="/individual/active-quests" element={<ActiveQuests />} />
     <Route path="/individual/party" element={<PartyManagement />} />
