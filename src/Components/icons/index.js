@@ -1,3 +1,4 @@
+// [TechGuild Update: 12-10-26] Added SortAsc, SortDesc, Banknote, ShoppingBag, ListFilter icon exports for QuestBoard filter/sort drawers
 // [TechGuild Update: 28-09-26] Added Copy icon export for public profile link copy action
 import LayoutDashboard from "../../assets/icons/layout-dashboard.svg?react";
 import User2 from "../../assets/icons/user2.svg?react";
@@ -101,6 +102,15 @@ import BadgeCheckFill from "../../assets/icons/badge-check-fill.svg?react";
 import UserRoundCog from "../../assets/icons/user-round-cog.svg?react";
 import Handshake from "../../assets/icons/handshake.svg?react";
 import ChartNoAxesCombined from "../../assets/icons/chart-no-axes-combined.svg?react";
+import Send from "../../assets/icons/send.svg?react";
+import Trophy from "../../assets/icons/trophy.svg?react";
+import Medal from "../../assets/icons/medal.svg?react";
+import Filter from "../../assets/icons/filter.svg?react";
+import SortAsc from "../../assets/icons/sort-asc.svg?react";
+import SortDesc from "../../assets/icons/sort-desc.svg?react";
+import Banknote from "../../assets/icons/banknote.svg?react";
+import ShoppingBag from "../../assets/icons/shopping-bag.svg?react";
+import ListFilter from "../../assets/icons/list-filter.svg?react";
 
 export {
   ArrowLeft,
@@ -207,6 +217,15 @@ export {
   UserRoundCog,
   Handshake,
   ChartNoAxesCombined,
+  Send,
+  Trophy,
+  Medal,
+  Filter,
+  SortAsc,
+  SortDesc,
+  Banknote,
+  ShoppingBag,
+  ListFilter,
 };
 
 
