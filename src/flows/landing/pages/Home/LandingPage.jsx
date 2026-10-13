@@ -1,21 +1,29 @@
+// Last Changed: 13-10-26
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Icon from "@/Components/icons/Icon";
 import "./LandingPage.css";
 
-import heroBg from "@/assets/landing-Img/Thumbnail.png";
-import papersBg from "@/assets/landing-Img/pexels-ds-stories-6991360 (1) 2.png";
-import aiTexture from "@/assets/landing-Img/toa-heftiba-i0p916iq-ew-unsplash 2.png";
+import heroBg from "@/assets/landing-Img/Frame 1707482940.png";
+import aiTexture from "@/assets/landing-Img/Frame 1707482940.png";
 import questBoard from "@/assets/landing-Img/QuestBoardShot.png";
 import taskMgmt from "@/assets/landing-Img/TaskMgmtShot.png";
 import milestonePlanner from "@/assets/landing-Img/MilestoneShot.png";
-import cardWeb from "@/assets/landing-Img/Frame 1707482912.png";
-import cardBrand from "@/assets/landing-Img/Frame 1707482913.png";
-import cardAI from "@/assets/landing-Img/Frame 1707482914.png";
-import cardMobile from "@/assets/landing-Img/Frame 1707482915.png";
-import cardUIUX from "@/assets/landing-Img/Frame 1707482916.png";
+import cardWeb from "@/assets/landing-Img/Frame 1707482912 copy.png";
+import cardBrand from "@/assets/landing-Img/Frame 1707482913 copy.png";
+import cardAI from "@/assets/landing-Img/Frame 1707482914 copy.png";
+import cardMobile from "@/assets/landing-Img/Frame 1707482915 copy.png";
+import cardUIUX from "@/assets/landing-Img/Frame 1707482916 copy.png";
 import frontCard from "@/assets/landing-Img/GuildCardFront.png";
 import backCard from "@/assets/landing-Img/GuildCardBack.png";
+
+const SERVICE_CARDS = [
+  { src: cardWeb, title: "Website Development", desc: "Business websites, SaaS platforms, e-commerce, and custom web applications." },
+  { src: cardBrand, title: "Branding & Visual Design", desc: "Brand identity, logos, social creatives, presentations, and marketing assets." },
+  { src: cardAI, title: "AI & Automation", desc: "AI solutions, intelligent workflows, chatbots, and business automation." },
+  { src: cardMobile, title: "Mobile App Development", desc: "Android, iOS, cross-platform apps, and MVP development." },
+  { src: cardUIUX, title: "UI/UX & Product Design", desc: "User research, wireframes, UI design, prototypes, and complete product experiences." },
+];
 
 /* ---------- data ---------- */
 
@@ -39,8 +47,8 @@ const RANKS = [
 ];
 
 const TRUST_CARDS = [
-  { icon: "Shield", title: "Verified Identity", text: "Know who you are working with." },
-  { icon: "BadgeCheck", title: "Verified Skills", text: "Build confidence through professional verification." },
+  { icon: "Focus", title: "Verified Identity", text: "Know who you are working with." },
+  { icon: "CircleCheck", title: "Verified Skills", text: "Build confidence through professional verification." },
   { icon: "Lock", title: "Secure Escrow", text: "Protect payments throughout every milestone." },
   { icon: "TrendingUp", title: "Transparent Reputation", text: "Make better decisions using real performance history." },
 ];
@@ -128,7 +136,7 @@ export default function LandingPage() {
         </nav>
         <div className="tg-nav-cta">
           <Link to="/login" className="tg-signin">Sign In</Link>
-          <Link to="/signup" className="tg-btn-primary">Get Started</Link>
+          <Link to="/signup" className="tg-btn-primary">Sign Up</Link>
         </div>
       </header>
 
@@ -146,15 +154,9 @@ export default function LandingPage() {
               reputation, and unlock better opportunities.
             </p>
             <div className="tg-hero-actions">
-              <Link to="/signup" className="tg-btn-primary lg">Get Started <span aria-hidden="true">→</span></Link>
               <Link to="#quests" className="tg-btn-white">Explore Quest Board</Link>
+              <Link to="/signup" className="tg-btn-primary lg">Get Started</Link>
             </div>
-            <ul className="tg-hero-ticks">
-              <li><span className="tick">✓</span>Verified Professionals</li>
-              <li><span className="tick">✓</span>Secure Escrow Payments</li>
-              <li><span className="tick">✓</span>Trust-Based Ranking</li>
-              <li><span className="tick">✓</span>AI-Powered Collaboration</li>
-            </ul>
           </div>
 
           <div className="tg-hero-visual">
@@ -302,7 +304,7 @@ export default function LandingPage() {
         <div className="tg-wrap tg-prin-grid">
           <div>
             <p className="tg-eyebrow blue">OUR PRINCIPLES</p>
-            <h2 className="light">Four core values.</h2>
+            <h2>Four core values.</h2>
           </div>
           <div className="tg-prin-list">
             {[
@@ -322,7 +324,7 @@ export default function LandingPage() {
       </section>
 
       {/* ============ HOW IT WORKS ============ */}
-      <section className="tg-process" id="how" style={{ backgroundImage: `url(${papersBg})` }}>
+      <section className="tg-process" id="how">
         <div className="tg-wrap">
           <p className="tg-eyebrow">HOW IT WORKS</p>
           <h2>Our working process</h2>
@@ -388,8 +390,15 @@ export default function LandingPage() {
           <div className="tg-service-track">
             {[0, 1].map((copy) => (
               <div className="tg-service-group" key={copy} aria-hidden={copy === 1}>
-                {[cardWeb, cardBrand, cardAI, cardMobile, cardUIUX].map((src, i) => (
-                  <img key={i} src={src} alt={copy === 0 ? `Service card ${i + 1}` : ""} loading="lazy" className="tg-service-card" />
+                {SERVICE_CARDS.map((c, i) => (
+                  <div key={i} className="tg-service-card">
+                    <img src={c.src} alt={copy === 0 ? c.title : ""} loading="lazy" />
+                    <div className="tg-service-info">
+                      <h4>{c.title}</h4>
+                      <p>{c.desc}</p>
+                      <span aria-hidden="true">→</span>
+                    </div>
+                  </div>
                 ))}
               </div>
             ))}
@@ -398,13 +407,13 @@ export default function LandingPage() {
       </section>
 
       {/* ============ DISCOVER QUEST ============ */}
-      <section className="tg-dark" id="quests">
+      <section className="tg-quest" id="quests">
         <div className="tg-wrap tg-split">
           <div>
-            <h3 className="tg-dark-title-sm">Feature we have</h3>
+            <h3 className="tg-quest-title-sm">Feature we have</h3>
             <p className="tg-eyebrow blue">QUEST BOARD</p>
-            <h2 className="light">Discover your next Quest</h2>
-            <p className="tg-dark-muted">Find meaningful opportunities from trusted clients with complete transparency.</p>
+            <h2 className="blue">Discover your next quest</h2>
+            <p className="tg-muted">Find meaningful opportunities from trusted clients with complete transparency.</p>
             <div className="tg-quest-card">
               <h4>Website Redesign for FinTech Startup</h4>
               <div className="tg-tags"><span>Figma</span><span>UI Design</span><span>UX Research</span><span>Prototype</span></div>
@@ -414,14 +423,14 @@ export default function LandingPage() {
               </div>
               <p className="tg-client">TechNova Pvt. Ltd.</p>
               <p className="tg-verified">✓ Verified Client · Rank A · Trust 92%</p>
-              <div className="tg-counts"><span>18<br />Applicants</span><i>·</i><span>245<br />Views</span></div>
+              <div className="tg-counts"><span>18 Applicants</span><i>·</i><span>245 Views</span></div>
             </div>
-            <Link to="/signup" className="tg-btn-primary">Explore Quest Board <span aria-hidden="true">→</span></Link>
+            <Link to="/signup" className="tg-btn-primary full">Explore Quest Board <span aria-hidden="true">→</span></Link>
           </div>
           <div className="tg-browser">
             <div className="tg-browser-bar"><span className="dot r" /><span className="dot y" /><span className="dot g" /><span className="tg-url">✓ techguild.io/quests</span></div>
             <div className="tg-browser-body">
-              <div className="tg-browse-top"><span className="tg-browse-label">All Quests</span><span className="tg-search">Search quests</span></div>
+              <div className="tg-browse-top right"><span className="tg-search">⌕ Search quests</span></div>
               <div className="tg-tabs"><span className="on">All</span><span>Design</span><span>Development</span><span>AI</span><span>Research</span></div>
               <div className="tg-mini-quest">
                 <p className="tg-mini-client">TechNova Pvt. Ltd.</p>
@@ -500,7 +509,7 @@ export default function LandingPage() {
           <div className="tg-trust-grid">
             {TRUST_CARDS.map((c) => (
               <div key={c.title} className="tg-trust-card">
-                <span className="tg-trust-ico"><Icon name={c.icon} size={22} color="#2456e6" /></span>
+                <span className="tg-trust-ico"><Icon name={c.icon} size={20} color="#2456e6" /></span>
                 <h4>{c.title}</h4><p>{c.text}</p>
               </div>
             ))}
@@ -512,7 +521,6 @@ export default function LandingPage() {
                 <div key={s} className="tg-escrow-step">
                   <b className={i < 4 ? "on" : ""}>{i + 1}</b>
                   <span>{s}</span>
-                  {i < ESCROW_STEPS.length - 1 && <em>→</em>}
                 </div>
               ))}
             </div>
@@ -578,8 +586,8 @@ export default function LandingPage() {
       {/* ============ COMMUNITY ============ */}
       <section className="tg-community">
         <p className="tg-eyebrow blue center">COMMUNITY</p>
-        <h2 className="light center">Trusted by professionals worldwide</h2>
-        <div className="tg-stats-dark">
+        <h2 className="center">Trusted by professionals worldwide</h2>
+        <div className="tg-stats-light">
           <div><strong>120K+</strong><span>Verified Professionals</span></div>
           <div><strong>25K+</strong><span>Trusted Parties</span></div>
           <div><strong>600K+</strong><span>Completed Quests</span></div>
