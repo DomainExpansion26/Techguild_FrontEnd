@@ -1,4 +1,6 @@
 // [TechGuild Update: 21-09-2026] Client whole profile page, LinkedIn/GitHub edit inputs, live logo/banner sync & points journey
+// [TechGuild Update: 28-09-26] Scoped edit modal (about/hiring/details/links/all), slugify handle, public URL card, logo menu
+//updated code 5/10/2026
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -11,6 +13,7 @@ import { projectsApi } from "@/services/api";
 import { showSnackbar } from "@/store";
 import { ICON_SIZES } from "@/constants/sizes";
 import "./WholeProfile.css";
+
 
 const TRUST_RANKS = [
   { rank: "F", min: 0, max: 99 },
@@ -42,6 +45,28 @@ const isValidImageUrl = (url) => {
   return true;
 };
 
+// [28-09-26] Slugify any free-form value into a website-safe handle, e.g. "Techstart Inc" -> "techstart-inc"
+const slugifyHandle = (value = "") =>
+  `${value || ""}`
+    .toLowerCase()
+    .trim()
+    .replace(/[\s_]+/g, "-")
+    .replace(/[^a-z0-9-]/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+// [28-09-26] Full public profile URL (shareable / copyable)
+const buildPublicUrl = (slug = "") => {
+  const origin = typeof window !== "undefined" ? window.location.origin : "";
+  return `${origin}/u/${slug}`;
+};
+
+// [28-09-26] Website-style display URL, e.g. "techguild.com/u/techstart-inc"
+const buildPublicDisplayUrl = (slug = "") => {
+  const host = typeof window !== "undefined" ? window.location.host : "techguild.com";
+  return `${host}/u/${slug}`;
+};
+
 export default function WholeProfile() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -65,11 +90,61 @@ export default function WholeProfile() {
   const [exporting, setExporting] = useState(false);
   const [inlineAlert, setInlineAlert] = useState(null);
   const [copiedLink, setCopiedLink] = useState(false);
+  // [28-09-26] Logo edit menu state (update/remove) + just-applied tick
+  const [logoMenuOpen, setLogoMenuOpen] = useState(false);
+  const [logoJustApplied, setLogoJustApplied] = useState(false);
+  const logoWrapRef = useRef(null);
+
+  useEffect(() => {
+    if (!logoMenuOpen) return;
+    const onDown = (e) => {
+      if (logoWrapRef.current && !logoWrapRef.current.contains(e.target)) {
+        setLogoMenuOpen(false);
+      }
+    };
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
+  }, [logoMenuOpen]);
 
   // Modal States
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [modalTab, setModalTab] = useState("general");
+  // [28-09-26] Scoped edit: section cards pass single scope, header passes "all" with tabs
+  const [editScope, setEditScope] = useState("all");
   const [isSlugModalOpen, setIsSlugModalOpen] = useState(false);
+
+  // [28-09-26] Section edit (single-section) vs Edit All (full profile in header).
+  // Section cards pass "about" | "hiring" | "details" | "links",
+  // header "Edit Profile" passes "all" with tabs.
+  const openEdit = (scope = "all", tab = "general") => {
+    setEditScope(scope);
+    setModalTab(tab);
+    setIsEditModalOpen(true);
+  };
+
+  const EDIT_SCOPE_META = {
+    all: {
+      title: "Edit Company Profile",
+      subtitle: "Update organization details, services, and online identity",
+    },
+    about: {
+      title: "Edit About Company",
+      subtitle: "Update your mission and company overview only",
+    },
+    hiring: {
+      title: "Edit Hiring Interests",
+      subtitle: "Update services and tech competencies only",
+    },
+    details: {
+      title: "Edit Company Details",
+      subtitle: "Update industry, size and location only",
+    },
+    links: {
+      title: "Edit Company Links",
+      subtitle: "Update website and social links only",
+    },
+  };
+  const editMeta = EDIT_SCOPE_META[editScope] || EDIT_SCOPE_META.all;
 
   // Edit Form State
   const [editForm, setEditForm] = useState({
@@ -285,7 +360,9 @@ export default function WholeProfile() {
   const website = profile?.website_url || profile?.website || "https://nexorasolutions.com";
   const companySize = profile?.team_size || profile?.company_size || profile?.size || "10 - 50";
   const founded = profile?.founded_year || profile?.founded || "2024";
-  const publicSlug = profile?.public_url_slug || companyName.toLowerCase().replace(/[^a-z0-9]/g, "-") || "nexora-solutions";
+  const publicSlug = profile?.public_url_slug || slugifyHandle(companyName) || "nexora-solutions";
+  const publicUrl = buildPublicUrl(publicSlug);
+  const publicDisplayUrl = buildPublicDisplayUrl(publicSlug);
 
   // Dynamic hiring interests
   let rawInterests =
@@ -323,9 +400,33 @@ export default function WholeProfile() {
     TRUST_RANKS.slice().reverse().find((r) => trustPoints >= r.min) || TRUST_RANKS[0];
   const currentRankIndex = TRUST_RANKS.findIndex((r) => r.rank === currentRankObj.rank);
   const nextRankObj = TRUST_RANKS[currentRankIndex + 1] || null;
-  const rankProgressPct = nextRankObj
+  const _rankProgressPct = nextRankObj
     ? Math.min(100, Math.max(0, Math.round(((trustPoints - currentRankObj.min) / (nextRankObj.min - currentRankObj.min)) * 100)))
     : 100;
+
+  // Rank Progression (client quest journey: 5 successful quests + verification)
+  const QUEST_GOAL = 5;
+  const completedQuestsRaw =
+    profile?.projects_completed ?? (projects.length > 0 ? Math.floor(projects.length * 0.7) : 2);
+  const completedQuests = Math.max(0, Math.min(QUEST_GOAL, Number(completedQuestsRaw) || 0));
+  const remainingQuests = Math.max(0, QUEST_GOAL - completedQuests);
+  const questProgressPct = Math.round((completedQuests / QUEST_GOAL) * 100);
+  const isVerified = Boolean(profile?.is_verified ?? profile?.identity_verified ?? false);
+  const RANK_SUBTITLES = {
+    F: "Building your reputation",
+    E: "Growing your presence",
+    D: "Earning freelancer trust",
+    C: "Established client",
+    B: "Trusted partner",
+    A: "Top rated client",
+    S: "Elite guild member",
+    SS: "Elite guild member",
+    SSS: "Elite guild member",
+  };
+  const rankSubtitle = RANK_SUBTITLES[currentRankObj.rank] || "Building your reputation";
+  const ringRadius = 22;
+  const ringCircumference = 2 * Math.PI * ringRadius;
+  const ringOffset = ringCircumference - (questProgressPct / 100) * ringCircumference;
 
   // Checklist Calculations
   const checklist = [
@@ -381,7 +482,7 @@ export default function WholeProfile() {
       url: formatFullUrl(rawWebsite, "https://nexorasolutions.com"),
       type: "link",
       tone: "blue",
-      iconColor: "#1d4ed8",
+      iconColor: "#103CA4",
     },
     {
       id: "linkedin",
@@ -544,6 +645,8 @@ export default function WholeProfile() {
         updateUser({ avatar: newLogoUrl });
         dispatch(showSnackbar({ message: "Company logo uploaded successfully!", type: "success" }));
         setInlineAlert({ type: "success", text: "Logo updated successfully!" });
+        setLogoJustApplied(true);
+        setTimeout(() => setLogoJustApplied(false), 2500);
       }
     } catch (err) {
       console.error("Logo upload error:", err);
@@ -557,6 +660,7 @@ export default function WholeProfile() {
       });
     } finally {
       setUploadingLogo(false);
+      setLogoMenuOpen(false);
       if (logoInputRef.current) logoInputRef.current.value = "";
     }
   };
@@ -589,7 +693,8 @@ export default function WholeProfile() {
   // API Action: Handle Logo Delete (DELETE /v1/profile/logo)
   // -------------------------------------------------------------
   const handleDeleteLogo = async (e) => {
-    e.stopPropagation();
+    e?.stopPropagation?.();
+    setLogoMenuOpen(false);
     if (!window.confirm("Are you sure you want to remove your company logo?")) return;
 
     setUploadingLogo(true);
@@ -606,10 +711,13 @@ export default function WholeProfile() {
       dispatch(showSnackbar({ message: err?.message || "Failed to remove logo.", type: "error" }));
     } finally {
       setUploadingLogo(false);
+      setLogoMenuOpen(false);
       if (logoInputRef.current) logoInputRef.current.value = "";
     }
   };
 
+  // -------------------------------------------------------------
+  // API Action: Handle Logo Delete (DELETE /v1/profile/logo)
   // -------------------------------------------------------------
   // API Action: Save/Update Client Profile (PATCH /v1/profile/client)
   // NOTE: UpdateClientProfileRequest only accepts budget_range, city,
@@ -741,8 +849,9 @@ export default function WholeProfile() {
   // API Action: Check Public Slug Availability (GET /v1/profile/check-slug)
   // -------------------------------------------------------------
   const handleCheckSlug = async () => {
-    const raw = slugInput.trim().toLowerCase().replace(/[^a-z0-9-]/g, "-");
+    const raw = slugifyHandle(slugInput);
     if (!raw) return;
+    setSlugInput(raw);
 
     setCheckingSlug(true);
     setSlugStatus(null);
@@ -813,13 +922,26 @@ export default function WholeProfile() {
     }
   };
 
-  // Copy public profile URL
-  const handleCopyPublicUrl = () => {
-    const publicUrl = `${window.location.origin}/u/${publicSlug}`;
-    navigator.clipboard.writeText(publicUrl);
+  // Copy public profile URL (website-style, e.g. techguild.com/u/techstart-inc)
+  const handleCopyPublicUrl = async () => {
+    const urlToCopy = buildPublicUrl(publicSlug);
+    try {
+      await navigator.clipboard.writeText(urlToCopy);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = urlToCopy;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
     setCopiedLink(true);
-    dispatch(showSnackbar({ message: `Copied public link: /u/${publicSlug}`, type: "success" }));
+    dispatch(showSnackbar({ message: `Copied public link: ${buildPublicDisplayUrl(publicSlug)}`, type: "success" }));
     setTimeout(() => setCopiedLink(false), 2500);
+  };
+
+  const handleOpenPublicUrl = () => {
+    window.open(buildPublicUrl(publicSlug), "_blank", "noopener,noreferrer");
   };
 
   // Add / Remove Tag Helpers
@@ -874,7 +996,7 @@ export default function WholeProfile() {
       id: "edit-profile",
       label: "Edit Profile Details",
       iconName: "Pencil",
-      onClick: () => setIsEditModalOpen(true),
+      onClick: () => openEdit("all", "general"),
     },
     {
       id: "check-slug",
@@ -961,7 +1083,7 @@ export default function WholeProfile() {
 
               <div className="wp-identity-layout">
                 <div className="wp-identity-left">
-                  <div className="wp-logo-wrap">
+                  <div className="wp-logo-wrap" ref={logoWrapRef}>
                     <div className="wp-logo-inner">
                       {uploadingLogo ? (
                         <div className="spinner-border spinner-border-sm text-light" role="status"></div>
@@ -989,40 +1111,63 @@ export default function WholeProfile() {
                       onChange={handleLogoUpload}
                     />
 
-                    {/* Logo edit trigger */}
+                    {/* Logo edit trigger -> opens menu with Update / Remove */}
                     <button
                       className="wp-logo-edit"
-                      aria-label="Upload / Change Logo"
-                      title="Upload / Change Logo"
+                      aria-label="Edit logo"
+                      title="Edit logo"
                       type="button"
                       disabled={uploadingLogo}
-                      onClick={() => logoInputRef.current?.click()}
+                      aria-expanded={logoMenuOpen}
+                      onClick={(e) => { e.stopPropagation(); setLogoMenuOpen((o) => !o); }}
                     >
-                      <Icon name="Pencil" size={ICON_SIZES.XS} />
+                      <Icon name={logoJustApplied ? "Check" : "Pencil"} size={ICON_SIZES.XS} />
                     </button>
 
-                    {/* Logo delete trigger if logo exists */}
-                    {hasValidLogo && (
-                      <button
-                        className="wp-logo-remove-btn"
-                        aria-label="Delete Logo"
-                        title="Delete Logo"
-                        type="button"
-                        onClick={handleDeleteLogo}
-                      >
-                        <Icon name="X" size={ICON_SIZES['2XS']} strokeWidth={2.5} />
-                      </button>
+                    {logoMenuOpen && (
+                      <div className="wp-logo-menu" role="menu">
+                        <button
+                          type="button"
+                          className="wp-logo-menu-item"
+                          role="menuitem"
+                          onClick={() => { setLogoMenuOpen(false); logoInputRef.current?.click(); }}
+                        >
+                          <Icon name={hasValidLogo ? "Pencil" : "Upload"} size={ICON_SIZES.XS} />
+                          <span>{hasValidLogo ? "Update logo" : "Upload logo"}</span>
+                        </button>
+                        {hasValidLogo && (
+                          <button
+                            type="button"
+                            className="wp-logo-menu-item danger"
+                            role="menuitem"
+                            onClick={handleDeleteLogo}
+                          >
+                            <Icon name="Trash" size={ICON_SIZES.XS} />
+                            <span>Remove logo</span>
+                          </button>
+                        )}
+                      </div>
                     )}
                   </div>
 
                   <div className="wp-company-details-main">
-                    <h1 className="wp-company-name">{companyName}</h1>
+                    <div className="wp-company-name-row">
+                      <h1 className="wp-company-name">{companyName}</h1>
+                      <button
+                        type="button"
+                        className="wp-link-btn wp-edit-all-btn"
+                        onClick={() => openEdit("all", "general")}
+                        title="Edit full company profile"
+                      >
+                        <Icon name="Pencil" size={ICON_SIZES.XS} /> Edit Profile
+                      </button>
+                    </div>
 
                     <p className="wp-company-tagline">{tagline}</p>
 
                     <div className="wp-badge-row">
                       <span className="wp-badge verified">
-                        <Icon name="CheckCircle2" size={ICON_SIZES.XS} /> Verified Client
+                        <Icon name="CheckCircle2" size={ICON_SIZES.XS} color="#16a34a" /> Verified Client
                       </span>
                       <span className="wp-badge hiring">
                         <span className="wp-dot" /> Actively Hiring
@@ -1040,25 +1185,34 @@ export default function WholeProfile() {
                       </button>
                     </div>
 
-                    {/* Public Slug & Share Badge */}
-                    <div className="d-flex align-items-center gap-2 mt-2">
+                    {/* Public URL — website-style link, e.g. techguild.com/u/techstart-inc */}
+                    <div className="wp-website-url-row mt-2">
+                      <span className="wp-website-url-icon">
+                        <Icon name="Globe" size={ICON_SIZES.SM} color="#64748b" />
+                      </span>
                       <button
                         type="button"
-                        className="wp-public-url-pill"
-                        title="Click to copy public profile link"
-                        onClick={handleCopyPublicUrl}
+                        className="wp-website-url-link"
+                        title={publicUrl}
+                        onClick={handleOpenPublicUrl}
                       >
-                        <Icon name="Globe" size={ICON_SIZES.XS} />
-                        <span>/u/{publicSlug}</span>
-                        <Icon name={copiedLink ? "Check" : "Copy"} size={ICON_SIZES['2XS']} className="copy-icon" />
+                        {publicDisplayUrl}
                       </button>
                       <button
                         type="button"
-                        className="wp-link-btn"
-                        style={{ fontSize: "0.8rem" }}
+                        className="wp-website-url-copy"
+                        title={copiedLink ? "Copied!" : "Copy public profile link"}
+                        aria-label="Copy public profile link"
+                        onClick={handleCopyPublicUrl}
+                      >
+                        <Icon name={copiedLink ? "Check" : "Copy"} size={ICON_SIZES.SM} />
+                      </button>
+                      <button
+                        type="button"
+                        className="wp-link-btn wp-customize-slug-btn"
                         onClick={() => setIsSlugModalOpen(true)}
                       >
-                        Customize Slug
+                        <Icon name="Pencil" size={ICON_SIZES['2XS']} /> Customize Slug
                       </button>
                     </div>
 
@@ -1074,7 +1228,7 @@ export default function WholeProfile() {
                     <p className="wp-intro-text">{intro}</p>
 
                     <span className="wp-badge verified wp-hiring-top-talent">
-                      <Icon name="CheckCircle2" size={ICON_SIZES.XS} /> Hiring Top Talent on TechGuild
+                      <Icon name="CheckCircle2" size={ICON_SIZES.XS} color="#16a34a" /> Hiring Top Talent on TechGuild
                     </span>
                   </div>
                 </div>
@@ -1088,6 +1242,7 @@ export default function WholeProfile() {
                     location={location}
                     website={formatDisplayUrl(website)}
                     logoInitials={logoInitials}
+                    logoUrl={logoUrl}
                     memberSince={memberSince}
                   />
                 </div>
@@ -1115,10 +1270,7 @@ export default function WholeProfile() {
                       <PrimaryButton
                         className="wp-about-me-btn"
                         type="button"
-                        onClick={() => {
-                          setModalTab("general");
-                          setIsEditModalOpen(true);
-                        }}
+                        onClick={() => openEdit("about")}
                       >
                         + Add Company Description
                       </PrimaryButton>
@@ -1133,10 +1285,7 @@ export default function WholeProfile() {
                       <button
                         className="wp-link-btn"
                         type="button"
-                        onClick={() => {
-                          setModalTab("general");
-                          setIsEditModalOpen(true);
-                        }}
+                        onClick={() => openEdit("about")}
                       >
                         <Icon name="Pencil" size={ICON_SIZES.XS} /> Edit
                       </button>
@@ -1156,10 +1305,7 @@ export default function WholeProfile() {
                     <button
                       className="wp-link-btn"
                       type="button"
-                      onClick={() => {
-                        setModalTab("preferences");
-                        setIsEditModalOpen(true);
-                      }}
+                      onClick={() => openEdit("hiring", "preferences")}
                     >
                       <Icon name="Pencil" size={ICON_SIZES['2XS']} /> Edit
                     </button>
@@ -1184,10 +1330,7 @@ export default function WholeProfile() {
                     <button
                       className="wp-link-btn"
                       type="button"
-                      onClick={() => {
-                        setModalTab("general");
-                        setIsEditModalOpen(true);
-                      }}
+                      onClick={() => openEdit("details")}
                     >
                       <Icon name="Pencil" size={ICON_SIZES['2XS']} /> Edit
                     </button>
@@ -1217,16 +1360,16 @@ export default function WholeProfile() {
                         type="button"
                         onClick={() => navigate("/client-quest-board")}
                       >
-                        Quest Board
+                        View All
                       </button>
                     </div>
                     <div className="wp-empty-card-body">
                       <div className="wp-empty-icon-box">
                         <Icon name="Briefcase" size={ICON_SIZES['5XL']} />
                       </div>
-                      <h4 className="wp-empty-heading">No active quests</h4>
+                      <h4 className="wp-empty-heading">No active quests.</h4>
                       <p className="wp-empty-desc">
-                        You have not posted any project quests yet. Create a quest to receive proposals from vetted freelancers.
+                        You haven&apos;t posted any projects yet. Post a quest and get applications from freelancers and agencies.
                       </p>
                       <PrimaryButton
                         className="wp-primary-cta-btn"
@@ -1250,7 +1393,7 @@ export default function WholeProfile() {
                         type="button"
                         onClick={() => navigate("/client-quest-board")}
                       >
-                        View all
+                        View All
                       </button>
                     </div>
                     <div className="wp-quest-list">
@@ -1291,9 +1434,9 @@ export default function WholeProfile() {
                     <div className="wp-empty-icon-box">
                       <Icon name="Star" size={ICON_SIZES['5XL']} color="#cbd5e1" strokeWidth={1.5} fill="none" />
                     </div>
-                    <h4 className="wp-empty-heading">4.9 / 5.0 Star Rating</h4>
+                    <h4 className="wp-empty-heading">No reviews yet.</h4>
                     <p className="wp-empty-desc">
-                      Outstanding reputation score across completed milestones on TechGuild.
+                      Complete your first project to start receiving client reviews.
                     </p>
                   </div>
                 </div>
@@ -1309,10 +1452,7 @@ export default function WholeProfile() {
                     <button
                       className="wp-link-btn"
                       type="button"
-                      onClick={() => {
-                        setModalTab("links");
-                        setIsEditModalOpen(true);
-                      }}
+                      onClick={() => openEdit("links", "links")}
                     >
                       <Icon name="Pencil" size={ICON_SIZES.XS} /> Edit
                     </button>
@@ -1479,60 +1619,139 @@ export default function WholeProfile() {
               </Cards>
             </div>
 
-            {/* Trust Journey (Live from profileApi.getPoints()) */}
-            <Cards variant="base" className="wp-card wp-trust-card" padding="0" style={{ marginBottom: "0px" }}>
-              <div className="wp-card-inner">
-                <div className="wp-card-head">
-                  <h3 className="wp-card-title">
-                    Trust Journey <span className="wp-title-sub">({trustPoints} Trust Points)</span>
-                  </h3>
+            {/* Rank Progression (Live from profileApi.getPoints() + quest counts) */}
+            <Cards variant="base" className="wp-card wp-trust-card wp-rank-card" padding="0">
+              <div className="wp-card-inner wp-rank-inner">
+                <div className="wp-rank-head">
+                  <div className="wp-rank-head-left">
+                    <h3 className="wp-card-title wp-rank-title">Rank Progression</h3>
+                    <p className="wp-rank-subtitle">
+                      {nextRankObj
+                        ? `Complete ${QUEST_GOAL} successful quests and stay verified to unlock your next rank.`
+                        : "Maximum rank achieved — you are a top tier guild client."}
+                    </p>
+                  </div>
                   <button
-                    className="wp-link-btn"
+                    className="wp-link-btn wp-rank-viewall"
                     type="button"
                     onClick={() => navigate("/client-company-reputation")}
                   >
-                    View all
+                    View all ranks <Icon name="ArrowRight" size={ICON_SIZES.SM} />
                   </button>
                 </div>
 
-                <div className="wp-trust-scroll-wrapper">
-                  <div className="wp-trust-scroll-inner">
-                    <div className="wp-trust-nodes">
-                      {TRUST_RANKS.map((r, i) => {
-                        const isActive = i <= currentRankIndex;
-                        const isCurrent = i === currentRankIndex;
-                        return (
-                          <div className={`wp-trust-node ${isActive ? "active" : ""}`} key={r.rank}>
-                            <span className="wp-trust-circle">{r.rank}</span>
-                            <span className="wp-trust-node-label">{isCurrent ? "You" : `${r.min} TP`}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-
-                    <div className="wp-trust-progress-bar">
-                      <div
-                        className="wp-trust-progress-fill"
-                        style={{ width: `${Math.max(8, ((currentRankIndex + rankProgressPct / 100) / TRUST_RANKS.length) * 100)}%` }}
-                      />
-                    </div>
+                <div className="wp-rank-track">
+                  <div className="wp-rank-line" aria-hidden="true" />
+                  <div className="wp-rank-nodes">
+                    {TRUST_RANKS.map((r, i) => {
+                      const isCurrent = i === currentRankIndex;
+                      const isPassed = i < currentRankIndex;
+                      return (
+                        <div
+                          className={`wp-rank-node ${isCurrent ? "current" : ""} ${isPassed ? "passed" : ""}`}
+                          key={r.rank}
+                        >
+                          <span className="wp-rank-circle">{r.rank}</span>
+                          {isCurrent && <span className="wp-rank-you">You</span>}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
 
-                <div className="wp-trust-footer">
-                  <span className="wp-trust-rank">Rank {currentRankObj.rank}</span>
-                  <span className="wp-trust-next">
+                <div className="wp-rank-progress-row">
+                  <div className="wp-rank-progress-bar">
+                    {/* Fill ends just past the current rank node (F + a little more) */}
+                    <div
+                      className="wp-rank-progress-fill"
+                      style={{
+                        width: `max(57px, ${(Math.min(1, (currentRankIndex + 0.35) / Math.max(1, TRUST_RANKS.length - 1)) * 100).toFixed(2)}%)`,
+                      }}
+                    />
+                  </div>
+                  <span className="wp-rank-progress-count">
+                    {completedQuests} / {QUEST_GOAL}
+                  </span>
+                </div>
+
+                <div className="wp-rank-bottom">
+                  <div className="wp-rank-left">
+                    <div className="wp-rank-current">Rank {currentRankObj.rank} (Client)</div>
+                    <div className="wp-rank-current-sub">{rankSubtitle}</div>
+                    <div className="wp-rank-tasks">
+                      <div className={`wp-rank-task ${isVerified ? "done" : ""}`}>
+                        <span className="wp-rank-task-icon">
+                          <Icon name="Shield" size={ICON_SIZES.DEFAULT} />
+                        </span>
+                        <div className="wp-rank-task-text">
+                          <div className="wp-rank-task-title">
+                            Be Verified
+                            {isVerified && (
+                              <Icon name="CheckCircle2" size={ICON_SIZES.SM} className="wp-rank-task-check" />
+                            )}
+                          </div>
+                          <div className="wp-rank-task-sub">Complete identity verification</div>
+                        </div>
+                      </div>
+                      <div className="wp-rank-divider" aria-hidden="true" />
+                      <div className={`wp-rank-task ${completedQuests >= QUEST_GOAL ? "done" : ""}`}>
+                        <span className="wp-rank-task-icon">
+                          <Icon name="FileText" size={ICON_SIZES.DEFAULT} />
+                        </span>
+                        <div className="wp-rank-task-text">
+                          <div className="wp-rank-task-title">Complete {QUEST_GOAL} Successful Quests</div>
+                          <div className="wp-rank-task-sub">
+                            Work with freelancers and mark quests as successful
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="wp-rank-nextbox">
                     {nextRankObj ? (
                       <>
-                        Next Rank ({nextRankObj.rank}): <b>Reach {nextRankObj.min} TP</b>{" "}
-                        <span className="wp-trust-tp">
-                          {trustPoints} / {nextRankObj.min} TP ({rankProgressPct}%)
-                        </span>
+                        <div className="wp-rank-nextinfo">
+                          <span className="wp-rank-next-label">Next Rank:</span>
+                          <span className="wp-rank-next-value">Rank {nextRankObj.rank}</span>
+                          <span className="wp-rank-next-sub">
+                            {remainingQuests > 0
+                              ? `Complete ${remainingQuests} more successful quest${remainingQuests === 1 ? "" : "s"}`
+                              : "Verification pending to unlock"}
+                          </span>
+                        </div>
+                        <div className="wp-rank-ring" role="img" aria-label={`${completedQuests} of ${QUEST_GOAL} quests complete`}>
+                          <svg width="64" height="64" viewBox="0 0 64 64">
+                            <circle cx="32" cy="32" r={ringRadius} fill="none" stroke="#e2e8f0" strokeWidth="6" />
+                            <circle
+                              cx="32"
+                              cy="32"
+                              r={ringRadius}
+                              fill="none"
+                              stroke="#103CA4"
+                              strokeWidth="6"
+                              strokeLinecap="round"
+                              strokeDasharray={ringCircumference}
+                              strokeDashoffset={ringOffset}
+                              transform="rotate(-90 32 32)"
+                            />
+                          </svg>
+                          <div className="wp-rank-ring-text">
+                            <span className="wp-rank-ring-count">
+                              {completedQuests}/{QUEST_GOAL}
+                            </span>
+                            <span className="wp-rank-ring-label">Quests</span>
+                          </div>
+                        </div>
                       </>
                     ) : (
-                      <b>Maximum Rank Achieved (Top Tier)</b>
+                      <div className="wp-rank-nextinfo">
+                        <span className="wp-rank-next-label">Status</span>
+                        <span className="wp-rank-next-value">Max Rank</span>
+                        <span className="wp-rank-next-sub">Top tier guild client ({trustPoints} TP)</span>
+                      </div>
                     )}
-                  </span>
+                  </div>
                 </div>
               </div>
             </Cards>
@@ -1551,8 +1770,8 @@ export default function WholeProfile() {
                   <Icon name="Building2" size={ICON_SIZES.XL} />
                 </div>
                 <div>
-                  <h3 className="wp-modal-title">Edit Company Profile</h3>
-                  <p className="wp-modal-subtitle">Update organization details, services, and online identity</p>
+                  <h3 className="wp-modal-title">{editMeta.title}</h3>
+                  <p className="wp-modal-subtitle">{editMeta.subtitle}</p>
                 </div>
               </div>
               <button
@@ -1565,34 +1784,194 @@ export default function WholeProfile() {
               </button>
             </div>
 
-            {/* Modal Tabs */}
-            <div className="wp-modal-tabs">
-              <button
-                type="button"
-                className={`wp-modal-tab-btn ${modalTab === "general" ? "active" : ""}`}
-                onClick={() => setModalTab("general")}
-              >
-                General Info
-              </button>
-              <button
-                type="button"
-                className={`wp-modal-tab-btn ${modalTab === "preferences" ? "active" : ""}`}
-                onClick={() => setModalTab("preferences")}
-              >
-                Hiring &amp; Services
-              </button>
-              <button
-                type="button"
-                className={`wp-modal-tab-btn ${modalTab === "links" ? "active" : ""}`}
-                onClick={() => setModalTab("links")}
-              >
-                Links &amp; Details
-              </button>
-            </div>
+            {/* Modal Tabs — only for Edit All; section edits hide tabs */}
+            {editScope === "all" && (
+              <div className="wp-modal-tabs">
+                <button
+                  type="button"
+                  className={`wp-modal-tab-btn ${modalTab === "general" ? "active" : ""}`}
+                  onClick={() => setModalTab("general")}
+                >
+                  General Info
+                </button>
+                <button
+                  type="button"
+                  className={`wp-modal-tab-btn ${modalTab === "preferences" ? "active" : ""}`}
+                  onClick={() => setModalTab("preferences")}
+                >
+                  Hiring &amp; Services
+                </button>
+                <button
+                  type="button"
+                  className={`wp-modal-tab-btn ${modalTab === "links" ? "active" : ""}`}
+                  onClick={() => setModalTab("links")}
+                >
+                  Links &amp; Details
+                </button>
+              </div>
+            )}
 
             <form onSubmit={handleSaveProfile} className="d-flex flex-column grow" style={{ minHeight: 0 }}>
               <div className="wp-modal-body">
-                {modalTab === "general" && (
+                {editScope === "about" && (
+                  <div className="wp-form-group">
+                    <label className="wp-form-label">About Company / Mission</label>
+                    <textarea
+                      className="wp-form-textarea"
+                      placeholder="Describe your organization, mission, and what kind of talent you collaborate with..."
+                      value={editForm.description}
+                      onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
+                    />
+                  </div>
+                )}
+
+                {editScope === "hiring" && (
+                  <div className="wp-form-group">
+                    <label className="wp-form-label">Hiring Interests &amp; Tech Competencies</label>
+                    <div className="wp-tags-container">
+                      {editForm.hiring_interests.map((tag) => (
+                        <span key={tag} className="wp-tag-pill">
+                          {tag}
+                          <button
+                            type="button"
+                            className="wp-tag-remove-btn"
+                            onClick={() => handleRemoveInterest(tag)}
+                          >
+                            <Icon name="X" size={ICON_SIZES['2XS']} />
+                          </button>
+                        </span>
+                      ))}
+                      <input
+                        type="text"
+                        className="wp-tag-input-inline"
+                        placeholder="+ Add service/interest"
+                        value={editForm.newInterest}
+                        onChange={(e) => setEditForm({ ...editForm, newInterest: e.target.value })}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            handleAddInterest();
+                          }
+                        }}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {editScope === "details" && (
+                  <>
+                    <div className="wp-form-grid-2">
+                      <div className="wp-form-group">
+                        <label className="wp-form-label">Industry</label>
+                        <select
+                          className="wp-form-select"
+                          value={editForm.industry}
+                          onChange={(e) => setEditForm({ ...editForm, industry: e.target.value })}
+                        >
+                          <option value="Healthcare">Healthcare</option>
+                          <option value="Technology">Technology &amp; SaaS</option>
+                          <option value="Finance">Finance &amp; Fintech</option>
+                          <option value="E-commerce">E-commerce</option>
+                          <option value="Education">Education &amp; EdTech</option>
+                          <option value="Marketing">Marketing &amp; Media</option>
+                        </select>
+                      </div>
+
+                      <div className="wp-form-group">
+                        <label className="wp-form-label">Team Size</label>
+                        <select
+                          className="wp-form-select"
+                          value={editForm.team_size}
+                          onChange={(e) => setEditForm({ ...editForm, team_size: e.target.value })}
+                        >
+                          <option value="1 - 10">1 - 10 Employees</option>
+                          <option value="10 - 50">10 - 50 Employees</option>
+                          <option value="50 - 200">50 - 200 Employees</option>
+                          <option value="200+">200+ Employees</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="wp-form-grid-2">
+                      <div className="wp-form-group">
+                        <label className="wp-form-label">City</label>
+                        <input
+                          type="text"
+                          className="wp-form-input"
+                          placeholder="e.g. San Francisco"
+                          value={editForm.city}
+                          onChange={(e) => setEditForm({ ...editForm, city: e.target.value })}
+                        />
+                      </div>
+
+                      <div className="wp-form-group">
+                        <label className="wp-form-label">Country</label>
+                        <input
+                          type="text"
+                          className="wp-form-input"
+                          placeholder="e.g. United States"
+                          value={editForm.country}
+                          onChange={(e) => setEditForm({ ...editForm, country: e.target.value })}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="wp-form-group">
+                      <label className="wp-form-label">Timezone</label>
+                      <select
+                        className="wp-form-select"
+                        value={editForm.timezone}
+                        onChange={(e) => setEditForm({ ...editForm, timezone: e.target.value })}
+                      >
+                        <option value="America/Los_Angeles">America/Los_Angeles (PST/PDT)</option>
+                        <option value="America/New_York">America/New_York (EST/EDT)</option>
+                        <option value="Europe/London">Europe/London (GMT/BST)</option>
+                        <option value="Asia/Kolkata">Asia/Kolkata (IST)</option>
+                        <option value="Asia/Singapore">Asia/Singapore (SGT)</option>
+                        <option value="Australia/Sydney">Australia/Sydney (AEST)</option>
+                      </select>
+                    </div>
+                  </>
+                )}
+
+                {editScope === "links" && (
+                  <>
+                    <div className="wp-form-group">
+                      <label className="wp-form-label">Website URL</label>
+                      <input
+                        type="text"
+                        className="wp-form-input"
+                        placeholder="https://yourcompany.com"
+                        value={editForm.website_url}
+                        onChange={(e) => setEditForm({ ...editForm, website_url: e.target.value })}
+                      />
+                    </div>
+
+                    <div className="wp-form-group">
+                      <label className="wp-form-label">LinkedIn URL</label>
+                      <input
+                        type="text"
+                        className="wp-form-input"
+                        placeholder="linkedin.com/company/yourcompany"
+                        value={editForm.linkedin_url}
+                        onChange={(e) => setEditForm({ ...editForm, linkedin_url: e.target.value })}
+                      />
+                    </div>
+
+                    <div className="wp-form-group">
+                      <label className="wp-form-label">GitHub URL</label>
+                      <input
+                        type="text"
+                        className="wp-form-input"
+                        placeholder="github.com/yourcompany"
+                        value={editForm.github_url}
+                        onChange={(e) => setEditForm({ ...editForm, github_url: e.target.value })}
+                      />
+                    </div>
+                  </>
+                )}
+
+                {editScope === "all" && modalTab === "general" && (
                   <>
                     <div className="wp-form-group">
                       <label className="wp-form-label">
@@ -1675,7 +2054,7 @@ export default function WholeProfile() {
                   </>
                 )}
 
-                {modalTab === "preferences" && (
+                {editScope === "all" && modalTab === "preferences" && (
                   <>
                     <div className="wp-form-group">
                       <label className="wp-form-label">Typical Budget Range</label>
@@ -1756,7 +2135,7 @@ export default function WholeProfile() {
                   </>
                 )}
 
-                {modalTab === "links" && (
+                {editScope === "all" && modalTab === "links" && (
                   <>
                     <div className="wp-form-group">
                       <label className="wp-form-label">Website URL</label>
@@ -1878,16 +2257,25 @@ export default function WholeProfile() {
 
             <div className="wp-modal-body">
               <div className="wp-form-group">
-                <label className="wp-form-label">Check Handle Availability</label>
-                <div className="wp-slug-check-box">
-                  <span className="wp-slug-prefix">/u/</span>
+                <label className="wp-form-label">Customize Slug — looks like your website URL</label>
+                <p className="wp-slug-hint">
+                  Your public page lives at{" "}
+                  <span className="wp-slug-hint-url">
+                    {typeof window !== "undefined" ? window.location.host : "techguild.com"}/u/
+                    {slugifyHandle(slugInput) || publicSlug}
+                  </span>
+                </p>
+                <div className="wp-slug-check-box wp-slug-website-style">
+                  <span className="wp-slug-prefix">
+                    {typeof window !== "undefined" ? window.location.host : "techguild.com"}/u/
+                  </span>
                   <input
                     type="text"
                     className="wp-form-input wp-slug-input-grouped"
-                    placeholder="my-company"
+                    placeholder="techstart-inc"
                     value={slugInput}
                     onChange={(e) => {
-                      setSlugInput(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "-"));
+                      setSlugInput(slugifyHandle(e.target.value));
                       setSlugStatus(null);
                     }}
                   />
@@ -1927,18 +2315,35 @@ export default function WholeProfile() {
                 </div>
               )}
 
-              <div className="mt-2 p-3 bg-light rounded-3 border">
+              <div className="wp-live-url-card">
                 <div className="small fw-bold text-dark mb-1">Your Live Public URL:</div>
-                <div className="d-flex align-items-center justify-content-between gap-2">
-                  <code className="text-primary small text-break">
-                    {window.location.origin}/u/{publicSlug}
-                  </code>
+                <div className="wp-live-url-row">
+                  <span className="wp-website-url-icon">
+                    <Icon name="Globe" size={ICON_SIZES.SM} color="#64748b" />
+                  </span>
+                  <button
+                    type="button"
+                    className="wp-website-url-link"
+                    title={publicUrl}
+                    onClick={handleOpenPublicUrl}
+                  >
+                    {publicDisplayUrl}
+                  </button>
+                  <button
+                    type="button"
+                    className="wp-website-url-copy"
+                    title={copiedLink ? "Copied!" : "Copy public profile link"}
+                    aria-label="Copy public profile link"
+                    onClick={handleCopyPublicUrl}
+                  >
+                    <Icon name={copiedLink ? "Check" : "Copy"} size={ICON_SIZES.SM} />
+                  </button>
                   <button
                     type="button"
                     className="btn btn-sm btn-outline-primary"
-                    onClick={handleCopyPublicUrl}
+                    onClick={handleOpenPublicUrl}
                   >
-                    {copiedLink ? "Copied!" : "Copy"}
+                    Open
                   </button>
                 </div>
               </div>

@@ -1,5 +1,5 @@
 // [TechGuild Update: 21-09-2026] Client profile settings & getMyProfile sync
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
