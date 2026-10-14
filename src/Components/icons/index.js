@@ -77,6 +77,10 @@ import Palette from "../../assets/icons/palette.svg?react";
 import Tag from "../../assets/icons/tag.svg?react";
 import LifeBuoy from "../../assets/icons/life-buoy.svg?react";
 import FolderOpen from "../../assets/icons/folder-open.svg?react";
+import RefreshCw from "../../assets/icons/refresh-cw.svg?react";
+import Copy from "../../assets/icons/copy.svg?react";
+import Send from "../../assets/icons/send.svg?react";
+import Target from "../../assets/icons/target.svg?react";
 
 export {
   ArrowLeft,
@@ -159,5 +163,9 @@ export {
   Tag,
   LifeBuoy,
   FolderOpen,
+  RefreshCw,
+  Copy,
+  Send,
+  Target,
 };
 
