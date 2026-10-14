@@ -687,6 +687,21 @@ function TaxDocumentsPanel({ flash }) {
   );
 }
 
+function FinanceBackButton({ onBack }) {
+  return (
+    <div className="ind-fin-back-wrap">
+      <button
+        type="button"
+        className="ind-fin-back-btn"
+        onClick={onBack}
+        aria-label="Go back to overview"
+      >
+        <FinIcon name="ArrowLeft" size={ICON_SIZES["2XL"]} color="#0b38a8" stroke="#0b38a8" fill="none" />
+      </button>
+    </div>
+  );
+}
+
 export default function Earnings() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -696,6 +711,13 @@ export default function Earnings() {
   const activeTab = VALID_TABS.includes(tabParam) ? tabParam : "overview";
   const goTab = (id) => navigate(`${location.pathname}?tab=${id}`);
   const goOverview = () => navigate(`${location.pathname}?tab=overview`);
+  const handleBack = () => {
+    if (activeTab === "transactions" && txnId) {
+      goTab("transactions");
+    } else {
+      goOverview();
+    }
+  };
   const [toast, setToast] = useState("");
   const flash = (msg) => { setToast(msg); setTimeout(() => setToast(""), 2400); };
 
@@ -703,6 +725,7 @@ export default function Earnings() {
     <DashboardLayout searchPlaceholder="Search projects, clients, or freelancers..." mainWorkspaceClass="ind-finance-workspace">
       <div className="ind-fin-page">
         <div className="ind-fin-main">
+          {activeTab !== "overview" && <FinanceBackButton onBack={handleBack} />}
           {activeTab === "overview" && <OverviewPanel onNavigate={goTab} onWithdraw={() => goTab("withdraw-funds")} onDownload={() => flash("Statement download started.")} />}
           {activeTab === "withdraw-funds" && <WithdrawFundsPanel goTab={goTab} goOverview={goOverview} />}
           {activeTab === "withdrawal-history" && <WithdrawalHistoryPanel flash={flash} />}
