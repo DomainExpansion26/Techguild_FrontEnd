@@ -52,8 +52,12 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
     currentPath.startsWith("/admin/settings");
 
   const isFinancePath =
+    currentPath === "/client-finance" ||
+    currentPath.startsWith("/client-finance/") ||
     currentPath === "/client-payouts" ||
     currentPath.startsWith("/client-payouts/") ||
+    currentPath === "/client/finance" ||
+    currentPath.startsWith("/client/finance/") ||
     currentPath === "/client/payouts" ||
     currentPath.startsWith("/client/payouts/") ||
     currentPath === "/finance" ||
@@ -61,7 +65,9 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
     currentPath === "/earnings-payouts" ||
     currentPath.startsWith("/earnings-payouts") ||
     currentPath === "/individual/earnings" ||
-    currentPath.startsWith("/individual/earnings");
+    currentPath.startsWith("/individual/earnings") ||
+    currentPath === "/individual/finance" ||
+    currentPath.startsWith("/individual/finance");
   const isFinanceMode = isFinancePath && !isSettingsPath;
   const isSettingsMode = isSettingsPath;
 
