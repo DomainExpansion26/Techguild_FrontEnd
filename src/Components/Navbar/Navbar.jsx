@@ -87,7 +87,6 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
   const pathParts = currentPath.split("/").filter(Boolean);
   const pathTab = isSettingsPath && pathParts.length >= 2 ? pathParts[pathParts.length - 1] : "profile";
   const activeTabId = activeSettingsTab || pathTab;
-
   const handleSettingsSubClick = (subItem) => {
     if (onSelectSettingsTab) {
       onSelectSettingsTab(subItem.id);
