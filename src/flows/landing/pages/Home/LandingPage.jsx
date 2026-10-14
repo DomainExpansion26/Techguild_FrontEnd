@@ -1,4 +1,4 @@
-// Last Changed: 14-10-2026
+﻿// Last Changed: 14-10-2026
 // 14-10-2026: Sign In / Sign Up and CTA buttons show "Coming Soon" message with no navigation.
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -66,7 +66,7 @@ const ESCROW_STEPS = [
 ];
 
 const FAQS = [
-  { q: "What is TechGuild?", a: "TechGuild is a trust-first ecosystem for professional collaboration — discover Quests, build Parties, and grow your Rank with verified identity and escrow protection." },
+  { q: "What is TechGuild?", a: "TechGuild is a trust-first ecosystem for professional collaboration â€” discover Quests, build Parties, and grow your Rank with verified identity and escrow protection." },
   { q: "What is a Quest?", a: "A Quest is a structured work opportunity with clear requirements, budget, milestones, and timelines posted by verified clients." },
   { q: "What is a Party?", a: "A Party is a trusted team of professionals with complementary skills who collaborate together on Quests." },
   { q: "How does verification work?", a: "Verify your identity, skills, and professional profile to earn Verified status, Trust Points, and higher Ranks." },
@@ -91,7 +91,7 @@ const MILESTONES = [
 
 function Marquee({ items }) {
   const row = items.map((t) => (
-    <span className="tg-mq-item" key={t}>{t}<i>◆</i></span>
+    <span className="tg-mq-item" key={t}>{t}<i>â—†</i></span>
   ));
   return (
     <div className="tg-marquee" aria-hidden="true">
@@ -157,7 +157,7 @@ export default function LandingPage() {
         <div className="tg-hero-glow" />
         <div className="tg-wrap tg-hero-grid">
           <div className="tg-hero-copy">
-            <p className="tg-hero-eyebrow"><i>•</i> THE TRUST-FIRST PROFESSIONAL ECOSYSTEM</p>
+            <p className="tg-hero-eyebrow"><i>â€¢</i> THE TRUST-FIRST PROFESSIONAL ECOSYSTEM</p>
             <h1>Build trust.<br />Find better projects.<br /><span>Collaborate<br />without limits.</span></h1>
             <p className="tg-hero-sub">
               TechGuild connects verified freelancers, agencies, Parties, and clients through a
@@ -187,11 +187,11 @@ export default function LandingPage() {
                 </aside>
                 <div className="tg-dash-main">
                   <p className="tg-dash-welcome">Welcome back,</p>
-                  <p className="tg-dash-user">Aarav Mehta · <span>Rank D</span></p>
+                  <p className="tg-dash-user">Aarav Mehta Â· <span>Rank D</span></p>
                   <div className="tg-dash-stats">
                     <div><span>Trust Points</span><strong>8,420</strong></div>
                     <div><span>Active Quests</span><strong>5</strong></div>
-                    <div><span>In Escrow</span><strong>₹2.4L</strong></div>
+                    <div><span>In Escrow</span><strong>â‚¹2.4L</strong></div>
                   </div>
                   <div className="tg-dash-ms">
                     <p><strong>Milestone progress</strong><span>Website Redesign</span></p>
@@ -206,9 +206,9 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="tg-chip c1"><span>Verified Client</span><p>Trust Score <em>✓ 98</em></p></div>
-            <div className="tg-chip c2"><span>Quest Budget</span><strong>₹ 75,000</strong></div>
-            <div className="tg-chip c3"><span className="pill">✦ Party</span><strong className="blue">94% Match</strong></div>
+            <div className="tg-chip c1"><span>Verified Client</span><p>Trust Score <em>âœ“ 98</em></p></div>
+            <div className="tg-chip c2"><span>Quest Budget</span><strong>â‚¹ 75,000</strong></div>
+            <div className="tg-chip c3"><span className="pill">âœ¦ Party</span><strong className="blue">94% Match</strong></div>
             <div className="tg-chip c4"><span>Escrow</span><p className="green">Protected</p><b>A</b></div>
           </div>
         </div>
@@ -252,7 +252,7 @@ export default function LandingPage() {
                 </div>
               ))}
             </div>
-            <div className="tg-eco-foot"><strong>Connected ecosystem</strong><span><b>A</b><em>✓ 97%</em></span></div>
+            <div className="tg-eco-foot"><strong>Connected ecosystem</strong><span><b>A</b><em>âœ“ 97%</em></span></div>
           </div>
         </div>
       </section>
@@ -285,7 +285,7 @@ export default function LandingPage() {
         <div className="tg-wrap">
           <p className="tg-eyebrow">OUR SERVICES</p>
           <h2>We provide best services</h2>
-          <p className="tg-muted narrow">Everything you need to connect, collaborate, manage projects, and grow your professional reputation—all in one platform.</p>
+          <p className="tg-muted narrow">Everything you need to connect, collaborate, manage projects, and grow your professional reputationâ€”all in one platform.</p>
           <div className="tg-svc-grid">
             {[
               ["01", "BadgeCheck", "Verified Talent Network", "Connect with trusted freelancers, agencies, and Parties through identity and skill verification."],
@@ -304,7 +304,7 @@ export default function LandingPage() {
                 <p className="tg-svc-num">SERVICE {n}</p>
                 <span className="tg-svc-ico"><Icon name={icon} size={24} color="#ffffff" /></span>
                 <h3>{t}</h3><p>{d}</p>
-                <span className="tg-svc-arrow" aria-hidden="true">→</span>
+                <span className="tg-svc-arrow" aria-hidden="true">â†’</span>
               </div>
             ))}
           </div>
@@ -340,7 +340,7 @@ export default function LandingPage() {
         <div className="tg-wrap">
           <p className="tg-eyebrow">HOW IT WORKS</p>
           <h2>Our working process</h2>
-          <p className="tg-muted narrow">Every great collaboration begins with trust—our process keeps every Quest simple, transparent, and secure.</p>
+          <p className="tg-muted narrow">Every great collaboration begins with trustâ€”our process keeps every Quest simple, transparent, and secure.</p>
           <div className="tg-steps">
             {PROCESS_STEPS.map((s) => (
               <div className="tg-step" key={s.n}>
@@ -365,7 +365,7 @@ export default function LandingPage() {
               <p className="tg-eyebrow sm">FEATURE 01</p>
               <h3>Quest Board</h3>
               <p className="tg-muted">Discover verified opportunities with transparent budgets, skills, timelines, client ranks, and Quest types.</p>
-              <Link to="/features" className="tg-learn">Learn more <span aria-hidden="true">→</span></Link>
+              <Link to="/features" className="tg-learn">Learn more <span aria-hidden="true">â†’</span></Link>
             </div>
             <div className="tg-shot-wrap"><img className="tg-shot" src={questBoard} alt="Quest Board dashboard" loading="lazy" /></div>
           </div>
@@ -376,7 +376,7 @@ export default function LandingPage() {
               <p className="tg-eyebrow sm">FEATURE 02</p>
               <h3>Task Management Dashboard</h3>
               <p className="tg-muted">Track Quests, monitor milestones, manage deadlines, and collaborate seamlessly from one centralized workspace.</p>
-              <Link to="/features" className="tg-learn">Learn more <span aria-hidden="true">→</span></Link>
+              <Link to="/features" className="tg-learn">Learn more <span aria-hidden="true">â†’</span></Link>
             </div>
           </div>
 
@@ -385,7 +385,7 @@ export default function LandingPage() {
               <p className="tg-eyebrow sm">FEATURE 03</p>
               <h3>Milestone Planner</h3>
               <p className="tg-muted">Build a structured roadmap for your Quest.<br />AI suggests milestones while you stay in control.</p>
-              <Link to="/features" className="tg-learn">Learn more <span aria-hidden="true">→</span></Link>
+              <Link to="/features" className="tg-learn">Learn more <span aria-hidden="true">â†’</span></Link>
             </div>
             <div className="tg-shot-wrap"><img className="tg-shot" src={milestonePlanner} alt="AI Milestone Planner" loading="lazy" /></div>
           </div>
@@ -396,7 +396,7 @@ export default function LandingPage() {
       <section className="tg-services">
         <div className="tg-wrap">
           <h2>Services Built for Your Next Quest</h2>
-          <p className="tg-muted narrow">From AI and app development to design, cybersecurity, cloud, and digital growth — access the expertise you need to bring your ideas to life.</p>
+          <p className="tg-muted narrow">From AI and app development to design, cybersecurity, cloud, and digital growth â€” access the expertise you need to bring your ideas to life.</p>
         </div>
         <div className="tg-service-marquee">
           <div className="tg-service-track">
@@ -408,7 +408,7 @@ export default function LandingPage() {
                     <div className="tg-service-info">
                       <h4>{c.title}</h4>
                       <p>{c.desc}</p>
-                      <span aria-hidden="true">→</span>
+                      <span aria-hidden="true">â†’</span>
                     </div>
                   </div>
                 ))}
@@ -430,35 +430,35 @@ export default function LandingPage() {
               <h4>Website Redesign for FinTech Startup</h4>
               <div className="tg-tags"><span>Figma</span><span>UI Design</span><span>UX Research</span><span>Prototype</span></div>
               <div className="tg-quest-meta">
-                <div><span>Budget</span><strong>₹ 75,000</strong></div>
+                <div><span>Budget</span><strong>â‚¹ 75,000</strong></div>
                 <div><span>Timeline</span><strong>20 Days</strong></div>
               </div>
               <p className="tg-client">TechNova Pvt. Ltd.</p>
-              <p className="tg-verified">✓ Verified Client · Rank A · Trust 92%</p>
-              <div className="tg-counts"><span>18 Applicants</span><i>·</i><span>245 Views</span></div>
+              <p className="tg-verified">âœ“ Verified Client Â· Rank A Â· Trust 92%</p>
+              <div className="tg-counts"><span>18 Applicants</span><i>Â·</i><span>245 Views</span></div>
             </div>
             {/* 14-10-2026: Coming Soon, no navigation */}
-            <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary full">Explore Quest Board <span aria-hidden="true">→</span></Link>
+            <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary full">Explore Quest Board <span aria-hidden="true">â†’</span></Link>
           </div>
           <div className="tg-browser">
-            <div className="tg-browser-bar"><span className="dot r" /><span className="dot y" /><span className="dot g" /><span className="tg-url">✓ techguild.io/quests</span></div>
+            <div className="tg-browser-bar"><span className="dot r" /><span className="dot y" /><span className="dot g" /><span className="tg-url">âœ“ techguild.io/quests</span></div>
             <div className="tg-browser-body">
-              <div className="tg-browse-top right"><span className="tg-search">⌕ Search quests</span></div>
+              <div className="tg-browse-top right"><span className="tg-search">âŒ• Search quests</span></div>
               <div className="tg-tabs"><span className="on">All</span><span>Design</span><span>Development</span><span>AI</span><span>Research</span></div>
               <div className="tg-mini-quest">
                 <p className="tg-mini-client">TechNova Pvt. Ltd.</p>
                 <div className="tg-tags light"><span>Figma</span><span>UI Design</span><span>UX</span></div>
-                <p className="tg-mini-foot">◷ 20 Days<span><b>A</b><em>✓ 92%</em></span></p>
+                <p className="tg-mini-foot">â—· 20 Days<span><b>A</b><em>âœ“ 92%</em></span></p>
               </div>
               <div className="tg-mini-quest hot">
                 <p className="tg-mini-client">NeuralEdge Labs<em className="prio">Priority</em></p>
                 <div className="tg-tags light"><span>AI</span><span>Product</span><span>Automation</span></div>
-                <p className="tg-mini-foot">◷ 30 Days<span><b className="s">S</b><em>✓ 97%</em></span></p>
+                <p className="tg-mini-foot">â—· 30 Days<span><b className="s">S</b><em>âœ“ 97%</em></span></p>
               </div>
               <div className="tg-mini-quest">
                 <p className="tg-mini-client">Loop Health</p>
                 <div className="tg-tags light"><span>UX Research</span><span>Mobile</span></div>
-                <p className="tg-mini-foot">◷ 15 Days<span><b>B</b><em>✓ 88%</em></span></p>
+                <p className="tg-mini-foot">â—· 15 Days<span><b>B</b><em>âœ“ 88%</em></span></p>
               </div>
             </div>
           </div>
@@ -481,9 +481,9 @@ export default function LandingPage() {
             <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary">Build Your Party +</Link>
           </div>
           <div className="tg-party-card">
-            <div className="tg-browser-bar"><span className="dot r" /><span className="dot y" /><span className="dot g" /><span className="tg-url">✓ techguild.io/party</span></div>
+            <div className="tg-browser-bar"><span className="dot r" /><span className="dot y" /><span className="dot g" /><span className="tg-url">âœ“ techguild.io/party</span></div>
             <div className="tg-party-inner">
-              <div className="tg-party-head"><strong>Verified Party</strong><span>✦ 94% Match</span></div>
+              <div className="tg-party-head"><strong>Verified Party</strong><span>âœ¦ 94% Match</span></div>
               <div className="tg-party-top">
                 <div><span>Party Trust</span><strong>94%</strong></div>
                 <div><span>Completed</span><strong>28</strong></div>
@@ -491,7 +491,7 @@ export default function LandingPage() {
               </div>
               <div className="tg-party-grid">
                 {PARTY_MEMBERS.map((m) => (
-                  <div key={m.init} className="tg-member"><b>{m.init}</b><div><strong>{m.role}</strong><span>✓ Verified</span></div></div>
+                  <div key={m.init} className="tg-member"><b>{m.init}</b><div><strong>{m.role}</strong><span>âœ“ Verified</span></div></div>
                 ))}
               </div>
             </div>
@@ -551,12 +551,12 @@ export default function LandingPage() {
             <h2 className="light">Find the right people.<br />Build the right Party.</h2>
             <p className="tg-ai-sub">TechGuild uses intelligent recommendations to help professionals discover relevant Quests and connect with compatible Party members.</p>
             {/* 14-10-2026: Coming Soon, no navigation */}
-            <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary light">Find Your Match ✦</Link>
+            <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary light">Find Your Match âœ¦</Link>
           </div>
           <div className="tg-match-frame">
             <div className="tg-match-card">
-              <span className="tg-reco">✦ Recommended for your Party</span>
-              <div className="tg-match-head"><b>DG</b><div><strong>Diya Gupta</strong><span>AI Specialist · Rank A</span></div><strong className="pct">94%</strong></div>
+              <span className="tg-reco">âœ¦ Recommended for your Party</span>
+              <div className="tg-match-head"><b>DG</b><div><strong>Diya Gupta</strong><span>AI Specialist Â· Rank A</span></div><strong className="pct">94%</strong></div>
               {[["Skills Match", "98%"], ["Experience Match", "92%"], ["Trust Compatibility", "95%"], ["Availability", "90%"]].map(([k, v]) => (
                 <div key={k} className="tg-bar-row"><span>{k}</span><em>{v}</em><div className="tg-bar"><i style={{ width: v }} /></div></div>
               ))}
@@ -607,7 +607,7 @@ export default function LandingPage() {
           <div><strong>120K+</strong><span>Verified Professionals</span></div>
           <div><strong>25K+</strong><span>Trusted Parties</span></div>
           <div><strong>600K+</strong><span>Completed Quests</span></div>
-          <div><strong>₹120Cr+</strong><span>Protected Payments</span></div>
+          <div><strong>â‚¹120Cr+</strong><span>Protected Payments</span></div>
           <div><strong>97%</strong><span>Project Success</span></div>
         </div>
       </section>
@@ -625,11 +625,11 @@ export default function LandingPage() {
             ].map((t) => (
               <div key={t.n} className="tg-t-card">
                 <span className="tg-tag">{t.tag}</span>
-                <p className="tg-t-quote">“{t.text}”</p>
+                <p className="tg-t-quote">â€œ{t.text}â€</p>
                 <div className="tg-t-foot">
                   <b>{t.i}</b>
                   <div><strong>{t.n}</strong><span>{t.r}</span></div>
-                  <div className="tg-t-right"><span className={`tg-rank-dot${t.bc}`}>{t.b}</span><em>✓ {t.t}</em></div>
+                  <div className="tg-t-right"><span className={`tg-rank-dot${t.bc}`}>{t.b}</span><em>âœ“ {t.t}</em></div>
                 </div>
               </div>
             ))}
@@ -649,7 +649,7 @@ export default function LandingPage() {
             {FAQS.map((f, i) => (
               <div key={f.q} className={`tg-faq-item${openFaq === i ? " open" : ""}`}>
                 <button type="button" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
-                  {f.q}<span>{openFaq === i ? "˄" : "˅"}</span>
+                  {f.q}<span>{openFaq === i ? "Ë„" : "Ë…"}</span>
                 </button>
                 {openFaq === i && <p>{f.a}</p>}
               </div>
