@@ -1,5 +1,5 @@
-﻿// Last Changed: 14-10-2026
-// 14-10-2026: Sign In / Sign Up and CTA buttons show "Coming Soon" message with no navigation.
+// Last Changed: 14-10-fixed
+// 14-10-fixed: Sign In / Sign Up and CTA buttons show "Coming Soon" message with no navigation.
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -122,7 +122,7 @@ export default function LandingPage() {
   const [openFaq, setOpenFaq] = useState(null);
   const dispatch = useDispatch();
 
-  // 14-10-2026: Shows "Coming Soon" toast and blocks navigation (Sign In / Sign Up / Explore / Get Started).
+  // 14-10-fixed: Shows "Coming Soon" toast and blocks navigation (Sign In / Sign Up / Explore / Get Started).
   const handleComingSoon = (e) => {
     if (e) e.preventDefault();
     dispatch(showSnackbar({ message: "Coming Soon", type: "info" }));
@@ -144,7 +144,7 @@ export default function LandingPage() {
           <a href="#quests">Quests</a>
           <a href="#trust">Trust System</a>
         </nav>
-        {/* 14-10-2026: Sign In / Sign Up - Coming Soon, no navigation */}
+        {/* 14-10-fixed: Sign In / Sign Up - Coming Soon, no navigation */}
         <div className="tg-nav-cta">
           <Link to="/login" onClick={handleComingSoon} className="tg-signin">Sign In</Link>
           <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary">Sign Up</Link>
@@ -157,14 +157,14 @@ export default function LandingPage() {
         <div className="tg-hero-glow" />
         <div className="tg-wrap tg-hero-grid">
           <div className="tg-hero-copy">
-            <p className="tg-hero-eyebrow"><i>â€¢</i> THE TRUST-FIRST PROFESSIONAL ECOSYSTEM</p>
+            <p className="tg-hero-eyebrow"><i>•</i> THE TRUST-FIRST PROFESSIONAL ECOSYSTEM</p>
             <h1>Build trust.<br />Find better projects.<br /><span>Collaborate<br />without limits.</span></h1>
             <p className="tg-hero-sub">
               TechGuild connects verified freelancers, agencies, Parties, and clients through a
               trusted ecosystem where professionals collaborate on meaningful projects, build
               reputation, and unlock better opportunities.
             </p>
-            {/* 14-10-2026: Explore Quest Board / Get Started - Coming Soon, no navigation */}
+            {/* 14-10-fixed: Explore Quest Board / Get Started - Coming Soon, no navigation */}
             <div className="tg-hero-actions">
               <Link to="#quests" onClick={handleComingSoon} className="tg-btn-white">Explore Quest Board</Link>
               <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary lg">Get Started</Link>
@@ -437,8 +437,8 @@ export default function LandingPage() {
               <p className="tg-verified">âœ“ Verified Client Â· Rank A Â· Trust 92%</p>
               <div className="tg-counts"><span>18 Applicants</span><i>Â·</i><span>245 Views</span></div>
             </div>
-            {/* 14-10-2026: Coming Soon, no navigation */}
-            <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary full">Explore Quest Board <span aria-hidden="true">â†’</span></Link>
+            {/* 14-10-fixed: Coming Soon, no navigation */}
+            <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary full">Explore Quest Board <span aria-hidden="true">→</span></Link>
           </div>
           <div className="tg-browser">
             <div className="tg-browser-bar"><span className="dot r" /><span className="dot y" /><span className="dot g" /><span className="tg-url">âœ“ techguild.io/quests</span></div>
