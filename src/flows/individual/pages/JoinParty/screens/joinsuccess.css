@@ -1,0 +1,233 @@
+/* [TechGuild Update: 13-10-2026] Join Party — Step 4 success
+   Mark geometry mirrors Create Party step 5 (same Figma construction). */
+
+.js {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.js__mark {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 260px;
+  height: 220px;
+}
+
+.js__confetti {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.js__disc {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.js__disc--glow {
+  width: 168px;
+  height: 168px;
+  background: radial-gradient(
+    circle,
+    rgba(34, 197, 94, 0.38) 0%,
+    rgba(34, 197, 94, 0.14) 45%,
+    rgba(34, 197, 94, 0) 70%
+  );
+}
+
+.js__disc--outer {
+  width: 120px;
+  height: 120px;
+  background-color: #ecfdf5;
+}
+
+.js__disc--inner {
+  width: 88px;
+  height: 88px;
+  background-color: #dcfce7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.js__shield {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 60px;
+}
+
+.js__tick {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   Copy
+   ========================================================================== */
+.js__title {
+  margin: 12px 0 0;
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.js__body {
+  margin: 12px 0 0;
+  font-size: 14px;
+  line-height: 22px;
+  color: #64748b;
+}
+
+.js__status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 14px 24px;
+  border: 1px solid #a7f3c3;
+  border-radius: 12px;
+  background-color: #ecfdf5;
+  text-align: left;
+}
+
+.js__status-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 510;
+  color: #64748b;
+}
+
+.js__status-value {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  color: #00a63e;
+}
+
+/* ==========================================================================
+   Submission ID
+   ========================================================================== */
+.js__id {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  margin-top: 24px;
+  padding: 16px 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background-color: #ffffff;
+  text-align: left;
+}
+
+.js__id-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+}
+
+.js__id-value {
+  display: block;
+  margin-top: 2px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.js__copy.secondary-btn,
+.js__view.secondary-btn {
+  width: auto;
+  height: 42px;
+  flex-shrink: 0;
+  padding: 0 16px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  font-size: 13px;
+  font-weight: 510;
+  color: #334155;
+}
+
+/* ==========================================================================
+   Actions + notice
+   ========================================================================== */
+.js__actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.js__go.primary-btn {
+  width: auto;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.js__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  margin-top: 20px;
+  padding: 16px 20px;
+  border: 1px solid #c7d7fe;
+  border-radius: 12px;
+  background-color: #eef4ff;
+  text-align: left;
+}
+
+.js__notice-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #103ca4;
+}
+
+.js__notice-body {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 20px;
+  color: #103ca4;
+}
+
+@media (max-width: 640px) {
+  .js {
+    padding: 36px 20px;
+  }
+
+  .js__id,
+  .js__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .js__copy,
+  .js__view,
+  .js__go {
+    width: 100%;
+  }
+}

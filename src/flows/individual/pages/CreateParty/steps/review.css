@@ -1,0 +1,237 @@
+/* [TechGuild Update: 13-10-2026] Create Party wizard — Step 4 "Review & Submit" */
+
+.cp-review {
+  width: 100%;
+}
+
+.cp-review__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.cp-review__head-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.cp-review__index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #eef2ff;
+  color: #103ca4;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.cp-review__title {
+  margin: 0;
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.cp-review__meta {
+  font-size: 13px;
+  color: #667085;
+}
+
+.cp-edit-btn.secondary-btn {
+  width: auto;
+  height: 36px;
+  flex-shrink: 0;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background-color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+}
+
+/* ==========================================================================
+   Field grid
+   ========================================================================== */
+.cp-review__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 24px;
+}
+
+.cp-review__grid--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.cp-review__field--wide {
+  grid-column: 1 / -1;
+}
+
+/* Multiple selected categories wrap inside the right-hand column */
+.cp-review__cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+
+.cp-review__cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #103ca4;
+}
+
+/* Figma: 11px / w590 / #9ca3af with NO letter-spacing. Held at 12px for the
+   mobile readability check; the lighter weight + colour is what stops these
+   micro-labels reading as bold headings next to the 15px section titles. */
+.cp-review__label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 17px;
+  color: #9ca3af;
+}
+
+.cp-review__label--spaced {
+  margin-top: 20px;
+}
+
+.cp-review__value {
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 500;
+  color: #111827;
+  overflow-wrap: anywhere;
+}
+
+.cp-review__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #103ca4;
+}
+
+.cp-review__logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #092055 0%, #103ca4 100%);
+}
+
+.cp-review__empty {
+  margin: 0;
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+/* ==========================================================================
+   Members grid
+   ========================================================================== */
+.cp-review__members {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.cp-review__member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+  min-width: 0;
+}
+
+.cp-review__member-avatar {
+  position: relative;
+  display: inline-block;
+}
+
+.cp-review__crown {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #ffffff;
+}
+
+.cp-review__member-name {
+  margin: 8px 0 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.cp-review__member-handle {
+  margin: 0;
+  font-size: 12px;
+  color: #9ca3af;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.cp-review__member-role {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #667085;
+}
+
+/* ==========================================================================
+   Tokens + link buttons
+   ========================================================================== */
+.cp-review__tokens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cp-linkbtn--left {
+  align-self: flex-start;
+  margin-top: 12px;
+}
+
+.cp-review__block {
+  padding: 14px 16px;
+  border: 1px solid #fed7aa;
+  border-radius: 10px;
+  background-color: #fff7ed;
+  font-size: 13px;
+  line-height: 20px;
+  color: #b45309;
+}
+
+@media (max-width: 900px) {
+  .cp-review__grid--4,
+  .cp-review__members {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .cp-review__grid,
+  .cp-review__grid--4,
+  .cp-review__members {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
