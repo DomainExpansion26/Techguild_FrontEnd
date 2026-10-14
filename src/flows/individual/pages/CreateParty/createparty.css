@@ -1,0 +1,267 @@
+/* [TechGuild Update: 13-10-2026] Create Party wizard — shell (header, stepper, layout, footer) */
+
+.cp-page {
+  width: 100%;
+  margin: 0 auto;
+  padding: 28px 0 48px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+.cp-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.cp-head__title {
+  margin: 0;
+  font-size: 32px;
+  line-height: 41.4px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.cp-head__sub {
+  margin: 6px 0 0;
+  font-size: 15px;
+  line-height: 22.5px;
+  color: #5e626a;
+}
+
+.cp-head__actions {
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.cp-head__ghost.secondary-btn {
+  width: auto;
+  height: 44px;
+  padding: 0 20px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+/* ==========================================================================
+   Stepper — matches the Figma geometry (32px circles, 16px/400 labels,
+   active #000000 / inactive #918d8d) by overriding the shared component.
+   ========================================================================== */
+.cp-stepper {
+  margin: 30px 0 28px;
+}
+
+.cp-stepper .stepper-track-line {
+  top: 15px;
+  background-color: #cbd5e1;
+}
+
+.cp-stepper .stepper-circle {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  font-size: 14px;
+  font-weight: 600;
+  border-width: 1.5px;
+  border-color: #cbd5e1;
+  color: #8e8e93;
+  background-color: #ffffff;
+}
+
+.cp-stepper .stepper-item.active .stepper-circle {
+  color: #ffffff;
+}
+
+.cp-stepper .stepper-label {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  color: #918d8d;
+  max-width: 200px;
+}
+
+.cp-stepper .stepper-item.active .stepper-label {
+  color: #000000;
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .cp-stepper .stepper-label {
+    font-size: 12px;
+    max-width: 90px;
+  }
+}
+
+/* ==========================================================================
+   Two-column layout — form + sticky-ish right rail
+   ========================================================================== */
+.cp-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 24px;
+  align-items: start;
+}
+
+.cp-layout__main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* PartySummary returns a Fragment of sibling cards on some steps, so spacing
+   lives here instead of on individual cards. */
+.cp-layout__rail {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+/* ==========================================================================
+   Main panel
+   ========================================================================== */
+.cp-panel {
+  width: 100%;
+}
+
+.cp-panel__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.cp-panel__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #eef2ff;
+}
+
+.cp-panel__title {
+  margin: 0;
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.cp-panel__sub {
+  margin: 2px 0 0;
+  font-size: 13px;
+  line-height: 19.5px;
+  color: #667085;
+}
+
+/* Success step renders its own card, so the shell padding is dropped */
+.cp-panel--flush {
+  padding: 0;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.cp-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.cp-footer__back.secondary-btn,
+.cp-footer__draft.secondary-btn {
+  width: auto;
+  height: 46px;
+  padding: 0 20px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background-color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.cp-footer__back.secondary-btn:disabled {
+  background-color: #f9fafb;
+  color: #9ca3af;
+  opacity: 1;
+}
+
+.cp-footer__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cp-footer__next.primary-btn {
+  width: auto;
+  height: 46px;
+  padding: 0 24px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 1100px) {
+  .cp-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .cp-page {
+    padding: 20px 0 32px;
+  }
+
+  .cp-head {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .cp-head__title {
+    font-size: 26px;
+    line-height: 34px;
+  }
+
+  .cp-head__actions {
+    width: 100%;
+  }
+
+  .cp-head__ghost.secondary-btn {
+    flex: 1 1 0;
+  }
+
+  .cp-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .cp-footer__right {
+    flex-direction: column-reverse;
+  }
+
+  .cp-footer__back.secondary-btn,
+  .cp-footer__draft.secondary-btn,
+  .cp-footer__next.primary-btn {
+    width: 100%;
+  }
+}

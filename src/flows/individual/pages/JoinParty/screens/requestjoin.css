@@ -1,0 +1,388 @@
+/* [TechGuild Update: 13-10-2026] Join Party — Step 3 request form */
+
+.jq {
+  width: 100%;
+}
+
+.jq__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.jq__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: #103ca4;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.jq__head-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.jq__tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background-color: #f1f5f9;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 510;
+  line-height: 17px;
+}
+
+.jq__head-sub {
+  margin: 3px 0 0;
+  font-size: 13px;
+  line-height: 19px;
+  color: #64748b;
+}
+
+/* ==========================================================================
+   1 — role picker
+   ========================================================================== */
+.jq__roles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.jq__role {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 16px 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background-color: #ffffff;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.jq__role:hover {
+  border-color: #c7d7fe;
+}
+
+.jq__role.is-selected {
+  border-color: #103ca4;
+  background-color: #f5f8ff;
+  box-shadow: 0 0 0 3px rgba(16, 60, 164, 0.08);
+}
+
+.jq__radio {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 50%;
+}
+
+.jq__radio.is-on {
+  border-color: #103ca4;
+  border-width: 6px;
+}
+
+.jq__role-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.jq__role-title {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.jq__role-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.jq__chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  background-color: #f8fafc;
+  font-size: 12px;
+  line-height: 17px;
+  font-weight: 510;
+  color: #475467;
+  white-space: nowrap;
+}
+
+/* Green = the applicant already has this skill (per the design's legend) */
+.jq__chip--have {
+  border-color: #a7f3c3;
+  background-color: #ecfdf5;
+  color: #00a63e;
+}
+
+.jq__match {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 17px;
+  white-space: nowrap;
+}
+
+.jq__match--high {
+  background-color: #dcfce7;
+  color: #00a63e;
+}
+
+.jq__match--mid {
+  background-color: #d1fae5;
+  color: #059669;
+}
+
+.jq__match--low {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.jq__legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0 0;
+  padding: 12px 16px;
+  border: 1px solid #eef2f7;
+  border-radius: 10px;
+  background-color: #f8fafc;
+  font-size: 12px;
+  line-height: 18px;
+  color: #64748b;
+}
+
+/* ==========================================================================
+   2 — intro + talking points
+   ========================================================================== */
+.jq__label {
+  margin: 18px 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+}
+
+.jq__suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.jq__suggestion {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  background-color: #ffffff;
+  font-size: 12px;
+  font-weight: 510;
+  color: #103ca4;
+  cursor: pointer;
+}
+
+.jq__suggestion:hover {
+  border-color: #c7d7fe;
+  background-color: #f5f8ff;
+}
+
+/* ==========================================================================
+   3 — links
+   ========================================================================== */
+.jq__links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.jq__links .text-input-wrapper {
+  height: 46px !important;
+  border-width: 1.5px !important;
+}
+
+/* ==========================================================================
+   4 — availability
+   ========================================================================== */
+.jq__availability {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.jq__avail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 18px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.jq__avail:hover {
+  border-color: #c7d7fe;
+}
+
+.jq__avail.is-selected {
+  border-color: #103ca4;
+  background-color: #f5f8ff;
+}
+
+.jq__avail-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.jq__avail.is-selected .jq__avail-label {
+  color: #103ca4;
+}
+
+.jq__avail-hours {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.jq__startdate {
+  margin-top: 20px;
+  max-width: 420px;
+}
+
+.jq__startdate .text-input-wrapper {
+  height: 46px !important;
+  border-width: 1.5px !important;
+}
+
+/* ==========================================================================
+   Footer: warning + submit
+   ========================================================================== */
+.jq--footer {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.jq__warn {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 20px;
+  border: 1px solid #fde68a;
+  border-radius: 12px;
+  background-color: #fffbeb;
+}
+
+.jq__warn p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 20px;
+  color: #b45309;
+}
+
+.jq__actions {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.jq__back.secondary-btn {
+  width: auto;
+  height: 44px;
+  padding: 0 20px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  font-size: 14px;
+  font-weight: 510;
+  color: #334155;
+}
+
+.jq__submit-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.jq__submit.primary-btn {
+  width: auto;
+  height: 44px;
+  padding: 0 26px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.jq__locked {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  line-height: 17px;
+  color: #94a3b8;
+}
+
+@media (max-width: 860px) {
+  .jq__links,
+  .jq__availability {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .jq__role {
+    flex-wrap: wrap;
+  }
+
+  .jq__actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .jq__back,
+  .jq__submit {
+    width: 100%;
+  }
+
+  .jq__submit-wrap {
+    align-items: stretch;
+  }
+}

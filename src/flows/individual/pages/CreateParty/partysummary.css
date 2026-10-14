@@ -1,0 +1,420 @@
+/* [TechGuild Update: 13-10-2026] Create Party wizard — right-rail "Party Summary" card */
+
+.cp-summary {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.cp-summary--next {
+  /* spacing comes from .cp-layout__rail's flex gap */
+}
+
+.cp-summary__title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.cp-summary__sub {
+  margin: 2px 0 0;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  color: #667085;
+}
+
+/* ==========================================================================
+   Identity block (placeholder in step 1, logo tile afterwards)
+   ========================================================================== */
+.cp-summary__identity {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.cp-summary__identity--compact {
+  align-items: center;
+  margin-top: 14px;
+}
+
+.cp-summary__avatar,
+.cp-summary__logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background-color: #f3f4f6;
+}
+
+.cp-summary__logo {
+  background: linear-gradient(135deg, #092055 0%, #103ca4 100%);
+  border-radius: 10px;
+}
+
+.cp-summary__name {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.cp-summary__value {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+.cp-summary__muted {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  line-height: 18px;
+  color: #9ca3af;
+}
+
+.cp-summary__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.cp-summary__pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background-color: #eef2ff;
+  color: #103ca4;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.cp-summary__muted-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* ==========================================================================
+   Label / description block
+   ========================================================================== */
+/* Matches the review micro-labels (Figma: w590 / #9ca3af, no letter-spacing) so the
+   rail and the form never disagree about what a muted label looks like. */
+.cp-summary__label {
+  margin: 18px 0 4px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 17px;
+  color: #9ca3af;
+}
+
+.cp-summary__desc {
+  margin: 0;
+  font-size: 13px;
+  line-height: 20px;
+  color: #374151;
+}
+
+.cp-summary__link {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #103ca4;
+}
+
+/* ==========================================================================
+   Key/value rows
+   ========================================================================== */
+.cp-summary__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 18px 0 0;
+}
+
+.cp-summary__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cp-summary__row dt {
+  font-size: 13px;
+  line-height: 19.5px;
+  font-weight: 400;
+  color: #667085;
+  flex-shrink: 0;
+}
+
+.cp-summary__row dd {
+  margin: 0;
+  font-size: 13px;
+  line-height: 19.5px;
+  font-weight: 400;
+  color: #667085;
+  text-align: right;
+  min-width: 0;
+}
+
+.cp-summary__rows--labels .cp-summary__row dt {
+  font-size: 12px;
+  font-weight: 500;
+  color: #9ca3af;
+}
+
+.cp-summary__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.cp-summary__badge--warn {
+  background-color: #ffedd4;
+  color: #b45309;
+}
+
+.cp-summary__lead {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #111827;
+  font-weight: 500;
+}
+
+.cp-summary__dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #111827;
+  font-weight: 500;
+}
+
+.cp-summary__dot::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #103ca4;
+}
+
+.cp-summary__members {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cp-summary__ok {
+  color: #00a63e;
+  font-weight: 600;
+}
+
+.cp-summary__pending {
+  color: #667085;
+}
+
+.cp-summary__progress {
+  height: 3px;
+  margin-top: 8px;
+  border-radius: 2px;
+  background-color: #e5e7eb;
+  overflow: hidden;
+}
+
+.cp-summary__progress--full {
+  background: linear-gradient(90deg, #103ca4 0%, #103ca4 100%);
+}
+
+/* ==========================================================================
+   Info note + checklist + alert
+   ========================================================================== */
+.cp-summary__note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 18px;
+  padding: 12px 14px;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  background-color: #e1ebff;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 500;
+  color: #103ca4;
+}
+
+.cp-summary__checklist {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  background-color: #eef4ff;
+}
+
+.cp-summary__checklist-title {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #103ca4;
+}
+
+.cp-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+
+.cp-check + .cp-check {
+  margin-top: 9px;
+}
+
+.cp-check__dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 1px;
+  border-radius: 50%;
+}
+
+.cp-check__dot.is-done {
+  background-color: #00a63e;
+}
+
+.cp-check__dot.is-current {
+  border: 1.5px solid #103ca4;
+}
+
+.cp-check__hollow {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid #cbd5e1;
+}
+
+.cp-check__label {
+  font-size: 12px;
+  line-height: 17px;
+  color: #9ca3af;
+}
+
+.cp-check__label.is-active {
+  color: #103ca4;
+  font-weight: 500;
+}
+
+.cp-summary__alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 12px 14px;
+  border: 1px solid #fed7aa;
+  border-radius: 10px;
+  background-color: #fff7ed;
+}
+
+.cp-summary__alert-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #b45309;
+}
+
+.cp-summary__alert--warn {
+  border-color: #fed7aa;
+  background-color: #fff7ed;
+}
+
+.cp-summary__alert-body {
+  margin: 2px 0 0;
+  font-size: 12px;
+  line-height: 17px;
+  color: #b45309;
+}
+
+/* ==========================================================================
+   "What happens next" list (step 5)
+   ========================================================================== */
+.cp-next-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cp-next-list__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.cp-next-list__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+}
+
+.cp-next-list__icon--review {
+  background-color: #f3e8ff;
+}
+
+.cp-next-list__icon--approval {
+  background-color: #eef2ff;
+}
+
+.cp-next-list__icon--journey {
+  background-color: #dcfce7;
+}
+
+.cp-next-list__title {
+  margin: 0;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.cp-next-list__body {
+  margin: 2px 0 0;
+  font-size: 12px;
+  line-height: 18px;
+  color: #667085;
+}
+
+/* ==========================================================================
+   Responsive — rail drops below the form
+   ========================================================================== */
+@media (max-width: 1100px) {
+  .cp-summary {
+    /* the rail gap handles stacking once it drops below the form */
+  }
+}
