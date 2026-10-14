@@ -1,4 +1,4 @@
-﻿/* Individual Finance — exact replica of provided mocks. */
+/* Individual Finance — exact replica of provided mocks. */
 .fin-ic { display: inline-flex; align-items: center; justify-content: center; line-height: 0; flex-shrink: 0; }
 .fin-ic svg { display: block; }
 .fin-ic svg [stroke="#6A717D"], .fin-ic svg [stroke="#6a717d"] { stroke: currentColor; }
@@ -348,7 +348,6 @@
 .ind-fin-back-wrap { width: 100%; display: flex; justify-content: flex-start; align-items: center; margin-bottom: 8px; }
 .ind-fin-back-btn { cursor: pointer; background: transparent; border: none; padding: 0; margin: 0; line-height: 0; display: inline-flex; align-items: center; justify-content: center; transform: none !important; transition: opacity 0.2s ease; }
 .ind-fin-back-btn:hover, .ind-fin-back-btn:focus, .ind-fin-back-btn:active { opacity: 0.6; transform: none !important; outline: none; box-shadow: none; }
-
 @media (max-width: 767px) {
   .ind-fin-page { padding-left: 0; padding-right: 0; }
 }

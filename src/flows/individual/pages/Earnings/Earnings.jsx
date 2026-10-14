@@ -722,7 +722,11 @@ export default function Earnings() {
   const flash = (msg) => { setToast(msg); setTimeout(() => setToast(""), 2400); };
 
   return (
-    <DashboardLayout searchPlaceholder="Search projects, clients, or freelancers..." mainWorkspaceClass="ind-finance-workspace">
+    <DashboardLayout
+      searchPlaceholder="Search projects, clients, or freelancers..."
+      containerClass="ind-finance-root"
+      mainWorkspaceClass="ind-finance-workspace"
+    >
       <div className="ind-fin-page">
         <div className="ind-fin-main">
           {activeTab !== "overview" && <FinanceBackButton onBack={handleBack} />}
