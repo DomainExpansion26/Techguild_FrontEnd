@@ -1,6 +1,9 @@
-// Last Changed: 13-10-26
+// Last Changed: 14-10-fixed
+// 14-10-fixed: Sign In / Sign Up and CTA buttons show "Coming Soon" message with no navigation.
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { showSnackbar } from "@/store/slices/snackbarSlice";
 import Icon from "@/Components/icons/Icon";
 import "./LandingPage.css";
 
@@ -117,6 +120,13 @@ function XGlyph() {
 
 export default function LandingPage() {
   const [openFaq, setOpenFaq] = useState(null);
+  const dispatch = useDispatch();
+
+  // 14-10-fixed: Shows "Coming Soon" toast and blocks navigation (Sign In / Sign Up / Explore / Get Started).
+  const handleComingSoon = (e) => {
+    if (e) e.preventDefault();
+    dispatch(showSnackbar({ message: "Coming Soon", type: "info" }));
+  };
 
   return (
     <div className="tg-landing">
@@ -134,9 +144,10 @@ export default function LandingPage() {
           <a href="#quests">Quests</a>
           <a href="#trust">Trust System</a>
         </nav>
+        {/* 14-10-fixed: Sign In / Sign Up - Coming Soon, no navigation */}
         <div className="tg-nav-cta">
-          <Link to="/login" className="tg-signin">Sign In</Link>
-          <Link to="/signup" className="tg-btn-primary">Sign Up</Link>
+          <Link to="/login" onClick={handleComingSoon} className="tg-signin">Sign In</Link>
+          <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary">Sign Up</Link>
         </div>
       </header>
 
@@ -153,9 +164,10 @@ export default function LandingPage() {
               trusted ecosystem where professionals collaborate on meaningful projects, build
               reputation, and unlock better opportunities.
             </p>
+            {/* 14-10-fixed: Explore Quest Board / Get Started - Coming Soon, no navigation */}
             <div className="tg-hero-actions">
-              <Link to="#quests" className="tg-btn-white">Explore Quest Board</Link>
-              <Link to="/signup" className="tg-btn-primary lg">Get Started</Link>
+              <Link to="#quests" onClick={handleComingSoon} className="tg-btn-white">Explore Quest Board</Link>
+              <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary lg">Get Started</Link>
             </div>
           </div>
 
@@ -425,7 +437,8 @@ export default function LandingPage() {
               <p className="tg-verified">✓ Verified Client · Rank A · Trust 92%</p>
               <div className="tg-counts"><span>18 Applicants</span><i>·</i><span>245 Views</span></div>
             </div>
-            <Link to="/signup" className="tg-btn-primary full">Explore Quest Board <span aria-hidden="true">→</span></Link>
+            {/* 14-10-fixed: Coming Soon, no navigation */}
+            <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary full">Explore Quest Board <span aria-hidden="true">→</span></Link>
           </div>
           <div className="tg-browser">
             <div className="tg-browser-bar"><span className="dot r" /><span className="dot y" /><span className="dot g" /><span className="tg-url">✓ techguild.io/quests</span></div>
@@ -464,7 +477,8 @@ export default function LandingPage() {
               <div><strong>28</strong><span>Completed Quests</span></div>
               <div><strong>A</strong><span>Rank</span></div>
             </div>
-            <Link to="/signup" className="tg-btn-primary">Build Your Party +</Link>
+            {/* 14-10-2026: Coming Soon, no navigation */}
+            <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary">Build Your Party +</Link>
           </div>
           <div className="tg-party-card">
             <div className="tg-browser-bar"><span className="dot r" /><span className="dot y" /><span className="dot g" /><span className="tg-url">✓ techguild.io/party</span></div>
@@ -536,7 +550,8 @@ export default function LandingPage() {
             <p className="tg-eyebrow light">AI-POWERED COLLABORATION</p>
             <h2 className="light">Find the right people.<br />Build the right Party.</h2>
             <p className="tg-ai-sub">TechGuild uses intelligent recommendations to help professionals discover relevant Quests and connect with compatible Party members.</p>
-            <Link to="/signup" className="tg-btn-primary light">Find Your Match ✦</Link>
+            {/* 14-10-2026: Coming Soon, no navigation */}
+            <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary light">Find Your Match ✦</Link>
           </div>
           <div className="tg-match-frame">
             <div className="tg-match-card">
@@ -545,7 +560,8 @@ export default function LandingPage() {
               {[["Skills Match", "98%"], ["Experience Match", "92%"], ["Trust Compatibility", "95%"], ["Availability", "90%"]].map(([k, v]) => (
                 <div key={k} className="tg-bar-row"><span>{k}</span><em>{v}</em><div className="tg-bar"><i style={{ width: v }} /></div></div>
               ))}
-              <button type="button" className="tg-btn-primary full">Find Your Match</button>
+              {/* 14-10-2026: Coming Soon, no navigation */}
+              <button type="button" className="tg-btn-primary full" onClick={handleComingSoon}>Find Your Match</button>
             </div>
           </div>
         </div>
