@@ -9,6 +9,7 @@ const Pricing = lazy(() => import("./pages/Pricing/pricing"));
 
 export const landingRoutes = (
   <>
+    {/* Landing is the first page of the app */}
     <Route path="/" element={<Home />} />
     <Route path="/home" element={<Home />} />
     <Route path="/about" element={<About />} />
