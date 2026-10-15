@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { DashboardLayout, PrimaryButton, SecondaryButton } from "@/Components";
 import { useAuth } from "@/context/AuthContext";
 import { showSnackbar } from "@/store";
-import { authApi } from "@/services/api";
+// [Solved 15-10-2026] Removed unused authApi import (lint no-unused-vars).
 import "./SignOutSetting.css";
 
 export default function SignOutSetting() {

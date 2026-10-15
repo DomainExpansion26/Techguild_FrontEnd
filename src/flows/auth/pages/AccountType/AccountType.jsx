@@ -242,7 +242,8 @@ export default function AccountType() {
     } finally {
       selectionDispatch({ type: "SUBMIT_END" });
     }
-  }, [selected, loading, email, password, firstName, lastName, fullName, login, navigate, dispatch, fail]);
+  // [Solved 15-10-2026] Added missing deps (isAuthenticated, token, switchRole, updateUser) to fix exhaustive-deps warning.
+  }, [selected, loading, email, password, firstName, lastName, fullName, login, navigate, dispatch, fail, isAuthenticated, token, switchRole, updateUser]);
 
   const selectedTitle = accountTypes.find((t) => t.id === selected)?.title ?? "";
 
