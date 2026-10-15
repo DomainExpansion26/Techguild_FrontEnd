@@ -1,5 +1,5 @@
 // [TechGuild Update: 21-09-2026] Individual freelancer profile wizard & OpenAPI save integration
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DashboardLayout, Cards, PrimaryButton, SecondaryButton, TextInput, Stepper } from "@/Components";
 import Icon from "@/Components/icons/Icon";
@@ -153,27 +153,28 @@ function TagInput({
   const containerRef = useRef(null);
   const inputRef = useRef(null);
 
-  const tags = typeof value === "string"
+  const tags = useMemo(() => typeof value === "string"
     ? value.split(",").map((s) => s.trim()).filter(Boolean)
-    : (Array.isArray(value) ? value : []);
+    : (Array.isArray(value) ? value : []), [value]);
 
   const setTags = (newTags) => {
     onChange(newTags.join(", "));
   };
 
-  const addTag = (tagText) => {
+  // [Solved 15-10-2026] Memoized tags + wrapped addTag in useCallback to fix missing 'addTag' dep warning.
+  const addTag = useCallback((tagText) => {
     const trimmed = tagText.trim();
     if (!trimmed) return;
     const exists = tags.some((t) => t.toLowerCase() === trimmed.toLowerCase());
     if (!exists) {
-      setTags([...tags, trimmed]);
+      onChange([...tags, trimmed].join(", "));
     }
     setInputValue("");
     setIsOpen(false);
     if (inputRef.current) {
       inputRef.current.focus();
     }
-  };
+  }, [tags, onChange]);
 
   const removeTag = (tagToRemove) => {
     setTags(tags.filter((t) => t.toLowerCase() !== tagToRemove.toLowerCase()));
@@ -215,7 +216,7 @@ function TagInput({
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [inputValue, tags]);
+  }, [inputValue, tags, addTag]);
 
   return (
     <div className="profile-field-group" ref={containerRef}>
