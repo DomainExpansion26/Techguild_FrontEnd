@@ -11,13 +11,28 @@ const EmailVerified = lazy(() => import("./pages/Emailverify/Emailverify"));
 const AccountType = lazy(() => import("./pages/AccountType/AccountType"));
 const TwoFactor = lazy(() => import("./pages/TwoFactor/TwoFactor"));
 const OAuthCallback = lazy(() => import("./pages/OAuthCallback/OAuthCallback"));
+const ComingSoon = lazy(() => import("./pages/ComingSoon/ComingSoon"));
+
+// TEMPORARY (revert to go live): when true, /login + /signup render a
+// "Coming Soon" placeholder instead of the real auth forms.
+// Set to false to restore the real Sign In / Sign Up pages — no other change needed.
+const AUTH_COMING_SOON = true;
 
 export const authRoutes = (
   <>
     {/* Public-only routes: logged in users are redirected to dashboard */}
     <Route element={<GuestGuard />}>
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/login" element={<Login />} />
+      {AUTH_COMING_SOON ? (
+        <>
+          <Route path="/signup" element={<ComingSoon title="Sign Up" subtitle="We're getting registration ready. Please check back soon." />} />
+          <Route path="/login" element={<ComingSoon title="Sign In" subtitle="We're getting authentication ready. Please check back soon." />} />
+        </>
+      ) : (
+        <>
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+        </>
+      )}
       <Route path="/forgot-password" element={<ForgetPass />} />
     </Route>
 

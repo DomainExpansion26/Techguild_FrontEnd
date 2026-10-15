@@ -1,5 +1,6 @@
-// Last Changed: 14-10-fixed
-// 14-10-fixed: Sign In / Sign Up and CTA buttons show "Coming Soon" message with no navigation.
+// Last Changed: 15-10-2026 - icons #2456e6->#103CA4, sidebar 16px + stats icons, footer LinkedIn only, c4 wrapper, encoding fixed (₹ ✓ → ◆ ✦)
+// Flow: only the landing page. Every CTA (Sign In / Sign Up / Explore /
+// Get Started / etc.) shows a "Coming Soon" message on click — no navigation anywhere.
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -100,29 +101,12 @@ function Marquee({ items }) {
   );
 }
 
-function InstagramGlyph() {
-  return (
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-      <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" strokeWidth="2" />
-      <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" strokeWidth="2" />
-      <circle cx="17.2" cy="6.8" r="1.4" fill="currentColor" />
-    </svg>
-  );
-}
-
-function XGlyph() {
-  return (
-    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-      <path d="M4 4l16 16M20 4L4 20" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-    </svg>
-  );
-}
-
 export default function LandingPage() {
   const [openFaq, setOpenFaq] = useState(null);
   const dispatch = useDispatch();
 
-  // 14-10-fixed: Shows "Coming Soon" toast and blocks navigation (Sign In / Sign Up / Explore / Get Started).
+  // All auth / CTA buttons (Sign In, Sign Up, Explore, Get Started, etc.) only
+  // show a "Coming Soon" message on click — no navigation anywhere.
   const handleComingSoon = (e) => {
     if (e) e.preventDefault();
     dispatch(showSnackbar({ message: "Coming Soon", type: "info" }));
@@ -144,7 +128,7 @@ export default function LandingPage() {
           <a href="#quests">Quests</a>
           <a href="#trust">Trust System</a>
         </nav>
-        {/* 14-10-fixed: Sign In / Sign Up - Coming Soon, no navigation */}
+        {/* Sign In / Sign Up: "Coming Soon" message only, no navigation. */}
         <div className="tg-nav-cta">
           <Link to="/login" onClick={handleComingSoon} className="tg-signin">Sign In</Link>
           <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary">Sign Up</Link>
@@ -164,34 +148,34 @@ export default function LandingPage() {
               trusted ecosystem where professionals collaborate on meaningful projects, build
               reputation, and unlock better opportunities.
             </p>
-            {/* 14-10-fixed: Explore Quest Board / Get Started - Coming Soon, no navigation */}
+            {/* Explore Quest Board / Get Started: "Coming Soon" message only, no navigation. */}
             <div className="tg-hero-actions">
-              <Link to="#quests" onClick={handleComingSoon} className="tg-btn-white">Explore Quest Board</Link>
+              <Link to="/signup" onClick={handleComingSoon} className="tg-btn-white">Explore Quest Board</Link>
               <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary lg">Get Started</Link>
             </div>
           </div>
 
           <div className="tg-hero-visual">
             <div className="tg-dash">
-              <div className="tg-dash-url"><Icon name="Shield" size={12} color="#2456e6" /> app.techguild.io</div>
+              <div className="tg-dash-url"><Icon name="Shield" size={12} color="#103CA4" /> app.techguild.io</div>
               <div className="tg-dash-body">
                 <aside className="tg-dash-side">
                   <p className="tg-dash-brand"><b>TG</b> TechGuild</p>
                   <ul>
-                    <li className="on"><Icon name="Layers" size={14} color="#2456e6" /> Dashboard</li>
-                    <li><Icon name="Search" size={14} color="#94a3b8" /> Quest Board</li>
-                    <li><Icon name="Users" size={14} color="#94a3b8" /> My Party</li>
-                    <li><Icon name="Lock" size={14} color="#94a3b8" /> Escrow</li>
-                    <li><Icon name="Star" size={14} color="#94a3b8" /> Rank</li>
+                    <li className="on"><Icon name="Layers" size={16} color="#103CA4" /> Dashboard</li>
+                    <li><Icon name="Search" size={16} color="#94a3b8" /> Quest Board</li>
+                    <li><Icon name="Users" size={16} color="#94a3b8" /> My Party</li>
+                    <li><Icon name="Lock" size={16} color="#94a3b8" /> Escrow</li>
+                    <li><Icon name="Star" size={16} color="#94a3b8" /> Rank</li>
                   </ul>
                 </aside>
                 <div className="tg-dash-main">
                   <p className="tg-dash-welcome">Welcome back,</p>
                   <p className="tg-dash-user">Aarav Mehta · <span>Rank D</span></p>
                   <div className="tg-dash-stats">
-                    <div><span>Trust Points</span><strong>8,420</strong></div>
-                    <div><span>Active Quests</span><strong>5</strong></div>
-                    <div><span>In Escrow</span><strong>₹2.4L</strong></div>
+                    <div><Icon name="TrendingUp" size={16} color="#103CA4" /><span>Trust Points</span><strong>8,420</strong></div>
+                    <div><Icon name="Briefcase" size={16} color="#103CA4" /><span>Active Quests</span><strong>5</strong></div>
+                    <div><Icon name="Lock" size={16} color="#103CA4" /><span>In Escrow</span><strong>₹2.4L</strong></div>
                   </div>
                   <div className="tg-dash-ms">
                     <p><strong>Milestone progress</strong><span>Website Redesign</span></p>
@@ -209,7 +193,7 @@ export default function LandingPage() {
             <div className="tg-chip c1"><span>Verified Client</span><p>Trust Score <em>✓ 98</em></p></div>
             <div className="tg-chip c2"><span>Quest Budget</span><strong>₹ 75,000</strong></div>
             <div className="tg-chip c3"><span className="pill">✦ Party</span><strong className="blue">94% Match</strong></div>
-            <div className="tg-chip c4"><span>Escrow</span><p className="green">Protected</p><b>A</b></div>
+            <div className="tg-chip c4"><div className="tg-c4-text"><span>Escrow</span><p className="green">Protected</p></div><b>A</b></div>
           </div>
         </div>
       </section>
@@ -247,7 +231,7 @@ export default function LandingPage() {
                 ["Shield", "Trust Score", false],
               ].map(([icon, label, on]) => (
                 <div key={label} className={`tg-eco-tile${on ? " on" : ""}`}>
-                  <span className="tg-eco-ico"><Icon name={icon} size={20} color={on ? "#ffffff" : "#2456e6"} /></span>
+                  <span className="tg-eco-ico"><Icon name={icon} size={20} color={on ? "#ffffff" : "#103CA4"} /></span>
                   <strong>{label}</strong>
                 </div>
               ))}
@@ -270,7 +254,7 @@ export default function LandingPage() {
               ["Layers", "Structured Quests", "Clear budgets, milestones, timelines, requirements, and outcomes."],
             ].map(([icon, t, d]) => (
               <div key={t} className="tg-why-card">
-                <span className="tg-why-ico"><Icon name={icon} size={22} color="#2456e6" /></span>
+                <span className="tg-why-ico"><Icon name={icon} size={22} color="#103CA4" /></span>
                 <h3>{t}</h3><p>{d}</p>
               </div>
             ))}
@@ -437,7 +421,7 @@ export default function LandingPage() {
               <p className="tg-verified">✓ Verified Client · Rank A · Trust 92%</p>
               <div className="tg-counts"><span>18 Applicants</span><i>·</i><span>245 Views</span></div>
             </div>
-            {/* 14-10-fixed: Coming Soon, no navigation */}
+            {/* Explore: "Coming Soon" message only, no navigation. */}
             <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary full">Explore Quest Board <span aria-hidden="true">→</span></Link>
           </div>
           <div className="tg-browser">
@@ -477,7 +461,7 @@ export default function LandingPage() {
               <div><strong>28</strong><span>Completed Quests</span></div>
               <div><strong>A</strong><span>Rank</span></div>
             </div>
-            {/* 14-10-2026: Coming Soon, no navigation */}
+            {/* Build Your Party: "Coming Soon" message only, no navigation. */}
             <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary">Build Your Party +</Link>
           </div>
           <div className="tg-party-card">
@@ -523,7 +507,7 @@ export default function LandingPage() {
           <div className="tg-trust-grid">
             {TRUST_CARDS.map((c) => (
               <div key={c.title} className="tg-trust-card">
-                <span className="tg-trust-ico"><Icon name={c.icon} size={20} color="#2456e6" /></span>
+                <span className="tg-trust-ico"><Icon name={c.icon} size={20} color="#103CA4" /></span>
                 <h4>{c.title}</h4><p>{c.text}</p>
               </div>
             ))}
@@ -550,7 +534,7 @@ export default function LandingPage() {
             <p className="tg-eyebrow light">AI-POWERED COLLABORATION</p>
             <h2 className="light">Find the right people.<br />Build the right Party.</h2>
             <p className="tg-ai-sub">TechGuild uses intelligent recommendations to help professionals discover relevant Quests and connect with compatible Party members.</p>
-            {/* 14-10-2026: Coming Soon, no navigation */}
+            {/* Find Your Match: "Coming Soon" message only, no navigation. */}
             <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary light">Find Your Match ✦</Link>
           </div>
           <div className="tg-match-frame">
@@ -679,8 +663,6 @@ export default function LandingPage() {
               <p className="tg-dark-muted sm">The trust-first ecosystem for professional collaboration.</p>
               <div className="tg-social">
                 <a href="#home" aria-label="LinkedIn"><Icon name="Linkedin" size={18} color="#ffffff" /></a>
-                <a href="#home" aria-label="Instagram"><InstagramGlyph /></a>
-                <a href="#home" aria-label="X"><XGlyph /></a>
               </div>
             </div>
             <div><strong>Platform</strong><span>Quest Board</span><span>Parties</span><span>Trust System</span><span>Rankings</span><span>Escrow</span></div>
