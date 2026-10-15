@@ -1544,15 +1544,40 @@ const VERIFY_TITLES = {
   upi: "Verify UPI ID",
 };
 
+function FinanceBackButton({ onBack }) {
+  return (
+    <div className="fin-back-wrap">
+      <button
+        type="button"
+        className="fin-back-btn"
+        onClick={onBack}
+        aria-label="Go back to overview"
+      >
+        <Icon name="ArrowLeft" size={ICON_SIZES["2XL"]} color="#0b38a8" />
+      </button>
+    </div>
+  );
+}
+
 export default function Payouts() {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const tabParam = new URLSearchParams(location.search).get("tab");
+  const searchParams = new URLSearchParams(location.search);
+  const tabParam = searchParams.get("tab");
+  const txnParam = searchParams.get("txn");
   const activeTab = FINANCE_SUBMENU_ITEMS.some((t) => t.id === tabParam)
     ? tabParam
     : "overview";
   const goTab = (id) => navigate(`${location.pathname}?tab=${id}`);
+  const goOverview = () => navigate(`${location.pathname}?tab=overview`);
+  const handleBack = () => {
+    if (activeTab === "transactions" && txnParam) {
+      navigate(`${location.pathname}?tab=transactions`);
+    } else {
+      goOverview();
+    }
+  };
 
   const [banks, setBanks] = useState(INITIAL_BANKS);
   const [upis, setUpis] = useState(INITIAL_UPIS);
@@ -1684,10 +1709,12 @@ export default function Payouts() {
   return (
     <DashboardLayout
       searchPlaceholder="Search projects, clients, or freelancers..."
+      containerClass="client-finance-root"
       mainWorkspaceClass="client-finance-workspace"
     >
       <div className="finance-page">
         <div className="finance-main">
+          {activeTab !== "overview" && <FinanceBackButton onBack={handleBack} />}
           {activeTab !== "transactions" && activeTab !== "payment-methods" && (
             <h1 className="finance-title">
               {activeTab === "overview"
