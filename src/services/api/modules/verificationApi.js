@@ -67,8 +67,8 @@ export const verificationApi = {
       if (data?.business_name) formData.append("business_name", data.business_name);
     }
 
-    // Ensure documented multipart fields 'filename' and 'name' are present
     const file =
+      formData.get("gst_certificate") ||
       formData.get("filename") ||
       formData.get("file") ||
       formData.get("document") ||
@@ -79,6 +79,9 @@ export const verificationApi = {
       formData.get("cancelled_cheque");
 
     if (file && typeof file !== "string") {
+      if (!formData.has("gst_certificate")) {
+        formData.set("gst_certificate", file, file.name);
+      }
       if (!formData.has("filename") || typeof formData.get("filename") === "string") {
         formData.set("filename", file, file.name);
       }

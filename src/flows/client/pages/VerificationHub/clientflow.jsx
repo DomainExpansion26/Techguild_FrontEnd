@@ -146,16 +146,39 @@ export default function ClientFlow({ defaultStep }) {
         documents.pan ||
         documents.registration ||
         bankDetails.cancelledCheque;
+
+      if (!documents.gst && !primaryFile) {
+        setApiError("GST Certificate is required. Please upload your GST Certificate in Step 2.");
+        setSubmitting(false);
+        return;
+      }
+
+      const gstDoc = documents.gst || primaryFile;
+      if (gstDoc) {
+        formData.append("gst_certificate", gstDoc, gstDoc.name);
+        formData.append("document_gst", gstDoc, gstDoc.name);
+      }
+
       if (primaryFile) {
         formData.append("filename", primaryFile, primaryFile.name);
         formData.append("file", primaryFile, primaryFile.name);
       }
 
-      if (documents.gst) formData.append("document_gst", documents.gst);
-      if (documents.incorporation) formData.append("document_incorporation", documents.incorporation);
-      if (documents.pan) formData.append("document_pan", documents.pan);
-      if (documents.registration) formData.append("document_registration", documents.registration);
-      if (bankDetails.cancelledCheque) formData.append("cancelled_cheque", bankDetails.cancelledCheque);
+      if (documents.incorporation) {
+        formData.append("incorporation_certificate", documents.incorporation, documents.incorporation.name);
+        formData.append("document_incorporation", documents.incorporation, documents.incorporation.name);
+      }
+      if (documents.pan) {
+        formData.append("pan_card", documents.pan, documents.pan.name);
+        formData.append("document_pan", documents.pan, documents.pan.name);
+      }
+      if (documents.registration) {
+        formData.append("registration_certificate", documents.registration, documents.registration.name);
+        formData.append("document_registration", documents.registration, documents.registration.name);
+      }
+      if (bankDetails.cancelledCheque) {
+        formData.append("cancelled_cheque", bankDetails.cancelledCheque, bankDetails.cancelledCheque.name);
+      }
 
       await verificationApi.submitBusiness(formData);
       setCurrentStep("submitted");
