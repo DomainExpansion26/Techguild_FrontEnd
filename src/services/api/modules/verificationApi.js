@@ -2,71 +2,140 @@ import { apiClient } from "@/services/api";
 import { ENDPOINTS } from "@/services/api/endpoints";
 
 export const verificationApi = {
-  // Overall verification status
+  // 1. Overall verification status (GET /v1/verification/status)
   getStatus: async () => {
     return apiClient.get(ENDPOINTS.VERIFICATION.STATUS);
   },
 
-  // Identity verification status
+  // 2. Identity verification status (GET /v1/verification/identity/status)
   getIdentityStatus: async () => {
     return apiClient.get(ENDPOINTS.VERIFICATION.IDENTITY_STATUS);
   },
 
-  // Submit identity verification document (Multipart/Form-Data)
+  // 3. Submit identity verification document (POST /v1/verification/identity/submit)
   submitIdentity: async (data) => {
+    let formData;
     if (data instanceof FormData) {
-      if (!data.has("file") && data.has("front_image")) {
-        data.append("file", data.get("front_image"));
-      }
-      if (!data.has("filename") && data.has("file")) {
-        data.append("filename", data.get("file"));
-      }
-      if (!data.has("name") && data.has("document_type")) {
-        data.append("name", data.get("document_type"));
-      }
-      return apiClient.upload(ENDPOINTS.VERIFICATION.IDENTITY_SUBMIT, data);
+      formData = data;
+    } else {
+      formData = new FormData();
+      if (data?.file) formData.append("file", data.file);
+      if (data?.filename) formData.append("filename", data.filename);
+      if (data?.name) formData.append("name", data.name);
+      if (data?.document_type) formData.append("document_type", data.document_type);
+      if (data?.selfie_verified !== undefined) formData.append("selfie_verified", String(data.selfie_verified));
     }
 
-    const formData = new FormData();
-    if (data?.file) {
-      formData.append("file", data.file);
-      formData.append("filename", data.file);
+    // Ensure documented multipart fields 'filename' and 'name' are present
+    const file = formData.get("filename") || formData.get("file") || formData.get("front_image");
+    if (file && typeof file !== "string") {
+      if (!formData.has("filename") || typeof formData.get("filename") === "string") {
+        formData.set("filename", file, file.name);
+      }
+      if (!formData.has("file")) {
+        formData.set("file", file, file.name);
+      }
     }
-    if (data?.name) formData.append("name", data.name);
-    return apiClient.upload(ENDPOINTS.VERIFICATION.IDENTITY_SUBMIT, formData);
+    if (!formData.has("name")) {
+      const docName = formData.get("document_type") || "Identity Document";
+      formData.append("name", docName);
+    }
+
+    const response = await apiClient.upload(ENDPOINTS.VERIFICATION.IDENTITY_SUBMIT, formData);
+    if (response?.verification_record_id) {
+      try {
+        sessionStorage.setItem("techguild_verification_record_id", response.verification_record_id);
+        sessionStorage.setItem("techguild_identity_record_id", response.verification_record_id);
+        localStorage.setItem("techguild_verification_record_id", response.verification_record_id);
+      } catch (e) {
+        // Safe fallback if storage unavailable
+      }
+    }
+    return response;
   },
 
-  // Submit business verification document (Multipart/Form-Data)
+  // 4. Submit business verification document (POST /v1/verification/business/submit)
   submitBusiness: async (data) => {
+    let formData;
     if (data instanceof FormData) {
-      if (!data.has("file") && data.has("document")) {
-        data.append("file", data.get("document"));
-      }
-      if (!data.has("name") && data.has("business_name")) {
-        data.append("name", data.get("business_name"));
-      }
-      if (!data.has("filename") && data.has("file")) {
-        data.append("filename", data.get("file")?.name || "business_document.jpg");
-      }
-      return apiClient.upload(ENDPOINTS.VERIFICATION.BUSINESS_SUBMIT, data);
+      formData = data;
+    } else {
+      formData = new FormData();
+      if (data?.file) formData.append("file", data.file);
+      if (data?.name) formData.append("name", data.name);
+      if (data?.filename) formData.append("filename", data.filename);
+      if (data?.business_name) formData.append("business_name", data.business_name);
     }
 
-    const formData = new FormData();
-    if (data?.file) formData.append("file", data.file);
-    if (data?.name) formData.append("name", data.name);
-    if (data?.filename) formData.append("filename", data.filename);
-    return apiClient.upload(ENDPOINTS.VERIFICATION.BUSINESS_SUBMIT, formData);
+    // Ensure documented multipart fields 'filename' and 'name' are present
+    const file =
+      formData.get("filename") ||
+      formData.get("file") ||
+      formData.get("document") ||
+      formData.get("document_gst") ||
+      formData.get("document_incorporation") ||
+      formData.get("document_pan") ||
+      formData.get("document_registration") ||
+      formData.get("cancelled_cheque");
+
+    if (file && typeof file !== "string") {
+      if (!formData.has("filename") || typeof formData.get("filename") === "string") {
+        formData.set("filename", file, file.name);
+      }
+      if (!formData.has("file")) {
+        formData.set("file", file, file.name);
+      }
+    }
+
+    if (!formData.has("name")) {
+      const bName = formData.get("business_name") || "Business Verification";
+      formData.append("name", bName);
+    }
+
+    const response = await apiClient.upload(ENDPOINTS.VERIFICATION.BUSINESS_SUBMIT, formData);
+    if (response?.verification_record_id) {
+      try {
+        sessionStorage.setItem("techguild_verification_record_id", response.verification_record_id);
+        sessionStorage.setItem("techguild_business_record_id", response.verification_record_id);
+        localStorage.setItem("techguild_verification_record_id", response.verification_record_id);
+      } catch (e) {
+        // Safe fallback if storage unavailable
+      }
+    }
+    return response;
   },
 
-  // Resubmit verification
+  // 5. Resubmit verification (POST /v1/verification/resubmit/{record_id})
   resubmit: async (recordId, data) => {
-    const formData = data instanceof FormData ? data : new FormData();
-    if (!(data instanceof FormData)) {
+    const id =
+      recordId ||
+      sessionStorage.getItem("techguild_verification_record_id") ||
+      localStorage.getItem("techguild_verification_record_id");
+    if (!id) {
+      throw new Error("No verification record ID available for resubmission.");
+    }
+
+    let formData;
+    if (data instanceof FormData) {
+      formData = data;
+    } else {
+      formData = new FormData();
       if (data?.file) formData.append("file", data.file);
       if (data?.name) formData.append("name", data.name);
       if (data?.filename) formData.append("filename", data.filename);
     }
-    return apiClient.upload(ENDPOINTS.VERIFICATION.RESUBMIT(recordId), formData);
+
+    const file = formData.get("filename") || formData.get("file");
+    if (file && typeof file !== "string") {
+      if (!formData.has("filename") || typeof formData.get("filename") === "string") {
+        formData.set("filename", file, file.name);
+      }
+      if (!formData.has("file")) {
+        formData.set("file", file, file.name);
+      }
+    }
+
+    return apiClient.upload(ENDPOINTS.VERIFICATION.RESUBMIT(id), formData);
   },
 };
 

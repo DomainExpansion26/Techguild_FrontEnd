@@ -48,11 +48,32 @@ export default function ClientFlow({ defaultStep }) {
     setCurrentStep(resolveStep());
   }, [location.pathname, defaultStep, params.step]);
 
+  useEffect(() => {
+    if (currentStep === "under-review" || currentStep === "complete") {
+      let isMounted = true;
+      verificationApi
+        .getStatus()
+        .then((res) => {
+          if (!isMounted || !res) return;
+          const normalized = (res.status || "").toLowerCase();
+          if (normalized === "approved" || normalized === "verified" || normalized === "complete") {
+            setCurrentStep("complete");
+          }
+        })
+        .catch((err) => {
+          console.warn("Could not fetch verification status:", err);
+        });
+      return () => {
+        isMounted = false;
+      };
+    }
+  }, [currentStep]);
+
   // Step 1: Business Information state
   const [businessInfo, setBusinessInfo] = useState({
     companyName: "Nimbus Analytics",
-    gstNumber: "27ABCDE1234F1Z5",
-    panNumber: "AAAAA1234A",
+    gstNumber: "27AAACN1234F1Z5",
+    panNumber: "AAACN1234F",
     registrationNumber: "U12345MH2024PTC123456",
     website: "nimbusanalytics.com",
     country: "India",
@@ -100,13 +121,30 @@ export default function ClientFlow({ defaultStep }) {
     setSubmitting(true);
     setApiError("");
     try {
+      const cleanPan = (businessInfo.panNumber || "").trim().toUpperCase();
+      const cleanGst = (businessInfo.gstNumber || "").trim().toUpperCase();
+      const cleanReg = (businessInfo.registrationNumber || "").trim().toUpperCase();
+
       const formData = new FormData();
+      formData.append("name", businessInfo.companyName || "Business Verification");
       formData.append("business_name", businessInfo.companyName);
-      formData.append("gst_number", businessInfo.gstNumber);
-      formData.append("pan_number", businessInfo.panNumber);
-      formData.append("registration_number", businessInfo.registrationNumber);
-      formData.append("website", businessInfo.website);
-      formData.append("country", businessInfo.country);
+      formData.append("gst_number", cleanGst);
+      formData.append("pan_number", cleanPan);
+      formData.append("pan", cleanPan);
+      formData.append("registration_number", cleanReg);
+      formData.append("website", (businessInfo.website || "").trim());
+      formData.append("country", (businessInfo.country || "").trim());
+
+      const primaryFile =
+        documents.gst ||
+        documents.incorporation ||
+        documents.pan ||
+        documents.registration ||
+        bankDetails.cancelledCheque;
+      if (primaryFile) {
+        formData.append("filename", primaryFile, primaryFile.name);
+        formData.append("file", primaryFile, primaryFile.name);
+      }
 
       if (documents.gst) formData.append("document_gst", documents.gst);
       if (documents.incorporation) formData.append("document_incorporation", documents.incorporation);
@@ -118,8 +156,7 @@ export default function ClientFlow({ defaultStep }) {
       setCurrentStep("submitted");
     } catch (err) {
       console.warn("Client verification submit note:", err);
-      // For demonstration and preprod flow resilience, continue to submitted screen
-      setCurrentStep("submitted");
+      setApiError(err?.message || "Failed to submit business verification. Please verify details and try again.");
     } finally {
       setSubmitting(false);
     }
@@ -341,7 +378,7 @@ export default function ClientFlow({ defaultStep }) {
                 className="cv-input-field"
                 placeholder="Enter GST number"
                 value={businessInfo.gstNumber}
-                onChange={(e) => setBusinessInfo({ ...businessInfo, gstNumber: e.target.value })}
+                onChange={(e) => setBusinessInfo({ ...businessInfo, gstNumber: e.target.value.toUpperCase().trim() })}
               />
             </div>
 
@@ -352,7 +389,7 @@ export default function ClientFlow({ defaultStep }) {
                 className="cv-input-field"
                 placeholder="Enter PAN number"
                 value={businessInfo.panNumber}
-                onChange={(e) => setBusinessInfo({ ...businessInfo, panNumber: e.target.value })}
+                onChange={(e) => setBusinessInfo({ ...businessInfo, panNumber: e.target.value.toUpperCase().trim() })}
               />
             </div>
 

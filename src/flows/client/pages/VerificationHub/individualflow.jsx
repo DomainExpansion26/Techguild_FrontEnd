@@ -46,6 +46,27 @@ export default function IndividualFlow({ defaultStep }) {
     setCurrentStep(resolveStep());
   }, [location.pathname, defaultStep, params.step]);
 
+  useEffect(() => {
+    if (currentStep === "under-review" || currentStep === "complete") {
+      let isMounted = true;
+      verificationApi
+        .getIdentityStatus()
+        .then((res) => {
+          if (!isMounted || !res) return;
+          const normalized = (res.status || "").toLowerCase();
+          if (normalized === "approved" || normalized === "verified" || normalized === "complete") {
+            setCurrentStep("complete");
+          }
+        })
+        .catch((err) => {
+          console.warn("Could not fetch identity verification status:", err);
+        });
+      return () => {
+        isMounted = false;
+      };
+    }
+  }, [currentStep]);
+
   // Step 1: Selected document
   const [selectedDocId, setSelectedDocId] = useState("aadhaar");
 
@@ -104,17 +125,18 @@ export default function IndividualFlow({ defaultStep }) {
     setApiError("");
     try {
       const formData = new FormData();
+      formData.append("name", selectedDocId || "Identity Document");
       formData.append("document_type", selectedDocId);
       if (uploadedDocFile) {
-        formData.append("file", uploadedDocFile);
-        formData.append("filename", uploadedDocFile.name);
+        formData.append("filename", uploadedDocFile, uploadedDocFile.name);
+        formData.append("file", uploadedDocFile, uploadedDocFile.name);
       }
       formData.append("selfie_verified", selfieCaptured ? "true" : "false");
       await verificationApi.submitIdentity(formData);
       setCurrentStep("submitted");
     } catch (err) {
       console.warn("Identity verification submit note:", err);
-      setCurrentStep("submitted");
+      setApiError(err?.message || "Failed to submit identity verification. Please try again.");
     } finally {
       setSubmitting(false);
     }
