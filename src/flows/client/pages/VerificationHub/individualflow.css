@@ -23,15 +23,18 @@
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  scrollbar-width: none !important; /* Firefox */
-  -ms-overflow-style: none !important; /* IE/Edge */
+  scrollbar-width: none !important;
+  /* Firefox */
+  -ms-overflow-style: none !important;
+  /* IE/Edge */
   padding-bottom: 0 !important;
   margin-bottom: 0 !important;
   box-sizing: border-box;
 }
 
 .if-scroll-container::-webkit-scrollbar {
-  display: none !important; /* Chrome, Safari, Opera */
+  display: none !important;
+  /* Chrome, Safari, Opera */
   width: 0 !important;
   height: 0 !important;
 }
@@ -69,6 +72,7 @@
   margin-bottom: 8px;
   transition: transform 0.15s ease, color 0.15s ease;
 }
+
 .if-back-btn:hover {
   transform: translateX(-4px);
   color: #0b2a75;
@@ -250,6 +254,7 @@
   cursor: pointer !important;
   transition: background 0.15s ease !important;
 }
+
 .if-primary-btn-wide:hover {
   background-color: #0b2a75 !important;
   border-color: #0b2a75 !important;
@@ -265,6 +270,7 @@
   margin-top: 16px;
   transition: color 0.15s;
 }
+
 .if-skip-link:hover {
   text-decoration: underline;
   color: #0b2a75;
@@ -490,37 +496,43 @@
 }
 
 /* ── Screen 15: Step 4 Review ────────────────────────────────────────── */
+.if-review-container {
+  width: 100%;
+  max-width: 490px;
+  margin: 0 auto;
+}
+
 .if-review-rows-container {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  max-width: 640px;
-  margin: 0 auto 36px auto;
   width: 100%;
+  margin-bottom: 28px;
 }
 
 .if-review-item-card {
-  background: #ffffff !important;
-  border: 1px solid #e2e8f0 !important;
-  border-radius: 12px !important;
-  padding: 18px 24px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 14px 20px;
+  min-height: 52px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: none;
+  transition: border-color 0.15s ease;
+}
+
+.if-review-item-card:hover {
+  border-color: #94a3b8;
 }
 
 .if-review-item-label {
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 700;
   color: #0f172a;
   margin: 0;
-}
-
-.if-review-item-sub {
-  font-size: 13px;
-  color: #64748b;
-  margin-top: 3px;
 }
 
 .if-review-edit-link {
@@ -530,11 +542,68 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  padding: 4px 8px;
+  padding: 0;
   transition: opacity 0.15s;
 }
+
 .if-review-edit-link:hover {
   text-decoration: underline;
+}
+
+.if-review-btn-row {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 18px;
+  width: 100%;
+  align-items: center;
+}
+
+.if-btn-back-outline {
+  height: 46px;
+  background: #ffffff;
+  border: 1px solid #0f172a;
+  border-radius: 8px;
+  color: #0f172a;
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.if-btn-back-outline:hover {
+  background: #f8fafc;
+  border-color: #000000;
+}
+
+.if-btn-continue-primary {
+  height: 46px;
+  background: #103ca4;
+  border: 1px solid #103ca4;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.if-btn-continue-primary:hover:not(:disabled) {
+  background: #0b2a75;
+  border-color: #0b2a75;
+}
+
+.if-btn-continue-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 /* ── Button Row Utilities ────────────────────────────────────────────── */
@@ -756,15 +825,96 @@
   border-radius: 999px;
 }
 
-.if-help-bar {
-  background: #eff6ff !important;
-  border: 1px solid #dbeafe !important;
-  border-radius: 12px !important;
-  padding: 14px 20px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  box-shadow: none !important;
+/* Need help footer bar */
+.if-help-bar,
+.cv-help-bar {
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  padding: 14px 22px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  margin-top: 16px;
+  margin-bottom: 0 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.if-help-left,
+.cv-help-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.if-help-icon-wrap,
+.cv-help-icon-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #dbeafe;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.if-help-title,
+.cv-help-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 2px;
+}
+
+.if-help-desc,
+.cv-help-desc {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 1024px) {
+
+  .if-help-desc,
+  .cv-help-desc {
+    white-space: normal;
+  }
+}
+
+.if-help-btn,
+.cv-help-btn {
+  background: #ffffff;
+  color: #2563eb;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 12.5px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+  white-space: nowrap;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.if-help-btn:hover,
+.cv-help-btn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
 }
 
 /* ── Screen 19: Success ──────────────────────────────────────────────── */
@@ -875,14 +1025,291 @@
   .if-main-card {
     padding: 24px 20px !important;
   }
+
   .if-docs-grid {
     grid-template-columns: 1fr;
   }
+
   .if-status-cards-2col {
     grid-template-columns: 1fr;
   }
+
   .if-btn-row-split {
     flex-direction: column;
     gap: 12px;
   }
+}
+
+/* /////////////////////////////////////////////////////////////////////// */
+
+
+/* Center the intro content inside the BaseCard */
+.if-intro-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.if-intro-card {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.if-intro-card .if-intro-content {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.if-intro-card .if-card-title,
+.if-intro-card .if-card-subtitle {
+  width: 100%;
+  text-align: center;
+}
+
+.if-intro-card .if-intro-checklist-card {
+  width: 100%;
+}
+
+.if-intro-card .if-primary-btn-wide {
+  width: 100%;
+  max-width: 100%;
+}
+
+.if-intro-card .if-skip-link {
+  text-align: center;
+}
+
+/* ///////////////////////////////////////////////////////////// */
+
+
+
+/* Security card: icon left, text right */
+.if-security-card {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 14px !important;
+  padding: 16px 20px !important;
+  text-align: left !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.if-security-card .if-security-icon-circle {
+  flex: 0 0 44px !important;
+  width: 44px !important;
+  height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+}
+
+.if-security-card .if-security-text {
+  flex: 1 !important;
+  min-width: 0;
+  text-align: left !important;
+}
+
+.if-security-card .if-security-title,
+.if-security-card .if-security-desc {
+  text-align: left !important;
+}
+
+
+/* Keep spacing between Back and Continue buttons */
+.if-btn-row-split {
+
+  gap: 20px;
+}
+
+
+/* Take a Selfie - center the card content */
+.if-selfie-card,
+.if-step-page-wrapper:has(.if-selfie-guidelines-box) .if-main-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.if-selfie-container {
+  width: 100%;
+  max-width: 540px;
+  margin: auto !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.if-step-page-wrapper:has(.if-selfie-guidelines-box) .if-card-title {
+  width: 100%;
+  text-align: center;
+  margin: 0 0 8px 0;
+}
+
+.if-step-page-wrapper:has(.if-selfie-guidelines-box) .if-card-subtitle {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto 10px auto;
+}
+
+.if-step-page-wrapper:has(.if-selfie-guidelines-box) .if-camera-box {
+  width: 220px;
+  height: 220px;
+  margin: 16px auto;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+/* Show selfie requirements one below another */
+.if-step-page-wrapper:has(.if-selfie-guidelines-box) .if-selfie-guidelines-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  width: fit-content;
+  margin: 10px auto 28px auto;
+  text-align: left;
+}
+
+.if-step-page-wrapper:has(.if-selfie-guidelines-box) .if-guideline-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Center the action buttons */
+.if-step-page-wrapper:has(.if-selfie-guidelines-box) .if-btn-row-center {
+  width: 100%;
+  margin: 0 auto;
+}
+
+
+/* Verification Submitted - center content inside BaseCard */
+.if-step-page-wrapper:has(.if-submitted-circle) .if-main-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.if-step-page-wrapper:has(.if-submitted-circle) .if-submitted-circle {
+  margin: 0 auto 20px;
+}
+
+.if-step-page-wrapper:has(.if-submitted-circle) .if-card-title,
+.if-step-page-wrapper:has(.if-submitted-circle) .if-card-subtitle {
+  width: 100%;
+  text-align: center;
+}
+
+.if-step-page-wrapper:has(.if-submitted-circle) .if-submitted-review-label,
+.if-step-page-wrapper:has(.if-submitted-circle) .if-submitted-review-time {
+  text-align: center;
+  width: 100%;
+}
+
+.if-step-page-wrapper:has(.if-submitted-circle) .if-btn-row-center {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 24px auto 0;
+}
+
+/* Individual Verification Success - center the whole card content */
+.if-step-page-wrapper:has(.if-success-icon-box) .if-main-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+/* Keep the success page back button in its original position */
+.if-step-page-wrapper:has(.if-success-icon-box) .if-back-btn {
+  align-self: auto;
+  margin: initial;
+}
+
+
+/* Center success icon */
+.if-step-page-wrapper:has(.if-success-icon-box) .if-success-icon-box {
+  margin: 0 auto 20px;
+}
+
+/* Center success heading */
+.if-step-page-wrapper:has(.if-success-icon-box) .if-card-title {
+  width: 100%;
+  text-align: center;
+}
+
+/* Center Verification Completed banner */
+.if-step-page-wrapper:has(.if-success-icon-box) .if-points-banner {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto 24px;
+  text-align: center;
+}
+
+/* Center the trust progress tracker */
+.if-step-page-wrapper:has(.if-success-icon-box) .if-trust-track {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 28px;
+}
+
+/* Center the dashboard button */
+.if-step-page-wrapper:has(.if-success-icon-box) .if-btn-row-center {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+
+/* Restore back button to its original top-left position */
+.if-step-page-wrapper:has(.if-success-icon-box) .if-main-card {
+  position: relative;
+}
+
+.if-step-page-wrapper:has(.if-success-icon-box) .if-back-btn {
+  position: absolute !important;
+  top: 20px !important;
+  left: 20px !important;
+  right: auto !important;
+  bottom: auto !important;
+  align-self: auto !important;
+  margin: 0 !important;
+}
+
+/* Keep the success content centered */
+.if-step-page-wrapper:has(.if-success-icon-box) .if-success-icon-box {
+  margin-left: auto;
+  margin-right: auto;
 }

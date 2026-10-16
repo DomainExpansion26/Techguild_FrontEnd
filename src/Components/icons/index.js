@@ -77,8 +77,10 @@ import Palette from "../../assets/icons/palette.svg?react";
 import Tag from "../../assets/icons/tag.svg?react";
 import LifeBuoy from "../../assets/icons/life-buoy.svg?react";
 import FolderOpen from "../../assets/icons/folder-open.svg?react";
+import Info from "../../assets/icons/info.svg?react";
 
 export {
+  Info,
   ArrowLeft,
   ArrowRight,
   Search,

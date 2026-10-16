@@ -45,7 +45,6 @@ export const clientRoutes = (
     <Route path="/client-verification-hub" element={<ClientFlow defaultStep="hub" />} />
     <Route path="/client-verification" element={<ClientFlow defaultStep="hub" />} />
     <Route path="/client-verification-business" element={<ClientFlow defaultStep="intro" />} />
-    <Route path="/verification" element={<ClientFlow defaultStep="hub" />} />
     <Route path="/verification/business" element={<ClientFlow defaultStep="intro" />} />
     <Route path="/verification/identity" element={<ClientFlow defaultStep="identity" />} />
     <Route path="/verification/documents" element={<ClientFlow defaultStep="documents" />} />
@@ -53,6 +52,8 @@ export const clientRoutes = (
     <Route path="/verification/review" element={<ClientFlow defaultStep="review" />} />
     <Route path="/verification/submitted" element={<ClientFlow defaultStep="submitted" />} />
     <Route path="/verification/under-review" element={<ClientFlow defaultStep="under-review" />} />
+    <Route path="/client-verification/under-review" element={<ClientFlow defaultStep="under-review" />} />
+    <Route path="/client-verification-under-review" element={<ClientFlow defaultStep="under-review" />} />
     <Route path="/verification/complete" element={<ClientFlow defaultStep="complete" />} />
     <Route path="/verification/success" element={<ClientFlow defaultStep="success" />} />
     <Route path="/verification/business/success" element={<ClientFlow defaultStep="success" />} />
@@ -76,6 +77,9 @@ export const clientRoutes = (
     <Route path="/client/verification" element={<ClientFlow defaultStep="hub" />} />
     <Route path="/client/verification/business" element={<ClientFlow defaultStep="intro" />} />
     <Route path="/client/verification-business" element={<ClientFlow defaultStep="intro" />} />
+    <Route path="/client/verification/submitted" element={<ClientFlow defaultStep="submitted" />} />
+    <Route path="/client/verification/under-review" element={<ClientFlow defaultStep="under-review" />} />
+    <Route path="/client/verification-under-review" element={<ClientFlow defaultStep="under-review" />} />
     <Route path="/client/verification/success" element={<ClientFlow defaultStep="success" />} />
     <Route path="/client/verification-success" element={<ClientFlow defaultStep="success" />} />
     <Route path="/client/payouts" element={<ClientPayouts />} />

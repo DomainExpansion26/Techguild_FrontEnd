@@ -6,6 +6,7 @@ import {
   SecondaryButton,
   Stepper,
   Cards,
+  BaseCard,
 } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import { verificationApi } from "@/services/api";
@@ -21,6 +22,8 @@ export default function IndividualFlow({ defaultStep }) {
 
   // Resolve active step
   const resolveStep = () => {
+    const search = new URLSearchParams(location.search);
+    if (search.get("step")) return search.get("step");
     if (defaultStep) return defaultStep;
     if (params.step) return params.step;
     const path = location.pathname;
@@ -126,12 +129,12 @@ export default function IndividualFlow({ defaultStep }) {
       <div className="if-intro-wrapper">
         <button
           className="if-back-btn"
-          onClick={() => navigate("/client-verification-hub")}
+          onClick={() => navigate("/dashboard")}
         >
           <Icon name="ArrowLeft" size={18} />
         </button>
 
-        <Cards
+        <BaseCard
           className="if-main-card if-intro-card"
           border={false}
           shadow="none"
@@ -183,7 +186,7 @@ export default function IndividualFlow({ defaultStep }) {
               {INTRO.SKIP_BTN || "Skip for now"}
             </span>
           </div>
-        </Cards>
+        </BaseCard>
       </div>
     );
   };
@@ -223,7 +226,7 @@ export default function IndividualFlow({ defaultStep }) {
           />
         </div>
 
-        <Cards className="if-main-card" border="1px solid #e2e8f0" shadow="md" padding="none">
+        <BaseCard className="if-main-card" border="1px solid #e2e8f0" shadow="md" padding="none">
           <h2 className="if-card-title">
             {IDN.CARD_TITLE || "Choose Verification Document"}
           </h2>
@@ -263,7 +266,7 @@ export default function IndividualFlow({ defaultStep }) {
 
           <div className="if-btn-row-center">
             <PrimaryButton
-              style={{ minWidth: "100%", maxWidth: "500px", height: "46px" }}
+              style={{ width: "790px", minWidth: "220px", maxWidth: "100%", height: "46px" }}
               icon={<Icon name="ArrowRight" size={16} />}
               iconPosition="right"
               onClick={() => setCurrentStep("upload")}
@@ -271,7 +274,7 @@ export default function IndividualFlow({ defaultStep }) {
               {IDN.CONTINUE_BTN || "Continue"}
             </PrimaryButton>
           </div>
-        </Cards>
+        </BaseCard>
       </div>
     );
   };
@@ -304,7 +307,7 @@ export default function IndividualFlow({ defaultStep }) {
           />
         </div>
 
-        <Cards className="if-main-card" border="1px solid #e2e8f0" shadow="md" padding="none">
+        <BaseCard className="if-main-card" border="1px solid #e2e8f0" shadow="md" padding="none">
           <h2 className="if-card-title">
             {UPL.CARD_TITLE || "Upload Government ID"}
           </h2>
@@ -351,6 +354,7 @@ export default function IndividualFlow({ defaultStep }) {
             </div>
           </Cards>
 
+
           {/* Security card */}
           <Cards
             className="if-security-card"
@@ -362,15 +366,18 @@ export default function IndividualFlow({ defaultStep }) {
             <div className="if-security-icon-circle">
               <Icon name="UserLock" size={20} color="#103ca4" />
             </div>
-            <div>
+
+            <div className="if-security-text">
               <div className="if-security-title">
                 {UPL.SECURITY_TITLE || "Your information is secure"}
               </div>
               <div className="if-security-desc">
-                {UPL.SECURITY_DESC || "Your documents are encrypted and used only for verification purposes."}
+                {UPL.SECURITY_DESC ||
+                  "Your documents are encrypted and used only for verification purposes."}
               </div>
             </div>
           </Cards>
+
 
           <div className="if-btn-row-split">
             <SecondaryButton
@@ -388,7 +395,7 @@ export default function IndividualFlow({ defaultStep }) {
               {UPL.CONTINUE_BTN || "Continue"}
             </PrimaryButton>
           </div>
-        </Cards>
+        </BaseCard>
       </div>
     );
   };
@@ -421,58 +428,60 @@ export default function IndividualFlow({ defaultStep }) {
           />
         </div>
 
-        <Cards className="if-main-card" border="1px solid #e2e8f0" shadow="md" padding="none">
-          <h2 className="if-card-title">{SLF.CARD_TITLE || "Take A Selfie"}</h2>
-          <p className="if-card-subtitle">
-            {SLF.CARD_DESC || "We'll compare your photo with your ID document."}
-          </p>
+        <BaseCard className="if-main-card if-selfie-card" border="1px solid #e2e8f0" shadow="md" padding="none">
+          <div className="if-selfie-container">
+            <h2 className="if-card-title">{SLF.CARD_TITLE || "Take A Selfie"}</h2>
+            <p className="if-card-subtitle">
+              {SLF.CARD_DESC || "We'll compare your photo with your ID document."}
+            </p>
 
-          {cameraActive && (
-            <div className="if-camera-box">
-              <video ref={videoRef} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-            </div>
-          )}
-
-          {selfieCaptured && !cameraActive && (
-            <div className="if-camera-box" style={{ background: "#f0fdf4", borderColor: "#16a34a" }}>
-              <Icon name="CircleCheck" size={64} color="#16a34a" />
-            </div>
-          )}
-
-          {/* Requirements */}
-          <div className="if-selfie-guidelines-box">
-            {(SLF.REQUIREMENTS || [
-              "Good lighting",
-              "Face camera",
-              "Remove glasses",
-              "Neutral expression",
-            ]).map((req, idx) => (
-              <div key={idx} className="if-guideline-item">
-                <Icon name="Check" size={16} color="#103ca4" strokeWidth={2.5} />
-                <span>{req}</span>
+            {cameraActive && (
+              <div className="if-camera-box">
+                <video ref={videoRef} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               </div>
-            ))}
-          </div>
+            )}
 
-          <div className="if-btn-row-center" style={{ flexDirection: "column", gap: "12px", maxWidth: "340px", margin: "0 auto" }}>
-            <SecondaryButton
-              style={{ width: "100%", height: "44px" }}
-              onClick={toggleCamera}
-            >
-              {cameraActive
-                ? "Capture Photo"
-                : selfieCaptured
-                ? "Retake Selfie"
-                : (SLF.CAMERA_BTN || "Open Camera")}
-            </SecondaryButton>
-            <PrimaryButton
-              style={{ width: "100%", height: "44px" }}
-              onClick={() => setCurrentStep("review")}
-            >
-              {SLF.CONTINUE_BTN || "Continue"}
-            </PrimaryButton>
+            {selfieCaptured && !cameraActive && (
+              <div className="if-camera-box" style={{ background: "#f0fdf4", borderColor: "#16a34a" }}>
+                <Icon name="CircleCheck" size={64} color="#16a34a" />
+              </div>
+            )}
+
+            {/* Requirements */}
+            <div className="if-selfie-guidelines-box">
+              {(SLF.REQUIREMENTS || [
+                "Good lighting",
+                "Face camera",
+                "Remove glasses",
+                "Neutral expression",
+              ]).map((req, idx) => (
+                <div key={idx} className="if-guideline-item">
+                  <Icon name="Check" size={16} color="#103ca4" strokeWidth={2.5} />
+                  <span>{req}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="if-btn-row-center" style={{ flexDirection: "column", gap: "12px", maxWidth: "340px", margin: "0 auto" }}>
+              <SecondaryButton
+                style={{ width: "100%", height: "44px" }}
+                onClick={toggleCamera}
+              >
+                {cameraActive
+                  ? "Capture Photo"
+                  : selfieCaptured
+                    ? "Retake Selfie"
+                    : (SLF.CAMERA_BTN || "Open Camera")}
+              </SecondaryButton>
+              <PrimaryButton
+                style={{ width: "100%", height: "44px" }}
+                onClick={() => setCurrentStep("review")}
+              >
+                {SLF.CONTINUE_BTN || "Continue"}
+              </PrimaryButton>
+            </div>
           </div>
-        </Cards>
+        </BaseCard>
       </div>
     );
   };
@@ -482,17 +491,15 @@ export default function IndividualFlow({ defaultStep }) {
   // ============================================================
   const renderReview = () => {
     const REV = S_INDIVIDUAL.REVIEW || {};
-    const docLabels = {
-      aadhaar: "Aadhaar Card",
-      pan: "PAN Card",
-      passport: "Passport",
-      "driving-license": "Driving License",
-    };
 
     return (
       <div className="if-step-page-wrapper">
-        <button className="if-back-btn" onClick={() => setCurrentStep("selfie")}>
-          <Icon name="ArrowLeft" size={18} />
+        <button
+          className="if-back-btn"
+          onClick={() => setCurrentStep("selfie")}
+          aria-label="Back"
+        >
+          <Icon name="ArrowLeft" size={20} color="#103ca4" />
         </button>
 
         <h1 className="if-page-heading">
@@ -512,84 +519,83 @@ export default function IndividualFlow({ defaultStep }) {
           />
         </div>
 
-        <Cards className="if-main-card" border="1px solid #e2e8f0" shadow="md" padding="none">
+        <BaseCard
+          className="if-main-card"
+          border="1px solid rgba(255, 255, 255, 0.9)"
+          shadow="md"
+          padding="none"
+        >
           <h2 className="if-card-title">{REV.CARD_TITLE || "Review Your Information"}</h2>
           <p className="if-card-subtitle">
-            {REV.CARD_DESC || "Please review the details below. Make sure everything is correct before you submit."}
+            {REV.CARD_DESC || (
+              <>
+                Please review the deatils below.
+                <br />
+                Make sure everything is correct before you submit.
+              </>
+            )}
           </p>
 
-          <div className="if-review-rows-container">
-            {/* Verification Document */}
-            <Cards
-              className="if-review-item-card"
-              border="1px solid #e2e8f0"
-              shadow="none"
-              padding="none"
-            >
-              <div>
-                <p className="if-review-item-label">{REV.DOC_LABEL || "Verification Document"}</p>
-                <p className="if-review-item-sub">{docLabels[selectedDocId] || "Aadhaar Card"}</p>
+          <div className="if-review-container">
+            <div className="if-review-rows-container">
+              {/* Verification Document */}
+              <div className="if-review-item-card">
+                <span className="if-review-item-label">{REV.DOC_LABEL || "Verification Document"}</span>
+                <button
+                  type="button"
+                  className="if-review-edit-link"
+                  onClick={() => setCurrentStep("identity")}
+                >
+                  Edit
+                </button>
               </div>
-              <button className="if-review-edit-link" onClick={() => setCurrentStep("identity")}>
-                Edit
-              </button>
-            </Cards>
 
-            {/* Upload Document */}
-            <Cards
-              className="if-review-item-card"
-              border="1px solid #e2e8f0"
-              shadow="none"
-              padding="none"
-            >
-              <div>
-                <p className="if-review-item-label">{REV.UPLOAD_LABEL || "Upload Document"}</p>
-                <p className="if-review-item-sub">{uploadedDocFile?.name || "aadhaar_card_front.pdf"}</p>
+              {/* Upload Document */}
+              <div className="if-review-item-card">
+                <span className="if-review-item-label">{REV.UPLOAD_LABEL || "Upload Document"}</span>
+                <button
+                  type="button"
+                  className="if-review-edit-link"
+                  onClick={() => setCurrentStep("upload")}
+                >
+                  Edit
+                </button>
               </div>
-              <button className="if-review-edit-link" onClick={() => setCurrentStep("upload")}>
-                Edit
-              </button>
-            </Cards>
 
-            {/* Selfie */}
-            <Cards
-              className="if-review-item-card"
-              border="1px solid #e2e8f0"
-              shadow="none"
-              padding="none"
-            >
-              <div>
-                <p className="if-review-item-label">{REV.SELFIE_LABEL || "Selfie"}</p>
-                <p className="if-review-item-sub">
-                  {selfieCaptured ? "Photo captured & verified" : "Selfie ready"}
-                </p>
+              {/* Selfie */}
+              <div className="if-review-item-card">
+                <span className="if-review-item-label">{REV.SELFIE_LABEL || "Selfie"}</span>
+                <button
+                  type="button"
+                  className="if-review-edit-link"
+                  onClick={() => setCurrentStep("selfie")}
+                >
+                  Edit
+                </button>
               </div>
-              <button className="if-review-edit-link" onClick={() => setCurrentStep("selfie")}>
-                Edit
-              </button>
-            </Cards>
+            </div>
+
+            {apiError && <div className="alert alert-danger py-2 mb-3">{apiError}</div>}
+
+            <div className="if-review-btn-row">
+              <SecondaryButton
+                className="if-btn-back-outline"
+                onClick={() => setCurrentStep("selfie")}
+              >
+                {REV.BACK_BTN || "Back"}
+              </SecondaryButton>
+              <PrimaryButton
+                className="if-btn-continue-primary"
+                disabled={submitting}
+                onClick={handleFinalSubmit}
+                icon={<Icon name="ArrowRight" size={16} />}
+                iconPosition="right"
+              >
+                {submitting ? "Submitting..." : (REV.CONTINUE_BTN || "Continue")}
+              </PrimaryButton>
+            </div>
           </div>
-
-          {apiError && <div className="alert alert-danger py-2 mb-3">{apiError}</div>}
-
-          <div className="if-btn-row-split">
-            <SecondaryButton
-              style={{ minWidth: "120px" }}
-              onClick={() => setCurrentStep("selfie")}
-            >
-              {REV.BACK_BTN || "Back"}
-            </SecondaryButton>
-            <PrimaryButton
-              style={{ minWidth: "160px" }}
-              icon={<Icon name="ArrowRight" size={16} />}
-              iconPosition="right"
-              disabled={submitting}
-              onClick={handleFinalSubmit}
-            >
-              {submitting ? "Submitting..." : (REV.CONTINUE_BTN || "Continue")}
-            </PrimaryButton>
-          </div>
-        </Cards>
+        </BaseCard>
       </div>
     );
   };
@@ -601,7 +607,7 @@ export default function IndividualFlow({ defaultStep }) {
     const SUB = S_INDIVIDUAL.SUBMITTED || {};
     return (
       <div className="if-step-page-wrapper">
-        <Cards
+        <BaseCard
           className="if-main-card"
           style={{ padding: "60px 40px", textAlign: "center" }}
           border="1px solid #e2e8f0"
@@ -627,15 +633,22 @@ export default function IndividualFlow({ defaultStep }) {
 
           <div className="if-btn-row-center">
             <PrimaryButton
-              style={{ minWidth: "220px", padding: "12px 28px" }}
-              icon={<Icon name="ArrowRight" size={16} />}
-              iconPosition="right"
-              onClick={() => setCurrentStep("under-review")}
+              style={{ width: "240px", maxWidth: "100%", padding: "12px 24px" }}
+              icon={<Icon name="ArrowLeft" size={16} />}
+              iconPosition="left"
+              onClick={() => {
+                setCurrentStep("under-review");
+                if (location.pathname.startsWith("/verification/individual")) {
+                  navigate("/verification/individual/under-review");
+                } else {
+                  navigate("/individual-verification/under-review");
+                }
+              }}
             >
-              {SUB.DASHBOARD_BTN || "Go To Dashboard"}
+              {SUB.BACK_BTN || SUB.DASHBOARD_BTN || "Go Back"}
             </PrimaryButton>
           </div>
-        </Cards>
+        </BaseCard>
       </div>
     );
   };
@@ -762,20 +775,14 @@ export default function IndividualFlow({ defaultStep }) {
         </Cards>
 
         {/* Help bar */}
-        <Cards
-          className="if-help-bar"
-          bg="#eff6ff"
-          border="1px solid #dbeafe"
-          shadow="none"
-          padding="none"
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-            <Icon name="MessageSquareMore" size={22} color="#103ca4" />
+        <div className="cv-help-bar">
+          <div className="cv-help-left">
+            <div className="cv-help-icon-wrap">
+              <Icon name="MessageSquareMore" size={20} color="#2563eb" />
+            </div>
             <div>
-              <div style={{ fontSize: "14px", fontWeight: 700, color: "#0f172a" }}>
-                {UR.HELP_TITLE || "Need help?"}
-              </div>
-              <div style={{ fontSize: "12px", color: "#64748b" }}>
+              <div className="cv-help-title">{UR.HELP_TITLE || "Need help?"}</div>
+              <div className="cv-help-desc">
                 {UR.HELP_DESC || "If you have any questions, feel free to contact our support team."}
               </div>
             </div>
@@ -785,9 +792,9 @@ export default function IndividualFlow({ defaultStep }) {
             onClick={() => navigate("/help-support")}
           >
             {UR.CONTACT_BTN || "Contact Support"}{" "}
-            <Icon name="ExternalLink" size={14} />
+            <Icon name="ExternalLink" size={13} />
           </button>
-        </Cards>
+        </div>
       </div>
     );
   };
@@ -922,20 +929,14 @@ export default function IndividualFlow({ defaultStep }) {
         </Cards>
 
         {/* Help bar */}
-        <Cards
-          className="if-help-bar"
-          bg="#eff6ff"
-          border="1px solid #dbeafe"
-          shadow="none"
-          padding="none"
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-            <Icon name="MessageSquareMore" size={22} color="#103ca4" />
+        <div className="cv-help-bar">
+          <div className="cv-help-left">
+            <div className="cv-help-icon-wrap">
+              <Icon name="MessageSquareMore" size={20} color="#2563eb" />
+            </div>
             <div>
-              <div style={{ fontSize: "14px", fontWeight: 700, color: "#0f172a" }}>
-                {COMP.HELP_TITLE || "Need help?"}
-              </div>
-              <div style={{ fontSize: "12px", color: "#64748b" }}>
+              <div className="cv-help-title">{COMP.HELP_TITLE || "Need help?"}</div>
+              <div className="cv-help-desc">
                 {COMP.HELP_DESC || "If you have any questions, feel free to contact our support team."}
               </div>
             </div>
@@ -945,9 +946,9 @@ export default function IndividualFlow({ defaultStep }) {
             onClick={() => navigate("/help-support")}
           >
             {COMP.CONTACT_BTN || "Contact Support"}{" "}
-            <Icon name="ExternalLink" size={14} />
+            <Icon name="ExternalLink" size={13} />
           </button>
-        </Cards>
+        </div>
       </div>
     );
   };
@@ -1039,7 +1040,7 @@ export default function IndividualFlow({ defaultStep }) {
 
           <div className="if-btn-row-center">
             <PrimaryButton
-              style={{ minWidth: "220px", padding: "12px 28px" }}
+              style={{ width: "240px", maxWidth: "100%", padding: "12px 24px" }}
               icon={<Icon name="ArrowRight" size={16} />}
               iconPosition="right"
               onClick={() => navigate("/dashboard")}

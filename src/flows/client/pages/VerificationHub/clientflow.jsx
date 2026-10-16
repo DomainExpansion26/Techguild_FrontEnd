@@ -7,6 +7,7 @@ import {
   TextInput,
   Stepper,
   Cards,
+  BaseCard,
 } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import { verificationApi } from "@/services/api";
@@ -131,7 +132,7 @@ export default function ClientFlow({ defaultStep }) {
   // ============================================================
   const renderHub = () => (
     <div className="cv-step-page-wrapper">
-      <Cards
+      <BaseCard
         className="cv-base-card"
         border="1px solid rgba(255, 255, 255, 0.9)"
         shadow="md"
@@ -172,7 +173,7 @@ export default function ClientFlow({ defaultStep }) {
           <Cards
             className="cv-hub-option-card"
             clickable
-            onClick={() => navigate("/verification")}
+            onClick={() => navigate("/individual-verification")}
             border="1px solid #e2e8f0"
             shadow="none"
             radius="lg"
@@ -217,16 +218,7 @@ export default function ClientFlow({ defaultStep }) {
             <div className="cv-hub-benefit-desc">{S_HUB.BENEFIT_COMMUNITY_DESC || "Helps us keep TechGuild secure."}</div>
           </div>
         </div>
-
-        <span
-          className="cv-skip-link"
-          onClick={() => navigate("/client-dashboard")}
-          role="button"
-          tabIndex={0}
-        >
-          {S_HUB.SKIP || "Skip for now"}
-        </span>
-      </Cards>
+      </BaseCard>
     </div>
   );
 
@@ -237,12 +229,12 @@ export default function ClientFlow({ defaultStep }) {
     const INTRO = S_CLIENT.INTRO || {};
     return (
       <div className="cv-step-page-wrapper">
-        <button className="cv-back-btn" onClick={() => setCurrentStep("hub")}>
-          <Icon name="ArrowLeft" size={16} /> Back
+        <button className="cv-back-btn" onClick={() => setCurrentStep("hub")} aria-label="Back">
+          <Icon name="ArrowLeft" size={18} />
         </button>
 
-        <Cards
-          className="cv-base-card"
+        <BaseCard
+          className="cv-base-card cv-intro-base-card"
           border="1px solid rgba(255, 255, 255, 0.9)"
           shadow="md"
           padding="none"
@@ -291,7 +283,7 @@ export default function ClientFlow({ defaultStep }) {
               {INTRO.SKIP_BTN || "Skip for now"}
             </span>
           </div>
-        </Cards>
+        </BaseCard>
       </div>
     );
   };
@@ -304,8 +296,8 @@ export default function ClientFlow({ defaultStep }) {
     return (
       <div className="cv-step-page-wrapper">
         <div className="cv-outer-header">
-          <button className="cv-back-btn" onClick={() => setCurrentStep("intro")}>
-            <Icon name="ArrowLeft" size={16} /> Back
+          <button className="cv-back-btn" onClick={() => setCurrentStep("intro")} aria-label="Back">
+            <Icon name="ArrowLeft" size={18} />
           </button>
 
           <h1 className="cv-page-title">{BI.PAGE_TITLE || "Verify Your Identity"}</h1>
@@ -319,7 +311,7 @@ export default function ClientFlow({ defaultStep }) {
           </div>
         </div>
 
-        <Cards
+        <BaseCard
           className="cv-base-card"
           border="1px solid rgba(255, 255, 255, 0.9)"
           shadow="md"
@@ -413,7 +405,7 @@ export default function ClientFlow({ defaultStep }) {
               </PrimaryButton>
             </div>
           </div>
-        </Cards>
+        </BaseCard>
       </div>
     );
   };
@@ -433,8 +425,8 @@ export default function ClientFlow({ defaultStep }) {
     return (
       <div className="cv-step-page-wrapper">
         <div className="cv-outer-header">
-          <button className="cv-back-btn" onClick={() => setCurrentStep("identity")}>
-            <Icon name="ArrowLeft" size={16} /> Back
+          <button className="cv-back-btn" onClick={() => setCurrentStep("identity")} aria-label="Back">
+            <Icon name="ArrowLeft" size={18} />
           </button>
 
           <h1 className="cv-page-title">{DOCS_CFG.PAGE_TITLE || "Verify Your Identity"}</h1>
@@ -448,7 +440,7 @@ export default function ClientFlow({ defaultStep }) {
           </div>
         </div>
 
-        <Cards
+        <BaseCard
           className="cv-base-card"
           border="1px solid rgba(255, 255, 255, 0.9)"
           shadow="md"
@@ -472,7 +464,7 @@ export default function ClientFlow({ defaultStep }) {
                     radius="lg"
                     padding="none"
                   >
-                    <div>
+                    <div className="cv-doc-card-text-wrap">
                       <div className="cv-doc-card-title">{doc.title}</div>
                       <div className="cv-doc-card-desc">{doc.desc}</div>
                     </div>
@@ -490,28 +482,23 @@ export default function ClientFlow({ defaultStep }) {
                         <Icon name="Check" size={14} color="#16a34a" /> {file.name.slice(0, 14)}...
                       </div>
                     ) : (
-                      <button
-                        type="button"
-                        className="cv-doc-upload-btn"
+                      <PrimaryButton
+                        className="cv-doc-upload-primary-btn"
+                        icon={<Icon name="Upload" size={13} color="#ffffff" />}
+                        iconPosition="left"
                         onClick={() => fileInputRefs[doc.id].current?.click()}
                       >
-                        <Icon name="Upload" size={14} color="#ffffff" /> {doc.label || "Upload Certificate"}
-                      </button>
+                        {doc.label || "Upload Certificate"}
+                      </PrimaryButton>
                     )}
                   </Cards>
                 );
               })}
             </div>
 
-            <div className="cv-btn-row-split">
-              <SecondaryButton
-                style={{ minWidth: "140px" }}
-                onClick={() => setCurrentStep("identity")}
-              >
-                Back
-              </SecondaryButton>
+            <div className="cv-btn-row-center">
               <PrimaryButton
-                style={{ minWidth: "160px", padding: "10px 24px" }}
+                style={{ width: "310px", height: "42px", padding: "10px 24px", fontSize: "14px", fontWeight: 600 }}
                 icon={<Icon name="ArrowRight" size={16} />}
                 iconPosition="right"
                 onClick={() => setCurrentStep("bank-details")}
@@ -520,7 +507,7 @@ export default function ClientFlow({ defaultStep }) {
               </PrimaryButton>
             </div>
           </div>
-        </Cards>
+        </BaseCard>
       </div>
     );
   };
@@ -533,8 +520,8 @@ export default function ClientFlow({ defaultStep }) {
     return (
       <div className="cv-step-page-wrapper">
         <div className="cv-outer-header">
-          <button className="cv-back-btn" onClick={() => setCurrentStep("documents")}>
-            <Icon name="ArrowLeft" size={16} /> Back
+          <button className="cv-back-btn" onClick={() => setCurrentStep("documents")} aria-label="Back">
+            <Icon name="ArrowLeft" size={18} />
           </button>
 
           <h1 className="cv-page-title">{BANK.PAGE_TITLE || "Verify Your Identity"}</h1>
@@ -548,7 +535,7 @@ export default function ClientFlow({ defaultStep }) {
           </div>
         </div>
 
-        <Cards
+        <BaseCard
           className="cv-base-card"
           border="1px solid rgba(255, 255, 255, 0.9)"
           shadow="md"
@@ -659,7 +646,7 @@ export default function ClientFlow({ defaultStep }) {
               </PrimaryButton>
             </div>
           </div>
-        </Cards>
+        </BaseCard>
       </div>
     );
   };
@@ -672,8 +659,8 @@ export default function ClientFlow({ defaultStep }) {
     return (
       <div className="cv-step-page-wrapper">
         <div className="cv-outer-header">
-          <button className="cv-back-btn" onClick={() => setCurrentStep("bank-details")}>
-            <Icon name="ArrowLeft" size={16} /> Back
+          <button className="cv-back-btn" onClick={() => setCurrentStep("bank-details")} aria-label="Back">
+            <Icon name="ArrowLeft" size={20} color="#103ca4" />
           </button>
 
           <h1 className="cv-page-title">{REV.PAGE_TITLE || "Verify Your Identity"}</h1>
@@ -687,7 +674,7 @@ export default function ClientFlow({ defaultStep }) {
           </div>
         </div>
 
-        <Cards
+        <BaseCard
           className="cv-base-card"
           border="1px solid rgba(255, 255, 255, 0.9)"
           shadow="md"
@@ -695,64 +682,57 @@ export default function ClientFlow({ defaultStep }) {
         >
           <h2 className="cv-card-title">{REV.CARD_TITLE || "Review Your Information"}</h2>
           <p className="cv-card-subtitle">
-            {REV.CARD_DESC || "Please review the details below. Make sure everything is correct before you submit."}
+            {REV.CARD_DESC || (
+              <>
+                Please review the deatils below.
+                <br />
+                Make sure everything is correct before you submit.
+              </>
+            )}
           </p>
 
           <div className="cv-review-container">
             <div className="cv-review-list">
-              <Cards className="cv-review-row" border="1px solid #e2e8f0" shadow="none" radius="md" padding="md">
+              <div className="cv-review-row">
                 <span className="cv-review-label">{REV.BUSINESS_INFO_LABEL || "Business Information"}</span>
                 <button className="cv-review-edit-btn" onClick={() => setCurrentStep("identity")}>
-                  <Icon name="Pencil" size={14} color="#103ca4" /> Edit
+                  <Icon name="Pencil" size={15} color="#103ca4" /> Edit
                 </button>
-              </Cards>
+              </div>
 
-              <Cards className="cv-review-row" border="1px solid #e2e8f0" shadow="none" radius="md" padding="md">
+              <div className="cv-review-row">
                 <span className="cv-review-label">{REV.DOCUMENTS_LABEL || "Upload Documents"}</span>
                 <button className="cv-review-edit-btn" onClick={() => setCurrentStep("documents")}>
-                  <Icon name="Pencil" size={14} color="#103ca4" /> Edit
+                  <Icon name="Pencil" size={15} color="#103ca4" /> Edit
                 </button>
-              </Cards>
+              </div>
 
-              <Cards className="cv-review-row" border="1px solid #e2e8f0" shadow="none" radius="md" padding="md">
+              <div className="cv-review-row">
                 <span className="cv-review-label">{REV.BANK_LABEL || "Bank Details"}</span>
                 <button className="cv-review-edit-btn" onClick={() => setCurrentStep("bank-details")}>
-                  <Icon name="Pencil" size={14} color="#103ca4" /> Edit
+                  <Icon name="Pencil" size={15} color="#103ca4" /> Edit
                 </button>
-              </Cards>
+              </div>
             </div>
 
-            <Cards
-              className="cv-review-info-box"
-              bg="#eff6ff"
-              border="1px solid #dbeafe"
-              radius="md"
-              padding="lg"
-              shadow="none"
-            >
-              <div>
+            <div className="cv-review-info-box">
+              <div className="cv-review-info-col-left">
                 <div className="cv-review-info-col-title">{REV.REVIEW_TIME_LABEL || "Estimated review time"}</div>
                 <div className="cv-review-info-col-value">{REV.REVIEW_TIME_VALUE || "24-48 Hours"}</div>
               </div>
-              <div>
-                <div className="cv-review-info-col-title">{REV.SECURITY_LABEL || "Your data is secure"}</div>
+              <div className="cv-review-info-col-right">
+                <div className="cv-review-info-col-title-secure">{REV.SECURITY_LABEL || "Your data is secure"}</div>
                 <div className="cv-review-info-col-desc">
                   {REV.SECURITY_DESC || "We use bank-level encryption to protect your information."}
                 </div>
               </div>
-            </Cards>
+            </div>
 
             {apiError && <div className="alert alert-danger py-2 mb-3">{apiError}</div>}
 
-            <div className="cv-btn-row-split">
-              <SecondaryButton
-                style={{ minWidth: "140px" }}
-                onClick={() => setCurrentStep("bank-details")}
-              >
-                Back
-              </SecondaryButton>
+            <div className="cv-btn-row-right">
               <PrimaryButton
-                style={{ minWidth: "160px", padding: "10px 24px" }}
+                style={{ width: "235px", height: "44px", fontSize: "14px", fontWeight: 600 }}
                 icon={<Icon name="ArrowRight" size={16} />}
                 iconPosition="right"
                 disabled={submitting}
@@ -762,7 +742,7 @@ export default function ClientFlow({ defaultStep }) {
               </PrimaryButton>
             </div>
           </div>
-        </Cards>
+        </BaseCard>
       </div>
     );
   };
@@ -774,8 +754,8 @@ export default function ClientFlow({ defaultStep }) {
     const SUB = S_CLIENT.SUBMITTED || {};
     return (
       <div className="cv-step-page-wrapper">
-        <Cards
-          className="cv-base-card cv-submitted-card"
+        <BaseCard
+          className="cv-base-card cv-submitted-card cv-submitted-centered-card"
           border="1px solid rgba(255, 255, 255, 0.9)"
           shadow="md"
           padding="none"
@@ -793,15 +773,24 @@ export default function ClientFlow({ defaultStep }) {
             <div className="cv-submitted-review-time">{SUB.REVIEW_VALUE || "24-48 Hours"}</div>
 
             <PrimaryButton
-              style={{ minWidth: "220px", padding: "12px 28px" }}
-              icon={<Icon name="ArrowRight" size={16} />}
-              iconPosition="right"
-              onClick={() => setCurrentStep("under-review")}
+              style={{ width: "240px", maxWidth: "100%", padding: "12px 24px" }}
+              icon={<Icon name="ArrowLeft" size={16} />}
+              iconPosition="left"
+              onClick={() => {
+                setCurrentStep("under-review");
+                if (location.pathname.startsWith("/client/verification")) {
+                  navigate("/client/verification/under-review");
+                } else if (location.pathname.startsWith("/client-verification")) {
+                  navigate("/client-verification/under-review");
+                } else {
+                  navigate("/verification/under-review");
+                }
+              }}
             >
-              {SUB.DASHBOARD_BTN || "Go To Dashboard"}
+              {SUB.BACK_BTN || SUB.DASHBOARD_BTN || "Go Back"}
             </PrimaryButton>
           </div>
-        </Cards>
+        </BaseCard>
       </div>
     );
   };
@@ -814,33 +803,45 @@ export default function ClientFlow({ defaultStep }) {
     const docNames = UR.DOC_NAMES || ["GST Certificate", "Incorporation Certificate", "PAN Card", "Business Registration"];
 
     return (
-      <div className="cv-step-page-wrapper">
+      <div className="cv-step-page-wrapper cv-under-review-page">
         <div className="cv-status-page-header">
           <h1 className="cv-status-page-title">{UR.TITLE || "Business Verification Under Review"}</h1>
           <p className="cv-status-page-desc">
-            {UR.DESC || "Your business details and documents have been submitted successfully and are currently being reviewed by our team."}
+            {UR.DESC || (
+              <>
+                Your business details and documents have been submitted successfully and are
+                <br />
+                currently being reviewed by our team.
+              </>
+            )}
           </p>
         </div>
 
         <div className="cv-top-status-cards-row">
-          <Cards className="cv-time-card" border="1px solid #e2e8f0" shadow="none" radius="lg" padding="none">
-            <div className="cv-time-card-content">
+          <div className="cv-time-card">
+            <div className="cv-time-card-inner-box">
               <div className="cv-time-icon-circle">
                 <Icon name="Clock" size={26} color="#103ca4" />
               </div>
-              <div>
+              <div className="cv-time-text-block">
                 <div className="cv-time-label">{UR.TIME_LABEL || "Estimated Verification Time"}</div>
                 <div className="cv-time-value">{UR.TIME_VALUE || "24 – 48 hours"}</div>
               </div>
             </div>
             <div className="cv-time-note">
-              {UR.TIME_NOTE || "We’ll notify you as soon as your verification is complete. You can continue using TechGuild while we review your documents."}
+              {UR.TIME_NOTE || (
+                <>
+                  We’ll notify you as soon as your verification is complete.
+                  <br />
+                  You can continue using TechGuild while we review your documents.
+                </>
+              )}
             </div>
-          </Cards>
+          </div>
 
-          <Cards className="cv-whats-next-card" bg="#eff6ff" border="1px solid #dbeafe" radius="lg" padding="none">
+          <div className="cv-whats-next-card">
             <div className="cv-whats-next-title">
-              <Icon name="CircleCheck" size={16} color="#2563eb" /> {UR.NEXT_TITLE || "What happens next?"}
+              <Icon name="Info" size={18} color="#2563eb" /> {UR.NEXT_TITLE || "What happens next?"}
             </div>
             <div className="cv-next-steps-list">
               {(UR.NEXT_STEPS || [
@@ -855,17 +856,19 @@ export default function ClientFlow({ defaultStep }) {
                 </div>
               ))}
             </div>
-          </Cards>
+          </div>
         </div>
 
-        <Cards className="cv-info-table-card" border="1px solid #e2e8f0" shadow="none" radius="lg" padding="none">
+        <div className="cv-info-table-card">
           <div className="cv-info-card-header">
-            <div className="cv-info-card-title">{UR.INFO_TITLE || "Submitted Business Information"}</div>
-            <span className="cv-uploaded-badge">
-              <Icon name="Check" size={12} color="#16a34a" /> Submitted
+            <div>
+              <div className="cv-info-card-title">{UR.INFO_TITLE || "Submitted Business Information"}</div>
+              <div className="cv-info-card-desc">{UR.INFO_DESC || "Here is the information you provided for verification."}</div>
+            </div>
+            <span className="cv-submitted-badge-pill">
+              <Icon name="CircleCheck" size={14} color="#16a34a" /> Submitted
             </span>
           </div>
-          <div className="cv-info-card-desc">{UR.INFO_DESC || "Here is the information you provided for verification."}</div>
 
           <div className="cv-info-grid">
             <div className="cv-info-grid-item">
@@ -893,44 +896,47 @@ export default function ClientFlow({ defaultStep }) {
               <span className="cv-info-item-value">{businessInfo.country}</span>
             </div>
           </div>
-        </Cards>
+        </div>
 
-        <Cards className="cv-status-docs-card" border="1px solid #e2e8f0" shadow="none" radius="lg" padding="none">
-          <div className="cv-info-card-title" style={{ marginBottom: "4px" }}>
+        <div className="cv-status-docs-card">
+          <div className="cv-info-card-title" style={{ marginBottom: "2px" }}>
             {UR.DOCS_TITLE || "Submitted Documents"}
           </div>
-          <div className="cv-info-card-desc" style={{ marginBottom: "18px" }}>
+          <div className="cv-info-card-desc" style={{ marginBottom: "14px" }}>
             {UR.DOCS_DESC || "The following documents have been submitted and are under review."}
           </div>
 
           <div className="cv-status-docs-grid">
             {docNames.map((dname, idx) => (
-              <Cards key={idx} className="cv-status-doc-item" border="1px solid #e2e8f0" shadow="none" radius="md" padding="none">
+              <div key={idx} className="cv-status-doc-item">
                 <div className="cv-doc-icon-wrap">
-                  <Icon name="FileText" size={20} color="#103ca4" />
+                  <Icon name="FileText" size={18} color="#2563eb" />
                 </div>
                 <div className="cv-status-doc-title">{dname}</div>
-                <span className="cv-uploaded-badge" style={{ alignSelf: "flex-start" }}>
-                  <Icon name="Check" size={12} color="#16a34a" /> Submitted
-                </span>
+                <div className="cv-doc-submitted-status">
+                  <Icon name="CircleCheck" size={13} color="#16a34a" />
+                  <span>Submitted</span>
+                </div>
                 <span className="cv-status-doc-date">Aug 12, 2024 · 10:24 AM</span>
-              </Cards>
+              </div>
             ))}
           </div>
-        </Cards>
+        </div>
 
-        <Cards className="cv-help-bar" bg="#eff6ff" border="1px solid #dbeafe" radius="lg" padding="none">
+        <div className="cv-help-bar">
           <div className="cv-help-left">
-            <Icon name="MessageSquareMore" size={22} color="#103ca4" />
+            <div className="cv-help-icon-wrap">
+              <Icon name="MessageSquareMore" size={20} color="#2563eb" />
+            </div>
             <div>
               <div className="cv-help-title">{UR.HELP_TITLE || "Need help?"}</div>
               <div className="cv-help-desc">{UR.HELP_DESC || "If you have any questions, feel free to contact our support team."}</div>
             </div>
           </div>
           <button className="cv-help-btn" onClick={() => navigate("/client-help-support")}>
-            {UR.CONTACT_BTN || "Contact Support"} <Icon name="ExternalLink" size={14} />
+            {UR.CONTACT_BTN || "Contact Support"} <Icon name="ExternalLink" size={13} />
           </button>
-        </Cards>
+        </div>
       </div>
     );
   };
@@ -943,7 +949,7 @@ export default function ClientFlow({ defaultStep }) {
     const docNames = COMP.DOC_NAMES || ["GST Certificate", "Incorporation Certificate", "PAN Card", "Business Registration"];
 
     return (
-      <div className="cv-step-page-wrapper">
+      <div className="cv-step-page-wrapper cv-under-review-page">
         <div className="cv-status-page-header">
           <div className="cv-status-page-title-row">
             <h1 className="cv-status-page-title">{COMP.TITLE || "Business Verification Complete"}</h1>
@@ -955,10 +961,10 @@ export default function ClientFlow({ defaultStep }) {
         </div>
 
         <div className="cv-top-status-cards-row">
-          <Cards className="cv-verified-banner-card" bg="#f0fdf4" border="1px solid #bbf7d0" radius="lg" padding="none">
+          <div className="cv-verified-banner-card">
             <div className="cv-verified-header-row">
               <div className="cv-verified-circle-big">
-                <Icon name="Check" size={28} color="#ffffff" strokeWidth={3} />
+                <Icon name="Check" size={26} color="#ffffff" strokeWidth={3} />
               </div>
               <div className="cv-verified-heading-wrap">
                 <div className="cv-verified-sublabel">{COMP.VERIFIED_LABEL || "Verified Successfully"}</div>
@@ -971,11 +977,11 @@ export default function ClientFlow({ defaultStep }) {
             <div className="cv-verified-desc-text">
               {COMP.VERIFIED_DESC || "You now have a verified business badge and can securely post projects, hire freelancers, and grow your business on TechGuild."}
             </div>
-          </Cards>
+          </div>
 
-          <Cards className="cv-whats-next-card" bg="#eff6ff" border="1px solid #dbeafe" radius="lg" padding="none">
+          <div className="cv-whats-next-card">
             <div className="cv-whats-next-title">
-              <Icon name="CircleCheck" size={16} color="#2563eb" /> {COMP.NEXT_TITLE || "What's next?"}
+              <Icon name="Info" size={18} color="#2563eb" /> {COMP.NEXT_TITLE || "What's next?"}
             </div>
             <div className="cv-next-steps-list">
               {(COMP.NEXT_STEPS || [
@@ -990,17 +996,19 @@ export default function ClientFlow({ defaultStep }) {
                 </div>
               ))}
             </div>
-          </Cards>
+          </div>
         </div>
 
-        <Cards className="cv-info-table-card" border="1px solid #e2e8f0" shadow="none" radius="lg" padding="none">
+        <div className="cv-info-table-card">
           <div className="cv-info-card-header">
-            <div className="cv-info-card-title">{COMP.INFO_TITLE || "Verified Business Information"}</div>
-            <span className="cv-uploaded-badge">
-              <Icon name="Check" size={12} color="#16a34a" /> Verified
+            <div>
+              <div className="cv-info-card-title">{COMP.INFO_TITLE || "Verified Business Information"}</div>
+              <div className="cv-info-card-desc">{COMP.INFO_DESC || "Here is the information you provided for verification."}</div>
+            </div>
+            <span className="cv-submitted-badge-pill">
+              <Icon name="CircleCheck" size={14} color="#16a34a" /> Verified
             </span>
           </div>
-          <div className="cv-info-card-desc">{COMP.INFO_DESC || "Here is the information you provided for verification."}</div>
 
           <div className="cv-info-grid">
             <div className="cv-info-grid-item">
@@ -1028,44 +1036,47 @@ export default function ClientFlow({ defaultStep }) {
               <span className="cv-info-item-value">{businessInfo.country}</span>
             </div>
           </div>
-        </Cards>
+        </div>
 
-        <Cards className="cv-status-docs-card" border="1px solid #e2e8f0" shadow="none" radius="lg" padding="none">
-          <div className="cv-info-card-title" style={{ marginBottom: "4px" }}>
+        <div className="cv-status-docs-card">
+          <div className="cv-info-card-title" style={{ marginBottom: "2px" }}>
             {COMP.DOCS_TITLE || "Verified Documents"}
           </div>
-          <div className="cv-info-card-desc" style={{ marginBottom: "18px" }}>
+          <div className="cv-info-card-desc" style={{ marginBottom: "14px" }}>
             {COMP.DOCS_DESC || "The following documents have been reviewed and verified."}
           </div>
 
           <div className="cv-status-docs-grid">
             {docNames.map((dname, idx) => (
-              <Cards key={idx} className="cv-status-doc-item" border="1px solid #e2e8f0" shadow="none" radius="md" padding="none">
+              <div key={idx} className="cv-status-doc-item">
                 <div className="cv-doc-icon-wrap">
-                  <Icon name="FileText" size={20} color="#103ca4" />
+                  <Icon name="FileText" size={18} color="#2563eb" />
                 </div>
                 <div className="cv-status-doc-title">{dname}</div>
-                <span className="cv-uploaded-badge" style={{ alignSelf: "flex-start" }}>
-                  <Icon name="Check" size={12} color="#16a34a" /> Verified
-                </span>
+                <div className="cv-doc-submitted-status">
+                  <Icon name="CircleCheck" size={13} color="#16a34a" />
+                  <span>Verified</span>
+                </div>
                 <span className="cv-status-doc-date">Aug 12, 2024 · 10:24 AM</span>
-              </Cards>
+              </div>
             ))}
           </div>
-        </Cards>
+        </div>
 
-        <Cards className="cv-help-bar" bg="#eff6ff" border="1px solid #dbeafe" radius="lg" padding="none">
+        <div className="cv-help-bar">
           <div className="cv-help-left">
-            <Icon name="MessageSquareMore" size={22} color="#103ca4" />
+            <div className="cv-help-icon-wrap">
+              <Icon name="MessageSquareMore" size={20} color="#2563eb" />
+            </div>
             <div>
               <div className="cv-help-title">{COMP.HELP_TITLE || "Need help?"}</div>
               <div className="cv-help-desc">{COMP.HELP_DESC || "If you have any questions, feel free to contact our support team."}</div>
             </div>
           </div>
           <button className="cv-help-btn" onClick={() => navigate("/client-help-support")}>
-            {COMP.CONTACT_BTN || "Contact Support"} <Icon name="ExternalLink" size={14} />
+            {COMP.CONTACT_BTN || "Contact Support"} <Icon name="ExternalLink" size={13} />
           </button>
-        </Cards>
+        </div>
       </div>
     );
   };
@@ -1145,7 +1156,7 @@ export default function ClientFlow({ defaultStep }) {
             </div>
 
             <PrimaryButton
-              style={{ minWidth: "220px", padding: "12px 28px" }}
+              style={{ width: "240px", maxWidth: "100%", padding: "12px 24px" }}
               icon={<Icon name="ArrowRight" size={16} />}
               iconPosition="right"
               onClick={() => navigate("/client-dashboard")}

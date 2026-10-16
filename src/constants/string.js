@@ -543,7 +543,8 @@ export const APP_STRINGS = {
         DESC: "Your documents have been received successfully.",
         REVIEW_LABEL: "Estimated Review",
         REVIEW_VALUE: "24-48 Hours",
-        DASHBOARD_BTN: "Go To Dashboard",
+        DASHBOARD_BTN: "Go Back",
+        BACK_BTN: "Go Back",
       },
       UNDER_REVIEW: {
         TITLE: "Business Verification Under Review",
@@ -654,7 +655,8 @@ export const APP_STRINGS = {
         DESC: "Your documents have been received successfully.",
         REVIEW_LABEL: "Estimated Review",
         REVIEW_VALUE: "24-48 Hours",
-        DASHBOARD_BTN: "Go To Dashboard",
+        DASHBOARD_BTN: "Go Back",
+        BACK_BTN: "Go Back",
       },
       UNDER_REVIEW: {
         TITLE: "Verification Under Review",

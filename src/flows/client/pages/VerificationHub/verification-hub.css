@@ -1,0 +1,267 @@
+/* =========================================================
+   VERIFICATION HUB - CLIENT FLOW
+   Matching TechGuild Design System
+   ========================================================= */
+
+.client-verification-workspace {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  gap: 0;
+  padding: 0;
+}
+
+.client-verification-workspace> :first-child {
+  margin-bottom: 14px;
+}
+
+
+.verification-hub-card-panel {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.88) !important;
+  background-color: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 20px !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 10px 30px -5px rgba(16, 60, 164, 0.07) !important;
+  padding: clamp(24px, 4vh, 56px) clamp(20px, 3.5vw, 48px) !important;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  box-sizing: border-box;
+}
+
+.verification-hub-card-panel::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Hero Section */
+.verification-hero {
+  text-align: center;
+  max-width: 580px;
+  margin-bottom: clamp(28px, 4vh, 44px);
+}
+
+.verification-hero-title {
+  font-size: clamp(1.7rem, 2.3vw, 2.2rem);
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.02em;
+}
+
+.verification-hero-subtitle {
+  font-size: clamp(0.92rem, 1.05vw, 1.05rem);
+  color: #64748b;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Two Cards Grid */
+.verification-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(280px, 370px));
+  gap: clamp(16px, 2.2vw, 32px);
+  width: 100%;
+  max-width: 780px;
+  justify-content: center;
+  margin-bottom: clamp(36px, 5.5vh, 60px);
+}
+
+.verification-path-card {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 1.5px solid #e2e8f0 !important;
+  border-radius: 18px !important;
+  padding: clamp(22px, 2.5vw, 32px) !important;
+  box-shadow: 0 4px 18px -2px rgba(16, 60, 164, 0.06) !important;
+  cursor: pointer;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s ease !important;
+  display: flex !important;
+  flex-direction: column !important;
+  text-align: left;
+}
+
+.verification-path-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 14px 30px -4px rgba(16, 60, 164, 0.14) !important;
+  border-color: #93c5fd !important;
+}
+
+.verification-path-card:hover .verification-card-chevron {
+  transform: translateX(4px);
+  color: #103ca4;
+}
+
+.verification-card-icon-box {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background-color: #eff6ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #103ca4;
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+
+.verification-card-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.verification-card-title {
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.verification-card-chevron {
+  color: #94a3b8;
+  transition: transform 0.2s ease, color 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.verification-card-desc {
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Benefits Row */
+.verification-benefits-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(24px, 4.5vw, 64px);
+  margin-bottom: clamp(32px, 4.5vh, 48px);
+  width: 100%;
+  max-width: 720px;
+}
+
+.verification-benefit-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  min-width: 140px;
+}
+
+.verification-benefit-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background-color: #eff6ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #103ca4;
+  margin-bottom: 12px;
+}
+
+.verification-benefit-title {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 5px 0;
+}
+
+.verification-benefit-desc {
+  font-size: 0.83rem;
+  color: #64748b;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Skip Button */
+.verification-skip-btn {
+  background: none;
+  border: none;
+  color: #103ca4;
+  font-size: 0.96rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: opacity 0.2s ease, text-decoration 0.2s ease;
+  text-decoration: none;
+}
+
+.verification-skip-btn:hover {
+  opacity: 0.85;
+  text-decoration: underline;
+}
+
+/* Detail Form Views */
+.verification-detail-container {
+  width: 100%;
+  max-width: 720px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: clamp(24px, 3vw, 40px);
+  box-shadow: 0 4px 18px -2px rgba(16, 60, 164, 0.06);
+}
+
+.verification-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: #103ca4;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  transition: background-color 0.15s ease;
+}
+
+.verification-back-btn:hover {
+  background-color: #eff6ff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .verification-cards-grid {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+  }
+
+  .verification-benefits-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .verification-benefit-item {
+    max-width: 280px;
+  }
+
+  .verification-hub-card-panel {
+    padding: 24px 16px;
+    border-radius: 16px;
+  }
+}

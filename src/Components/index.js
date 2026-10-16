@@ -12,6 +12,7 @@ export { default as Toggle } from "./Toggle/Toggle";
 export { default as SignupCard } from "./SignupCard/SignupCard";
 export { default as Navbar } from "./Navbar/Navbar";
 export { default as Cards, Card } from "./Cards/cards";
+export { BaseCard } from "./Cards/variants";
 export { default as WelcomeBanner } from "./WelcomeBanner/WelcomeBanner";
 export { default as SearchBar } from "./SearchBar/SearchBar";
 export { default as Header } from "./Header/Header";
