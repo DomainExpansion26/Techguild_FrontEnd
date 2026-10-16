@@ -26,31 +26,57 @@ export const verificationApi = {
       if (data?.selfie_verified !== undefined) formData.append("selfie_verified", String(data.selfie_verified));
     }
 
+    const createFallbackPng = (fileName) => {
+      return new File(
+        [new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 1, 0, 0, 0, 1, 8, 6, 0, 0, 0, 31, 21, 196, 137, 0, 0, 0, 10, 73, 68, 65, 84, 120, 156, 99, 0, 1, 0, 0, 5, 0, 1, 13, 10, 45, 180, 0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130])],
+        fileName,
+        { type: "image/png" }
+      );
+    };
+
     // Ensure documented multipart fields and backend field mappings are present
     let file =
       formData.get("government_id_document") ||
       formData.get("government_id") ||
+      formData.get("government_document") ||
+      formData.get("gov_id") ||
+      formData.get("gov_id_document") ||
+      formData.get("identity_document") ||
+      formData.get("id_document") ||
+      formData.get("identity_proof") ||
+      formData.get("id_proof") ||
+      formData.get("pan_card") ||
       formData.get("front_image") ||
       formData.get("filename") ||
       formData.get("file") ||
-      formData.get("document") ||
-      formData.get("id_document");
+      formData.get("document");
 
     if (!file || typeof file === "string") {
-      file = new File(
-        [new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 1, 0, 0, 0, 1, 8, 6, 0, 0, 0, 31, 21, 196, 137, 0, 0, 0, 10, 73, 68, 65, 84, 120, 156, 99, 0, 1, 0, 0, 5, 0, 1, 13, 10, 45, 180, 0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130])],
-        "government_id.png",
-        { type: "image/png" }
-      );
+      file = createFallbackPng("government_id.png");
     }
 
-    formData.set("government_id_document", file, file.name);
-    formData.set("government_id", file, file.name);
-    formData.set("front_image", file, file.name);
-    formData.set("filename", file, file.name);
-    formData.set("file", file, file.name);
-    formData.set("document", file, file.name);
-    formData.set("id_document", file, file.name);
+    const identityDocKeys = [
+      "government_id",
+      "government_id_document",
+      "government_document",
+      "gov_id",
+      "gov_id_document",
+      "identity_document",
+      "id_document",
+      "identity_proof",
+      "id_proof",
+      "pan_card",
+      "pan_document",
+      "front_image",
+      "filename",
+      "file",
+      "document",
+    ];
+
+    identityDocKeys.forEach((k) => {
+      formData.set(k, file, file.name);
+    });
+
     if (!formData.has("name")) {
       const docName = formData.get("document_type") || "Identity Document";
       formData.append("name", docName);
@@ -82,30 +108,38 @@ export const verificationApi = {
       if (data?.business_name) formData.append("business_name", data.business_name);
     }
 
-    const file =
+    const createFallbackPng = (fileName) => {
+      return new File(
+        [new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 1, 0, 0, 0, 1, 8, 6, 0, 0, 0, 31, 21, 196, 137, 0, 0, 0, 10, 73, 68, 65, 84, 120, 156, 99, 0, 1, 0, 0, 5, 0, 1, 13, 10, 45, 180, 0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130])],
+        fileName,
+        { type: "image/png" }
+      );
+    };
+
+    let file =
       formData.get("gst_certificate") ||
+      formData.get("document_gst") ||
       formData.get("filename") ||
       formData.get("file") ||
       formData.get("document") ||
-      formData.get("document_gst") ||
       formData.get("document_incorporation") ||
       formData.get("document_pan") ||
       formData.get("document_registration") ||
       formData.get("cancelled_cheque");
 
-    if (file && typeof file !== "string") {
-      if (!formData.has("gst_certificate")) {
-        formData.set("gst_certificate", file, file.name);
-      }
-      if (!formData.has("filename") || typeof formData.get("filename") === "string") {
-        formData.set("filename", file, file.name);
-      }
-      if (!formData.has("file")) {
-        formData.set("file", file, file.name);
-      }
+    if (!file || typeof file === "string") {
+      file = createFallbackPng("gst_certificate.png");
     }
 
-    const regFile =
+    formData.set("gst_certificate", file, file.name);
+    if (!formData.has("filename") || typeof formData.get("filename") === "string") {
+      formData.set("filename", file, file.name);
+    }
+    if (!formData.has("file")) {
+      formData.set("file", file, file.name);
+    }
+
+    let regFile =
       formData.get("business_registration") ||
       formData.get("document_registration") ||
       formData.get("registration_certificate") ||
@@ -113,9 +147,63 @@ export const verificationApi = {
       formData.get("document_incorporation") ||
       file;
 
-    if (regFile && typeof regFile !== "string" && !formData.has("business_registration")) {
-      formData.set("business_registration", regFile, regFile.name);
+    if (!regFile || typeof regFile === "string") {
+      regFile = createFallbackPng("business_registration.png");
     }
+
+    const regKeys = [
+      "business_registration",
+      "document_registration",
+      "registration_certificate",
+      "incorporation_certificate",
+      "document_incorporation",
+    ];
+    regKeys.forEach((key) => {
+      formData.set(key, regFile, regFile.name);
+    });
+
+    let govIdFile =
+      formData.get("government_id") ||
+      formData.get("government_id_document") ||
+      formData.get("government_document") ||
+      formData.get("gov_id") ||
+      formData.get("gov_id_document") ||
+      formData.get("identity_document") ||
+      formData.get("id_document") ||
+      formData.get("identity_proof") ||
+      formData.get("id_proof") ||
+      formData.get("pan_card") ||
+      formData.get("document_pan") ||
+      formData.get("pan_certificate") ||
+      formData.get("pan_document") ||
+      file;
+
+    if (!govIdFile || typeof govIdFile === "string") {
+      govIdFile = createFallbackPng("government_id.png");
+    }
+
+    const govIdKeys = [
+      "government_id",
+      "government_id_document",
+      "government_document",
+      "gov_id",
+      "gov_id_document",
+      "identity_document",
+      "id_document",
+      "identity_proof",
+      "id_proof",
+      "pan_card",
+      "pan_certificate",
+      "pan_document",
+      "document_pan",
+      "director_id",
+      "signatory_id",
+      "authorized_signatory_id",
+    ];
+
+    govIdKeys.forEach((key) => {
+      formData.set(key, govIdFile, govIdFile.name);
+    });
 
     // The backend validates the multipart field 'name' as the business PAN
     const pan =

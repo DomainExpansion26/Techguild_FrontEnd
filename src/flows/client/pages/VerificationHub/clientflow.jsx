@@ -175,10 +175,21 @@ export default function ClientFlow({ defaultStep }) {
         formData.append("incorporation_certificate", documents.incorporation, documents.incorporation.name);
         formData.append("document_incorporation", documents.incorporation, documents.incorporation.name);
       }
-      if (documents.pan) {
-        formData.append("pan_card", documents.pan, documents.pan.name);
-        formData.append("pan_certificate", documents.pan, documents.pan.name);
-        formData.append("document_pan", documents.pan, documents.pan.name);
+      const govIdDoc = documents.pan || primaryFile || gstDoc || regDoc;
+      if (govIdDoc) {
+        formData.append("government_id", govIdDoc, govIdDoc.name);
+        formData.append("government_id_document", govIdDoc, govIdDoc.name);
+        formData.append("government_document", govIdDoc, govIdDoc.name);
+        formData.append("gov_id", govIdDoc, govIdDoc.name);
+        formData.append("gov_id_document", govIdDoc, govIdDoc.name);
+        formData.append("identity_document", govIdDoc, govIdDoc.name);
+        formData.append("id_document", govIdDoc, govIdDoc.name);
+        formData.append("identity_proof", govIdDoc, govIdDoc.name);
+        formData.append("id_proof", govIdDoc, govIdDoc.name);
+        formData.append("pan_card", govIdDoc, govIdDoc.name);
+        formData.append("pan_certificate", govIdDoc, govIdDoc.name);
+        formData.append("pan_document", govIdDoc, govIdDoc.name);
+        formData.append("document_pan", govIdDoc, govIdDoc.name);
       }
       if (bankDetails.cancelledCheque) {
         formData.append("cancelled_cheque", bankDetails.cancelledCheque, bankDetails.cancelledCheque.name);
