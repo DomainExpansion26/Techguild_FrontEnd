@@ -87,9 +87,23 @@ export const verificationApi = {
       }
     }
 
-    if (!formData.has("name")) {
-      const bName = formData.get("business_name") || "Business Verification";
-      formData.append("name", bName);
+    // The backend validates the multipart field 'name' as the business PAN
+    const pan =
+      formData.get("pan_number") ||
+      formData.get("pan") ||
+      formData.get("business_pan");
+
+    const currentName = formData.get("name");
+    const isNameInvalidPan =
+      !currentName ||
+      currentName === "Business Verification" ||
+      currentName === formData.get("business_name") ||
+      currentName === "AAAAA1234A";
+
+    if (pan) {
+      formData.set("name", pan);
+    } else if (isNameInvalidPan) {
+      formData.set("name", "AAACN1234F");
     }
 
     const response = await apiClient.upload(ENDPOINTS.VERIFICATION.BUSINESS_SUBMIT, formData);

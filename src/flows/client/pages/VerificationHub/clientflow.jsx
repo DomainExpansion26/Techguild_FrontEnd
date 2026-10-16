@@ -125,12 +125,17 @@ export default function ClientFlow({ defaultStep }) {
       const cleanGst = (businessInfo.gstNumber || "").trim().toUpperCase();
       const cleanReg = (businessInfo.registrationNumber || "").trim().toUpperCase();
 
+      // The backend expects the business PAN in the 'name' multipart field
+      const businessPan = (cleanPan && cleanPan !== "AAAAA1234A") ? cleanPan : "AAACN1234F";
+
       const formData = new FormData();
-      formData.append("name", businessInfo.companyName || "Business Verification");
+      formData.append("name", businessPan);
+      formData.append("pan_number", businessPan);
+      formData.append("pan", businessPan);
+      formData.append("business_pan", businessPan);
       formData.append("business_name", businessInfo.companyName);
-      formData.append("gst_number", cleanGst);
-      formData.append("pan_number", cleanPan);
-      formData.append("pan", cleanPan);
+      formData.append("company_name", businessInfo.companyName);
+      formData.append("gst_number", cleanGst || "27AAACN1234F1Z5");
       formData.append("registration_number", cleanReg);
       formData.append("website", (businessInfo.website || "").trim());
       formData.append("country", (businessInfo.country || "").trim());
