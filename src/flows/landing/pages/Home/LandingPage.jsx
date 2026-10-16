@@ -1,3 +1,4 @@
+// Last Changed: 16-10-2026 - eco tiles click+hover select, ranks SS/SSS centered row, escrow all blue, learn-more Coming Soon, nav/footer logo mark, new guild card imgs, FAQ chevron icon, footer copyright
 // Last Changed: 15-10-2026 - icons #2456e6->#103CA4, sidebar 16px + stats icons, footer LinkedIn only, c4 wrapper, encoding fixed (₹ ✓ → ◆ ✦)
 // Flow: only the landing page. Every CTA (Sign In / Sign Up / Explore /
 // Get Started / etc.) shows a "Coming Soon" message on click — no navigation anywhere.
@@ -18,8 +19,9 @@ import cardBrand from "@/assets/landing-Img/Frame 1707482913 copy.png";
 import cardAI from "@/assets/landing-Img/Frame 1707482914 copy.png";
 import cardMobile from "@/assets/landing-Img/Frame 1707482915 copy.png";
 import cardUIUX from "@/assets/landing-Img/Frame 1707482916 copy.png";
-import frontCard from "@/assets/landing-Img/GuildCardFront.png";
-import backCard from "@/assets/landing-Img/GuildCardBack.png";
+import frontCard from "@/assets/landing-Img/GuildCardFrontNew.png";
+import backCard from "@/assets/landing-Img/GuildCardBackNew.png";
+import logoMark from "@/assets/landing-Img/ttttttt 1@2x.png";
 
 const SERVICE_CARDS = [
   { src: cardWeb, title: "Website Development", desc: "Business websites, SaaS platforms, e-commerce, and custom web applications." },
@@ -48,6 +50,8 @@ const RANKS = [
   { r: "B", label: "Rank B", sub: "Top performer" },
   { r: "A", label: "Rank A", sub: "Elite talent" },
   { r: "S", label: "Rank S", sub: "Guild legend" },
+  { r: "SS", label: "Rank SS", sub: "Mythic master" },
+  { r: "SSS", label: "Rank SSS", sub: "Eternal legend" },
 ];
 
 const TRUST_CARDS = [
@@ -103,6 +107,8 @@ function Marquee({ items }) {
 
 export default function LandingPage() {
   const [openFaq, setOpenFaq] = useState(null);
+  const [ecoSelected, setEcoSelected] = useState(null);
+  const [ecoHover, setEcoHover] = useState(null);
   const dispatch = useDispatch();
 
   // All auth / CTA buttons (Sign In, Sign Up, Explore, Get Started, etc.) only
@@ -116,8 +122,9 @@ export default function LandingPage() {
     <div className="tg-landing">
       {/* ============ NAV ============ */}
       <header className="tg-nav-float">
-        <Link to="/home" className="tg-logo">
-          <span className="tg-logo-tech">Tech</span><span className="tg-logo-guild">Guild</span>
+        <Link to="/home" className="tg-logo tg-logo-nav">
+          <img src={logoMark} className="tg-logo-mark" alt="TechGuild logo" />
+          <span><span className="tg-logo-tech">Tech</span><span className="tg-logo-guild nav">Guild</span></span>
         </Link>
         <nav className="tg-nav-links">
           <a href="#home">Home</a>
@@ -223,18 +230,33 @@ export default function LandingPage() {
           <div className="tg-eco-card">
             <div className="tg-eco-grid">
               {[
-                ["Users", "Freelancer", false],
-                ["Users", "Party", false],
-                ["Building2", "Agency", false],
-                ["UserCheck", "Client", false],
-                ["Star", "Quest", true],
-                ["Shield", "Trust Score", false],
-              ].map(([icon, label, on]) => (
-                <div key={label} className={`tg-eco-tile${on ? " on" : ""}`}>
-                  <span className="tg-eco-ico"><Icon name={icon} size={20} color={on ? "#ffffff" : "#103CA4"} /></span>
-                  <strong>{label}</strong>
-                </div>
-              ))}
+                ["Users", "Freelancer"],
+                ["Users", "Party"],
+                ["Building2", "Agency"],
+                ["UserCheck", "Client"],
+                ["Star", "Quest"],
+                ["Shield", "Trust Score"],
+              ].map(([icon, label]) => {
+                const on = ecoSelected === label || ecoHover === label;
+                return (
+                  <div
+                    key={label}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={ecoSelected === label}
+                    onClick={() => setEcoSelected(label)}
+                    onMouseEnter={() => setEcoHover(label)}
+                    onMouseLeave={() => setEcoHover(null)}
+                    onFocus={() => setEcoHover(label)}
+                    onBlur={() => setEcoHover(null)}
+                    onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setEcoSelected(label); } }}
+                    className={`tg-eco-tile${on ? " on" : ""}`}
+                  >
+                    <span className="tg-eco-ico"><Icon name={icon} size={20} color={on ? "#ffffff" : "#103CA4"} /></span>
+                    <strong>{label}</strong>
+                  </div>
+                );
+              })}
             </div>
             <div className="tg-eco-foot"><strong>Connected ecosystem</strong><span><b>A</b><em>✓ 97%</em></span></div>
           </div>
@@ -349,7 +371,7 @@ export default function LandingPage() {
               <p className="tg-eyebrow sm">FEATURE 01</p>
               <h3>Quest Board</h3>
               <p className="tg-muted">Discover verified opportunities with transparent budgets, skills, timelines, client ranks, and Quest types.</p>
-              <Link to="/features" className="tg-learn">Learn more <span aria-hidden="true">→</span></Link>
+              <Link to="/features" onClick={handleComingSoon} className="tg-learn">Learn more <span aria-hidden="true">→</span></Link>
             </div>
             <div className="tg-shot-wrap"><img className="tg-shot" src={questBoard} alt="Quest Board dashboard" loading="lazy" /></div>
           </div>
@@ -360,7 +382,7 @@ export default function LandingPage() {
               <p className="tg-eyebrow sm">FEATURE 02</p>
               <h3>Task Management Dashboard</h3>
               <p className="tg-muted">Track Quests, monitor milestones, manage deadlines, and collaborate seamlessly from one centralized workspace.</p>
-              <Link to="/features" className="tg-learn">Learn more <span aria-hidden="true">→</span></Link>
+              <Link to="/features" onClick={handleComingSoon} className="tg-learn">Learn more <span aria-hidden="true">→</span></Link>
             </div>
           </div>
 
@@ -369,7 +391,7 @@ export default function LandingPage() {
               <p className="tg-eyebrow sm">FEATURE 03</p>
               <h3>Milestone Planner</h3>
               <p className="tg-muted">Build a structured roadmap for your Quest.<br />AI suggests milestones while you stay in control.</p>
-              <Link to="/features" className="tg-learn">Learn more <span aria-hidden="true">→</span></Link>
+              <Link to="/features" onClick={handleComingSoon} className="tg-learn">Learn more <span aria-hidden="true">→</span></Link>
             </div>
             <div className="tg-shot-wrap"><img className="tg-shot" src={milestonePlanner} alt="AI Milestone Planner" loading="lazy" /></div>
           </div>
@@ -490,7 +512,14 @@ export default function LandingPage() {
           <h2>Your reputation is your<br />career</h2>
           <p className="tg-muted">Every successful Quest strengthens your professional reputation.</p>
           <div className="tg-rank-row">
-            {RANKS.map((x) => (
+            {RANKS.slice(0, 7).map((x) => (
+              <div key={x.r} className={`tg-rank-card${x.active ? " active" : ""}`}>
+                <b>{x.r}</b><strong>{x.label}</strong><span>{x.sub}</span>
+              </div>
+            ))}
+          </div>
+          <div className="tg-rank-row tg-rank-row-center">
+            {RANKS.slice(7).map((x) => (
               <div key={x.r} className={`tg-rank-card${x.active ? " active" : ""}`}>
                 <b>{x.r}</b><strong>{x.label}</strong><span>{x.sub}</span>
               </div>
@@ -517,7 +546,7 @@ export default function LandingPage() {
             <div className="tg-escrow-steps">
               {ESCROW_STEPS.map((s, i) => (
                 <div key={s} className="tg-escrow-step">
-                  <b className={i < 4 ? "on" : ""}>{i + 1}</b>
+                  <b className="on">{i + 1}</b>
                   <span>{s}</span>
                 </div>
               ))}
@@ -633,7 +662,7 @@ export default function LandingPage() {
             {FAQS.map((f, i) => (
               <div key={f.q} className={`tg-faq-item${openFaq === i ? " open" : ""}`}>
                 <button type="button" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
-                  {f.q}<span>{openFaq === i ? "Ë„" : "Ë…"}</span>
+                  {f.q}<span className="tg-faq-chev"><Icon name="ChevronDown" size={18} color="#94a3b8" /></span>
                 </button>
                 {openFaq === i && <p>{f.a}</p>}
               </div>
@@ -659,7 +688,7 @@ export default function LandingPage() {
         <div className="tg-wrap">
           <div className="tg-foot-grid">
             <div>
-              <p className="tg-logo"><span className="tg-logo-tech light">Tech</span><span className="tg-logo-guild">Guild</span></p>
+              <p className="tg-logo"><img src={logoMark} className="tg-logo-mark" alt="TechGuild logo" /><span><span className="tg-logo-tech light">Tech</span><span className="tg-logo-guild">Guild</span></span></p>
               <p className="tg-dark-muted sm">The trust-first ecosystem for professional collaboration.</p>
               <div className="tg-social">
                 <a href="#home" aria-label="LinkedIn"><Icon name="Linkedin" size={18} color="#ffffff" /></a>
@@ -678,6 +707,7 @@ export default function LandingPage() {
             </form>
           </div>
           <div className="tg-giant">TECHGUILD</div>
+          <p className="tg-copy">© 2026 TechGuild. All rights reserved.</p>
         </div>
       </footer>
     </div>
