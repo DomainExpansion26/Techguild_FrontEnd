@@ -90,6 +90,18 @@ export const verificationApi = {
       }
     }
 
+    const regFile =
+      formData.get("business_registration") ||
+      formData.get("document_registration") ||
+      formData.get("registration_certificate") ||
+      formData.get("incorporation_certificate") ||
+      formData.get("document_incorporation") ||
+      file;
+
+    if (regFile && typeof regFile !== "string" && !formData.has("business_registration")) {
+      formData.set("business_registration", regFile, regFile.name);
+    }
+
     // The backend validates the multipart field 'name' as the business PAN
     const pan =
       formData.get("pan_number") ||

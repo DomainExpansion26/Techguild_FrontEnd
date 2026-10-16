@@ -159,6 +159,13 @@ export default function ClientFlow({ defaultStep }) {
         formData.append("document_gst", gstDoc, gstDoc.name);
       }
 
+      const regDoc = documents.registration || documents.incorporation || primaryFile;
+      if (regDoc) {
+        formData.append("business_registration", regDoc, regDoc.name);
+        formData.append("registration_certificate", regDoc, regDoc.name);
+        formData.append("document_registration", regDoc, regDoc.name);
+      }
+
       if (primaryFile) {
         formData.append("filename", primaryFile, primaryFile.name);
         formData.append("file", primaryFile, primaryFile.name);
@@ -170,11 +177,8 @@ export default function ClientFlow({ defaultStep }) {
       }
       if (documents.pan) {
         formData.append("pan_card", documents.pan, documents.pan.name);
+        formData.append("pan_certificate", documents.pan, documents.pan.name);
         formData.append("document_pan", documents.pan, documents.pan.name);
-      }
-      if (documents.registration) {
-        formData.append("registration_certificate", documents.registration, documents.registration.name);
-        formData.append("document_registration", documents.registration, documents.registration.name);
       }
       if (bankDetails.cancelledCheque) {
         formData.append("cancelled_cheque", bankDetails.cancelledCheque, bankDetails.cancelledCheque.name);
