@@ -26,9 +26,22 @@ export const verificationApi = {
       if (data?.selfie_verified !== undefined) formData.append("selfie_verified", String(data.selfie_verified));
     }
 
-    // Ensure documented multipart fields 'filename' and 'name' are present
-    const file = formData.get("filename") || formData.get("file") || formData.get("front_image");
+    // Ensure documented multipart fields and backend field mappings are present
+    const file =
+      formData.get("government_id") ||
+      formData.get("front_image") ||
+      formData.get("filename") ||
+      formData.get("file") ||
+      formData.get("document") ||
+      formData.get("id_document");
+
     if (file && typeof file !== "string") {
+      if (!formData.has("government_id")) {
+        formData.set("government_id", file, file.name);
+      }
+      if (!formData.has("front_image")) {
+        formData.set("front_image", file, file.name);
+      }
       if (!formData.has("filename") || typeof formData.get("filename") === "string") {
         formData.set("filename", file, file.name);
       }

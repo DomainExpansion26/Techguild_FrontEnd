@@ -123,14 +123,23 @@ export default function IndividualFlow({ defaultStep }) {
   const handleFinalSubmit = async () => {
     setSubmitting(true);
     setApiError("");
+
+    if (!uploadedDocFile) {
+      setApiError("Government ID document is required. Please upload your ID document in Step 2.");
+      setSubmitting(false);
+      return;
+    }
+
     try {
       const formData = new FormData();
       formData.append("name", selectedDocId || "Identity Document");
       formData.append("document_type", selectedDocId);
-      if (uploadedDocFile) {
-        formData.append("filename", uploadedDocFile, uploadedDocFile.name);
-        formData.append("file", uploadedDocFile, uploadedDocFile.name);
-      }
+      formData.append("government_id", uploadedDocFile, uploadedDocFile.name);
+      formData.append("front_image", uploadedDocFile, uploadedDocFile.name);
+      formData.append("file", uploadedDocFile, uploadedDocFile.name);
+      formData.append("filename", uploadedDocFile, uploadedDocFile.name);
+      formData.append("document", uploadedDocFile, uploadedDocFile.name);
+      formData.append("id_document", uploadedDocFile, uploadedDocFile.name);
       formData.append("selfie_verified", selfieCaptured ? "true" : "false");
       await verificationApi.submitIdentity(formData);
       setCurrentStep("submitted");
