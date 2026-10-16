@@ -205,16 +205,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ============ STATS ============ */}
-      <section className="tg-stats-band">
-        <div className="tg-wrap tg-stats-grid">
-          <div><strong>120K+</strong><span>Verified Professionals</span></div>
-          <div><strong>25K+</strong><span>Trusted Parties</span></div>
-          <div><strong>600K+</strong><span>Completed Quests</span></div>
-          <div><strong>97%</strong><span>Average Trust Score</span></div>
-        </div>
-      </section>
-
       <Marquee items={["SECURE ESCROW", "TRUST-BASED RANKING", "AI COLLABORATION", "TRANSPARENT MILESTONES", "REPUTATION SYSTEM"]} />
 
       {/* ============ ABOUT ============ */}
@@ -609,19 +599,6 @@ export default function LandingPage() {
               </ul>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* ============ COMMUNITY ============ */}
-      <section className="tg-community">
-        <p className="tg-eyebrow blue center">COMMUNITY</p>
-        <h2 className="center">Trusted by professionals worldwide</h2>
-        <div className="tg-stats-light">
-          <div><strong>120K+</strong><span>Verified Professionals</span></div>
-          <div><strong>25K+</strong><span>Trusted Parties</span></div>
-          <div><strong>600K+</strong><span>Completed Quests</span></div>
-          <div><strong>₹120Cr+</strong><span>Protected Payments</span></div>
-          <div><strong>97%</strong><span>Project Success</span></div>
         </div>
       </section>
 
