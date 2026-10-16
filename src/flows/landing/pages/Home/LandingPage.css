@@ -125,13 +125,6 @@ footer.tg-footer .tg-foot-grid .tg-logo > span { display: inline-flex; align-ite
 .tg-chip.c4 p { font-size: 16px; font-weight: 800; margin: 0; line-height: 1; white-space: nowrap; flex-shrink: 0; } .tg-chip.c4 span { display: inline; font-size: 13px; line-height: 1; white-space: nowrap; flex-shrink: 0; }
 .tg-chip.c4 b { width: 38px; height: 38px; border-radius: 50%; background: #103CA4; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex-shrink: 0; line-height: 1; }
 
-/* ---------- stats band ---------- */
-.tg-stats-band { background: #fff; padding: 72px 0; }
-.tg-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-.tg-stats-grid div { background: #fff; border-radius: 22px; padding: 34px 32px; box-shadow: 0 10px 30px rgba(2,6,23,.05); }
-.tg-stats-grid strong { display: block; font-size: 52px; font-weight: 800; letter-spacing: -0.03em; }
-.tg-stats-grid span { color: #7c8aa0; font-size: 15px; }
-
 /* ---------- marquee ---------- */
 .tg-marquee { overflow: hidden; border-top: 1px solid #eef2ff; border-bottom: 1px solid #eef2ff; background: #fff; padding: 20px 0; }
 .tg-mq-track { display: flex; gap: 0; width: max-content; animation: tg-mq 32s linear infinite; }
@@ -335,13 +328,6 @@ footer.tg-footer .tg-foot-grid .tg-logo > span { display: inline-flex; align-ite
 .tg-diff-card.new li { display: flex; align-items: center; gap: 14px; }
 .tg-diff-card.new li::before { content: "✓"; width: 26px; height: 26px; border: 1.5px solid rgba(255,255,255,.9); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
 
-/* ---------- community ---------- */
-.tg-community { background: #e8efff; padding: 100px 0; text-align: center; }
-.tg-community h2 { color: #0b1220; }
-.tg-stats-light { display: flex; justify-content: center; gap: 80px; margin-top: 56px; flex-wrap: wrap; }
-.tg-stats-light strong { display: block; color: #103CA4; font-size: 48px; font-weight: 800; letter-spacing: -0.02em; }
-.tg-stats-light span { color: #64748b; font-size: 13.5px; }
-
 /* ---------- testimonials ---------- */
 .tg-testimonials { padding: 110px 0; }
 .tg-t-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 48px; }
@@ -399,7 +385,6 @@ footer.tg-footer .tg-foot-grid .tg-logo > span { display: inline-flex; align-ite
   .tg-hero-visual { min-height: 0; max-width: 640px; padding: 24px 12px 24px; }
   .tg-chip.c1 { left: 0; } .tg-chip.c2 { right: 0; } .tg-chip.c3 { left: 0; } .tg-chip.c4 { left: auto; right: 0; transform: none; bottom: 2%; }
   .tg-feature-row, .tg-feature-row.reverse { grid-template-columns: 1fr; gap: 36px; margin: 60px 0; }
-  .tg-stats-grid { grid-template-columns: 1fr 1fr; }
   .tg-why-grid, .tg-svc-grid { grid-template-columns: 1fr; }
   .tg-steps { grid-template-columns: repeat(3,1fr); }
   .tg-steps::before { display: none; }
@@ -424,11 +409,9 @@ footer.tg-footer .tg-foot-grid .tg-logo > span { display: inline-flex; align-ite
   .tg-steps { grid-template-columns: 1fr 1fr; }
   .tg-rank-row { grid-template-columns: 1fr 1fr; }
   .tg-rank-row-center .tg-rank-card { flex-basis: calc((100% - 16px) / 2); max-width: calc((100% - 16px) / 2); }
-  .tg-trust-grid, .tg-diff-grid, .tg-cards-row, .tg-foot-grid, .tg-stats-grid, .tg-prin-list { grid-template-columns: 1fr; }
+  .tg-trust-grid, .tg-diff-grid, .tg-cards-row, .tg-foot-grid, .tg-prin-list { grid-template-columns: 1fr; }
   .tg-diff-grid { gap: 24px; }
   .tg-service-card { flex-basis: 260px; min-width: 260px; height: 360px; }
-  .tg-stats-light { gap: 36px; margin-top: 40px; }
-  .tg-stats-light strong { font-size: 36px; }
   .tg-dash-body { grid-template-columns: 1fr; }
   .tg-dash-side { display: none; }
   .tg-chip.c1 { top: 0; } .tg-chip.c2 { top: 60px; } .tg-chip.c3 { bottom: 30%; } .tg-chip.c4 { bottom: 2%; left: auto; right: 0; transform: none; }
