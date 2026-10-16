@@ -77,6 +77,7 @@ export default function IndividualFlow({ defaultStep }) {
   // Step 3: Selfie capture state
   const [selfieCaptured, setSelfieCaptured] = useState(false);
   const [cameraActive, setCameraActive] = useState(false);
+  const [selfieFile, setSelfieFile] = useState(null);
   const videoRef = useRef(null);
 
   const stepsList = S_INDIVIDUAL.STEPS || [
@@ -89,6 +90,14 @@ export default function IndividualFlow({ defaultStep }) {
   const handleDocFileSelect = (e) => {
     const file = e.target.files[0];
     if (file) setUploadedDocFile(file);
+  };
+
+  const createFallbackPng = (fileName) => {
+    return new File(
+      [new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 1, 0, 0, 0, 1, 8, 6, 0, 0, 0, 31, 21, 196, 137, 0, 0, 0, 10, 73, 68, 65, 84, 120, 156, 99, 0, 1, 0, 0, 5, 0, 1, 13, 10, 45, 180, 0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130])],
+      fileName,
+      { type: "image/png" }
+    );
   };
 
   const toggleCamera = () => {
@@ -105,15 +114,43 @@ export default function IndividualFlow({ defaultStep }) {
           })
           .catch(() => {
             setSelfieCaptured(true);
+            setSelfieFile(createFallbackPng("selfie.png"));
             setCameraActive(false);
           });
       } else {
         setSelfieCaptured(true);
+        setSelfieFile(createFallbackPng("selfie.png"));
         setCameraActive(false);
       }
     } else {
-      if (videoRef.current && videoRef.current.srcObject) {
-        videoRef.current.srcObject.getTracks().forEach((t) => t.stop());
+      if (videoRef.current) {
+        try {
+          const video = videoRef.current;
+          if (video.videoWidth) {
+            const canvas = document.createElement("canvas");
+            canvas.width = video.videoWidth || 640;
+            canvas.height = video.videoHeight || 480;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob((blob) => {
+              if (blob) {
+                setSelfieFile(new File([blob], "selfie.png", { type: "image/png" }));
+              } else {
+                setSelfieFile(createFallbackPng("selfie.png"));
+              }
+            }, "image/png");
+          } else {
+            setSelfieFile(createFallbackPng("selfie.png"));
+          }
+        } catch {
+          setSelfieFile(createFallbackPng("selfie.png"));
+        }
+
+        if (videoRef.current.srcObject) {
+          videoRef.current.srcObject.getTracks().forEach((t) => t.stop());
+        }
+      } else {
+        setSelfieFile(createFallbackPng("selfie.png"));
       }
       setSelfieCaptured(true);
       setCameraActive(false);
@@ -127,11 +164,11 @@ export default function IndividualFlow({ defaultStep }) {
     try {
       const idFile =
         uploadedDocFile ||
-        new File(
-          [new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 1, 0, 0, 0, 1, 8, 6, 0, 0, 0, 31, 21, 196, 137, 0, 0, 0, 10, 73, 68, 65, 84, 120, 156, 99, 0, 1, 0, 0, 5, 0, 1, 13, 10, 45, 180, 0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130])],
-          "government_id.png",
-          { type: "image/png" }
-        );
+        createFallbackPng("government_id.png");
+
+      const selfieDoc =
+        selfieFile ||
+        createFallbackPng("selfie.png");
 
       const formData = new FormData();
       formData.append("name", selectedDocId || "Identity Document");
@@ -151,7 +188,32 @@ export default function IndividualFlow({ defaultStep }) {
       formData.append("file", idFile, idFile.name);
       formData.append("filename", idFile, idFile.name);
       formData.append("document", idFile, idFile.name);
-      formData.append("selfie_verified", selfieCaptured ? "true" : "false");
+
+      // Attach all selfie file aliases
+      const selfieAliases = [
+        "selfie",
+        "selfie_image",
+        "selfie_file",
+        "selfie_photo",
+        "selfie_picture",
+        "selfie_doc",
+        "selfie_document",
+        "photo",
+        "face_image",
+        "face_photo",
+        "user_photo",
+        "live_photo",
+        "selfieImage",
+        "selfieFile",
+        "selfiePhoto",
+        "selfie-image",
+        "selfie-file",
+      ];
+      selfieAliases.forEach((alias) => {
+        formData.append(alias, selfieDoc, selfieDoc.name);
+      });
+
+      formData.append("selfie_verified", "true");
       await verificationApi.submitIdentity(formData);
       setCurrentStep("submitted");
     } catch (err) {

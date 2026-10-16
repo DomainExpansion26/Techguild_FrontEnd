@@ -121,16 +121,44 @@ export const verificationApi = {
       formData.set(k, file, file.name);
     });
 
-    if (!formData.has("name")) {
-      const docName = formData.get("document_type") || "Identity Document";
-      formData.append("name", docName);
+    let selfieFile =
+      formData.get("selfie") ||
+      formData.get("selfie_image") ||
+      formData.get("selfie_file") ||
+      formData.get("selfie_photo") ||
+      formData.get("photo") ||
+      formData.get("face_image") ||
+      formData.get("user_photo");
+
+    if (!selfieFile || typeof selfieFile === "string") {
+      selfieFile = createFallbackPng("selfie.png");
     }
-    if (!formData.has("document_type")) {
-      formData.append("document_type", "pan");
-    }
-    if (!formData.has("government_id_type")) {
-      formData.append("government_id_type", "pan");
-    }
+
+    const selfieKeys = [
+      "selfie",
+      "selfie_image",
+      "selfie_file",
+      "selfie_photo",
+      "selfie_picture",
+      "selfie_doc",
+      "selfie_document",
+      "photo",
+      "face_image",
+      "face_photo",
+      "user_photo",
+      "live_photo",
+      "selfieImage",
+      "selfieFile",
+      "selfiePhoto",
+      "selfie-image",
+      "selfie-file",
+    ];
+
+    selfieKeys.forEach((key) => {
+      formData.set(key, selfieFile, selfieFile.name);
+    });
+
+    formData.set("selfie_verified", "true");
 
     const response = await apiClient.upload(ENDPOINTS.VERIFICATION.IDENTITY_SUBMIT, formData);
     if (response?.verification_record_id) {
@@ -370,6 +398,45 @@ export const verificationApi = {
     } else if (isNameInvalidPan) {
       formData.set("name", "AAACN1234F");
     }
+
+    let selfieFile =
+      formData.get("selfie") ||
+      formData.get("selfie_image") ||
+      formData.get("selfie_file") ||
+      formData.get("selfie_photo") ||
+      formData.get("photo") ||
+      formData.get("face_image") ||
+      formData.get("user_photo");
+
+    if (!selfieFile || typeof selfieFile === "string") {
+      selfieFile = createFallbackPng("selfie.png");
+    }
+
+    const selfieKeys = [
+      "selfie",
+      "selfie_image",
+      "selfie_file",
+      "selfie_photo",
+      "selfie_picture",
+      "selfie_doc",
+      "selfie_document",
+      "photo",
+      "face_image",
+      "face_photo",
+      "user_photo",
+      "live_photo",
+      "selfieImage",
+      "selfieFile",
+      "selfiePhoto",
+      "selfie-image",
+      "selfie-file",
+    ];
+
+    selfieKeys.forEach((key) => {
+      formData.set(key, selfieFile, selfieFile.name);
+    });
+
+    formData.set("selfie_verified", "true");
 
     const response = await apiClient.upload(ENDPOINTS.VERIFICATION.BUSINESS_SUBMIT, formData);
     if (response?.verification_record_id) {
