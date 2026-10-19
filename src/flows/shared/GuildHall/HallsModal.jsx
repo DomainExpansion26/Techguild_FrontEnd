@@ -150,7 +150,7 @@ function StatusPill({ status }) {
   );
 }
 
-function ListView({ onExplore }) {
+function ListView({ joinedHalls, onJoin, onExplore }) {
   const [filter, setFilter] = useState(H.TABS[0]);
   const [query, setQuery] = useState("");
   const search = query.trim().toLowerCase();
@@ -177,7 +177,13 @@ function ListView({ onExplore }) {
         <div className="hm-banner-side">
           <AvatarStack items={FEATURED.stack} variant="md" />
           <div className="hm-banner-btns">
-            <SecondaryButton text={H.JOIN} className="hm-btn hm-btn--join" />
+            <SecondaryButton
+              text={joinedHalls.has(FEATURED.id) ? H.JOINED : H.JOIN}
+              icon={joinedHalls.has(FEATURED.id) ? <Icon name="Check" size={14} color="#103ca4" strokeWidth={2.4} /> : null}
+              className={`hm-btn hm-btn--join${joinedHalls.has(FEATURED.id) ? " is-joined" : ""}`}
+              aria-pressed={joinedHalls.has(FEATURED.id)}
+              onClick={() => onJoin(FEATURED.id)}
+            />
             <PrimaryButton
               text={H.EXPLORE}
               className="hm-btn hm-btn--explore"
@@ -244,7 +250,13 @@ function ListView({ onExplore }) {
                 <span className="hm-card-members">{hall.members}</span>
               </span>
               <span className="hm-card-btns">
-                <SecondaryButton text={H.JOIN} className="hm-btn hm-btn--sm-join" />
+                <SecondaryButton
+                  text={joinedHalls.has(hall.id) ? H.JOINED : H.JOIN}
+                  icon={joinedHalls.has(hall.id) ? <Icon name="Check" size={13} color="#103ca4" strokeWidth={2.4} /> : null}
+                  className={`hm-btn hm-btn--sm-join${joinedHalls.has(hall.id) ? " is-joined" : ""}`}
+                  aria-pressed={joinedHalls.has(hall.id)}
+                  onClick={() => onJoin(hall.id)}
+                />
                 <PrimaryButton
                   text={H.EXPLORE}
                   className="hm-btn hm-btn--sm-explore"
@@ -259,7 +271,7 @@ function ListView({ onExplore }) {
   );
 }
 
-function DetailView({ hall, onBack }) {
+function DetailView({ hall, joined, onJoin, onBack }) {
   return (
     <>
       <button type="button" className="hm-back" onClick={onBack}>
@@ -356,7 +368,14 @@ function DetailView({ hall, onBack }) {
           <span className="hm-joinbar-title">{H.OPEN_TITLE}</span>
           <span className="hm-joinbar-desc">{H.OPEN_DESC}</span>
         </span>
-        <PrimaryButton text={H.JOIN_CTA} className="hm-btn hm-btn--ctajoin" />
+        <PrimaryButton
+          text={joined ? H.JOINED : H.JOIN_CTA}
+          icon={joined ? <Icon name="Check" size={15} color="#103ca4" strokeWidth={2.4} /> : null}
+          iconPosition="left"
+          className={`hm-btn hm-btn--ctajoin${joined ? " is-joined" : ""}`}
+          aria-pressed={joined}
+          onClick={() => onJoin(hall.id)}
+        />
       </div>
     </>
   );
@@ -373,6 +392,21 @@ export default function HallsModal({
   const hall =
     HALLS.find((item) => item.id === hallId) ||
     (hallId === FEATURED.id ? FEATURED : HALLS[0]);
+
+  // Local join state (session-only — no halls/membership endpoint exists yet;
+  // swap toggleJoin for an API call + refetch when one does). A Set keyed by
+  // hall id so the list cards, the featured banner and the detail join bar
+  // always agree.
+  const [joinedHalls, setJoinedHalls] = useState(() => new Set());
+
+  const toggleJoin = (id) => {
+    setJoinedHalls((current) => {
+      const next = new Set(current);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
 
   return (
     <Popup
@@ -400,9 +434,14 @@ export default function HallsModal({
         <Icon name="X" size={18} color="#7d8eaa" strokeWidth={1.8} />
       </button>
       {view === "detail" ? (
-        <DetailView hall={hall} onBack={onBack} />
+        <DetailView
+          hall={hall}
+          joined={joinedHalls.has(hall.id)}
+          onJoin={toggleJoin}
+          onBack={onBack}
+        />
       ) : (
-        <ListView onExplore={onExplore} />
+        <ListView joinedHalls={joinedHalls} onJoin={toggleJoin} onExplore={onExplore} />
       )}
     </Popup>
   );
