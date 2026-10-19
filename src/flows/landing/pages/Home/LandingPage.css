@@ -125,13 +125,6 @@ footer.tg-footer .tg-foot-grid .tg-logo > span { display: inline-flex; align-ite
 .tg-chip.c4 p { font-size: 16px; font-weight: 800; margin: 0; line-height: 1; white-space: nowrap; flex-shrink: 0; } .tg-chip.c4 span { display: inline; font-size: 13px; line-height: 1; white-space: nowrap; flex-shrink: 0; }
 .tg-chip.c4 b { width: 38px; height: 38px; border-radius: 50%; background: #103CA4; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex-shrink: 0; line-height: 1; }
 
-/* ---------- stats band ---------- */
-.tg-stats-band { background: #fff; padding: 72px 0; }
-.tg-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-.tg-stats-grid div { background: #fff; border-radius: 22px; padding: 34px 32px; box-shadow: 0 10px 30px rgba(2,6,23,.05); }
-.tg-stats-grid strong { display: block; font-size: 52px; font-weight: 800; letter-spacing: -0.03em; }
-.tg-stats-grid span { color: #7c8aa0; font-size: 15px; }
-
 /* ---------- marquee ---------- */
 .tg-marquee { overflow: hidden; border-top: 1px solid #eef2ff; border-bottom: 1px solid #eef2ff; background: #fff; padding: 20px 0; }
 .tg-mq-track { display: flex; gap: 0; width: max-content; animation: tg-mq 32s linear infinite; }
@@ -208,20 +201,8 @@ footer.tg-footer .tg-foot-grid .tg-logo > span { display: inline-flex; align-ite
 .tg-shot-wrap { position: relative; }
 .tg-shot { position: relative; z-index: 1; width: 100%; display: block; border-radius: 22px; box-shadow: 0 24px 60px rgba(13,30,80,.18); border: 1px solid #e6edff; }
 
-/* ---------- image services rail ---------- */
-.tg-services { padding: 80px 0 110px; }
-.tg-service-marquee { overflow: hidden; max-width: 1200px; margin: 0 auto; padding: 40px 0 14px; -webkit-mask-image: linear-gradient(to right, transparent 0, #000 4%, #000 96%, transparent 100%); mask-image: linear-gradient(to right, transparent 0, #000 4%, #000 96%, transparent 100%); }
-.tg-service-track { display: flex; width: max-content; animation: tg-mq 38s linear infinite; }
-.tg-service-marquee:hover .tg-service-track { animation-play-state: paused; }
-.tg-service-group { display: flex; gap: 28px; padding-right: 28px; }
-.tg-service-card { position: relative; height: 400px; border-radius: 24px; flex: 0 0 360px; min-width: 360px; overflow: hidden; background: #0b1220; }
-.tg-service-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.tg-service-info { position: absolute; left: 0; right: 0; bottom: 0; padding: 26px 26px 24px; background: linear-gradient(transparent, rgba(3,6,18,.82) 45%); color: #fff; }
-.tg-service-info h4 { margin: 0 0 8px; font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
-.tg-service-info p { margin: 0; font-size: 13.5px; line-height: 1.55; color: rgba(255,255,255,.82); }
-.tg-service-info span { display: block; margin-top: 14px; font-size: 22px; }
-
 /* ---------- quest (light, Figma) ---------- */
+.tg-landing > section.tg-features + section.tg-quest { margin-top: 0; }
 .tg-quest { background: #e8efff; padding: 110px 0; color: #0b1220; }
 .tg-quest h2.blue { color: #12379e; }
 .tg-quest-title-sm { font-size: 26px; margin: 0 0 10px; color: #0b1220; font-weight: 700; letter-spacing: -0.01em; }
@@ -335,13 +316,6 @@ footer.tg-footer .tg-foot-grid .tg-logo > span { display: inline-flex; align-ite
 .tg-diff-card.new li { display: flex; align-items: center; gap: 14px; }
 .tg-diff-card.new li::before { content: "✓"; width: 26px; height: 26px; border: 1.5px solid rgba(255,255,255,.9); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
 
-/* ---------- community ---------- */
-.tg-community { background: #e8efff; padding: 100px 0; text-align: center; }
-.tg-community h2 { color: #0b1220; }
-.tg-stats-light { display: flex; justify-content: center; gap: 80px; margin-top: 56px; flex-wrap: wrap; }
-.tg-stats-light strong { display: block; color: #103CA4; font-size: 48px; font-weight: 800; letter-spacing: -0.02em; }
-.tg-stats-light span { color: #64748b; font-size: 13.5px; }
-
 /* ---------- testimonials ---------- */
 .tg-testimonials { padding: 110px 0; }
 .tg-t-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 48px; }
@@ -399,7 +373,6 @@ footer.tg-footer .tg-foot-grid .tg-logo > span { display: inline-flex; align-ite
   .tg-hero-visual { min-height: 0; max-width: 640px; padding: 24px 12px 24px; }
   .tg-chip.c1 { left: 0; } .tg-chip.c2 { right: 0; } .tg-chip.c3 { left: 0; } .tg-chip.c4 { left: auto; right: 0; transform: none; bottom: 2%; }
   .tg-feature-row, .tg-feature-row.reverse { grid-template-columns: 1fr; gap: 36px; margin: 60px 0; }
-  .tg-stats-grid { grid-template-columns: 1fr 1fr; }
   .tg-why-grid, .tg-svc-grid { grid-template-columns: 1fr; }
   .tg-steps { grid-template-columns: repeat(3,1fr); }
   .tg-steps::before { display: none; }
@@ -424,11 +397,8 @@ footer.tg-footer .tg-foot-grid .tg-logo > span { display: inline-flex; align-ite
   .tg-steps { grid-template-columns: 1fr 1fr; }
   .tg-rank-row { grid-template-columns: 1fr 1fr; }
   .tg-rank-row-center .tg-rank-card { flex-basis: calc((100% - 16px) / 2); max-width: calc((100% - 16px) / 2); }
-  .tg-trust-grid, .tg-diff-grid, .tg-cards-row, .tg-foot-grid, .tg-stats-grid, .tg-prin-list { grid-template-columns: 1fr; }
+  .tg-trust-grid, .tg-diff-grid, .tg-cards-row, .tg-foot-grid, .tg-prin-list { grid-template-columns: 1fr; }
   .tg-diff-grid { gap: 24px; }
-  .tg-service-card { flex-basis: 260px; min-width: 260px; height: 360px; }
-  .tg-stats-light { gap: 36px; margin-top: 40px; }
-  .tg-stats-light strong { font-size: 36px; }
   .tg-dash-body { grid-template-columns: 1fr; }
   .tg-dash-side { display: none; }
   .tg-chip.c1 { top: 0; } .tg-chip.c2 { top: 60px; } .tg-chip.c3 { bottom: 30%; } .tg-chip.c4 { bottom: 2%; left: auto; right: 0; transform: none; }
