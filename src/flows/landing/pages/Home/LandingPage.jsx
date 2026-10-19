@@ -637,13 +637,6 @@ export default function LandingPage() {
             <div><strong>Resources</strong><span>Help Center</span><span>Guides</span><span>Community</span><span>FAQ</span></div>
             <div><strong>Legal</strong><span>Privacy</span><span>Terms</span><span>Security</span></div>
           </div>
-          <div className="tg-sub">
-            <div><strong>Stay updated with TechGuild.</strong><p className="tg-dark-muted sm">Get product updates, guides, and Quest highlights.</p></div>
-            <form className="tg-sub-form" onSubmit={(e) => e.preventDefault()}>
-              <input type="email" placeholder="Enter your email" aria-label="Email" />
-              <button type="submit" className="tg-btn-primary">Subscribe</button>
-            </form>
-          </div>
           <div className="tg-giant">TECHGUILD</div>
           <p className="tg-copy">© 2026 TechGuild. All rights reserved.</p>
         </div>
