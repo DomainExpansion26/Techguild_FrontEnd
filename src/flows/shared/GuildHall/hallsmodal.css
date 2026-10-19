@@ -13,6 +13,19 @@
   font-family: "Inter", "SF Pro", Arial, sans-serif;
 }
 
+/* `.popup-card` scrolls on short viewports — keep the bar invisible, scroll
+   behaviour unchanged (same pattern as settings.css). */
+.popup-card.hm-modal {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.popup-card.hm-modal::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 .popup-header.hm-header {
   align-items: flex-start;
   gap: 0;
@@ -925,6 +938,28 @@
 
 .popup-card.hm-modal .hm-btn--ctajoin:hover:not(:disabled) {
   background: #0c3188;
+}
+
+/* ---------- Joined state (tick + "Joined") ---------- */
+/* The join bar CTA swaps its solid blue for a confirmed outline, the small list
+   buttons keep their size and just go blue-tinted. */
+.popup-card.hm-modal .hm-btn.is-joined {
+  gap: 6px;
+  background: #eef3ff;
+  border: 1px solid #103ca4;
+  color: #103ca4;
+  font-weight: 600;
+  box-shadow: none;
+}
+
+.popup-card.hm-modal .hm-btn--ctajoin.is-joined {
+  padding: 13px 27px;
+}
+
+.popup-card.hm-modal .hm-btn.is-joined:hover:not(:disabled) {
+  background: #e2ebff;
+  border-color: #0c3188;
+  color: #0c3188;
 }
 
 /* ---------- Responsive ---------- */
