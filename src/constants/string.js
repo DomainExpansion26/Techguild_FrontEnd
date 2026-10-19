@@ -1021,6 +1021,7 @@ export const APP_STRINGS = {
       INSIDE: "567 inside right now",
       BADGE: "↗ Hall of the week · fastest growing, +38%",
       JOIN: "Join",
+      JOINED: "Joined",
       EXPLORE: "Explore",
       TABS: ["All halls", "Open to all", "By intro", "Your halls"],
       SEARCH: "Search halls...",
