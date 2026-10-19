@@ -353,11 +353,6 @@ footer.tg-footer .tg-foot-grid .tg-logo > span { display: inline-flex; align-ite
 .tg-social { display: flex; gap: 12px; margin-top: 26px; }
 .tg-social a { width: 44px; height: 44px; border-radius: 12px; background: rgba(255,255,255,.07); color: #fff; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
 .tg-social a:hover { background: rgba(255,255,255,.14); color: #fff; }
-.tg-sub { display: flex; justify-content: space-between; align-items: center; gap: 24px; border-top: 1px solid rgba(255,255,255,.1); margin-top: 60px; padding-top: 44px; flex-wrap: wrap; }
-.tg-sub strong { font-size: 17px; }
-.tg-sub-form { display: flex; gap: 12px; }
-.tg-sub-form input { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.16); border-radius: 999px; padding: 14px 24px; color: #fff; min-width: 300px; outline: none; font-size: 14px; }
-.tg-sub-form input::placeholder { color: #5b6474; }
 .tg-giant { font-size: 11.5vw; font-weight: 900; letter-spacing: -0.02em; color: rgba(255,255,255,.07); text-align: center; line-height: 1; margin-top: 50px; user-select: none; }
 .tg-copy { text-align: center; color: #5b6474; font-size: 13.5px; line-height: 1.6; margin: 26px 0 0; }
 
@@ -402,5 +397,4 @@ footer.tg-footer .tg-foot-grid .tg-logo > span { display: inline-flex; align-ite
   .tg-dash-body { grid-template-columns: 1fr; }
   .tg-dash-side { display: none; }
   .tg-chip.c1 { top: 0; } .tg-chip.c2 { top: 60px; } .tg-chip.c3 { bottom: 30%; } .tg-chip.c4 { bottom: 2%; left: auto; right: 0; transform: none; }
-  .tg-sub-form { width: 100%; } .tg-sub-form input { flex: 1; min-width: 0; }
 }
