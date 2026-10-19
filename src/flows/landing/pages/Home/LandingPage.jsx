@@ -14,22 +14,9 @@ import aiTexture from "@/assets/landing-Img/Frame 1707482940.png";
 import questBoard from "@/assets/landing-Img/QuestBoardShot.png";
 import taskMgmt from "@/assets/landing-Img/TaskMgmtShot.png";
 import milestonePlanner from "@/assets/landing-Img/MilestoneShot.png";
-import cardWeb from "@/assets/landing-Img/Frame 1707482912 copy.png";
-import cardBrand from "@/assets/landing-Img/Frame 1707482913 copy.png";
-import cardAI from "@/assets/landing-Img/Frame 1707482914 copy.png";
-import cardMobile from "@/assets/landing-Img/Frame 1707482915 copy.png";
-import cardUIUX from "@/assets/landing-Img/Frame 1707482916 copy.png";
 import frontCard from "@/assets/landing-Img/GuildCardFrontNew.png";
 import backCard from "@/assets/landing-Img/GuildCardBackNew.png";
 import logoMark from "@/assets/landing-Img/ttttttt 1@2x.png";
-
-const SERVICE_CARDS = [
-  { src: cardWeb, title: "Website Development", desc: "Business websites, SaaS platforms, e-commerce, and custom web applications." },
-  { src: cardBrand, title: "Branding & Visual Design", desc: "Brand identity, logos, social creatives, presentations, and marketing assets." },
-  { src: cardAI, title: "AI & Automation", desc: "AI solutions, intelligent workflows, chatbots, and business automation." },
-  { src: cardMobile, title: "Mobile App Development", desc: "Android, iOS, cross-platform apps, and MVP development." },
-  { src: cardUIUX, title: "UI/UX & Product Design", desc: "User research, wireframes, UI design, prototypes, and complete product experiences." },
-];
 
 /* ---------- data ---------- */
 
@@ -384,32 +371,6 @@ export default function LandingPage() {
               <Link to="/features" onClick={handleComingSoon} className="tg-learn">Learn more <span aria-hidden="true">→</span></Link>
             </div>
             <div className="tg-shot-wrap"><img className="tg-shot" src={milestonePlanner} alt="AI Milestone Planner" loading="lazy" /></div>
-          </div>
-        </div>
-      </section>
-
-      {/* ============ IMAGE SERVICES RAIL ============ */}
-      <section className="tg-services">
-        <div className="tg-wrap">
-          <h2>Services Built for Your Next Quest</h2>
-          <p className="tg-muted narrow">From AI and app development to design, cybersecurity, cloud, and digital growth — access the expertise you need to bring your ideas to life.</p>
-        </div>
-        <div className="tg-service-marquee">
-          <div className="tg-service-track">
-            {[0, 1].map((copy) => (
-              <div className="tg-service-group" key={copy} aria-hidden={copy === 1}>
-                {SERVICE_CARDS.map((c, i) => (
-                  <div key={i} className="tg-service-card">
-                    <img src={c.src} alt={copy === 0 ? c.title : ""} loading="lazy" />
-                    <div className="tg-service-info">
-                      <h4>{c.title}</h4>
-                      <p>{c.desc}</p>
-                      <span aria-hidden="true">→</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ))}
           </div>
         </div>
       </section>
