@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { DashboardLayout, PrimaryButton, SecondaryButton } from "@/Components";
 import { useAuth } from "@/context/AuthContext";
 import { showSnackbar } from "@/store";
-import { authApi } from "@/services/api";
+// [Solved 15-10-2026] Removed unused authApi import (lint no-unused-vars).
 import "./SignOutSetting.css";
 
 export default function SignOutSetting() {
@@ -14,10 +14,8 @@ export default function SignOutSetting() {
 
   const handleConfirmSignOut = async () => {
     try {
-      // Optional backend logout notification
-      await authApi.logout().catch(() => {});
+      await logout();
     } finally {
-      logout();
       dispatch(showSnackbar({
         message: "You have been signed out successfully.",
         type: "info",

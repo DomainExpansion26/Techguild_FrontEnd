@@ -3,7 +3,7 @@ name: Deploy TechGuild Frontend to S3
 on:
   push:
     branches:
-      - 
+      - preprod
 
 permissions:
   id-token: write

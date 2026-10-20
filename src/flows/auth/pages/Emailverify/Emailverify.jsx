@@ -1,5 +1,5 @@
 // [TechGuild Update: 30-09-2026] Bg uses existing img2.png (no visual change).
-import { useEffect, useReducer, useRef } from "react";
+import { useCallback, useEffect, useReducer, useRef } from "react";
 import { useNavigate, useSearchParams, useParams, Link } from "react-router-dom";
 import SignupCard from "@/Components/SignupCard/SignupCard";
 import { Lock } from "@/Components/icons";
@@ -49,7 +49,8 @@ export default function EmailVerified() {
   const hasFiredRef = useRef(false);
   const verifyFailedMsg = FORM_ERRORS.AUTH.VERIFY_FAILED || STRINGS.INVALID_TOKEN_ERROR;
 
-  const executeVerify = async (tokenToVerify) => {
+  // [Solved 15-10-2026] Wrapped in useCallback so useEffect deps are exhaustive (fixes missing 'executeVerify' dep warning).
+  const executeVerify = useCallback(async (tokenToVerify) => {
     if (!tokenToVerify) {
       dispatch({ type: "VERIFY_ERROR", error: "Verification token is missing. Please check your link or paste the token below." });
       return;
@@ -78,7 +79,7 @@ export default function EmailVerified() {
         dispatch({ type: "VERIFY_ERROR", error: err?.message || verifyFailedMsg });
       }
     }
-  };
+  }, [verifyFailedMsg]);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -94,7 +95,7 @@ export default function EmailVerified() {
     return () => {
       mountedRef.current = false;
     };
-  }, [token, verifyFailedMsg]);
+  }, [token, executeVerify]);
 
   const steps = [
     {

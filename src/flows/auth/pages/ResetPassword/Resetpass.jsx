@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Lock, Eye, EyeOff, ArrowLeft, Check } from "@/Components/icons";
 import "./resetpass.css";
 import {
@@ -40,8 +40,15 @@ function reducer(state, action) {
 
 export default function ResetPass() {
   const STRINGS = APP_STRINGS.AUTH.RESET_PASSWORD;
+  const { token: routeToken } = useParams();
   const [searchParams] = useSearchParams();
-  const token = (searchParams.get("token") || "").trim();
+  const token = (
+    searchParams.get("token") ||
+    searchParams.get("reset_token") ||
+    searchParams.get("t") ||
+    routeToken ||
+    ""
+  ).trim();
   const hasToken = token.length > 0;
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -116,7 +123,17 @@ export default function ResetPass() {
 
                 {showError && (
                   <div className="reset-error" role="alert">
-                    {showError}
+                    <div>{showError}</div>
+                    {!hasToken && (
+                      <div style={{ marginTop: "6px" }}>
+                        <Link
+                          to="/forgot-password"
+                          style={{ color: "inherit", fontWeight: 600, textDecoration: "underline" }}
+                        >
+                          Request a new reset link
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 )}
 

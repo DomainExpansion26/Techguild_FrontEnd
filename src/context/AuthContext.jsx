@@ -1,10 +1,13 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { ROLES } from "@/permissions/roles";
+import { authApi } from "@/services/api";
 
 const AuthContext = createContext(null);
 
 const STORAGE_KEYS = {
   TOKEN: "techguild_token",
+  REFRESH_TOKEN: "techguild_refresh_token",
+  EXPIRES_AT: "techguild_expires_at",
   USER: "techguild_user",
   ROLE: "techguild_role",
 };
@@ -12,7 +15,7 @@ const STORAGE_KEYS = {
 function loadInitialSession() {
   let user = null;
   let token = null;
-  let role = ROLES.INDIVIDUAL;
+  let role = null;
 
   try {
     const savedUser = localStorage.getItem(STORAGE_KEYS.USER);
@@ -48,6 +51,7 @@ function loadInitialSession() {
   // never resurrects a previous identity.
   if (!token) {
     user = null;
+    role = null;
   }
 
   return { user, token, role };
@@ -60,9 +64,7 @@ export function AuthProvider({ children }) {
   const [role, setRole] = useState(initial.role);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Single persist path per slice; effects are the only writers so state
-  // stays the source of truth (callers never touch localStorage directly,
-  // except Login's remember-me email which is a separate preference key).
+  // Sync state to storage
   useEffect(() => {
     if (user) {
       localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user));
@@ -87,20 +89,52 @@ export function AuthProvider({ children }) {
     }
   }, [token]);
 
-  const login = useCallback((userData, userToken, userRole) => {
-    const activeRole = userRole || userData?.role || ROLES.INDIVIDUAL;
+  // Clean local session state
+  const clearLocalSession = useCallback(() => {
+    setUser(null);
+    setToken(null);
+    setRole(null);
+    localStorage.removeItem(STORAGE_KEYS.USER);
+    localStorage.removeItem(STORAGE_KEYS.TOKEN);
+    localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
+    localStorage.removeItem(STORAGE_KEYS.EXPIRES_AT);
+    localStorage.removeItem(STORAGE_KEYS.ROLE);
+    localStorage.removeItem("techguild_pending_user");
+  }, []);
+
+  // Listen for automatic token refresh failures from apiClient
+  useEffect(() => {
+    const handleAuthExpired = () => {
+      clearLocalSession();
+    };
+
+    window.addEventListener("techguild:auth_expired", handleAuthExpired);
+    return () => window.removeEventListener("techguild:auth_expired", handleAuthExpired);
+  }, [clearLocalSession]);
+
+  const login = useCallback((userData, userToken, userRole, refreshToken, expiresIn) => {
+    const activeRole = userRole !== undefined ? userRole : (userData?.role || null);
     setIsLoading(true);
     try {
       if (userToken) {
         localStorage.setItem(STORAGE_KEYS.TOKEN, userToken);
+      }
+      if (refreshToken) {
+        localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, refreshToken);
+      }
+      if (expiresIn) {
+        const expiresAt = Date.now() + expiresIn * 1000;
+        localStorage.setItem(STORAGE_KEYS.EXPIRES_AT, String(expiresAt));
       }
       if (userData) {
         localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(userData));
       }
       if (activeRole) {
         localStorage.setItem(STORAGE_KEYS.ROLE, activeRole);
+      } else {
+        localStorage.removeItem(STORAGE_KEYS.ROLE);
       }
-      // Batch-adjacent sets: one render pass commits user+token+role together.
+
       setUser(userData);
       setToken(userToken || null);
       setRole(activeRole);
@@ -114,15 +148,15 @@ export function AuthProvider({ children }) {
     setUser((prev) => (prev ? { ...prev, ...updates } : prev));
   }, []);
 
-  const logout = useCallback(() => {
-    setUser(null);
-    setToken(null);
-    setRole(ROLES.INDIVIDUAL);
-    localStorage.removeItem(STORAGE_KEYS.USER);
-    localStorage.removeItem(STORAGE_KEYS.TOKEN);
-    localStorage.removeItem(STORAGE_KEYS.ROLE);
-    localStorage.removeItem("techguild_pending_user");
-  }, []);
+  const logout = useCallback(async () => {
+    const refreshToken = localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN);
+    try {
+      // Call documented POST /auth/logout endpoint sending refresh_token
+      await authApi.logout(refreshToken).catch(() => {});
+    } finally {
+      clearLocalSession();
+    }
+  }, [clearLocalSession]);
 
   const switchRole = useCallback((newRole) => {
     if (Object.values(ROLES).includes(newRole)) {
