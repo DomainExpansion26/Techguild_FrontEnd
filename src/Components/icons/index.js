@@ -77,6 +77,12 @@ import Palette from "../../assets/icons/palette.svg?react";
 import Tag from "../../assets/icons/tag.svg?react";
 import LifeBuoy from "../../assets/icons/life-buoy.svg?react";
 import FolderOpen from "../../assets/icons/folder-open.svg?react";
+import Sparkles from "../../assets/icons/sparkles.svg?react";
+import Fingerprint from "../../assets/icons/fingerprint.svg?react";
+import Crown from "../../assets/icons/crown.svg?react";
+import Flag from "../../assets/icons/flag.svg?react";
+import Gem from "../../assets/icons/gem.svg?react";
+import RefreshCw from "../../assets/icons/refresh-cw.svg?react";
 
 export {
   ArrowLeft,
@@ -159,5 +165,11 @@ export {
   Tag,
   LifeBuoy,
   FolderOpen,
+  Sparkles,
+  Fingerprint,
+  Crown,
+  Flag,
+  Gem,
+  RefreshCw,
 };
 
