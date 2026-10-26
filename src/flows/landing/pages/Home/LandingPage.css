@@ -350,6 +350,11 @@ footer.tg-footer .tg-foot-grid .tg-logo > span { display: inline-flex; align-ite
 .tg-foot-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; gap: 28px; }
 .tg-foot-grid strong { display: block; font-size: 15px; margin-bottom: 22px; }
 .tg-foot-grid span { display: block; font-size: 15px; color: #8b96ac; margin-bottom: 16px; }
+.tg-foot-grid a { display: block; font-size: 15px; color: #8b96ac; margin-bottom: 16px; text-decoration: none; transition: color .2s ease; }
+.tg-foot-grid > div > button { display: block; width: auto; margin-bottom: 16px; padding: 0; border: 0; background: none; color: #8b96ac; font-family: inherit; font-size: 15px; line-height: inherit; text-align: left; cursor: pointer; transition: color .2s ease; }
+.tg-foot-grid > div > a:hover,
+.tg-foot-grid > div > span:hover,
+.tg-foot-grid > div > button:hover { color: #fff; font-weight: 700; }
 .tg-social { display: flex; gap: 12px; margin-top: 26px; }
 .tg-social a { width: 44px; height: 44px; border-radius: 12px; background: rgba(255,255,255,.07); color: #fff; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
 .tg-social a:hover { background: rgba(255,255,255,.14); color: #fff; }
