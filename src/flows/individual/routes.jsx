@@ -11,6 +11,12 @@ const Proposals = lazy(() => import("./pages/Proposals/Proposals"));
 const Messages = lazy(() => import("./pages/Messages/Messages"));
 const ActiveQuests = lazy(() => import("./pages/ActiveQuests/ActiveQuests"));
 const PartyManagement = lazy(() => import("./pages/PartyManagement/PartyManagement"));
+const PartyFormation = lazy(() => import("./pages/PartyFormation/PartyFormation"));
+const CreateParty = lazy(() => import("./pages/CreateParty/CreateParty"));
+const JoinParty = lazy(() => import("./pages/JoinParty/JoinParty"));
+const PartyLead = lazy(() => import("./pages/PartyLead/PartyLead"));
+const PartyExit = lazy(() => import("./pages/PartyExit/PartyExit"));
+const PartyDelete = lazy(() => import("./pages/PartyExit/PartyDelete"));
 const ReputationRank = lazy(() => import("./pages/ReputationRank/ReputationRank"));
 const Earnings = lazy(() => import("./pages/Earnings/Earnings"));
 const Reviews = lazy(() => import("./pages/Reviews/Reviews"));
@@ -35,7 +41,21 @@ export const individualRoutes = (
     <Route path="/active-quests" element={<ActiveQuests />} />
     <Route path="/task-management" element={<ActiveQuests />} />
     <Route path="/party-management" element={<PartyManagement />} />
-    <Route path="/party-formation" element={<PartyManagement />} />
+    <Route path="/party-formation" element={<PartyFormation />} />
+    <Route path="/party-formation/create" element={<CreateParty />} />
+    <Route path="/party-formation/create/:step" element={<CreateParty />} />
+    <Route path="/party-formation/join" element={<JoinParty />} />
+    <Route path="/party-formation/join/:partyId" element={<JoinParty />} />
+    {/* `:step` (not literal request/success) — JoinParty reads it from useParams() */}
+    <Route path="/party-formation/join/:partyId/:step" element={<JoinParty />} />
+    {/* Party Lead dashboard — the "party created" landing page. Separate from
+        /party-management, which stays the legacy multi-team list. */}
+    <Route path="/party-formation/lead" element={<PartyLead />} />
+    {/* Leave / Delete confirmations. PartyExit renders both leave variants —
+        /leave-lead adds the mandatory leadership-transfer section. */}
+    <Route path="/party-formation/leave" element={<PartyExit />} />
+    <Route path="/party-formation/leave-lead" element={<PartyExit />} />
+    <Route path="/party-formation/delete" element={<PartyDelete />} />
     <Route path="/reputation-rank" element={<ReputationRank />} />
     <Route path="/analytics" element={<ReputationRank />} />
     <Route path="/verification-hub" element={<Verification />} />

@@ -1,0 +1,724 @@
+
+/* [TechGuild Update: 13-10-2026] Party Formation page — derived from Figma frame "Party Formation" (1440x1979, node 190:96) */
+
+.pf-page {
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 0 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   Page heading
+   ========================================================================== */
+.pf-page__head {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.pf-page__head-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.pf-page__title {
+  margin: 0;
+  font-size: 36px;
+  line-height: 1.4667; /* 52.8px */
+  font-weight: 700;
+  color: #111827;
+}
+
+.pf-page__subtitle {
+  margin: 10px 0 0;
+  font-size: 18px;
+  line-height: 1.5; /* 27px */
+  font-weight: 400;
+  color: #5e626a;
+}
+
+.pf-page__link {
+  flex-shrink: 0;
+  padding: 11px 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 22.5px;
+  font-weight: 600;
+  color: #103ca4;
+  transition: color 0.2s ease;
+}
+
+.pf-page__link:hover {
+  color: #0c3188;
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   Hero — "You are not part of any party yet."
+   ========================================================================== */
+.pf-hero {
+  position: relative;
+  width: 100%;
+  min-height: 402px;
+  border-radius: 10px;
+  box-shadow: 4px 4px 8px 0px rgba(16, 60, 164, 0.35);
+  /* Figma layers a GRADIENT_LINEAR (#e2ebff -> #739efb @60%) over this photo, but it
+     renders at ~1% difference — the design shows the photo essentially untinted.
+     Verified by pixel-sampling the Figma frame vs. the raw export (both #112a2d)
+     and against a CSS overlay (which computes to #8e9eab, i.e. the washed-out look).
+     So the photo is used clean, with NO scrim. */
+  background-color: #0f2930;
+  overflow: hidden;
+
+  /* Photo is painted on a pseudo-element so it can be zoomed without scaling the
+     heading/buttons that sit on top of it. Bump --pf-hero-zoom to crop tighter. */
+  --pf-hero-zoom: 1.12;
+}
+
+.pf-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--pf-hero-image);
+  background-size: cover;
+  background-position: center;
+  transform: scale(var(--pf-hero-zoom));
+  transform-origin: center center;
+  pointer-events: none;
+}
+
+.pf-hero__body {
+  position: relative;
+  z-index: 1;
+  /* Figma node 190:188 is a COLUMN: the 453px text block sits at the top
+     (padding 48px) and the two 87px action tiles sit 28px below it. */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 48px;
+}
+
+.pf-hero__copy {
+  width: 453px;
+  max-width: 100%;
+  flex-shrink: 0; /* Figma locks this column at 453px */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.pf-hero__heading {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.52; /* 45.6px */
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.pf-hero__desc {
+  width: 100%;
+  margin: 16px 0 0;
+  font-size: 16px;
+  line-height: 1.6; /* 25.6px */
+  font-weight: 400;
+  color: #efeaea;
+}
+
+.pf-hero__tagline {
+  margin: 8px 0 0;
+  font-size: 15px;
+  line-height: 22.5px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Action tiles: same 453px column as the copy, 28px below it (Figma .container-11) */
+.pf-hero__actions {
+  width: 453px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.pf-hero__btn.primary-btn,
+.pf-hero__btn.secondary-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 87px;
+  width: auto;
+  padding: 0 18px;
+  border-radius: 16px;
+  /* Figma's glyphs are 10-12px wide, leaving ~155px for the text column so both
+     descriptions wrap to exactly 2 lines (Figma desc widths: 156px / 154px).
+     A wider lucide icon plus Figma's 20px padding costs a third line, so padding
+     is 18px and gap 10px here — 2px of padding buys the correct line count. */
+  gap: 10px;
+  justify-content: flex-start;
+  flex-direction: row;
+  text-align: left;
+  white-space: normal;
+  box-shadow: none;
+}
+
+.pf-hero__btn .btn-icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.pf-hero__btn-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.pf-hero__btn-title {
+  display: block;
+  font-size: 18px;
+  line-height: 22.5px;
+  font-weight: 700;
+}
+
+.pf-hero__btn-desc {
+  display: block;
+  margin-top: 0; /* Figma: title y=547 h=23 -> desc y=570, i.e. no gap */
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+}
+
+.pf-hero__btn--primary {
+  background: #103ca4;
+  color: #ffffff;
+}
+
+.pf-hero__btn--primary:hover:not(:disabled) {
+  background: #0c3188;
+}
+
+.pf-hero__btn--primary .pf-hero__btn-title {
+  color: #ffffff;
+}
+
+.pf-hero__btn--primary .pf-hero__btn-desc {
+  color: #e0e8ff;
+}
+
+.pf-hero__btn--secondary {
+  background: #ffffff;
+  border: 1.5px solid #a1b9ed;
+  color: #111827;
+}
+
+.pf-hero__btn--secondary:hover:not(:disabled) {
+  background: #f5f8ff;
+  border-color: #103ca4;
+}
+
+.pf-hero__btn--secondary .pf-hero__btn-title {
+  color: #111827;
+}
+
+.pf-hero__btn--secondary .pf-hero__btn-desc {
+  color: #667085;
+}
+
+/* ==========================================================================
+   Shared card shell
+   ========================================================================== */
+.pf-card {
+  width: 100%;
+  margin-top: 28px;
+}
+
+.pf-card__title {
+  margin: 0;
+  font-size: 18px;
+  line-height: 30px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* ==========================================================================
+   Callouts (info banners)
+   ========================================================================== */
+.pf-callout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  margin-top: 20px;
+  padding: 16px 20px;
+  border: 1px solid #bfdbfe;
+  border-radius: 12px;
+  background-color: #e1ebff;
+  box-sizing: border-box;
+}
+
+.pf-callout--muted {
+  border: none;
+  border-radius: 10px;
+  padding: 14px 18px;
+  gap: 10px;
+}
+
+.pf-callout__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.pf-callout__title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 22.5px;
+  font-weight: 600;
+  color: #103ca4;
+}
+
+.pf-callout__title--sm {
+  font-size: 14px;
+  line-height: 19.5px;
+}
+
+.pf-callout__sub {
+  margin: 4px 0 0;
+  font-size: 12px;
+  line-height: 19.5px;
+  font-weight: 400;
+  color: #103ca4;
+}
+
+/* ==========================================================================
+   Rank progression track
+   ========================================================================== */
+.pf-track {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  margin-top: 32px;
+  padding-top: 0;
+}
+
+.pf-track__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.pf-rank-node {
+  width: 56px;
+  height: 56px;
+  border-radius: 28px;
+  border: 2px solid transparent;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.pf-rank-node__letter {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 700;
+}
+
+.pf-track__label {
+  margin: 0;
+  font-size: 13px;
+  line-height: 19.5px;
+  font-weight: 700;
+  color: #111827;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.pf-track__sub {
+  margin: 0;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  color: #667085;
+  text-align: center;
+}
+
+.pf-track__connector {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+}
+
+.pf-track__line {
+  flex: 1 1 0;
+  min-width: 12px;
+  height: 2px;
+  background-color: #bfdbfe;
+}
+
+.pf-track__arrow {
+  font-size: 18px;
+  line-height: 27px;
+  color: #93c5fd;
+  flex-shrink: 0;
+  padding: 0 4px;
+}
+
+/* ==========================================================================
+   Benefits
+   ========================================================================== */
+.pf-section {
+  width: 100%;
+  margin-top: 28px;
+}
+
+.pf-section__title {
+  margin: 0 0 24px;
+  font-size: 24px;
+  line-height: 33px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.pf-benefits {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  /* Figma: 4 x 268px cards + 3 gaps across the 1127px content column -> 18px gap */
+  gap: 18px;
+}
+
+.pf-benefit {
+  margin-top: 0;
+  min-height: 186px;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pf-benefit:hover {
+  transform: translateY(-3px);
+}
+
+.pf-benefit__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.pf-benefit__title {
+  margin: 16px 0 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.pf-benefit__desc {
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.6; /* 20.8px */
+  font-weight: 400;
+  color: #667085;
+}
+
+/* ==========================================================================
+   How it works
+   ========================================================================== */
+.pf-process__row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 32px;
+}
+
+.pf-step {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pf-step__icon {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  margin-bottom: 14px;
+}
+
+.pf-step__icon--purple {
+  background-color: #f3e8ff;
+}
+
+.pf-step__icon--blue {
+  background-color: #dbeafe;
+}
+
+.pf-step__icon--green {
+  background-color: #dcfce7;
+}
+
+.pf-step__icon--orange {
+  background-color: #ffedd4;
+}
+
+.pf-step__badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  border: 2px solid #ffffff;
+  background-color: #103ca4;
+  color: #ffffff;
+  font-size: 11px;
+  line-height: 16.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pf-step__title {
+  margin: 0;
+  padding: 0 8px;
+  font-size: 14px;
+  line-height: 19.5px;
+  font-weight: 700;
+  color: #111827;
+  text-align: center;
+}
+
+.pf-step__desc {
+  margin: 4px 0 0;
+  padding: 0 8px;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  color: #667085;
+  text-align: center;
+}
+
+.pf-process__arrow {
+  display: flex;
+  align-items: center;
+  /* Figma .container-85 carries no horizontal padding — the glyph width alone
+     separates the steps, which keeps each step column at ~154px. */
+  padding: 0;
+  margin-top: 21px; /* vertically centre against the 60px icon bubble */
+  font-size: 20px;
+  line-height: 30px;
+  color: #93c5fd;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   CTA banner
+   ========================================================================== */
+.pf-cta {
+  width: 100%;
+  margin-top: 28px;
+  padding: 40px 48px;
+  border-radius: 10px;
+  background-color: #103ca4;
+  box-shadow: 4px 4px 8px 0px rgba(16, 60, 164, 0.35);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+}
+
+.pf-cta__left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  min-width: 0;
+}
+
+.pf-cta__icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background-color: rgba(255, 255, 255, 0.15);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.pf-cta__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* Figma .container-132 is 480px wide, which forces the description onto 2 lines
+     and gives the banner its 164px height. */
+  width: 480px;
+  max-width: 100%;
+  flex-shrink: 1;
+}
+
+.pf-cta__title {
+  margin: 0;
+  font-size: 24px;
+  line-height: 33px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.pf-cta__desc {
+  margin: 6px 0 0;
+  font-size: 14px;
+  line-height: 22.5px;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.pf-cta__btn.primary-btn {
+  width: auto;
+  height: 52px;
+  flex-shrink: 0;
+  padding: 0 28px;
+  border-radius: 14px;
+  background: #ffffff;
+  color: #103ca4;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.pf-cta__btn.primary-btn:hover:not(:disabled) {
+  background: #e8eeff;
+  color: #0c3188;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 1280px) {
+  .pf-hero__body {
+    padding: 36px;
+  }
+
+  .pf-hero__copy,
+  .pf-hero__actions {
+    width: 100%;
+    max-width: 453px;
+  }
+
+  .pf-benefits {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pf-process__row {
+    flex-wrap: wrap;
+    row-gap: 28px;
+  }
+
+  .pf-step {
+    flex: 0 1 30%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .pf-page {
+    padding: 28px 0 40px;
+  }
+
+  .pf-page__head {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .pf-page__title {
+    font-size: 30px;
+    line-height: 40px;
+  }
+
+  .pf-hero__actions {
+    margin-top: 24px;
+  }
+
+  .pf-card,
+  .pf-cta {
+    padding: 28px;
+  }
+
+  .pf-track {
+    flex-wrap: wrap;
+    row-gap: 24px;
+    justify-content: flex-start;
+  }
+
+  .pf-track__connector {
+    flex: 0 0 40px;
+  }
+
+  .pf-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pf-cta__btn.primary-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .pf-benefits {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pf-benefit {
+    min-height: 0;
+  }
+
+  .pf-hero__actions {
+    flex-direction: column;
+  }
+
+  .pf-hero__btn.primary-btn,
+  .pf-hero__btn.secondary-btn {
+    width: 100%;
+  }
+
+  .pf-step {
+    flex: 0 1 45%;
+  }
+}
