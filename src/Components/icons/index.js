@@ -110,8 +110,11 @@ import SortDesc from "../../assets/icons/sort-desc.svg?react";
 import Banknote from "../../assets/icons/banknote.svg?react";
 import ShoppingBag from "../../assets/icons/shopping-bag.svg?react";
 import ListFilter from "../../assets/icons/list-filter.svg?react";
+import Sparkles from "../../assets/icons/sparkles.svg?react";
+import Fingerprint from "../../assets/icons/fingerprint.svg?react";
+import Crown from "../../assets/icons/crown.svg?react";
+import Flag from "../../assets/icons/flag.svg?react";
 import RefreshCw from "../../assets/icons/refresh-cw.svg?react";
-import Target from "../../assets/icons/target.svg?react";
 
 export {
   ArrowLeft,
@@ -225,6 +228,9 @@ export {
   Banknote,
   ShoppingBag,
   ListFilter,
+  Sparkles,
+  Fingerprint,
+  Crown,
+  Flag,
   RefreshCw,
-  Target,
 };

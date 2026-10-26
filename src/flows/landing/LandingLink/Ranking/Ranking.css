@@ -1,0 +1,458 @@
+.rk-page {
+  height: 100vh;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #ffffff;
+  color: #0b1220;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.rk-page::-webkit-scrollbar {
+  display: none;
+}
+
+.rk-main {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 50px 72px 80px;
+}
+
+.rk-hero {
+  display: grid;
+  grid-template-columns: 1.02fr 1fr;
+  align-items: center;
+  gap: 24px;
+  padding: 46px 56px;
+  background: #f4f8ff;
+  border-radius: 18px;
+}
+
+.rk-hero-copy {
+  max-width: 600px;
+}
+
+.rk-eyebrow {
+  margin: 0 0 16px;
+  color: #0062ff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.rk-hero h1 {
+  margin: 0 0 20px;
+  color: #0b1220;
+  font-size: 44px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.16;
+}
+
+.rk-hero-text {
+  max-width: 560px;
+  margin: 0 0 28px;
+  color: #475569;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.rk-cta {
+  width: auto;
+  height: auto;
+  gap: 10px;
+  padding: 14px 24px;
+  border-radius: 999px;
+  background: #0062ff;
+  font-size: 14px;
+}
+
+.rk-cta:hover:not(:disabled) {
+  background: #0052d6;
+}
+
+.rk-cta:active:not(:disabled) {
+  background: #0052d6;
+}
+
+.rk-hero-art {
+  position: relative;
+  min-height: 390px;
+  padding-top: 44px;
+}
+
+.rk-hint {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 48%;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px 18px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.1);
+  color: #1e293b;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.rk-hint-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #EFF6FF;
+}
+
+.rk-chart {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  margin-top: 8px;
+}
+
+.rk-dashline {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 524px;
+  height: 360px;
+  transform: translateX(-50%);
+}
+
+.rk-cols {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  width: 524px;
+  transform: translateX(-50%);
+}
+
+.rk-col {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rk-crown {
+  display: block;
+  margin-bottom: 2px;
+  line-height: 0;
+}
+
+.rk-hex {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 40px;
+  margin-bottom: 10px;
+  clip-path: polygon(50% 0, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  color: #ffffff;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.rk-hex.f {
+  background: #b45309;
+}
+
+.rk-hex.e {
+  background: #1c2433;
+}
+
+.rk-hex.d {
+  background: #d97706;
+}
+
+.rk-hex.c {
+  background: #0062ff;
+}
+
+.rk-hex.b {
+  background: #9333ea;
+}
+
+.rk-hex.a {
+  background: #e11d48;
+}
+
+.rk-hex.s {
+  background: #1f2937;
+}
+
+.rk-hex.ss {
+  background: #111827;
+}
+
+.rk-hex.sss {
+  width: 44px;
+  height: 46px;
+  background: #0b1220;
+  font-size: 12.5px;
+}
+
+.rk-bar {
+  display: block;
+  width: 44px;
+  background: #EFF6FF;
+  border-radius: 8px 8px 0 0;
+}
+
+.rk-bar.dark {
+  width: 60px;
+  background: #16233f;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.18);
+}
+
+.rk-how {
+  margin-top: 58px;
+}
+
+.rk-how h2,
+.rk-benefits h2 {
+  margin: 0 0 10px;
+  color: #0b1220;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.rk-sub {
+  max-width: 900px;
+  margin: 0;
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.rk-how-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 32px;
+}
+
+.rk-how-card {
+  position: relative;
+  min-height: 240px;
+  padding: 28px 26px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+}
+
+.rk-how-card::after {
+  content: "›";
+  position: absolute;
+  top: 50%;
+  right: -19px;
+  color: #94a3b8;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+.rk-how-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.rk-how-icon.blue {
+  background: #EFF6FF;
+  color: #0062ff;
+}
+
+.rk-how-icon.green {
+  background: #e6f6ee;
+  color: #10b981;
+}
+
+.rk-how-icon.purple {
+  background: #f3e8ff;
+  color: #9333ea;
+}
+
+.rk-how-icon.yellow {
+  background: #fef3c7;
+  color: #f59e0b;
+}
+
+.rk-how-card h3 {
+  margin: 26px 0 10px;
+  color: #0b1220;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+
+.rk-how-card p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.rk-benefits {
+  margin-top: 56px;
+  padding: 36px 32px;
+  background: #f7f8fa;
+  border-radius: 6px;
+}
+
+.rk-benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px;
+  margin-top: 34px;
+}
+
+.rk-benefit-icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: #EFF6FF;
+}
+
+.rk-benefit h3 {
+  margin: 22px 0 8px;
+  color: #0b1220;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+
+.rk-benefit p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+@media (max-width: 1200px) {
+  .rk-main {
+    padding: 44px 48px 70px;
+  }
+
+  .rk-hero {
+    padding: 40px 42px;
+  }
+
+  .rk-hero h1 {
+    font-size: 38px;
+  }
+
+  .rk-how-grid,
+  .rk-benefit-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rk-how-card::after {
+    display: none;
+  }
+}
+
+@media (max-width: 980px) {
+  .rk-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .rk-hero-art {
+    min-height: 390px;
+  }
+
+  .rk-hint {
+    left: 50%;
+  }
+}
+
+@media (max-width: 760px) {
+  .rk-main {
+    padding: 32px 24px 60px;
+  }
+
+  .rk-hero {
+    padding: 30px 24px;
+    border-radius: 16px;
+  }
+
+  .rk-hero h1 {
+    font-size: 33px;
+  }
+
+  .rk-hero-text {
+    font-size: 15px;
+  }
+
+  .rk-hero-art {
+    min-height: 330px;
+    padding-top: 52px;
+  }
+
+  .rk-chart {
+    height: 330px;
+    transform: scale(0.78);
+    transform-origin: bottom center;
+  }
+
+  .rk-dashline {
+    height: 360px;
+  }
+
+  .rk-how h2,
+  .rk-benefits h2 {
+    font-size: 26px;
+  }
+
+  .rk-how-grid,
+  .rk-benefit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rk-how-card {
+    min-height: 0;
+  }
+
+  .rk-benefits {
+    padding: 28px 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .rk-hero h1 {
+    font-size: 28px;
+  }
+
+  .rk-hero h1 br {
+    display: none;
+  }
+
+  .rk-hint {
+    padding: 10px 14px;
+    font-size: 11px;
+  }
+
+  .rk-chart {
+    transform: scale(0.62);
+  }
+}

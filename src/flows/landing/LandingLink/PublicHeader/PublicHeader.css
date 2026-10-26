@@ -1,0 +1,103 @@
+.pub-header {
+  background: #ffffff;
+}
+
+.pub-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 26px 72px;
+}
+
+.pub-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #0b1220;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.pub-logo:hover {
+  color: #0b1220;
+}
+
+.pub-logo-mark {
+  display: block;
+  flex-shrink: 0;
+  width: auto;
+  height: 32px;
+}
+
+.pub-actions {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.pub-login {
+  color: #0b1220;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.pub-login:hover {
+  color: #0062ff;
+}
+
+.pub-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 22px;
+  border-radius: 8px;
+  background: #0062ff;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.pub-cta:hover {
+  background: #1748b8;
+  color: #ffffff;
+}
+
+@media (max-width: 760px) {
+  .pub-header-inner {
+    padding: 20px 24px;
+  }
+
+  .pub-actions {
+    gap: 18px;
+  }
+
+  .pub-logo {
+    font-size: 19px;
+  }
+
+  .pub-logo-mark {
+    height: 28px;
+  }
+}
+
+@media (max-width: 460px) {
+  .pub-header-inner {
+    padding: 16px 18px;
+  }
+
+  .pub-login {
+    display: none;
+  }
+
+  .pub-cta {
+    padding: 10px 16px;
+  }
+}
