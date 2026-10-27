@@ -12,6 +12,11 @@ import { findParty } from "./partyData";
 import { APP_STRINGS } from "@/constants/string";
 import { showSnackbar } from "@/store";
 import { ScrollArea, BackLink } from "@/flows/shared/party/PartyUi";
+import {
+  PARTY_STATUS,
+  getPartyStatus,
+  setPartyStatus,
+} from "@/flows/shared/party/partyStatus";
 import "./joinparty.css";
 
 const { HEADER, VALIDATION } = APP_STRINGS.JOIN_PARTY;
@@ -94,6 +99,9 @@ export default function JoinParty() {
       dispatch(showSnackbar({ message: "Please fix the highlighted fields.", type: "error" }));
       return;
     }
+    // The request is pending → Party Management shows the applicant state
+    // until a party accepts (then the demo flag flips it to the joined view).
+    setPartyStatus(PARTY_STATUS.APPLIED);
     setSubmissionId(makeSubmissionId(party.tag));
     navigate(`/party-formation/join/${party.id}/success`);
   };
@@ -145,7 +153,17 @@ export default function JoinParty() {
               party={party}
               submissionId={submissionId}
               onViewParty={() => navigate(`/party-formation/join/${party.id}`)}
-              onGoToManagement={() => navigate("/party-management")}
+              // "Go to Party Management" lands on the applicant screen while
+              // the request is pending; once accepted (demo: ?accept=1) the
+              // joined-member screen takes over. The lead's own dashboard at
+              // /party-formation/lead is only for party owners.
+              onGoToManagement={() =>
+                navigate(
+                  getPartyStatus() === PARTY_STATUS.MEMBER
+                    ? "/party-formation/member"
+                    : "/party-formation/applied",
+                )
+              }
             />
           </div>
         </ScrollArea>

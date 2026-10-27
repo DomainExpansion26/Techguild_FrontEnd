@@ -98,40 +98,21 @@ export default function ReviewStep({ draft, goToStep }) {
         )}
       </ReviewSection>
 
-      {/* ---------------- 3. Skills & positions ---------------- */}
+      {/* ---------------- 3. Positions (party-level skills were removed with
+              the Figma "step-3" redesign — skills now live on each position) */}
       <ReviewSection
         index={3}
         title={REVIEW.SEC_SKILLS}
         onEdit={() => goToStep("skills")}
       >
-        <div className="cp-review__label">{REVIEW.LABEL_SELECTED_SKILLS} ({draft.skills.length})</div>
-        {draft.skills.length === 0 ? (
+        {draft.positions.length === 0 ? (
           <p className="cp-review__empty">{REVIEW.EMPTY}</p>
         ) : (
-          <>
-            <div className="cp-review__tokens">
-              {draft.skills.map((s) => (
-                <Token key={s}>{s}</Token>
-              ))}
-            </div>
-            {draft.skills.length > 8 && (
-              <button type="button" className="cp-linkbtn cp-linkbtn--left">
-                {REVIEW.VIEW_ALL_SKILLS}
-                <Icon name="ChevronDown" size={ICON_SIZES.SM} color="#103ca4" stroke="#103ca4" />
-              </button>
-            )}
-          </>
-        )}
-
-        {draft.positions.length > 0 && (
-          <>
-            <div className="cp-review__label cp-review__label--spaced">{REVIEW.LABEL_POSITIONS}</div>
-            <div className="cp-review__tokens">
-              {draft.positions.map((p) => (
-                <Token key={p.id}>{p.title}</Token>
-              ))}
-            </div>
-          </>
+          <div className="cp-review__tokens">
+            {draft.positions.map((p) => (
+              <Token key={p.id}>{p.name}</Token>
+            ))}
+          </div>
         )}
       </ReviewSection>
 

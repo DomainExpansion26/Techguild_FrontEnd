@@ -9,13 +9,14 @@
   text-align: center;
 }
 
+/* Figma: the mark row is 148px tall (the 120px disc + glow overflow it, and
+   the confetti dots fly into the copy zone exactly like the frame). */
 .js__mark {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 260px;
-  height: 220px;
+  height: 148px;
 }
 
 .js__confetti {
@@ -80,28 +81,36 @@
    Copy
    ========================================================================== */
 .js__title {
-  margin: 12px 0 0;
-  font-size: 28px;
-  line-height: 36px;
+  margin: 0;
+  font-size: 26px;
+  line-height: 39px;
   font-weight: 700;
-  color: #0f172a;
+  color: #111827;
 }
 
 .js__body {
-  margin: 12px 0 0;
-  font-size: 14px;
-  line-height: 22px;
-  color: #64748b;
+  margin: 12px 0 24px;
+  font-size: 15px;
+  line-height: 26px;
+  color: #6b7280;
+}
+
+/* Figma styles the party-name run semibold inside the otherwise-muted body. */
+.js__body-name {
+  font-weight: 600;
+  color: #111827;
 }
 
 .js__status {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-top: 24px;
-  padding: 14px 24px;
-  border: 1px solid #a7f3c3;
-  border-radius: 12px;
+  gap: 10px;
+  /* the body paragraph owns the visual gap (12px + trailing 24px), so the
+     chip sits flush under it like in the frame */
+  margin-top: 0;
+  padding: 16px 24px;
+  border: 1px solid #bbf7d0;
+  border-radius: 14px;
   background-color: #ecfdf5;
   text-align: left;
 }
@@ -109,15 +118,17 @@
 .js__status-label {
   display: block;
   font-size: 12px;
+  line-height: 17px;
   font-weight: 510;
-  color: #64748b;
+  color: #6b7280;
 }
 
 .js__status-value {
   display: block;
   font-size: 16px;
+  line-height: 26px;
   font-weight: 700;
-  color: #00a63e;
+  color: #16a34a;
 }
 
 /* ==========================================================================
@@ -129,20 +140,21 @@
   justify-content: space-between;
   gap: 16px;
   width: 100%;
-  margin-top: 24px;
-  padding: 16px 20px;
-  border: 1px solid #e2e8f0;
+  margin-top: 19px;
+  padding: 14px 20px;
+  border: 1px solid #e5e7eb;
   border-radius: 12px;
-  background-color: #ffffff;
+  background-color: #fafafa;
   text-align: left;
 }
 
 .js__id-label {
   display: block;
   font-size: 12px;
+  line-height: 17px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: #94a3b8;
+  color: #9ca3af;
 }
 
 .js__id-value {
@@ -150,11 +162,24 @@
   margin-top: 2px;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 15px;
+  line-height: 26px;
   font-weight: 700;
-  color: #0f172a;
+  color: #111827;
 }
 
-.js__copy.secondary-btn,
+.js__copy.secondary-btn {
+  width: auto;
+  height: 36px;
+  flex-shrink: 0;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background-color: #ffffff;
+  font-size: 13px;
+  font-weight: 510;
+  color: #374151;
+}
+
 .js__view.secondary-btn {
   width: auto;
   height: 42px;
@@ -163,9 +188,9 @@
   border-radius: 10px;
   border: 1px solid #e2e8f0;
   background-color: #ffffff;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 510;
-  color: #334155;
+  color: #374151;
 }
 
 /* ==========================================================================
@@ -192,11 +217,11 @@
   align-items: flex-start;
   gap: 12px;
   width: 100%;
-  margin-top: 20px;
-  padding: 16px 20px;
-  border: 1px solid #c7d7fe;
-  border-radius: 12px;
-  background-color: #eef4ff;
+  margin-top: 16px;
+  padding: 18px 24px;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  background-color: #eff6ff;
   text-align: left;
 }
 
@@ -211,7 +236,7 @@
   margin: 4px 0 0;
   font-size: 13px;
   line-height: 20px;
-  color: #103ca4;
+  color: #3b82f6;
 }
 
 @media (max-width: 640px) {

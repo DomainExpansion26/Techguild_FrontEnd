@@ -39,7 +39,7 @@ export const MEMBERS = [
     initials: "PV",
     color: "#ec4899",
     role: "UI Designer",
-    handle: "@priyaverma",
+    handle: "@priyadesign",
     meta: "Accepted 1 hr ago",
   },
 ];
@@ -53,7 +53,7 @@ export const PENDING_INVITES = [
     color: "#7c3aed",
     role: "React Developer",
     handle: "@rahul.dev",
-    meta: "Invited 2 hrs ago",
+    meta: "Invited 3 hrs ago",
   },
 ];
 
@@ -66,9 +66,9 @@ export const JOIN_REQUESTS = [
     color: "#2563eb",
     role: "UI Researcher",
     handle: "@snehaui",
-    skills: ["Figma", "Design", "Wireframing"],
+    skills: ["Figma", "UI Design", "Wireframing"],
     message:
-      "All I'm a UX designer with 3 years of experience. I'd love to contribute to your team's design work.",
+      '"Hi! I\'m a UI/UX designer with 3 years of experience. I\'d love to contribute to your team\'s design work."',
   },
   {
     id: "r2",
@@ -76,9 +76,10 @@ export const JOIN_REQUESTS = [
     initials: "VK",
     color: "#f59e0b",
     role: "Mobile Developer",
-    handle: "@vikram.dev",
+    handle: "@vikram.code",
     skills: ["Flutter", "Dart", "Firebase"],
-    message: "Hey! I'd love to help here. I build beautiful cross-platform apps and would love to join Pixel Masters.",
+    message:
+      '"Hey! Flutter dev here. I build beautiful cross-platform apps and would love to join Pixel Masters."',
   },
 ];
 
@@ -103,7 +104,7 @@ export const ACTIVITY = [
     icon: "Send",
     tone: "amber",
     text: "You invited Rahul Sharma to join Pixel Masters.",
-    time: "4 hrs ago",
+    time: "3 hrs ago",
   },
   {
     id: "a4",
