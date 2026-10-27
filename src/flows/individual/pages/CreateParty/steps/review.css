@@ -1,4 +1,7 @@
 /* [TechGuild Update: 13-10-2026] Create Party wizard — Step 4 "Review & Submit" */
+/* `.cp-why` was moved here from the deleted skills.css — the why-box is no
+   longer part of Step 3 (Figma "step-3" 223:117 has no explainer), but the
+   review step still renders it. */
 
 .cp-review {
   width: 100%;
@@ -234,4 +237,31 @@
   .cp-review__members {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+
+/* ==========================================================================
+   Why box (moved from skills.css — see the note at the top of this file)
+   ========================================================================== */
+.cp-why {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 20px;
+  border: 1px solid #bfdbfe;
+  border-radius: 12px;
+  background-color: #e1ebff;
+}
+
+.cp-why__title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #103ca4;
+}
+
+.cp-why__body {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 20px;
+  color: #103ca4;
 }

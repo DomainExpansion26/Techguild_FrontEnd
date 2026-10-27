@@ -1,5 +1,7 @@
-// [TechGuild Update: 13-10-2026] Create Party wizard — Step 5 "Success" (Figma "Party 5", node 193:3742)
-import React from "react";
+// [TechGuild Update: 14-10-2026] Create Party — Step 5 "Success" (Figma "party
+// created success" 225:28). No verification-waiting phase any more: the card is
+// title + one-line body + submission ID + the two action buttons that route to
+// the Party Management screen (/party-formation/lead).import React from "react";
 import { Cards, PrimaryButton, SecondaryButton } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import { APP_STRINGS } from "@/constants/string";
@@ -88,17 +90,7 @@ export default function SuccessStep({ draft, submissionId, onViewParty, onGoToMa
         <h2 className="cp-success__title">{SUCCESS.TITLE}</h2>
         <p className="cp-success__body">
           {SUCCESS.BODY.replace("{name}", draft.name || "Pixel Masters")}
-          <br />
-          {SUCCESS.BODY_2}
         </p>
-
-        <div className="cp-success__status">
-          <Icon name="Clock" size={ICON_SIZES.XL} color="#00a63e" stroke="#00a63e" />
-          <div>
-            <span className="cp-success__status-label">{SUCCESS.STATUS_LABEL}</span>
-            <span className="cp-success__status-value">{SUCCESS.STATUS_VALUE}</span>
-          </div>
-        </div>
 
         <div className="cp-success__id">
           <div>
@@ -131,14 +123,6 @@ export default function SuccessStep({ draft, submissionId, onViewParty, onGoToMa
           />
         </div>
       </Cards>
-
-      <div className="cp-notice">
-        <Icon name="CircleQuestionMark" size={ICON_SIZES.MD} color="#103ca4" stroke="#103ca4" />
-        <div>
-          <p className="cp-notice__title">{SUCCESS.NOTICE_TITLE}</p>
-          <p className="cp-notice__body">{SUCCESS.NOTICE_BODY}</p>
-        </div>
-      </div>
     </>
   );
 }

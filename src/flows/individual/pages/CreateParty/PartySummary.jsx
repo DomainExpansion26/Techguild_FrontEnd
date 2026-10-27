@@ -59,7 +59,7 @@ export default function PartySummary({ step, draft, leadName = "You (Arjun Mehta
         <dl className="cp-summary__rows">
           <Row label={REVIEW.LABEL_DESCRIPTION} value={draft.description ? draft.description : REVIEW.NOT_SET} />
           <Row label={REVIEW.LABEL_CATEGORY} value={categoryText || REVIEW.NOT_SELECTED} />
-          <Row label={REVIEW.LABEL_SELECTED_SKILLS} value={draft.skills.length ? `${draft.skills.length} skills` : REVIEW.NOT_SELECTED} />
+          <Row label={REVIEW.LABEL_SELECTED_SKILLS} value={draft.positions.length ? `${draft.positions.length} positions` : REVIEW.NOT_SELECTED} />
           <Row
             label={REVIEW.SEC_MEMBERS}
             value={
@@ -137,42 +137,15 @@ export default function PartySummary({ step, draft, leadName = "You (Arjun Mehta
               }
             />
             <Row label="PARTY LEAD" value={leadName} />
-            <Row label="SKILLS" value={`${draft.skills.length} skills`} />
+            {/* Figma "party created success" 225:28 renames this row POSITIONS
+                and shows the bare count (skills are per-position now). */}
+            <Row label="POSITIONS" value={draft.positions.length} />
             <Row label={REVIEW.LABEL_VISIBILITY.toUpperCase()} value={REVIEW.VALUE_PUBLIC} />
             <Row
               label="SUBMITTED ON"
               value={submissionId?.submittedOn || "20 May 2025, 11:30 AM"}
             />
           </dl>
-        </Cards>
-
-        <Cards
-          variant="base"
-          className="cp-summary cp-summary--next"
-          radius="md"
-          bg="rgba(255,255,255,0.6)"
-          border="1px solid #e7edf8"
-          padding="24px"
-        >
-          <h3 className="cp-summary__title">{APP_STRINGS.CREATE_PARTY.SUCCESS.NEXT_TITLE}</h3>
-          <ul className="cp-next-list">
-            {APP_STRINGS.CREATE_PARTY.SUCCESS.NEXT_STEPS.map((s) => (
-              <li key={s.key} className="cp-next-list__item">
-                <span className={`cp-next-list__icon cp-next-list__icon--${s.key}`}>
-                  <Icon
-                    name={s.key === "review" ? "Users" : s.key === "approval" ? "Shield" : "TrendingUp"}
-                    size={ICON_SIZES.MD}
-                    color={s.key === "review" ? "#9810fa" : s.key === "approval" ? "#103ca4" : "#00a63e"}
-                    stroke={s.key === "review" ? "#9810fa" : s.key === "approval" ? "#103ca4" : "#00a63e"}
-                  />
-                </span>
-                <div>
-                  <p className="cp-next-list__title">{s.title}</p>
-                  <p className="cp-next-list__body">{s.body}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
         </Cards>
       </>
     );
@@ -187,9 +160,11 @@ export default function PartySummary({ step, draft, leadName = "You (Arjun Mehta
       current: !metMinimum,
     },
     {
-      label: "Add skills & expertise",
-      done: draft.skills.length > 0,
-      current: metMinimum && draft.skills.length === 0,
+      // Figma step-3 frame (223:117): "Add Positions and Skills". Skills are no
+      // longer a party-level field, so completion is measured by positions.
+      label: "Add Positions and Skills",
+      done: draft.positions.length > 0,
+      current: metMinimum && draft.positions.length === 0,
     },
     { label: "Review and submit", done: step === 4, current: step === 4 },
   ];
@@ -254,7 +229,10 @@ export default function PartySummary({ step, draft, leadName = "You (Arjun Mehta
 
       <dl className="cp-summary__rows cp-summary__rows--labels">
         <Row label="PARTY LEAD" value={leadName} />
-        <Row label="SKILLS" value={draft.skills.length ? `${draft.skills.length} skills` : "Not added yet"} />
+        {/* Figma keeps the party-skills row saying "Not added yet" even with
+            positions present — the wizard no longer collects a party-level
+            skills field, so the row mirrors positions instead. */}
+        <Row label="PARTY SKILLS" value={draft.positions.length ? `${draft.positions.length} positions` : "Not added yet"} />
         <Row label="Status" value={<span className="cp-summary__dot">Draft</span>} />
       </dl>
 

@@ -9,13 +9,38 @@
   box-sizing: border-box;
 }
 
-/* Success screen is a single centred column (Figma "4" has no right rail) */
+/* Success screen is a single centred column. Geometry from Figma
+   "Party 6 join part success" (227:1036): 1127px column, back link 12px below
+   the header chrome, 30px back-link -> heading, 36px/54px heading, 44px
+   heading -> card. The other join steps keep their verified shell spacing. */
 .jp-page--narrow {
-  max-width: 1080px;
+  max-width: 1127px;
+  padding-top: 12px;
+}
+
+.jp-page--narrow .party-back {
+  font-size: 13px;
+  line-height: 20px;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.jp-page--narrow .jp-head {
+  /* flex column does not collapse the shared 8px margin — the frame puts the
+     30px gap fully under the back link */
+  margin-top: 0;
+  margin-bottom: 44px;
+}
+
+/* "Party 6" (227:1036) measures the success header at 36px/54; the other join
+   steps are still 30px, so the bump is scoped to the success branch. */
+.jp-page--narrow .jp-title {
+  font-size: 36px;
+  line-height: 54px;
 }
 
 /* ==========================================================================
-   Back link
+   Back link (shared .party-back lives in partyui.css)
    ========================================================================== */
 
 /* ==========================================================================

@@ -1463,7 +1463,7 @@ export const APP_STRINGS = {
       SUBTITLES: {
         details: "Build your team, invite skilled professionals, and start your journey together.",
         members: "Invite the right people to build a strong, balanced team.",
-        skills: "Show clients what your party is capable of delivering.",
+        skills: "Build your team, invite skilled professionals, and start your journey together.",
         review: "Review all details before submitting your party for verification.",
         success: "Your party has been successfully submitted for verification.",
       },
@@ -1489,7 +1489,6 @@ export const APP_STRINGS = {
       NAME_MAX: 50,
       TAG_MAX: 20,
       DESCRIPTION_MAX: 250,
-      SKILLS_MAX: 15,
       MEMBERS_MIN: 5,
       LOGO_MAX_MB: 2,
       LOGO_RECOMMENDED: "512x512px",
@@ -1552,22 +1551,34 @@ export const APP_STRINGS = {
       COPY_LINK: "Copy Link",
       LINK_COPIED: "Link copied",
     },
-    SKILLS: {
-      CARD_TITLE: "Skills & Expertise",
-      CARD_SUBTITLE: "Select the skills and specializations your party excels in.",
-      ADD_SKILLS_LABEL: "Add Skills",
-      ADD_SKILLS_HINT: "Search and add skills relevant to your party. You can add up to {n} skills.",
-      SEARCH_PLACEHOLDER: "Search skills (e.g., React, UI/UX, Node.js...)",
-      SUGGESTIONS: "Suggestions",
-      VIEW_MORE_SKILLS: "View more skills",
-      POSITIONS_LABEL: "Positions",
-      POSITIONS_HINT: "Choose the roles you need for your party.",
-      ADD_POSITION: "Add a position",
+    // Step 3: positions with per-position required skills (Figma "step-3" 223:117
+    // + "popup" 223:596). The old party-level skill picker is gone — skills now
+    // belong to each position card. Step id stays "skills" so the URL / the
+    // review step's edit link do not change.
+    POSITIONS: {
+      CARD_TITLE: "Add Positions",
+      CARD_SUBTITLE:
+        "Define the roles you need for your party. Add the position and specify the required skills for each role.",
+      REQUIRED_SKILLS: "Required Skills",
+      ADD_ANOTHER: "Add Another Position",
+      ADD_SKILL: "Add Skill",
+      EMPTY_SKILLS: "No skills added yet.",
       REMOVE_POSITION: "Remove position",
-      WHY_TITLE: "Why add skills?",
-      WHY_BODY:
-        "Adding relevant skills helps clients find your party easily and shows your expertise in specific domains.",
-      MAX_REACHED: "You have reached the maximum of {n} skills.",
+      REMOVE_SKILL: "Remove {skill}",
+      POPUP: {
+        TITLE: "Add Position",
+        EDIT_TITLE: "Edit Position",
+        NAME_LABEL: "Position Name *",
+        // Verbatim from Figma — "milestone" is a designer copy-slip ("position"
+        // was meant), preserved until the copy is corrected in the design.
+        NAME_PLACEHOLDER: "Write milestone name here",
+        SKILLS_LABEL: "Add Skills *",
+        SKILLS_PLACEHOLDER: "Write Skill here..",
+        SAVE: "Save Position",
+        CANCEL: "Cancel",
+        NAME_REQUIRED: "Position name is required.",
+        SKILLS_REQUIRED: "Add at least one skill to this position.",
+      },
     },
     REVIEW: {
       CARD_TITLE: "Review Your Party Details",
@@ -1575,7 +1586,7 @@ export const APP_STRINGS = {
       EDIT: "Edit",
       SEC_DETAILS: "Party Details",
       SEC_MEMBERS: "Members",
-      SEC_SKILLS: "Skills & Positions",
+      SEC_SKILLS: "Positions",
       SEC_EXTRA: "Additional Information",
       VIEW_ALL_MEMBERS: "View all member details",
       VIEW_ALL_SKILLS: "View all skills",
@@ -1599,35 +1610,15 @@ export const APP_STRINGS = {
       NEXT_BODY_2: "You will be notified once your party is verified and ready to accept quests.",
       EMPTY: "Nothing to review yet.",
     },
+    // Step 5 (Figma "party created success" 225:28). There is no verification-
+    // waiting phase — the card is title + one line + submission ID + the two
+    // actions, both routing to /party-formation/lead.
     SUCCESS: {
       TITLE: "Party Submitted Successfully!",
-      BODY: 'Your party "{name}" has been submitted for verification.',
-      BODY_2: "Our team will review your details and notify you once approved.",
-      STATUS_LABEL: "Current Status",
-      STATUS_VALUE: "Pending Verification",
+      BODY: 'Your party "{name}" has been submitted.',
       SUBMISSION_ID_LABEL: "Submission ID",
       COPY_ID: "Copy ID",
       COPIED: "Copied",
-      NEXT_TITLE: "What happens next?",
-      NEXT_STEPS: [
-        {
-          key: "review",
-          title: "Verification Review",
-          body: "Our team will review your party details, members, and skills.",
-        },
-        {
-          key: "approval",
-          title: "Approval & Notification",
-          body: "You will be notified once your party is verified and approved.",
-        },
-        {
-          key: "journey",
-          title: "Start Your Journey",
-          body: "Once approved, you can start applying for quests and grow your reputation.",
-        },
-      ],
-      NOTICE_TITLE: "You will receive a notification in-app and via email once your party is verified.",
-      NOTICE_BODY: "You can continue exploring the platform in the meantime.",
     },
     VALIDATION: {
       NAME_REQUIRED: "Party name is required.",
@@ -1635,7 +1626,7 @@ export const APP_STRINGS = {
       DESCRIPTION_REQUIRED: "Short description is required.",
       CATEGORY_REQUIRED: "Select at least one party category.",
       MEMBERS_REQUIRED: "Invite at least {n} members before continuing.",
-      SKILLS_REQUIRED: "Add at least one skill.",
+      POSITIONS_REQUIRED: "Add at least one position.",
     },
   },
 
@@ -1729,6 +1720,132 @@ export const APP_STRINGS = {
       INVITE_CANCELLED: "Invitation to {name} cancelled.",
       REQUEST_ACCEPTED: "{name} added to your party.",
       REQUEST_DECLINED: "Request from {name} declined.",
+    },
+  },
+
+  // Party Management — applicant state (Figma "Party management for Applied
+  // party screen" 230:1216). Shown after the user submits a join request and
+  // until a party responds; there is no active party yet.
+  PARTY_APPLIED: {
+    HEADER: {
+      TITLE: "Party Management",
+      SUBTITLE: "Track your party applications and explore more teams that match your skills.",
+      SEARCH_PLACEHOLDER: "Search projects, clients, or freelancers...",
+    },
+    HERO: {
+      SWITCH: "No active party yet",
+      TITLE: "You have {n} pending applications",
+      BODY: "We'll notify you as soon as a party responds. Meanwhile, you can explore more parties that match your skills.",
+    },
+    APPLICATIONS: {
+      TITLE: "Your Applications",
+      STATUS_REVIEW: "Under Review",
+      STATUS_PENDING: "Pending Response",
+      STATUS_INFO: "More Info Requested",
+      ACTION_VIEW: "View Application",
+      ACTION_RESPOND: "Respond",
+      NOTE: "You'll be notified when a party responds. You can withdraw an application while it's under review.",
+      REMOVE: "Withdraw application for {name}",
+    },
+    EXPLORE: {
+      TITLE: "Explore More Parties",
+      SUB: "Discover teams looking for members for upcoming quests.",
+      VIEW_ALL: "View all parties",
+      VIEW_ALL_ARIA: "View all parties",
+    },
+    TIP: {
+      TEXT: "Tip: Keep your Guild Card updated to improve your chances of being accepted.",
+      CTA: "Go to Guild Card",
+    },
+    MESSAGES: {
+      WITHDRAWN: {
+        title: "Demo only",
+        body: "Withdraw needs the applications API — the row stays for now.",
+      },
+    },
+  },
+
+  // Party Management — member state (Figma "Party management Joined screen"
+  // 230:1663). Shown once a join request has been accepted and the user is a
+  // party member (not the lead — that view lives in PARTY_LEAD).
+  PARTY_MEMBER: {
+    HEADER: {
+      TITLE: "Party Management",
+      SUBTITLE: "You are a member of {party}. Collaborate, complete quests, and grow your rank together.",
+      SEARCH_PLACEHOLDER: "Search projects, clients, or freelancers...",
+      HOW_IT_WORKS: "How Parties Work?",
+    },
+    HERO: {
+      ACTIVE: "Active",
+      ROLE_YOU: "Your Role: {role}",
+      JOINED: "Joined {when}",
+      STATS: {
+        MEMBERS: "Members",
+        QUESTS: "Quests",
+        RATING: "Rating",
+        SUCCESS: "Success",
+      },
+    },
+    TABS: {
+      OVERVIEW: "Overview",
+      QUESTS: "Quests ({n})",
+      MEMBERS: "Members ({n})",
+      ACTIVITY: "Activity",
+    },
+    QUESTS: {
+      TITLE: "Active Quests",
+      NEW: "New Quest",
+      STATUS_PROGRESS: "In Progress",
+      STATUS_STARTED: "Just Started",
+      PROGRESS: "Quest Progress",
+      META: "Client: {client} · Budget: {budget}",
+      DUE: "Due {date}",
+      YOUR_ROLE: "Your role: {role}",
+    },
+    MEMBERS: {
+      TITLE: "Party Members",
+      VIEW_ALL: "View all",
+      ROLE_LEAD: "Full Stack Developer",
+      LEAD_CHIP: "Lead",
+      YOU: "You",
+      ONLINE: "Online",
+      OFFLINE: "Offline",
+      PANEL_ARIA: "Mock online/offline marker in the row end",
+    },
+    ACTIVITY: {
+      TITLE: "Recent Activity",
+    },
+    PROFILE: {
+      TITLE: "Your Party Profile",
+      ROLE: "Role",
+      TRUST_POINTS: "Trust Points",
+      JOINED: "Joined",
+      CURRENT_RANK: "F Rank",
+      IN_PROGRESS: "In progress → E",
+    },
+    RANK_PROGRESS: {
+      TITLE: "Rank Progress",
+      BADGE: "F → E",
+      SUB: "Complete these to reach Rank E",
+    },
+    LEAD: {
+      TITLE: "Party Lead",
+      MESSAGE: "Message Lead",
+    },
+    INFO: {
+      TITLE: "Party Info",
+      VISIBILITY: "Visibility",
+      CHAT: "Chat",
+      AVAILABILITY: "Availability",
+      GUILD_ID: "Guild ID",
+      COPY_ID: "Copy guild ID",
+      COPIED: "Guild ID copied.",
+    },
+    QUICK_ACTIONS: {
+      TITLE: "Quick Actions",
+    },
+    MESSAGES: {
+      CHAT_OPENED: "Party chat opens with Communication once that screen exists.",
     },
   },
 
