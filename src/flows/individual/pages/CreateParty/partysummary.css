@@ -1,12 +1,10 @@
-/* [TechGuild Update: 13-10-2026] Create Party wizard — right-rail "Party Summary" card */
+/* [TechGuild Update: 14-10-2026] Create Party wizard — right-rail "Party Summary"
+   card. The step-5 "What happens next" list was removed with the Figma
+   "party created success" redesign (225:28) — the rail is a single card. */
 
 .cp-summary {
   width: 100%;
   flex-shrink: 0;
-}
-
-.cp-summary--next {
-  /* spacing comes from .cp-layout__rail's flex gap */
 }
 
 .cp-summary__title {
@@ -353,61 +351,6 @@
   font-size: 12px;
   line-height: 17px;
   color: #b45309;
-}
-
-/* ==========================================================================
-   "What happens next" list (step 5)
-   ========================================================================== */
-.cp-next-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin: 16px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.cp-next-list__item {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.cp-next-list__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-}
-
-.cp-next-list__icon--review {
-  background-color: #f3e8ff;
-}
-
-.cp-next-list__icon--approval {
-  background-color: #eef2ff;
-}
-
-.cp-next-list__icon--journey {
-  background-color: #dcfce7;
-}
-
-.cp-next-list__title {
-  margin: 0;
-  font-size: 13px;
-  line-height: 18px;
-  font-weight: 600;
-  color: #111827;
-}
-
-.cp-next-list__body {
-  margin: 2px 0 0;
-  font-size: 12px;
-  line-height: 18px;
-  color: #667085;
 }
 
 /* ==========================================================================

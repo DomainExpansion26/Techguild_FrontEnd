@@ -2,6 +2,7 @@
 // (Figma "Party mngnt create", node 205:704). Lead-only view: the owner accepts /
 // declines join requests, invites members and tracks submission readiness.
 import React, { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { DashboardLayout, Cards, PrimaryButton, SecondaryButton } from "@/Components";
 import Icon from "@/Components/icons/Icon";
@@ -196,11 +197,19 @@ function RequestCard({ request, onAccept, onDecline }) {
 
 export default function PartyLead() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [members, setMembers] = useState(MEMBERS);
   const [invites, setInvites] = useState(PENDING_INVITES);
   const [requests, setRequests] = useState(JOIN_REQUESTS);
   const [tab, setTab] = useState("members");
+
+  // You are the Party Lead, so leaving means the hand-over variant. The other
+  // quick actions have no screens yet and stay inert.
+  const handleQuickAction = {
+    leave: () => navigate("/party-formation/leave-lead"),
+    delete: () => navigate("/party-formation/delete"),
+  };
 
   const confirmedCount = members.length;
   const openSlots = Math.max(0, PARTY.memberLimit - confirmedCount);
@@ -583,7 +592,11 @@ export default function PartyLead() {
                 <ul className="pl-qa">
                   {QUICK_ACTIONS.map((a) => (
                     <li key={a.key}>
-                      <button type="button" className={`pl-qa__btn pl-qa__btn--${a.tone}`}>
+                      <button
+                        type="button"
+                        className={`pl-qa__btn pl-qa__btn--${a.tone}`}
+                        onClick={handleQuickAction[a.key]}
+                      >
                         <Icon name={a.icon} size={ICON_SIZES.SM} color={TONE[a.tone]} stroke={TONE[a.tone]} />
                         <span>{a.label}</span>
                         <Icon name="ChevronRight" size={ICON_SIZES.XS} color="#94a3b8" stroke="#94a3b8" />

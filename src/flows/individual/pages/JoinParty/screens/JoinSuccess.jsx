@@ -1,4 +1,4 @@
-// [TechGuild Update: 13-10-2026] Join Party — Step 4 success (Figma "4", node 197:5476)
+// [TechGuild Update: 14-10-2026] Join Party — Step 4 success (Figma "Party 6", node 227:1036)
 import React from "react";
 import { Cards, PrimaryButton, SecondaryButton } from "@/Components";
 import Icon from "@/Components/icons/Icon";
@@ -45,9 +45,9 @@ export default function JoinSuccess({ party, submissionId, onViewParty, onGoToMa
         variant="base"
         className="js"
         radius="md"
-        bg="rgba(255,255,255,0.6)"
-        border="1px solid #e7edf8"
-        padding="52px 44px"
+        bg="#ffffff"
+        border="1px solid #e5e7eb"
+        padding="40px"
       >
         <div className="js__mark">
           {CONFETTI.map((c, i) => (
@@ -84,13 +84,15 @@ export default function JoinSuccess({ party, submissionId, onViewParty, onGoToMa
 
         <h1 className="js__title">{SUCCESS.TITLE}</h1>
         <p className="js__body">
-          {SUCCESS.BODY.replace("{party}", `"${party.name}"`)}
+          {SUCCESS.BODY.split("{party}")[0]}
+          <strong className="js__body-name">{party.name}</strong>
+          {SUCCESS.BODY.split("{party}")[1]}
           <br />
           {SUCCESS.BODY_2}
         </p>
 
         <div className="js__status">
-          <Icon name="Clock" size={ICON_SIZES.XL} color="#00a63e" stroke="#00a63e" />
+          <Icon name="Clock" size={18} color="#00a63e" stroke="#00a63e" />
           <div>
             <span className="js__status-label">{SUCCESS.STATUS_LABEL}</span>
             <span className="js__status-value">{SUCCESS.STATUS_VALUE}</span>

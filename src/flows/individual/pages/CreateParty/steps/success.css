@@ -100,35 +100,6 @@
 }
 
 /* ==========================================================================
-   Status pill
-   ========================================================================== */
-.cp-success__status {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 24px;
-  padding: 14px 22px;
-  border: 1px solid #bbf7d0;
-  border-radius: 12px;
-  background-color: #f0fdf4;
-  text-align: left;
-}
-
-.cp-success__status-label {
-  display: block;
-  font-size: 12px;
-  font-weight: 500;
-  color: #667085;
-}
-
-.cp-success__status-value {
-  display: block;
-  font-size: 16px;
-  font-weight: 700;
-  color: #00a63e;
-}
-
-/* ==========================================================================
    Submission ID
    ========================================================================== */
 .cp-success__id {
@@ -193,35 +164,6 @@
   border-radius: 12px;
   font-size: 14px;
   font-weight: 600;
-}
-
-/* ==========================================================================
-   Bottom notice
-   ========================================================================== */
-.cp-notice {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  width: 100%;
-  margin-top: 20px;
-  padding: 16px 20px;
-  border: 1px solid #bfdbfe;
-  border-radius: 12px;
-  background-color: #e1ebff;
-}
-
-.cp-notice__title {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 600;
-  color: #103ca4;
-}
-
-.cp-notice__body {
-  margin: 4px 0 0;
-  font-size: 13px;
-  line-height: 20px;
-  color: #103ca4;
 }
 
 @media (max-width: 640px) {

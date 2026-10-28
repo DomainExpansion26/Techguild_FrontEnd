@@ -7,7 +7,7 @@ import Icon from "@/Components/icons/Icon";
 import PartySummary from "./PartySummary";
 import PartyDetailsStep from "./steps/PartyDetailsStep";
 import InviteMembersStep from "./steps/InviteMembersStep";
-import SkillsStep from "./steps/SkillsStep";
+import PositionsStep from "./steps/PositionsStep";
 import ReviewStep from "./steps/ReviewStep";
 import SuccessStep from "./steps/SuccessStep";
 import { APP_STRINGS } from "@/constants/string";
@@ -21,7 +21,7 @@ const { HEADER, STEPS, ACTIONS, LIMITS, VALIDATION } = APP_STRINGS.CREATE_PARTY;
 const PANEL_ICONS = {
   details: "Files",
   members: "Users",
-  skills: "Layers",
+  skills: "Briefcase",
   review: "FileText",
   success: "Shield",
 };
@@ -29,7 +29,7 @@ const PANEL_ICONS = {
 const PANEL_TITLES = {
   details: APP_STRINGS.CREATE_PARTY.DETAILS.CARD_TITLE,
   members: APP_STRINGS.CREATE_PARTY.MEMBERS.CARD_TITLE,
-  skills: APP_STRINGS.CREATE_PARTY.SKILLS.CARD_TITLE,
+  skills: APP_STRINGS.CREATE_PARTY.POSITIONS.CARD_TITLE,
   review: APP_STRINGS.CREATE_PARTY.REVIEW.CARD_TITLE,
   success: "",
 };
@@ -37,7 +37,7 @@ const PANEL_TITLES = {
 const PANEL_SUBS = {
   details: APP_STRINGS.CREATE_PARTY.DETAILS.CARD_SUBTITLE,
   members: APP_STRINGS.CREATE_PARTY.MEMBERS.CARD_SUBTITLE,
-  skills: APP_STRINGS.CREATE_PARTY.SKILLS.CARD_SUBTITLE,
+  skills: APP_STRINGS.CREATE_PARTY.POSITIONS.CARD_SUBTITLE,
   review: APP_STRINGS.CREATE_PARTY.REVIEW.CARD_SUBTITLE,
   success: "",
 };
@@ -60,7 +60,6 @@ const EMPTY_DRAFT = {
   categories: [],
   logo: null,
   invited: [],
-  skills: [],
   positions: [],
 };
 
@@ -122,8 +121,8 @@ export default function CreateParty() {
     if (id === "members" && 1 + draft.invited.length < LIMITS.MEMBERS_MIN) {
       next.members = VALIDATION.MEMBERS_REQUIRED.replace("{n}", LIMITS.MEMBERS_MIN);
     }
-    if (id === "skills" && draft.skills.length === 0) {
-      next.skills = VALIDATION.SKILLS_REQUIRED;
+    if (id === "skills" && draft.positions.length === 0) {
+      next.skills = VALIDATION.POSITIONS_REQUIRED;
     }
     setErrors(next);
     return Object.keys(next).length === 0;
@@ -252,7 +251,7 @@ export default function CreateParty() {
                   {current.id === "members" && (
                     <InviteMembersStep draft={draft} update={update} />
                   )}
-                  {current.id === "skills" && <SkillsStep draft={draft} update={update} />}
+                  {current.id === "skills" && <PositionsStep draft={draft} update={update} />}
                   {current.id === "review" && (
                     <ReviewStep draft={draft} goToStep={goToStep} />
                   )}
@@ -260,8 +259,11 @@ export default function CreateParty() {
                     <SuccessStep
                       draft={draft}
                       submissionId={submissionId || makeSubmissionId(draft.tag)}
-                      onViewParty={() => navigate("/party-management")}
-                      onGoToManagement={handleCancel}
+                      // Both actions land on the Party Management screen — the
+                      // new Figma flow has no verification wait, the lead goes
+                      // straight to managing the freshly created party.
+                      onViewParty={() => navigate("/party-formation/lead")}
+                      onGoToManagement={() => navigate("/party-formation/lead")}
                     />
                   )}
                 </div>

@@ -17,6 +17,8 @@ const JoinParty = lazy(() => import("./pages/JoinParty/JoinParty"));
 const PartyLead = lazy(() => import("./pages/PartyLead/PartyLead"));
 const PartyExit = lazy(() => import("./pages/PartyExit/PartyExit"));
 const PartyDelete = lazy(() => import("./pages/PartyExit/PartyDelete"));
+const AppliedParty = lazy(() => import("./pages/PartyApplied/AppliedParty"));
+const PartyMember = lazy(() => import("./pages/PartyMember/MemberParty"));
 const ReputationRank = lazy(() => import("./pages/ReputationRank/ReputationRank"));
 const Earnings = lazy(() => import("./pages/Earnings/Earnings"));
 const Reviews = lazy(() => import("./pages/Reviews/Reviews"));
@@ -56,6 +58,14 @@ export const individualRoutes = (
     <Route path="/party-formation/leave" element={<PartyExit />} />
     <Route path="/party-formation/leave-lead" element={<PartyExit />} />
     <Route path="/party-formation/delete" element={<PartyDelete />} />
+    {/* Party Management member states — the applicant view (Figma
+        "Party management for Applied party screen" 230:1216) and the
+        joined-member view (Figma "Party management Joined screen" 230:1663).
+        "Go to Party Management" after joining lands on one of these based on
+        the persisted status; create-party owners go to /party-formation/lead.
+        Demo: /party-formation/applied?accept=1 simulates being accepted. */}
+    <Route path="/party-formation/applied" element={<AppliedParty />} />
+    <Route path="/party-formation/member" element={<PartyMember />} />
     <Route path="/reputation-rank" element={<ReputationRank />} />
     <Route path="/analytics" element={<ReputationRank />} />
     <Route path="/verification-hub" element={<Verification />} />
