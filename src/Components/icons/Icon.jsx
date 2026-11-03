@@ -1,9 +1,11 @@
+// 03-11-2026
+// Generic icon renderer that resolves an icon by name from the icon registry.
 import * as Icons from "./index";
 
 function Icon({
   name,
   size = 20,
-  color = "currentColor",
+  color = "#6A717D",
   stroke,
   strokeWidth = 1.75,
   fill = "none",

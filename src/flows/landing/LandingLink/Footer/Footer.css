@@ -1,0 +1,266 @@
+/* 03-11-2026 */
+/* Styles for the site-wide Footer component. */
+.ftr {
+  background: #030304;
+  color: #ffffff;
+  padding: 84px 0 40px;
+}
+
+.ftr-wrap {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 72px;
+}
+
+.ftr-grid {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr 1fr 1fr 1fr;
+  gap: 32px;
+}
+
+.ftr-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.ftr-logo:hover {
+  color: #ffffff;
+}
+
+.ftr-logo img {
+  display: block;
+  height: 30px;
+  width: auto;
+}
+
+.ftr-brand p {
+  max-width: 280px;
+  margin: 0;
+  color: #8b96ac;
+  font-size: 14.5px;
+  line-height: 1.7;
+}
+
+.ftr-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.ftr-col strong {
+  margin-bottom: 4px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.ftr-col a,
+.ftr-col button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #8b96ac;
+  font-family: inherit;
+  font-size: 14.5px;
+  line-height: 1.4;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.ftr-col a:hover,
+.ftr-col button:hover {
+  color: #ffffff;
+}
+
+.ftr-col .ftr-active,
+.ftr-col .ftr-active:hover {
+  color: #0062ff;
+}
+
+.ftr-social {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.ftr-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.ftr-social a:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.ftr-social .ftr-social-linkedin svg path {
+  stroke: #ffffff;
+}
+
+.ftr-newsletter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  margin-top: 64px;
+  padding-top: 44px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ftr-newsletter strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.ftr-newsletter p {
+  margin: 0;
+  color: #8b96ac;
+  font-size: 14px;
+}
+
+.ftr-newsletter form {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 520px;
+}
+
+.ftr-newsletter input {
+  flex: 1;
+  min-width: 0;
+  height: 46px;
+  padding: 0 18px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.ftr-newsletter input::placeholder {
+  color: #7c879b;
+}
+
+.ftr-newsletter input:focus {
+  border-color: rgba(0, 98, 255, 0.7);
+}
+
+.ftr-newsletter button {
+  height: 46px;
+  padding: 0 28px;
+  border: 0;
+  border-radius: 10px;
+  background: #0062ff;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.ftr-newsletter button:hover {
+  background: #0052d6;
+}
+
+.ftr-giant {
+  margin-top: 58px;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.06);
+  font-size: clamp(56px, 12.4vw, 178px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+  text-align: center;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.ftr-copy {
+  margin: 24px 0 0;
+  color: #5b6474;
+  font-size: 13.5px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+@media (max-width: 1100px) {
+  .ftr-wrap {
+    padding: 0 44px;
+  }
+
+  .ftr-grid {
+    grid-template-columns: 1.5fr 1fr 1fr;
+    row-gap: 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  .ftr-wrap {
+    padding: 0 20px;
+  }
+
+  .ftr {
+    padding-top: 60px;
+  }
+
+  .ftr-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 24px;
+  }
+
+  .ftr-brand {
+    grid-column: 1 / -1;
+  }
+
+  .ftr-newsletter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 22px;
+    margin-top: 48px;
+    padding-top: 32px;
+  }
+
+  .ftr-newsletter form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ftr-newsletter input,
+  .ftr-newsletter button {
+    width: 100%;
+  }
+
+  .ftr-giant {
+    margin-top: 44px;
+    font-size: 17vw;
+  }
+}
+
+@media (max-width: 420px) {
+  .ftr-grid {
+    grid-template-columns: 1fr;
+  }
+}

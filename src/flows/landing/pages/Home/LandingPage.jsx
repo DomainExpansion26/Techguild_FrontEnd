@@ -1,12 +1,14 @@
+// 03-11-2026
+// TechGuild public landing page with hero, features, process, escrow, and FAQ sections.
 // Last Changed: 16-10-2026 - eco tiles click+hover select, ranks SS/SSS centered row, escrow all blue, learn-more Coming Soon, nav/footer logo mark, new guild card imgs, FAQ chevron icon, footer copyright
 // Last Changed: 15-10-2026 - icons #2456e6->#103CA4, sidebar 16px + stats icons, footer LinkedIn only, c4 wrapper, encoding fixed (₹ ✓ → ◆ ✦)
-// Flow: only the landing page. Every CTA (Sign In / Sign Up / Explore /
-// Get Started / etc.) shows a "Coming Soon" message on click — no navigation anywhere.
+// Flow: every navigation to another page (Learn more, footer links, Get Started)
+// goes to the Sign In page first. Sign In -> /login, Sign Up -> /signup.
+// After signing in, the user is returned to the page they originally clicked.
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { showSnackbar } from "@/store/slices/snackbarSlice";
 import Icon from "@/Components/icons/Icon";
+import Footer from "@/flows/landing/LandingLink/Footer/Footer";
 import "./LandingPage.css";
 
 import heroBg from "@/assets/landing-Img/Frame 1707482940.png";
@@ -98,14 +100,6 @@ export default function LandingPage() {
   const [openFaq, setOpenFaq] = useState(null);
   const [ecoSelected, setEcoSelected] = useState(null);
   const [ecoHover, setEcoHover] = useState(null);
-  const dispatch = useDispatch();
-
-  // All auth / CTA buttons (Sign In, Sign Up, Explore, Get Started, etc.) only
-  // show a "Coming Soon" message on click — no navigation anywhere.
-  const handleComingSoon = (e) => {
-    if (e) e.preventDefault();
-    dispatch(showSnackbar({ message: "Coming Soon", type: "info" }));
-  };
 
   return (
     <div className="tg-landing">
@@ -121,13 +115,12 @@ export default function LandingPage() {
           <a href="#features">Features</a>
           <a href="#how">How It Works</a>
           <a href="#services">Services</a>
-          <a href="#quests">Quests</a>
+          <Link to="/features/quest-board">Quests</Link>
           <a href="#trust">Trust System</a>
         </nav>
-        {/* Sign In / Sign Up: "Coming Soon" message only, no navigation. */}
         <div className="tg-nav-cta">
-          <Link to="/login" onClick={handleComingSoon} className="tg-signin">Sign In</Link>
-          <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary">Sign Up</Link>
+          <Link to="/login" state={{ from: "/" }} className="tg-signin">Sign In</Link>
+          <Link to="/signup" className="tg-btn-primary">Sign Up</Link>
         </div>
       </header>
 
@@ -144,10 +137,10 @@ export default function LandingPage() {
               trusted ecosystem where professionals collaborate on meaningful projects, build
               reputation, and unlock better opportunities.
             </p>
-            {/* Explore Features navigates to the features section; Get Started: "Coming Soon" message only. */}
+            {/* Explore Features scrolls within the page; Get Started goes to sign up. */}
             <div className="tg-hero-actions">
               <a href="#features" className="tg-btn-white">Explore Features</a>
-              <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary lg">Get Started</Link>
+              <Link to="/signup" className="tg-btn-primary lg">Get Started</Link>
             </div>
           </div>
 
@@ -352,7 +345,7 @@ export default function LandingPage() {
               <p className="tg-eyebrow sm">FEATURE 01</p>
               <h3>Quest Board</h3>
               <p className="tg-muted">Discover verified opportunities with transparent budgets, skills, timelines, client ranks, and Quest types.</p>
-              <Link to="/quest-board" className="tg-learn">Learn more <span aria-hidden="true">→</span></Link>
+              <Link to="/features/quest-board" className="tg-learn">Learn more <span aria-hidden="true">→</span></Link>
             </div>
             <div className="tg-shot-wrap"><img className="tg-shot" src={questBoard} alt="Quest Board dashboard" loading="lazy" /></div>
           </div>
@@ -632,50 +625,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ============ FOOTER ============ */}
-      <footer className="tg-footer">
-        <div className="tg-wrap">
-          <div className="tg-foot-grid">
-            <div>
-              <p className="tg-logo"><img src={logoMark} className="tg-logo-mark" alt="TechGuild logo" /><span><span className="tg-logo-tech light">Tech</span><span className="tg-logo-guild">Guild</span></span></p>
-              <p className="tg-dark-muted sm">The trust-first ecosystem for professional collaboration.</p>
-              <div className="tg-social">
-                <a href="#home" aria-label="LinkedIn"><Icon name="Linkedin" size={18} color="#ffffff" /></a>
-              </div>
-            </div>
-            <div>
-              <strong>Platform</strong>
-              <Link to="/quest-board">Quest Board</Link>
-              <Link to="/party">Parties</Link>
-              <Link to="/trust-points">Trust System</Link>
-              <Link to="/ranking">Rankings</Link>
-              <Link to="/escrow">Escrow</Link>
-            </div>
-            <div>
-              <strong>Company</strong>
-              <a href="#about">About</a>
-              <button type="button" onClick={handleComingSoon}>Careers</button>
-              <Link to="/contact">Contact</Link>
-              <button type="button" onClick={handleComingSoon}>Partners</button>
-            </div>
-            <div>
-              <strong>Resources</strong>
-              <button type="button" onClick={handleComingSoon}>Help Center</button>
-              <a href="#how">Guides</a>
-              <button type="button" onClick={handleComingSoon}>Community</button>
-              <a href="#faq">FAQ</a>
-            </div>
-            <div>
-              <strong>Legal</strong>
-              <button type="button" onClick={handleComingSoon}>Privacy</button>
-              <button type="button" onClick={handleComingSoon}>Terms</button>
-              <a href="#trust">Security</a>
-            </div>
-          </div>
-          <div className="tg-giant">TECHGUILD</div>
-          <p className="tg-copy">© 2026 TechGuild. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

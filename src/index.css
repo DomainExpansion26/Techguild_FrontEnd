@@ -1,3 +1,5 @@
+/* 03-11-2026 */
+/* Global base styles and shared layout resets for the application. */
 * {
   margin: 0;
   padding: 0;
@@ -69,4 +71,8 @@ body {
 .auth-primary-btn:active {
   background: #092363 !important;
   transform: none !important;
+}
+
+svg [stroke="#6A717D"] {
+  stroke: currentColor;
 }

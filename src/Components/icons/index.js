@@ -1,3 +1,5 @@
+// 03-11-2026
+// Central registry mapping icon names to their SVG React components.
 import LayoutDashboard from "../../assets/icons/layout-dashboard.svg?react";
 import User2 from "../../assets/icons/user2.svg?react";
 import User from "../../assets/icons/user.svg?react";
@@ -14,6 +16,7 @@ import CircleQuestionMark from "../../assets/icons/circle-question-mark.svg?reac
 import Focus from "../../assets/icons/focus.svg?react";
 import CircleCheck from "../../assets/icons/circle-check.svg?react";
 import Mail from "../../assets/icons/mail.svg?react";
+import Phone from "../../assets/icons/phone.svg?react";
 import Check from "../../assets/icons/check.svg?react";
 import ArrowLeft from "../../assets/icons/arrow-left.svg?react";
 import ArrowRight from "../../assets/icons/arrow-right.svg?react";
@@ -78,11 +81,21 @@ import Tag from "../../assets/icons/tag.svg?react";
 import LifeBuoy from "../../assets/icons/life-buoy.svg?react";
 import FolderOpen from "../../assets/icons/folder-open.svg?react";
 import Sparkles from "../../assets/icons/sparkles.svg?react";
+import MousePointer from "../../assets/icons/mouse-pointer.svg?react";
+import Code from "../../assets/icons/code.svg?react";
+import Server from "../../assets/icons/server.svg?react";
+import Megaphone from "../../assets/icons/megaphone.svg?react";
+import Smile from "../../assets/icons/smile.svg?react";
+import ChartNoAxesColumn from "../../assets/icons/chart-no-axes-column.svg?react";
 import Fingerprint from "../../assets/icons/fingerprint.svg?react";
 import Crown from "../../assets/icons/crown.svg?react";
 import Flag from "../../assets/icons/flag.svg?react";
 import Gem from "../../assets/icons/gem.svg?react";
 import RefreshCw from "../../assets/icons/refresh-cw.svg?react";
+import GraduationCap from "../../assets/icons/graduation-cap.svg?react";
+import Compass from "../../assets/icons/compass.svg?react";
+import Handshake from "../../assets/icons/handshake.svg?react";
+import ShieldCheck from "../../assets/icons/shield-check.svg?react";
 
 export {
   ArrowLeft,
@@ -108,6 +121,7 @@ export {
   Focus,
   CircleCheck,
   Mail,
+  Phone,
   Check,
   Clock9,
   Lightbulb,
@@ -166,10 +180,20 @@ export {
   LifeBuoy,
   FolderOpen,
   Sparkles,
+  MousePointer,
+  Code,
+  Server,
+  Megaphone,
+  Smile,
+  ChartNoAxesColumn,
   Fingerprint,
   Crown,
   Flag,
   Gem,
   RefreshCw,
+  GraduationCap,
+  Compass,
+  Handshake,
+  ShieldCheck,
 };
 

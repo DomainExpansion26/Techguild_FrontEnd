@@ -1,3 +1,5 @@
+/* 03-11-2026 */
+/* Styles for the Ranking feature page. */
 .rk-page {
   height: 100vh;
   min-height: 100vh;
@@ -77,144 +79,16 @@
 }
 
 .rk-hero-art {
-  position: relative;
-  min-height: 390px;
-  padding-top: 44px;
-}
-
-.rk-hint {
-  position: absolute;
-  z-index: 3;
-  top: 0;
-  left: 48%;
   display: flex;
   align-items: center;
-  gap: 11px;
-  padding: 12px 18px;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.1);
-  color: #1e293b;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.4;
-  transform: translateX(-50%);
-  white-space: nowrap;
+  justify-content: center;
 }
 
-.rk-hint-icon {
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: #EFF6FF;
-}
-
-.rk-chart {
-  position: relative;
+.rk-hero-img {
+  display: block;
   width: 100%;
-  height: 360px;
-  margin-top: 8px;
-}
-
-.rk-dashline {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 524px;
-  height: 360px;
-  transform: translateX(-50%);
-}
-
-.rk-cols {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  display: flex;
-  align-items: flex-end;
-  gap: 14px;
-  width: 524px;
-  transform: translateX(-50%);
-}
-
-.rk-col {
-  display: flex;
-  flex: 0 0 auto;
-  flex-direction: column;
-  align-items: center;
-}
-
-.rk-crown {
-  display: block;
-  margin-bottom: 2px;
-  line-height: 0;
-}
-
-.rk-hex {
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 40px;
-  margin-bottom: 10px;
-  clip-path: polygon(50% 0, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
-  color: #ffffff;
-  font-size: 11.5px;
-  font-weight: 800;
-  letter-spacing: 0.01em;
-}
-
-.rk-hex.f {
-  background: #b45309;
-}
-
-.rk-hex.e {
-  background: #1c2433;
-}
-
-.rk-hex.d {
-  background: #d97706;
-}
-
-.rk-hex.c {
-  background: #0062ff;
-}
-
-.rk-hex.b {
-  background: #9333ea;
-}
-
-.rk-hex.a {
-  background: #e11d48;
-}
-
-.rk-hex.s {
-  background: #1f2937;
-}
-
-.rk-hex.ss {
-  background: #111827;
-}
-
-.rk-hex.sss {
-  width: 44px;
-  height: 46px;
-  background: #0b1220;
-  font-size: 12.5px;
-}
-
-.rk-bar {
-  display: block;
-  width: 44px;
-  background: #EFF6FF;
-  border-radius: 8px 8px 0 0;
-}
-
-.rk-bar.dark {
-  width: 60px;
-  background: #16233f;
-  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.18);
+  max-width: 640px;
+  height: auto;
 }
 
 .rk-how {
@@ -376,14 +250,6 @@
   .rk-hero {
     grid-template-columns: 1fr;
   }
-
-  .rk-hero-art {
-    min-height: 390px;
-  }
-
-  .rk-hint {
-    left: 50%;
-  }
 }
 
 @media (max-width: 760px) {
@@ -402,21 +268,6 @@
 
   .rk-hero-text {
     font-size: 15px;
-  }
-
-  .rk-hero-art {
-    min-height: 330px;
-    padding-top: 52px;
-  }
-
-  .rk-chart {
-    height: 330px;
-    transform: scale(0.78);
-    transform-origin: bottom center;
-  }
-
-  .rk-dashline {
-    height: 360px;
   }
 
   .rk-how h2,
@@ -445,14 +296,5 @@
 
   .rk-hero h1 br {
     display: none;
-  }
-
-  .rk-hint {
-    padding: 10px 14px;
-    font-size: 11px;
-  }
-
-  .rk-chart {
-    transform: scale(0.62);
   }
 }
