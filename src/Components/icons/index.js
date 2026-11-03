@@ -113,7 +113,6 @@ import ShoppingBag from "../../assets/icons/shopping-bag.svg?react";
 import ListFilter from "../../assets/icons/list-filter.svg?react";
 import Sparkles from "../../assets/icons/sparkles.svg?react";
 import MousePointer from "../../assets/icons/mouse-pointer.svg?react";
-import Code from "../../assets/icons/code.svg?react";
 import Server from "../../assets/icons/server.svg?react";
 import Megaphone from "../../assets/icons/megaphone.svg?react";
 import Smile from "../../assets/icons/smile.svg?react";
@@ -124,8 +123,6 @@ import Flag from "../../assets/icons/flag.svg?react";
 import RefreshCw from "../../assets/icons/refresh-cw.svg?react";
 import GraduationCap from "../../assets/icons/graduation-cap.svg?react";
 import Compass from "../../assets/icons/compass.svg?react";
-import Handshake from "../../assets/icons/handshake.svg?react";
-import ShieldCheck from "../../assets/icons/shield-check.svg?react";
 
 export {
   ArrowLeft,
@@ -242,7 +239,6 @@ export {
   ListFilter,
   Sparkles,
   MousePointer,
-  Code,
   Server,
   Megaphone,
   Smile,
@@ -253,6 +249,4 @@ export {
   RefreshCw,
   GraduationCap,
   Compass,
-  Handshake,
-  ShieldCheck,
 };
