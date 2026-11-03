@@ -1,4 +1,7 @@
+// 03-11-2026
+// Trust Points feature page explaining how users earn points and unlock ranks.
 import PublicHeader from "@/flows/landing/LandingLink/PublicHeader/PublicHeader";
+import Footer from "@/flows/landing/LandingLink/Footer/Footer";
 import Icon from "@/Components/icons/Icon";
 import "./TrustPoints.css";
 
@@ -149,6 +152,8 @@ export default function TrustPoints() {
           </p>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }

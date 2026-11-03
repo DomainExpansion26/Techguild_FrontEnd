@@ -1,3 +1,5 @@
+// 03-11-2026
+// Organization verification page for business identity and representative checks.
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import DashboardShell from "@/flows/landing/LandingLink/DashboardShell/DashboardShell";
@@ -146,7 +148,7 @@ export default function VerifyOrganization() {
             client.
           </p>
           <div className="vp-actions">
-            <Link to="/get-verified" className="dash-btn dash-btn-primary">
+            <Link to="/login" state={{ from: "/get-verified" }} className="dash-btn dash-btn-primary">
               Start Verification
               <span aria-hidden="true">→</span>
             </Link>
@@ -246,7 +248,7 @@ export default function VerifyOrganization() {
       <section className="vp-cta">
         <h2>Ready to Build Trust?</h2>
         <p>Verify your organization and strengthen your TechGuild client profile.</p>
-        <Link to="/get-verified" className="dash-btn dash-btn-primary dash-btn-lg">
+        <Link to="/login" state={{ from: "/get-verified" }} className="dash-btn dash-btn-primary dash-btn-lg">
           Start Verification
           <span aria-hidden="true">→</span>
         </Link>

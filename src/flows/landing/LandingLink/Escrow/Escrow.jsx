@@ -1,4 +1,7 @@
+// 03-11-2026
+// Escrow feature page explaining secure, milestone-based payments.
 import PublicHeader from "@/flows/landing/LandingLink/PublicHeader/PublicHeader";
+import Footer from "@/flows/landing/LandingLink/Footer/Footer";
 import PrimaryButton from "@/Components/Button/Primarybutton";
 import Icon from "@/Components/icons/Icon";
 import "./Escrow.css";
@@ -325,6 +328,8 @@ export default function Escrow() {
           </div>
         </section>
       </main>
+
+      <Footer />
     </div>
   );
 }

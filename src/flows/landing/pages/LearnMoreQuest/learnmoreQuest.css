@@ -1,0 +1,465 @@
+/* 03-11-2026 */
+/* Styles for the Learn More About Quests page. */
+.lmq-page {
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #ffffff;
+  color: #0b1220;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.lmq-page::-webkit-scrollbar {
+  display: none;
+}
+
+.lmq-wrap {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 72px;
+}
+
+.lmq-page .pub-cta {
+  background: #103ca4;
+}
+
+.lmq-page .pub-cta:hover {
+  background: #0c3083;
+}
+
+/* ---------- breadcrumb ---------- */
+
+.lmq-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-top: 18px;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.lmq-breadcrumb a {
+  color: #94a3b8;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.lmq-breadcrumb a:hover {
+  color: #0062ff;
+}
+
+.lmq-breadcrumb span[aria-current="page"] {
+  color: #64748b;
+}
+
+/* ---------- hero ---------- */
+
+.lmq-hero {
+  padding: 34px 0 54px;
+}
+
+.lmq-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.35fr);
+  gap: 56px;
+  align-items: center;
+}
+
+.lmq-eyebrow {
+  margin: 0 0 14px;
+  color: #0062ff;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.lmq-hero-copy h1 {
+  margin: 0;
+  color: #0b1220;
+  font-size: clamp(42px, 4.4vw, 58px);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+
+.lmq-hero-lede {
+  max-width: 460px;
+  margin: 22px 0 16px;
+  color: #0f172a;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+}
+
+.lmq-hero-text {
+  max-width: 490px;
+  margin: 0;
+  color: #5b6b82;
+  font-size: 15.5px;
+  line-height: 1.75;
+}
+
+.lmq-hero-shot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lmq-hero-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ---------- how it helps ---------- */
+
+.lmq-help {
+  padding: 10px 0 56px;
+}
+
+.lmq-section-title {
+  margin: 0 0 24px;
+  color: #0b1220;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.lmq-help-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.lmq-help-card {
+  padding: 24px 28px 26px;
+  border: 1px solid #e6edf7;
+  border-radius: 12px;
+  background: #f5f8fe;
+}
+
+.lmq-help-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.lmq-help-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #eef2ff;
+}
+
+.lmq-help-head h3 {
+  margin: 2px 0 6px;
+  color: #0b1220;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+}
+
+.lmq-help-head p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.lmq-help-list {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lmq-help-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  color: #27364c;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.lmq-bullet {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #103ca4;
+}
+
+/* ---------- filters ---------- */
+
+.lmq-filters {
+  padding: 0 0 26px;
+}
+
+.lmq-filters .lmq-section-title {
+  margin-bottom: 8px;
+}
+
+.lmq-filters-sub {
+  margin: 0 0 24px;
+  color: #64748b;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+.lmq-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.lmq-filter-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 148px;
+  padding: 18px 18px 20px;
+  border: 1px solid #e7edf6;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(15, 35, 75, 0.035);
+}
+
+.lmq-filter-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  background: #eef4ff;
+}
+
+.lmq-filter-card h3 {
+  margin: 0 0 6px;
+  color: #0f172a;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.lmq-filter-card p {
+  margin: 0;
+  color: #64748b;
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+/* ---------- cta ---------- */
+
+.lmq-cta-section {
+  padding: 18px 0 64px;
+}
+
+.lmq-cta {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 24px 28px;
+  border: 1px solid #e6edff;
+  border-radius: 14px;
+  background: #f5f9ff;
+}
+
+.lmq-cta-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #e8efff;
+}
+
+.lmq-cta-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.lmq-cta-copy h2 {
+  margin: 0 0 7px;
+  color: #0b1220;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.lmq-cta-copy p {
+  max-width: 660px;
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.lmq-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 14px 22px;
+  border-radius: 8px;
+  background: #103ca4;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.lmq-cta-btn:hover {
+  background: #0c3083;
+  color: #ffffff;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 1180px) {
+  .lmq-wrap {
+    padding: 0 44px;
+  }
+
+  .lmq-hero-grid {
+    gap: 36px;
+  }
+
+  .lmq-filter-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lmq-filter-card {
+    min-height: 132px;
+  }
+}
+
+@media (max-width: 980px) {
+  .lmq-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .lmq-hero {
+    padding-bottom: 44px;
+  }
+
+  .lmq-hero-text,
+  .lmq-hero-lede {
+    max-width: 620px;
+  }
+
+  .lmq-help-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .lmq-wrap {
+    padding: 0 24px;
+  }
+
+  .lmq-breadcrumb {
+    padding-top: 14px;
+    font-size: 12px;
+  }
+
+  .lmq-hero {
+    padding: 26px 0 38px;
+  }
+
+  .lmq-hero-copy h1 {
+    font-size: clamp(36px, 9vw, 46px);
+  }
+
+  .lmq-hero-lede {
+    margin: 18px 0 14px;
+    font-size: 18px;
+  }
+
+  .lmq-hero-text {
+    font-size: 14.5px;
+  }
+
+  .lmq-section-title {
+    font-size: 23px;
+  }
+
+  .lmq-filter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .lmq-cta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 22px;
+  }
+
+  .lmq-cta-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .lmq-page {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .lmq-help-card {
+    padding: 22px;
+  }
+
+  .lmq-help-head {
+    gap: 14px;
+  }
+
+  .lmq-help-icon {
+    width: 46px;
+    height: 46px;
+  }
+
+  .lmq-help-head h3 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 520px) {
+  .lmq-filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lmq-cta-icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .lmq-cta-copy h2 {
+    font-size: 19px;
+  }
+}

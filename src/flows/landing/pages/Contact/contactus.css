@@ -1,0 +1,465 @@
+/* 03-11-2026 */
+/* Styles for the Contact Us page. */
+.ctu-page {
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #ffffff;
+  color: #0b1220;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.ctu-page::-webkit-scrollbar {
+  display: none;
+}
+
+.ctu-wrap {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 72px;
+}
+
+.ctu-top {
+  padding: 64px 0 96px;
+  background:
+    linear-gradient(
+      180deg,
+      #fbfdff 0%,
+      #eef5fe 18%,
+      #ecf3fd 30%,
+      #f7faff 52%,
+      #ffffff 72%
+    );
+}
+
+/* ---------- hero ---------- */
+
+.ctu-hero {
+  text-align: center;
+}
+
+.ctu-eyebrow {
+  margin: 0 0 16px;
+  color: #0062ff;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ctu-hero h1 {
+  margin: 0 auto;
+  max-width: 760px;
+  font-size: clamp(36px, 3.6vw, 52px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.16;
+}
+
+.ctu-hero-sub {
+  margin: 18px auto 0;
+  max-width: 600px;
+  color: #64748b;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+/* ---------- layout ---------- */
+
+.ctu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+  margin-top: 52px;
+}
+
+.ctu-side {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.ctu-card {
+  border: 1px solid #e3e9f2;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(15, 35, 75, 0.04);
+}
+
+.ctu-card h2 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.ctu-card-sub {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* ---------- form ---------- */
+
+.ctu-form-card {
+  padding: 28px 30px 30px;
+}
+
+.ctu-form-card h2 {
+  font-size: 22px;
+}
+
+.ctu-form {
+  margin-top: 26px;
+}
+
+.ctu-name-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.ctu-field {
+  display: block;
+  margin-bottom: 17px;
+}
+
+.ctu-field > span {
+  display: block;
+  margin-bottom: 8px;
+  color: #0b1220;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.ctu-field em {
+  color: #2456e6;
+  font-style: normal;
+}
+
+.ctu-field input,
+.ctu-field textarea {
+  display: block;
+  width: 100%;
+  border: 1px solid #dfe5ee;
+  border-radius: 8px;
+  outline: none;
+  background: #ffffff;
+  color: #0b1220;
+  font-family: inherit;
+  font-size: 13px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ctu-field input {
+  height: 40px;
+  padding: 0 13px;
+}
+
+.ctu-field textarea {
+  height: 104px;
+  padding: 10px 13px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.ctu-field input::placeholder,
+.ctu-field textarea::placeholder {
+  color: #9aa6b6;
+}
+
+.ctu-field input:focus,
+.ctu-field textarea:focus {
+  border-color: #2456e6;
+  box-shadow: 0 0 0 3px rgba(36, 86, 230, 0.1);
+}
+
+.ctu-message-field {
+  margin-bottom: 0;
+}
+
+.ctu-counter {
+  margin: 7px 0 16px;
+  color: #94a3b8;
+  font-size: 11px;
+  text-align: right;
+}
+
+.ctu-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  height: 42px;
+  border: 0;
+  border-radius: 8px;
+  background: #1c3fa8;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.ctu-submit svg {
+  transition: transform 0.2s ease;
+}
+
+.ctu-submit:hover {
+  background: #16338c;
+}
+
+.ctu-submit:hover svg {
+  transform: translateX(3px);
+}
+
+/* ---------- contact details ---------- */
+
+.ctu-reach,
+.ctu-offices {
+  padding: 30px 32px;
+}
+
+.ctu-reach-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-top: 26px;
+}
+
+.ctu-reach-row {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+}
+
+.ctu-reach-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  background: #eef3fc;
+}
+
+.ctu-reach-icon svg path,
+.ctu-office-icon svg path {
+  stroke: #2456e6;
+}
+
+.ctu-reach-text strong {
+  display: block;
+  margin-bottom: 3px;
+  color: #0b1220;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.ctu-reach-text a,
+.ctu-reach-text > span {
+  display: block;
+  color: #5b6b82;
+  font-size: 13px;
+  line-height: 1.45;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.ctu-reach-text a:hover {
+  color: #2456e6;
+}
+
+.ctu-reach-text .ctu-reach-note {
+  color: #8492a6;
+  font-size: 12px;
+}
+
+.ctu-badge {
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #f3f5f9;
+  color: #6b7a90;
+  font-size: 10.5px;
+  line-height: 1.45;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ---------- offices ---------- */
+
+.ctu-office-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.ctu-office {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 20px;
+  border: 1px solid #e6ebf3;
+  border-radius: 10px;
+  background: #fbfcff;
+}
+
+.ctu-office-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 9px;
+  background: #eef3fc;
+}
+
+.ctu-office strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.ctu-office span {
+  display: block;
+  margin-top: 2px;
+  color: #7b8a9e;
+  font-size: 11.5px;
+  line-height: 1.4;
+}
+
+/* ---------- follow ---------- */
+
+.ctu-follow {
+  margin-top: 24px;
+  padding: 24px 32px;
+}
+
+.ctu-follow h2 {
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.ctu-social {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.ctu-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #dfe6f1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #0b1220;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.ctu-social a:hover {
+  border-color: #b9ccf4;
+  background: #f5f9ff;
+  color: #2456e6;
+}
+
+.ctu-social .ctu-social-linkedin svg path {
+  stroke: currentColor;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 1100px) {
+  .ctu-wrap {
+    padding: 0 44px;
+  }
+}
+
+@media (max-width: 980px) {
+  .ctu-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .ctu-page {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+}
+
+@media (max-width: 640px) {
+  .ctu-wrap {
+    padding: 0 20px;
+  }
+
+  .ctu-top {
+    padding: 48px 0 64px;
+  }
+
+  .ctu-hero h1 {
+    font-size: 33px;
+  }
+
+  .ctu-hero-sub {
+    font-size: 15px;
+  }
+
+  .ctu-hero-break {
+    display: none;
+  }
+
+  .ctu-grid {
+    margin-top: 36px;
+  }
+
+  .ctu-form-card,
+  .ctu-reach,
+  .ctu-offices {
+    padding: 22px;
+  }
+
+  .ctu-form-card h2 {
+    font-size: 20px;
+  }
+
+  .ctu-name-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .ctu-reach-row {
+    grid-template-columns: 46px minmax(0, 1fr);
+  }
+
+  .ctu-badge {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: -6px;
+    white-space: normal;
+  }
+
+  .ctu-office-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ctu-follow {
+    padding: 22px;
+  }
+}
+
