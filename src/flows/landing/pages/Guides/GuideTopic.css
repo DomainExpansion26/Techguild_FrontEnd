@@ -1,0 +1,371 @@
+/* 03-11-2026 */
+/* Styles for the GuideTopic page. */
+.gt-page {
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #ffffff;
+  color: #0b1220;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.gt-page::-webkit-scrollbar {
+  display: none;
+}
+
+.gt-page .pub-header-inner {
+  padding: 30px 64px;
+}
+
+.gt-page .pub-cta {
+  background: #103ca4;
+}
+
+.gt-page .pub-cta:hover {
+  background: #0c3083;
+}
+
+.gt-wrap {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 64px;
+}
+
+/* ---------- hero ---------- */
+
+.gt-hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #edf4ff 0%, #f6faff 62%, #ffffff 100%);
+  border-bottom: 1px solid #eef3fa;
+}
+
+.gt-hero .gt-wrap {
+  padding-top: 36px;
+  padding-bottom: 52px;
+}
+
+.gt-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 30px;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.gt-breadcrumb a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.gt-breadcrumb a:hover {
+  color: #103ca4;
+}
+
+.gt-hero-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.gt-hero-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 15px;
+  background: #e0ecff;
+  flex-shrink: 0;
+}
+
+.gt-eyebrow {
+  margin: 0 0 6px;
+  color: #4d6b9a;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.gt-hero h1 {
+  margin: 0;
+  color: #0b1220;
+  font-size: 40px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.gt-hero-sub {
+  max-width: 620px;
+  margin: 12px 0 0;
+  color: #5a6a80;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.gt-hero-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 30px;
+  margin-top: 16px;
+  padding: 0 12px;
+  border: 1px solid #d6e4fa;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #3b6fd4;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ---------- guide list ---------- */
+
+.gt-list {
+  padding: 48px 0 12px;
+}
+
+.gt-section-head h2 {
+  margin: 0;
+  color: #0b1220;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.gt-section-head p {
+  margin: 7px 0 0;
+  color: #64748b;
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+.gt-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 24px;
+  margin-top: 26px;
+}
+
+.gt-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 22px;
+  border: 1px solid #e7edf5;
+  border-radius: 11px;
+  background: #ffffff;
+  color: inherit;
+  font-family: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.gt-card:hover {
+  border-color: #c8d9f2;
+  box-shadow: 0 18px 34px -30px rgba(15, 39, 82, 0.4);
+  transform: translateY(-1px);
+}
+
+.gt-card > svg {
+  align-self: center;
+  flex-shrink: 0;
+}
+
+.gt-card-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #eef4ff;
+  color: #103ca4;
+  font-size: 12.5px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.gt-card-copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.gt-card-title {
+  color: #0b1220;
+  font-size: 15.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+}
+
+.gt-card-text {
+  margin-top: 6px;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* ---------- support ---------- */
+
+.gt-support {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 40px 0 64px;
+  padding: 19px 24px;
+  border-radius: 12px;
+  background: #edf4ff;
+}
+
+.gt-support-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  background: #dbe9ff;
+  flex-shrink: 0;
+}
+
+.gt-support-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.gt-support-copy strong {
+  display: block;
+  color: #0b1220;
+  font-size: 15.5px;
+  font-weight: 700;
+}
+
+.gt-support-copy p {
+  margin: 4px 0 0;
+  color: #5a6a80;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.gt-support-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 44px;
+  padding: 0 18px;
+  border: 1px solid #103ca4;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #103ca4;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.gt-support-btn:hover {
+  background: #103ca4;
+  color: #ffffff;
+}
+
+.gt-support-btn:hover svg {
+  color: #ffffff;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 980px) {
+  .gt-hero h1 {
+    font-size: 36px;
+  }
+
+  .gt-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .gt-page .pub-header-inner {
+    padding: 22px 32px;
+  }
+
+  .gt-wrap {
+    padding: 0 32px;
+  }
+}
+
+@media (max-width: 760px) {
+  .gt-page .pub-header-inner {
+    padding: 20px 24px;
+  }
+
+  .gt-wrap {
+    padding: 0 24px;
+  }
+
+  .gt-hero .gt-wrap {
+    padding-top: 28px;
+    padding-bottom: 40px;
+  }
+
+  .gt-hero-main {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .gt-hero h1 {
+    font-size: 32px;
+  }
+
+  .gt-hero-sub {
+    font-size: 15px;
+  }
+
+  .gt-list {
+    padding-top: 36px;
+  }
+
+  .gt-support {
+    flex-wrap: wrap;
+    padding: 18px;
+  }
+
+  .gt-support-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 460px) {
+  .gt-page .pub-header-inner {
+    padding: 16px 18px;
+  }
+
+  .gt-wrap {
+    padding: 0 18px;
+  }
+
+  .gt-hero h1 {
+    font-size: 28px;
+  }
+
+  .gt-card {
+    padding: 18px;
+  }
+
+  .gt-support {
+    padding: 16px;
+  }
+}

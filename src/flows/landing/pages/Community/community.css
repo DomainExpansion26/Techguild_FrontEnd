@@ -1,0 +1,587 @@
+/* 03-11-2026 */
+/* Styles for the Community page. */
+.cm-page {
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #ffffff;
+  color: #0b1220;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.cm-page::-webkit-scrollbar {
+  display: none;
+}
+
+.cm-wrap {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 84px;
+}
+
+/* ---------- hero ---------- */
+
+.cm-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: clamp(468px, 45vw, 680px);
+  background-color: #24170f;
+  background-position: center 45%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.cm-hero-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(22, 13, 7, 0.86) 0%,
+      rgba(24, 14, 8, 0.66) 34%,
+      rgba(25, 15, 9, 0.28) 66%,
+      rgba(25, 15, 9, 0.06) 100%
+    ),
+    linear-gradient(180deg, rgba(15, 10, 6, 0.12) 0%, rgba(15, 10, 6, 0.24) 100%);
+}
+
+.cm-hero-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+.cm-eyebrow {
+  margin: 0 0 14px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.cm-hero h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(40px, 4.1vw, 56px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+.cm-hero-sub {
+  max-width: 470px;
+  margin: 18px 0 0;
+  color: #f1f5f9;
+  font-size: 17px;
+  line-height: 1.62;
+}
+
+/* ---------- shared sections ---------- */
+
+.cm-section h2 {
+  margin: 0;
+  color: #0b1220;
+  font-size: clamp(24px, 2.15vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.22;
+}
+
+.cm-section-sub {
+  margin: 10px 0 0;
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.cm-who {
+  padding: 62px 0 54px;
+}
+
+.cm-role-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 34px;
+}
+
+.cm-role-card {
+  min-height: 170px;
+  padding: 20px 18px;
+  border: 1px solid #e8edf4;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.cm-role-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+}
+
+.cm-tone-blue {
+  background: #e8f0ff;
+}
+
+.cm-tone-violet {
+  background: #f6e9ff;
+}
+
+.cm-tone-green {
+  background: #e7f8ef;
+}
+
+.cm-tone-orange {
+  background: #fff1e6;
+}
+
+.cm-tone-pink {
+  background: #fde9f3;
+}
+
+.cm-role-card strong {
+  display: block;
+  color: #0b1220;
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.cm-role-card p {
+  margin: 9px 0 0;
+  color: #64748b;
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+/* ---------- what you can do ---------- */
+
+.cm-do {
+  padding: 66px 0 54px;
+}
+
+.cm-action-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 34px;
+}
+
+.cm-action-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px;
+  border-radius: 12px;
+  background: #f7f8fa;
+}
+
+.cm-action-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: #e8f1fe;
+}
+
+.cm-action-card strong {
+  display: block;
+  color: #0b1220;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.cm-action-card p {
+  margin: 5px 0 0;
+  color: #64748b;
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+/* ---------- guild hall ---------- */
+
+.cm-guild {
+  padding: 68px 0 88px;
+}
+
+.cm-guild-panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: 64px;
+  align-items: center;
+  overflow: hidden;
+  padding: 54px 62px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #eff5ff 0%, #e7f0fe 100%);
+}
+
+.cm-guild-panel::before,
+.cm-guild-panel::after {
+  content: "";
+  position: absolute;
+  top: 44px;
+  right: 54px;
+  width: 34px;
+  height: 3px;
+  border-radius: 999px;
+  background: #2f6fed;
+  transform: rotate(-42deg);
+}
+
+.cm-guild-panel::after {
+  top: 31px;
+  right: 33px;
+  width: 20px;
+  transform: rotate(-42deg);
+}
+
+.cm-guild-eyebrow {
+  margin: 0 0 14px;
+  color: #2f6fed;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.cm-guild-copy h2 {
+  margin: 0 0 14px;
+  color: #0b1220;
+  font-size: clamp(30px, 2.7vw, 38px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.cm-guild-copy p {
+  max-width: 400px;
+  margin: 0;
+  color: #475569;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.cm-guild-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 46px;
+  margin-top: 26px;
+  padding: 0 22px;
+  border-radius: 8px;
+  background: #0062ff;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.cm-guild-btn:hover {
+  background: #0052d6;
+  color: #ffffff;
+}
+
+/* ---------- feed mock ---------- */
+
+.cm-feed {
+  padding: 24px;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 18px 44px rgba(15, 35, 75, 0.08);
+}
+
+.cm-composer {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.cm-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.cm-avatar-dark {
+  background: #0f172a;
+}
+
+.cm-avatar-photo {
+  background: linear-gradient(135deg, #c084fc, #7c3aed);
+  color: #ffffff;
+}
+
+.cm-composer-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.cm-input {
+  display: flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 4px;
+  border-bottom: 1px solid #eef2f7;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.cm-composer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.cm-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px;
+  color: #64748b;
+  font-size: 11px;
+}
+
+.cm-tools span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.cm-post-btn {
+  height: 28px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 6px;
+  background: #0062ff;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cm-post {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid #eef2f7;
+}
+
+.cm-post-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.cm-post-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.cm-post-meta strong {
+  display: block;
+  color: #0b1220;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.cm-post-meta strong span {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.cm-post-meta p {
+  margin: 2px 0 0;
+  color: #94a3b8;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.cm-post-text {
+  margin: 12px 0 0;
+  color: #334155;
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.cm-post-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 104px;
+  margin-top: 13px;
+  border-radius: 8px;
+  background: #0c1a38;
+  color: #cbd5e1;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.cm-post-media-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 1180px) {
+  .cm-wrap {
+    padding: 0 48px;
+  }
+
+  .cm-guild-panel {
+    gap: 40px;
+    padding: 44px 42px;
+  }
+}
+
+@media (max-width: 960px) {
+  .cm-role-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cm-action-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 940px) {
+  .cm-hero {
+    min-height: 400px;
+  }
+
+  .cm-hero h1 {
+    font-size: 42px;
+  }
+
+  .cm-guild-panel {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 34px;
+  }
+
+  .cm-guild-copy p {
+    max-width: 520px;
+  }
+
+  .cm-feed {
+    width: 100%;
+    max-width: 620px;
+  }
+}
+
+@media (max-width: 760px) {
+  .cm-wrap {
+    padding: 0 24px;
+  }
+
+  .cm-hero {
+    min-height: 370px;
+    background-position: center 30%;
+  }
+
+  .cm-hero h1 {
+    font-size: 38px;
+  }
+
+  .cm-hero-sub {
+    font-size: 15.5px;
+  }
+
+  .cm-who {
+    padding: 44px 0 38px;
+  }
+
+  .cm-do {
+    padding: 46px 0 38px;
+  }
+
+  .cm-role-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cm-action-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cm-guild {
+    padding: 46px 0 60px;
+  }
+
+  .cm-guild-panel {
+    padding: 36px 26px;
+  }
+
+  .cm-guild-panel::before,
+  .cm-guild-panel::after {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .cm-wrap {
+    padding: 0 18px;
+  }
+
+  .cm-hero {
+    min-height: 330px;
+    background-position: center 26%;
+  }
+
+  .cm-hero h1 {
+    font-size: 33px;
+  }
+
+  .cm-role-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cm-role-card {
+    min-height: 0;
+  }
+
+  .cm-guild-copy h2 {
+    font-size: 30px;
+  }
+
+  .cm-guild-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cm-feed {
+    padding: 18px;
+  }
+
+  .cm-tools {
+    gap: 10px;
+  }
+}
