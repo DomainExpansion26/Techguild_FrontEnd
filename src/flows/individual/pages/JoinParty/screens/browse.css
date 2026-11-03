@@ -1,0 +1,237 @@
+/* [TechGuild Update: 13-10-2026] Join Party — Step 1 browse */
+
+.jb-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================================
+   Filter bar
+   ========================================================================== */
+.jb-filterbar {
+  width: 100%;
+}
+
+.jb-searchrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.jb-grow {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.jb-searchrow .text-input-wrapper {
+  height: 46px !important;
+  border-width: 1.5px !important;
+}
+
+.jb-btn.secondary-btn {
+  width: auto;
+  height: 46px;
+  flex-shrink: 0;
+  padding: 0 18px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  font-size: 14px;
+  font-weight: 510;
+  color: #334155;
+}
+
+.jb-sort {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  height: 46px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background-color: #ffffff;
+  padding: 0 36px 0 16px;
+  cursor: pointer;
+}
+
+.jb-sort select {
+  appearance: none;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 14px;
+  font-weight: 510;
+  color: #334155;
+  cursor: pointer;
+}
+
+.jb-sort svg {
+  position: absolute;
+  right: 12px;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Category chips
+   ========================================================================== */
+.jb-cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.jb-cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  background-color: #ffffff;
+  font-size: 13px;
+  font-weight: 510;
+  line-height: 19px;
+  color: #334155;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.jb-cat:hover {
+  border-color: #c7d7fe;
+  background-color: #f5f8ff;
+}
+
+.jb-cat.is-active {
+  border-color: #103ca4;
+  background-color: #eef4ff;
+  color: #103ca4;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Result meta
+   ========================================================================== */
+.jb-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 22px 0 14px;
+}
+
+.jb-count {
+  font-size: 16px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.jb-views {
+  display: flex;
+  gap: 6px;
+}
+
+.jb-view {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.jb-view.is-active {
+  border-color: #103ca4;
+  background-color: #eef4ff;
+}
+
+/* ==========================================================================
+   Grid
+   ========================================================================== */
+.jb-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.jb-grid.is-list {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.jb-empty {
+  margin: 0;
+  padding: 40px 16px;
+  text-align: center;
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+/* ==========================================================================
+   Pagination
+   ========================================================================== */
+.jb-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.jb-page {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 38px;
+  height: 38px;
+  justify-content: center;
+  padding: 0 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+  background-color: #ffffff;
+  font-size: 14px;
+  font-weight: 510;
+  color: #334155;
+  cursor: pointer;
+}
+
+.jb-page:hover:not(:disabled) {
+  border-color: #c7d7fe;
+  background-color: #f5f8ff;
+}
+
+.jb-page.is-active {
+  border-color: #103ca4;
+  background-color: #103ca4;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.jb-page:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 900px) {
+  .jb-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .jb-searchrow {
+    flex-wrap: wrap;
+  }
+
+  .jb-grow {
+    flex: 1 1 100%;
+  }
+}

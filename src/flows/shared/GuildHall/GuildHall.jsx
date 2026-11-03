@@ -278,12 +278,22 @@ const CARD_TOKENS = {
   shadow: "0px 1px 6px 0px rgba(33, 97, 234, 0.05)",
 };
 
-// Poll post card: solid white, 1.5px hairline, 16px radius, dual blue-tinted shadow.
+// Poll post card: 1.5px hairline, 16px radius, dual blue-tinted shadow.
+// No `bg` token on purpose — the poll card inherits POST_CARD_TOKENS, so every
+// post in the feed (seeded or freshly published, poll or not) keeps one glass
+// alpha. It used to pass `#ffffff` here, which made poll cards solid white
+// while everything else was translucent.
 const POLL_CARD_TOKENS = {
-  bg: "#ffffff",
   border: "1.5px solid #dde5f4",
   radius: 16,
   shadow: "0px 1px 3px 0px rgba(0, 0, 0, 0.05), 0px 2px 16px 0px rgba(33, 97, 234, 0.07)",
+};
+
+// Feed post cards are the page's glass layer: lighter than the chrome cards
+// (composer/tabs/rail stay on CARD_TOKENS) so the blue workspace reads through.
+// The comment card (CommentSection) uses the same alpha so the two always match.
+const POST_CARD_TOKENS = {
+  bg: "rgba(255, 255, 255, 0.42)",
 };
 
 function GhCard({ className = "", children, ...props }) {
@@ -515,14 +525,29 @@ function EventBlock({ event }) {
   );
 }
 
-function PostFooter({ stats, postId, commentsOpen, onToggleComments, onOpenComments }) {
+function PostFooter({ stats, postId, liked, onToggleLike, commentsOpen, onToggleComments, onOpenComments }) {
   const commentsId = `comments-${postId}`;
+  // Local optimistic like: the base count is the post's own stat, +1 while the
+  // current user has liked it (session-only — no likes endpoint exists yet).
+  const likeCount = stats.likes + (liked ? 1 : 0);
   return (
     <div className="gh-post-footer">
       <div className="gh-actions">
-        <button type="button" className="gh-action" aria-label={`${G.POST.LIKE} (${stats.likes})`}>
-          <Icon name="Heart" size={15} color="#71809f" strokeWidth={1.6} />
-          <span>{stats.likes}</span>
+        <button
+          type="button"
+          className={`gh-action gh-action--like${liked ? " is-active" : ""}`}
+          aria-label={`${G.POST.LIKE} (${likeCount})`}
+          aria-pressed={liked}
+          onClick={() => onToggleLike(postId)}
+        >
+          <Icon
+            name="Heart"
+            size={15}
+            color={liked ? "#103ca4" : "#71809f"}
+            strokeWidth={1.6}
+            fill={liked ? "#103ca4" : "none"}
+          />
+          <span>{likeCount}</span>
         </button>
         <button
           type="button"
@@ -555,7 +580,7 @@ function PostFooter({ stats, postId, commentsOpen, onToggleComments, onOpenComme
   );
 }
 
-function PostCard({ post, commentsOpen, onToggleComments, onOpenComments }) {
+function PostCard({ post, liked, onToggleLike, commentsOpen, onToggleComments, onOpenComments }) {
   const isPoll = post.type === "poll";
   const typeLabel = isPoll
     ? G.POST.TYPE_POLL
@@ -567,6 +592,7 @@ function PostCard({ post, commentsOpen, onToggleComments, onOpenComments }) {
     <GhCard
       id={isPoll ? post.id : undefined}
       className={`gh-post${isPoll ? " gh-post--poll" : ""}`}
+      {...POST_CARD_TOKENS}
       {...(isPoll ? POLL_CARD_TOKENS : {})}
     >
       <div className="gh-post-head">
@@ -630,6 +656,8 @@ function PostCard({ post, commentsOpen, onToggleComments, onOpenComments }) {
       <PostFooter
         stats={post.stats}
         postId={post.id}
+        liked={liked}
+        onToggleLike={onToggleLike}
         commentsOpen={commentsOpen}
         onToggleComments={onToggleComments}
         onOpenComments={onOpenComments}
@@ -644,6 +672,7 @@ export default function GuildHall() {
   const [activeTab, setActiveTab] = useState(G.TABS[0]);
   const [composerText, setComposerText] = useState("");
   const [feedPosts, setFeedPosts] = useState(POSTS);
+  const [likedPosts, setLikedPosts] = useState(() => new Set());
   const [createOpen, setCreateOpen] = useState(() => readUrlParams().createOpen);
   const [presetFormat, setPresetFormat] = useState(() => readUrlParams().presetFormat);
   const [openComments, setOpenComments] = useState(() => readUrlParams().comments);
@@ -685,6 +714,18 @@ export default function GuildHall() {
 
   const toggleComments = (postId) => {
     setOpenComments((current) => (current === postId ? null : postId));
+  };
+
+  // Local optimistic like (same contract as publish/comments: session-only, swap
+  // for a likes API + refetch when an endpoint exists). Keyed by post id so it
+  // covers both the static feed and drafts prepended by handlePublish.
+  const toggleLike = (postId) => {
+    setLikedPosts((current) => {
+      const next = new Set(current);
+      if (next.has(postId)) next.delete(postId);
+      else next.add(postId);
+      return next;
+    });
   };
 
   // Deep-link anchors: <any-route>#<post-id> scrolls to that post's section
@@ -763,6 +804,8 @@ export default function GuildHall() {
               <React.Fragment key={post.id}>
                 <PostCard
                   post={post}
+                  liked={likedPosts.has(post.id)}
+                  onToggleLike={toggleLike}
                   commentsOpen={openComments === post.id}
                   onToggleComments={toggleComments}
                   onOpenComments={setOpenComments}

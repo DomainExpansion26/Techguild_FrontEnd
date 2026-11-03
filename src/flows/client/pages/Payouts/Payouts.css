@@ -6,6 +6,29 @@
   gap: 12px;
   min-height: 0;
 }
+/* Match whole-profile client shell: 12px outer padding + 12px sidebar/content gap.
+   Reference: .dashboard-layout.wp-page-root uses padding 12px + gap 12px. */
+.client-finance-root.dashboard-layout {
+  padding: 12px;
+  gap: 12px;
+}
+.client-finance-root .main-workspace.client-finance-workspace {
+  gap: 12px;
+  overflow: hidden;
+}
+/* Split FINANCE sidebar — same glass tokens as whole-profile client
+   (.wp-page-root .sidebar): rail + FINANCE panel like reference image. */
+.client-finance-root .sidebar {
+  background: rgba(255, 255, 255, 0.60) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid #e8edf5 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.05) !important;
+}
+.client-finance-root .sidebar.finance-mode {
+  width: 272px !important;
+}
 
 /* Scroll area (same pattern as client profile .wp-scroll-area):
    only this content scrolls — header + sidebar stay fixed,
@@ -1972,3 +1995,35 @@
 
 .rv-total span { color: #1d4ed8; font-weight: 800; font-size: 13px; }
 .rv-total strong { color: #1d4ed8; font-weight: 800; font-size: 17px; }
+
+/* ---- Back arrow (all finance tabs except overview) ---- */
+.fin-back-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.fin-back-btn {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  line-height: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: none !important;
+  transition: opacity 0.2s ease;
+}
+
+.fin-back-btn:hover,
+.fin-back-btn:focus,
+.fin-back-btn:active {
+  opacity: 0.6;
+  transform: none !important;
+  outline: none;
+  box-shadow: none;
+}

@@ -1,0 +1,197 @@
+/* [TechGuild Update: 13-10-2026] Create Party wizard — Step 1 "Party Details" */
+
+.cp-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cp-fields__row {
+  display: grid;
+  gap: 16px;
+}
+
+.cp-fields__row--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Matches the Figma input: 48px tall (shared TextInput default is 50px) */
+.cp-fields .text-input-wrapper {
+  height: 48px !important;
+  border-width: 1.5px !important;
+}
+
+.cp-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================================
+   Fieldset (label + control group + hint)
+   ========================================================================== */
+.cp-fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cp-fieldset__label {
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.cp-fieldset__label .required-star {
+  color: #dc2626;
+  margin-left: 2px;
+}
+
+/* ==========================================================================
+   Category chips
+   ========================================================================== */
+.cp-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cp-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  background-color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #374151;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+}
+
+.cp-chip:hover {
+  border-color: #a1b9ed;
+  background-color: #f5f8ff;
+}
+
+.cp-chip.is-selected {
+  border-color: #103ca4;
+  background-color: #eef2ff;
+  color: #103ca4;
+  font-weight: 600;
+}
+
+.cp-chip:focus-visible {
+  outline: 2px solid #103ca4;
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Logo dropzone + guidelines
+   ========================================================================== */
+.cp-logo-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.cp-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 150px;
+  padding: 20px;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.cp-dropzone:hover {
+  border-color: #103ca4;
+  background-color: #f5f8ff;
+}
+
+.cp-dropzone__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background-color: #eef2f6;
+}
+
+.cp-dropzone__preview {
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.cp-dropzone__title {
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  color: #374151;
+  word-break: break-all;
+}
+
+.cp-dropzone__hint {
+  font-size: 12px;
+  line-height: 18px;
+  color: #9ca3af;
+}
+
+.cp-guidelines {
+  min-height: 150px;
+}
+
+.cp-guidelines__title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+  color: #111827;
+}
+
+.cp-guidelines__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cp-guidelines__list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 18px;
+  color: #374151;
+}
+
+@media (max-width: 900px) {
+  .cp-fields__row--2,
+  .cp-logo-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

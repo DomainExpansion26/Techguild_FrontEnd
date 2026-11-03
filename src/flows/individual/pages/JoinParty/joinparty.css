@@ -1,0 +1,115 @@
+/* [TechGuild Update: 13-10-2026] Join Party — shell (header, two-column layout) */
+
+.jp-page {
+  width: 100%;
+  margin: 0 auto;
+  padding: 28px 0 48px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* Success screen is a single centred column. Geometry from Figma
+   "Party 6 join part success" (227:1036): 1127px column, back link 12px below
+   the header chrome, 30px back-link -> heading, 36px/54px heading, 44px
+   heading -> card. The other join steps keep their verified shell spacing. */
+.jp-page--narrow {
+  max-width: 1127px;
+  padding-top: 12px;
+}
+
+.jp-page--narrow .party-back {
+  font-size: 13px;
+  line-height: 20px;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.jp-page--narrow .jp-head {
+  /* flex column does not collapse the shared 8px margin — the frame puts the
+     30px gap fully under the back link */
+  margin-top: 0;
+  margin-bottom: 44px;
+}
+
+/* "Party 6" (227:1036) measures the success header at 36px/54; the other join
+   steps are still 30px, so the bump is scoped to the success branch. */
+.jp-page--narrow .jp-title {
+  font-size: 36px;
+  line-height: 54px;
+}
+
+/* ==========================================================================
+   Back link (shared .party-back lives in partyui.css)
+   ========================================================================== */
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+.jp-head {
+  margin-top: 8px;
+}
+
+.jp-title {
+  margin: 0;
+  font-size: 30px;
+  line-height: 38px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.jp-sub {
+  margin: 6px 0 0;
+  font-size: 14px;
+  line-height: 21px;
+  color: #64748b;
+}
+
+/* ==========================================================================
+   Two-column layout
+   ========================================================================== */
+.jp-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 24px;
+  align-items: start;
+  margin-top: 24px;
+}
+
+.jp-head + .jp-layout {
+  margin-top: 24px;
+}
+
+.jp-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+/* The rails render a Fragment of sibling <Cards>, so the spacing lives here
+   rather than on each card. Without it the cards butt straight up against each
+   other (gap: 0) and read as overlapping. */
+.jp-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+@media (max-width: 1100px) {
+  .jp-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .jp-page {
+    padding: 20px 0 32px;
+  }
+
+  .jp-title {
+    font-size: 24px;
+    line-height: 31px;
+  }
+}

@@ -1,0 +1,23 @@
+/* [TechGuild Update: 13-10-2026] Icon stroke fix.
+ *
+ * Source SVGs in src/assets/icons/ bake `stroke="#6A717D"` as a presentation
+ * attribute onto their <path>. That is an author-level declaration on the path
+ * itself, so it wins over the `stroke` inherited from the wrapping <svg> and the
+ * Icon component's `color` / `stroke` props were ignored — every such icon
+ * rendered grey no matter what colour callers passed.
+ *
+ * Forcing `stroke: currentColor` on descendants makes the props work again.
+ * `currentColor` resolves from `style.color` on the <svg>, which Icon sets from
+ * the `color` prop (default #6A717D, preserving today's appearance).
+ *
+ * `stroke-width` is intentionally left alone — see the note in Icon.jsx. */
+
+.tg-icon path,
+.tg-icon circle,
+.tg-icon ellipse,
+.tg-icon rect,
+.tg-icon line,
+.tg-icon polyline,
+.tg-icon polygon {
+  stroke: currentColor;
+}

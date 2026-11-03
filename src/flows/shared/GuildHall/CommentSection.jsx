@@ -7,6 +7,10 @@ import "./commentsection.css";
 const G = APP_STRINGS.GUILD_HALL;
 const C = G.COMMENTS;
 
+// Same glass alpha as the feed post cards (POST_CARD_TOKENS in GuildHall.jsx) so
+// the comment card never looks heavier than the post it belongs to.
+const CARD_BG = "rgba(255, 255, 255, 0.42)";
+
 const ME = {
   name: "Aarav Menon",
   initials: "AM",
@@ -250,7 +254,7 @@ export default function CommentSection({ id }) {
   return (
     <Cards
       variant="base"
-      bg="#ffffff"
+      bg={CARD_BG}
       border="1px solid #eef2f9"
       radius="md"
       shadow="0px 1px 6px 0px rgba(33, 97, 234, 0.05)"

@@ -1,0 +1,924 @@
+/* [TechGuild Update: 14-10-2026] Party Lead dashboard — Figma "Party mngnt create" (node 205:704)
+   Tokens read off the frame: brand #103ca4, hero #e1ebff / #bfdbfe, card shadow
+   0 8px 24px rgba(16,24,40,0.06). Figma's 11px micro-labels are bumped to 12px
+   for mobile legibility (same call as Create Party / Join Party). */
+
+.pl-page {
+  width: 100%;
+  margin: 0 auto;
+  padding: 36px 0 60px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+.pl-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.pl-head__title {
+  margin: 0;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.pl-head__sub {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 20px;
+  color: #64748b;
+}
+
+.pl-head__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.pl-head__title,
+.pl-head__sub {
+  min-width: 0;
+}
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+.pl-hero {
+  margin-top: 22px;
+  box-shadow: 0 8px 24px 0 rgba(16, 24, 40, 0.06);
+}
+
+.pl-hero__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.pl-hero__id {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-width: 0;
+}
+
+.pl-hero__logo {
+  width: 68px;
+  height: 68px;
+  border-radius: 18px;
+  background-color: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 8px 20px 0 rgba(37, 99, 235, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.pl-hero__nameline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pl-hero__name {
+  margin: 0;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.pl-hero__meta {
+  margin: 3px 0 0;
+  font-size: 12px;
+  line-height: 18px;
+  color: #64748b;
+}
+
+.pl-hero__slots {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.pl-hero__slotslabel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.pl-hero__count {
+  font-size: 12px;
+  color: #334155;
+}
+
+.pl-slots {
+  display: flex;
+  align-items: center;
+}
+
+.pl-slot {
+  width: 36px;
+  height: 36px;
+  border-radius: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-left: -6px;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
+}
+
+.pl-slot:first-child {
+  margin-left: 0;
+}
+
+.pl-slot--filled {
+  border: 2px solid #ffffff;
+}
+
+.pl-slot--empty {
+  background-color: rgba(255, 255, 255, 0.6);
+  border: 2px dashed #cbd5e1;
+  color: #94a3b8;
+}
+
+/* ==========================================================================
+   Warning strip (hero + pending invites)
+   ========================================================================== */
+.pl-warn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background-color: #fffbeb;
+  border: 1px solid #fde68a;
+}
+
+.pl-warn p {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  line-height: 18px;
+  color: #92400e;
+}
+
+.pl-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background-color: #fffbeb;
+  border: 1px solid #fde68a;
+  font-size: 12px;
+  line-height: 18px;
+  color: #92400e;
+}
+
+/* ==========================================================================
+   Tabs
+   ========================================================================== */
+.pl-tabs {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: 22px;
+  border-bottom: 1px solid #e6ecf5;
+}
+
+.pl-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 2px 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.pl-tab:hover {
+  color: #334155;
+}
+
+.pl-tab.is-active {
+  color: #103ca4;
+  border-bottom-color: #103ca4;
+}
+
+.pl-tab__badge {
+  min-width: 17px;
+  height: 17px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background-color: #ef4444;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 17px;
+  text-align: center;
+}
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+.pl-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 24px;
+  align-items: start;
+  margin-top: 22px;
+}
+
+.pl-main,
+.pl-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+/* ==========================================================================
+   Cards
+   ========================================================================== */
+.pl-card {
+  box-shadow: 0 8px 24px 0 rgba(16, 24, 40, 0.06);
+}
+
+.pl-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pl-card__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.pl-card__count {
+  font-size: 12px;
+  font-weight: 700;
+  color: #16a34a;
+}
+
+.pl-card__hint {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 18px;
+  color: #64748b;
+}
+
+.pl-rail__title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 14px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.pl-rail__title--pad {
+  margin: 0;
+  padding: 4px 4px 12px;
+}
+
+.pl-rail__hint {
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 18px;
+  color: #94a3b8;
+}
+
+.pl-empty {
+  margin: 12px 0 0;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* ==========================================================================
+   Chips / badges
+   ========================================================================== */
+.pl-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.pl-chip--confirmed {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.pl-chip--lead {
+  background-color: #fde68a;
+  color: #92400e;
+}
+
+.pl-chip--pending {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.pl-chip--wants {
+  background-color: #eef4ff;
+  color: #103ca4;
+}
+
+.pl-chip--hero {
+  margin-top: 8px;
+  background-color: rgba(212, 175, 55, 0.1);
+  border: 1.5px solid #fde68a;
+  color: #92400e;
+  padding: 4px 14px;
+}
+
+.pl-chip--skill {
+  background-color: #f1f5f9;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.pl-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background-color: #ffffff;
+  border: 1px solid #e6ecf5;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.pl-badge--rank {
+  background-color: rgba(212, 175, 55, 0.1);
+  border: 1.5px solid #fde68a;
+  color: #92400e;
+}
+
+.pl-badge--warn {
+  background-color: #fef3c7;
+  border-color: #fde68a;
+  color: #d97706;
+}
+
+.pl-badge--info {
+  background-color: #fee2e2;
+  border-color: #fecaca;
+  color: #ef4444;
+}
+
+.pl-you {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background-color: #bfd2ff;
+  color: #103ca4;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+}
+
+/* ==========================================================================
+   Member / invite rows
+   ========================================================================== */
+.pl-list {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pl-member {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pl-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 18px;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pl-member__id {
+  flex: 1;
+  min-width: 0;
+}
+
+.pl-member__name {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.pl-member__role {
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 17px;
+  color: #64748b;
+}
+
+.pl-member__end {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.pl-member__meta {
+  font-size: 12px;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Join requests
+   ========================================================================== */
+.pl-reqs {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.pl-req {
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #e6ecf5;
+  background-color: #ffffff;
+}
+
+.pl-req__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pl-req__id {
+  flex: 1;
+  min-width: 0;
+}
+
+.pl-req__name {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.pl-req__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.pl-req__skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0 0;
+}
+
+.pl-req__quote {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background-color: #f8fafc;
+  border-left: 3px solid #bfd2ff;
+  font-size: 12px;
+  line-height: 18px;
+  color: #475569;
+  font-style: italic;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+/* The shared Primary/SecondaryButton are built for stacked form rows:
+   both default to `width: 100%`, and PrimaryButton has NO horizontal padding
+   at all (it relies on the full width to look padded). In the party-lead
+   header, banner and card rows these buttons sit inline, so the small variant
+   restores intrinsic width plus explicit padding and a compact height —
+   otherwise they stretch and squeeze sibling text to one word per line. */
+.pl-btn--sm {
+  width: auto;
+  flex-shrink: 0;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.pl-btn--danger {
+  color: #ef4444;
+}
+
+.pl-iconbtn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid #e6ecf5;
+  background-color: #ffffff;
+  color: #334155;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.pl-iconbtn:hover {
+  background-color: #f1f5f9;
+}
+
+.pl-iconbtn--sm {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+}
+
+.pl-iconbtn--danger:hover {
+  background-color: #fff5f5;
+}
+
+.pl-linkbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: #103ca4;
+}
+
+/* ==========================================================================
+   Submission checklist
+   ========================================================================== */
+.pl-check {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.pl-check__row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.pl-check__mark {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.pl-check__text {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  line-height: 17px;
+  color: #64748b;
+}
+
+.pl-check__row.is-done .pl-check__text {
+  color: #16a34a;
+}
+
+.pl-check__note {
+  font-style: normal;
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.pl-progress {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #e6ecf5;
+}
+
+.pl-progress__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.pl-progress__track {
+  height: 6px;
+  margin-top: 8px;
+  border-radius: 999px;
+  background-color: #e2e8f0;
+  overflow: hidden;
+}
+
+.pl-progress__fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background-color: #103ca4;
+  transition: width 0.2s ease;
+}
+
+.pl-locked {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 12px 0 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+/* ==========================================================================
+   Breakdown / info / quick actions
+   ========================================================================== */
+.pl-break,
+.pl-info {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pl-break li,
+.pl-info li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.pl-break b,
+.pl-info b {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.t-green { color: #16a34a; }
+.t-amber { color: #d97706; }
+.t-blue  { color: #2563eb; }
+.t-muted { color: #94a3b8; }
+
+.pl-guild {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #e6ecf5;
+}
+
+.pl-guild__label {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.pl-guild__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.pl-guild__row code {
+  font-family: "SF Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: #0f172a;
+  letter-spacing: 0.2px;
+}
+
+.pl-qa {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pl-qa__btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #e6ecf5;
+  background-color: #ffffff;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.pl-qa__btn span {
+  flex: 1;
+  text-align: left;
+}
+
+.pl-qa__btn:hover {
+  background-color: #f8fafc;
+}
+
+.pl-qa__btn--red {
+  color: #ef4444;
+}
+
+/* ==========================================================================
+   Tips
+   ========================================================================== */
+.pl-tips {
+  box-shadow: 0 8px 24px 0 rgba(16, 24, 40, 0.06);
+}
+
+.pl-tips__list {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pl-tips__list li {
+  font-size: 12px;
+  line-height: 18px;
+  color: #334155;
+}
+
+/* ==========================================================================
+   Activity timeline
+   ========================================================================== */
+.pl-timeline {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pl-tl {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+}
+
+.pl-tl__dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pl-tl__text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: #0f172a;
+}
+
+.pl-tl__time {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* ==========================================================================
+   Responsive — rail drops under the main column on narrow viewports
+   ========================================================================== */
+@media (max-width: 1100px) {
+  .pl-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .pl-head,
+  .pl-hero__top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pl-hero__slots {
+    align-items: flex-start;
+  }
+
+  .pl-req__head {
+    flex-wrap: wrap;
+  }
+
+  .pl-req__actions {
+    width: 100%;
+  }
+
+  /* Figma draws these at 34px, which is under the 44px minimum touch target.
+     Keep the desktop proportions and only grow the hit area on phones. */
+  .pl-btn--sm {
+    height: 44px;
+  }
+
+  /* The banner button is flex-shrink:0, so on a narrow viewport it would eat
+     the row and force the sentence to one word per line. Let the text take a
+     full row and drop the button underneath. */
+  .pl-warn {
+    flex-wrap: wrap;
+  }
+
+  .pl-warn p {
+    flex: 1 0 100%;
+  }
+
+  .pl-iconbtn,
+  .pl-iconbtn--sm {
+    width: 44px;
+    height: 44px;
+  }
+
+  .pl-linkbtn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .pl-qa__btn {
+    min-height: 44px;
+  }
+
+  .pl-tab {
+    min-height: 44px;
+  }
+}

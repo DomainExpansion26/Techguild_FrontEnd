@@ -14,13 +14,36 @@
   overflow-x: hidden;
 }
 
-/* Scrollbar (hidden visual scrollbar while retaining scroll functionality) */
-.gh-page {
+/* --------------------------------------------------------------------------
+   Scrollbars — no visible scrollbar anywhere in this flow; scrolling
+   behaviour is untouched. Same pattern as flows/shared/settings/settings.css.
+   Covers the page scroller and the horizontal tab strip; the popup cards are
+   handled in their own stylesheets (createpost.css / hallsmodal.css).
+   -------------------------------------------------------------------------- */
+
+.gh-page,
+.gh-tabs {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
-.gh-page::-webkit-scrollbar {
+.gh-page::-webkit-scrollbar,
+.gh-tabs::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* The mobile layout shell is a shared component that sits ABOVE this page in
+   the tree, so it is scoped through :has() on the page root — that keeps this
+   rule off every other flow. (The sidebar's settings panel is not rendered
+   here: Navbar only mounts it on /settings routes.) */
+body:has(.gh-page) .dashboard-layout {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body:has(.gh-page) .dashboard-layout::-webkit-scrollbar {
   display: none;
   width: 0;
   height: 0;
@@ -308,17 +331,10 @@
   align-items: stretch;
   height: 50px;
   overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.gh-tabs::-webkit-scrollbar {
-  display: none;
-  width: 0;
-  height: 0;
 }
 
 .gh-tab {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -342,9 +358,22 @@
 }
 
 .gh-tab.is-active {
-  border-color: #103ca4;
   font-weight: 700;
   color: #103ca4;
+}
+
+/* Active indicator is a bottom underline (pseudo-element, not a border) so the
+   50px tab row keeps a constant height — a real border-bottom would grow the
+   active tab by 1px and shift its label. */
+.gh-tab.is-active::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: #103ca4;
 }
 
 /* --------------------------------------------------------------------------
@@ -381,6 +410,10 @@
 .gh-post {
   gap: 6px;
   padding: 16px;
+  /* Glass layer: the alpha lives in POST_CARD_TOKENS (GuildHall.jsx) — the extra
+     blur is what sells it as glass rather than as a washed-out card. */
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 .gh-post-head {
@@ -1613,10 +1646,16 @@
    Bottom CTA banner
    -------------------------------------------------------------------------- */
 
-.gh-cta {
+/* `flex-direction: row` needs `!important` here: the shared card base selector is
+   `.card:not(.welcome-banner-card):not(.tip-banner-card):not(.tg-card--gradient):not(.tg-card--ghost)`,
+   whose four `:not()` arguments make it (0,5,0) — far above any class-only override.
+   It sets `flex-direction: column`, which stacked icon/text/button vertically and
+   made this a 204px block instead of a bar. */
+.gh-cta.gh-card {
   display: flex;
-  flex-direction: row;
+  flex-direction: row !important;
   align-items: center;
+  justify-content: flex-start;
   gap: 18px;
   padding: 22px 28px;
 }
