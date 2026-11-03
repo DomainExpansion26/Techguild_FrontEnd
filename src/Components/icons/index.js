@@ -1,5 +1,5 @@
-// [TechGuild Update: 12-10-26] Added SortAsc, SortDesc, Banknote, ShoppingBag, ListFilter icon exports for QuestBoard filter/sort drawers
-// [TechGuild Update: 28-09-26] Added Copy icon export for public profile link copy action
+// 03-11-2026
+// Central registry mapping icon names to their SVG React components.
 import LayoutDashboard from "../../assets/icons/layout-dashboard.svg?react";
 import User2 from "../../assets/icons/user2.svg?react";
 import User from "../../assets/icons/user.svg?react";
@@ -17,6 +17,7 @@ import Focus from "../../assets/icons/focus.svg?react";
 import CircleCheck from "../../assets/icons/circle-check.svg?react";
 import CircleCheckFill from "../../assets/icons/circle-check-fill.svg?react";
 import Mail from "../../assets/icons/mail.svg?react";
+import Phone from "../../assets/icons/phone.svg?react";
 import Check from "../../assets/icons/check.svg?react";
 import ArrowLeft from "../../assets/icons/arrow-left.svg?react";
 import ArrowRight from "../../assets/icons/arrow-right.svg?react";
@@ -111,10 +112,17 @@ import Banknote from "../../assets/icons/banknote.svg?react";
 import ShoppingBag from "../../assets/icons/shopping-bag.svg?react";
 import ListFilter from "../../assets/icons/list-filter.svg?react";
 import Sparkles from "../../assets/icons/sparkles.svg?react";
+import MousePointer from "../../assets/icons/mouse-pointer.svg?react";
+import Server from "../../assets/icons/server.svg?react";
+import Megaphone from "../../assets/icons/megaphone.svg?react";
+import Smile from "../../assets/icons/smile.svg?react";
+import ChartNoAxesColumn from "../../assets/icons/chart-no-axes-column.svg?react";
 import Fingerprint from "../../assets/icons/fingerprint.svg?react";
 import Crown from "../../assets/icons/crown.svg?react";
 import Flag from "../../assets/icons/flag.svg?react";
 import RefreshCw from "../../assets/icons/refresh-cw.svg?react";
+import GraduationCap from "../../assets/icons/graduation-cap.svg?react";
+import Compass from "../../assets/icons/compass.svg?react";
 
 export {
   ArrowLeft,
@@ -139,6 +147,7 @@ export {
   BadgeCheckFill,
   BadgeCheck,
   Mail,
+  Phone,
   Check,
   UserCheck,
   CreditCard,
@@ -229,8 +238,15 @@ export {
   ShoppingBag,
   ListFilter,
   Sparkles,
+  MousePointer,
+  Server,
+  Megaphone,
+  Smile,
+  ChartNoAxesColumn,
   Fingerprint,
   Crown,
   Flag,
   RefreshCw,
+  GraduationCap,
+  Compass,
 };

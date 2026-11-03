@@ -1,5 +1,8 @@
+// 03-11-2026
+// Task Management feature page showing milestones, approvals, and project progress.
 import { useDispatch } from "react-redux";
 import PublicHeader from "@/flows/landing/LandingLink/PublicHeader/PublicHeader";
+import Footer from "@/flows/landing/LandingLink/Footer/Footer";
 import FeatureHelp from "@/flows/landing/LandingLink/FeatureHelp/FeatureHelp";
 import PrimaryButton from "@/Components/Button/Primarybutton";
 import Icon from "@/Components/icons/Icon";
@@ -175,6 +178,8 @@ export default function TaskManagement() {
           <FeatureHelp items={HELP} variant="stacked" />
         </section>
       </main>
+
+      <Footer />
     </div>
   );
 }

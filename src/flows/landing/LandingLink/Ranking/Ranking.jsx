@@ -1,21 +1,13 @@
+// 03-11-2026
+// Ranking feature page explaining trust points and rank progression.
 import { useDispatch } from "react-redux";
 import PublicHeader from "@/flows/landing/LandingLink/PublicHeader/PublicHeader";
-import PrimaryButton from "@/Components/Button/Primarybutton";
+import Footer from "@/flows/landing/LandingLink/Footer/Footer";
+import { PrimaryButton } from "@/Components";
 import Icon from "@/Components/icons/Icon";
-import { showSnackbar } from "@/store/slices/snackbarSlice";
+import { showSnackbar } from "@/store";
+import rankingArt from "@/assets/landing-Img/Right Hero Graphic_ Ascending Staircase Graphic.png";
 import "./Ranking.css";
-
-const RANKS = [
-  { label: "F", tone: "f", height: 50 },
-  { label: "E", tone: "e", height: 72 },
-  { label: "D", tone: "d", height: 96 },
-  { label: "C", tone: "c", height: 126 },
-  { label: "B", tone: "b", height: 160 },
-  { label: "A", tone: "a", height: 196 },
-  { label: "S", tone: "s", height: 232 },
-  { label: "SS", tone: "ss", height: 262 },
-  { label: "SSS", tone: "sss", height: 300, dark: true, crown: true },
-];
 
 const HOW_IT_WORKS = [
   {
@@ -99,45 +91,11 @@ export default function Ranking() {
           </div>
 
           <div className="rk-hero-art">
-            <div className="rk-hint">
-              <span className="rk-hint-icon">
-                <Icon name="BarChart3" size={18} color="#0062FF" />
-              </span>
-              <span>
-                Complete successful
-                <br />
-                projects to rank up
-              </span>
-            </div>
-
-            <div className="rk-chart" aria-hidden="true">
-              <svg className="rk-dashline" viewBox="0 0 524 360" preserveAspectRatio="none">
-                <polyline
-                  points="22,280 80,258 138,234 196,204 254,170 312,134 370,98 428,68 494,28"
-                  fill="none"
-                  stroke="#9db9f7"
-                  strokeWidth="1.6"
-                  strokeDasharray="5 5"
-                />
-              </svg>
-
-              <div className="rk-cols">
-                {RANKS.map((rank) => (
-                  <div className="rk-col" key={rank.label}>
-                    {rank.crown && (
-                      <span className="rk-crown">
-                        <Icon name="Crown" size={28} color="#f4b400" fill="#f4b400" />
-                      </span>
-                    )}
-                    <span className={`rk-hex ${rank.tone}`}>{rank.label}</span>
-                    <span
-                      className={`rk-bar${rank.dark ? " dark" : ""}`}
-                      style={{ height: `${rank.height}px` }}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
+            <img
+              src={rankingArt}
+              alt="Rank progression from F to SSS shown as ascending bars with rank badges and a crown"
+              className="rk-hero-img"
+            />
           </div>
         </section>
 
@@ -180,6 +138,8 @@ export default function Ranking() {
           </div>
         </section>
       </main>
+
+      <Footer />
     </div>
   );
 }

@@ -1,3 +1,5 @@
+// 03-11-2026
+// Generic icon renderer that resolves an icon by name from the icon registry.
 import * as Icons from "./index";
 import "./icon.css";
 
