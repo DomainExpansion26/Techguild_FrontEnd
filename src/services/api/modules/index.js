@@ -9,3 +9,4 @@ export { milestonesApi, default as milestones } from "./milestonesApi";
 export { submissionsApi, default as submissions } from "./submissionsApi";
 export { teamsApi, default as teams } from "./teamsApi";
 export { verificationApi, default as verification } from "./verificationApi";
+export { taskManagementApi, default as taskManagement } from "./taskManagementApi";
