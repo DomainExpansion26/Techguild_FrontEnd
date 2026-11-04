@@ -1,7 +1,6 @@
 // Last Changed: 16-10-2026 - eco tiles click+hover select, ranks SS/SSS centered row, escrow all blue, learn-more Coming Soon, nav/footer logo mark, new guild card imgs, FAQ chevron icon, footer copyright
 // Last Changed: 15-10-2026 - icons #2456e6->#103CA4, sidebar 16px + stats icons, footer LinkedIn only, c4 wrapper, encoding fixed (₹ ✓ → ◆ ✦)
-// Flow: only the landing page. Every CTA (Sign In / Sign Up / Explore /
-// Get Started / etc.) shows a "Coming Soon" message on click — no navigation anywhere.
+// Account CTAs navigate to the active sign-in and sign-up pages.
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -122,10 +121,9 @@ export default function LandingPage() {
           <a href="#quests">Quests</a>
           <a href="#trust">Trust System</a>
         </nav>
-        {/* Sign In / Sign Up: "Coming Soon" message only, no navigation. */}
         <div className="tg-nav-cta">
-          <Link to="/login" onClick={handleComingSoon} className="tg-signin">Sign In</Link>
-          <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary">Sign Up</Link>
+          <Link to="/login" className="tg-signin">Sign In</Link>
+          <Link to="/signup" className="tg-btn-primary">Sign Up</Link>
         </div>
       </header>
 
@@ -142,10 +140,9 @@ export default function LandingPage() {
               trusted ecosystem where professionals collaborate on meaningful projects, build
               reputation, and unlock better opportunities.
             </p>
-            {/* Explore Quest Board / Get Started: "Coming Soon" message only, no navigation. */}
             <div className="tg-hero-actions">
-              <Link to="/signup" onClick={handleComingSoon} className="tg-btn-white">Explore Quest Board</Link>
-              <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary lg">Get Started</Link>
+              <Link to="/signup" className="tg-btn-white">Explore Quest Board</Link>
+              <Link to="/signup" className="tg-btn-primary lg">Get Started</Link>
             </div>
           </div>
 
@@ -394,8 +391,7 @@ export default function LandingPage() {
               <p className="tg-verified">✓ Verified Client · Rank A · Trust 92%</p>
               <div className="tg-counts"><span>18 Applicants</span><i>·</i><span>245 Views</span></div>
             </div>
-            {/* Explore: "Coming Soon" message only, no navigation. */}
-            <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary full">Explore Quest Board <span aria-hidden="true">→</span></Link>
+            <Link to="/signup" className="tg-btn-primary full">Explore Quest Board <span aria-hidden="true">→</span></Link>
           </div>
           <div className="tg-browser">
             <div className="tg-browser-bar"><span className="dot r" /><span className="dot y" /><span className="dot g" /><span className="tg-url">✓ techguild.io/quests</span></div>
@@ -434,8 +430,7 @@ export default function LandingPage() {
               <div><strong>28</strong><span>Completed Quests</span></div>
               <div><strong>A</strong><span>Rank</span></div>
             </div>
-            {/* Build Your Party: "Coming Soon" message only, no navigation. */}
-            <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary">Build Your Party +</Link>
+            <Link to="/signup" className="tg-btn-primary">Build Your Party +</Link>
           </div>
           <div className="tg-party-card">
             <div className="tg-browser-bar"><span className="dot r" /><span className="dot y" /><span className="dot g" /><span className="tg-url">✓ techguild.io/party</span></div>
@@ -514,8 +509,7 @@ export default function LandingPage() {
             <p className="tg-eyebrow light">AI-POWERED COLLABORATION</p>
             <h2 className="light">Find the right people.<br />Build the right Party.</h2>
             <p className="tg-ai-sub">TechGuild uses intelligent recommendations to help professionals discover relevant Quests and connect with compatible Party members.</p>
-            {/* Find Your Match: "Coming Soon" message only, no navigation. */}
-            <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary light">Find Your Match ✦</Link>
+            <Link to="/signup" className="tg-btn-primary light">Find Your Match ✦</Link>
           </div>
           <div className="tg-match-frame">
             <div className="tg-match-card">

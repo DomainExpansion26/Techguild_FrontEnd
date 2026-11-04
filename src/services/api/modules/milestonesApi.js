@@ -3,13 +3,16 @@ import { ENDPOINTS } from "@/services/api/endpoints";
 
 export const milestonesApi = {
   // Create milestone
-  createMilestone: async ({ contract_id, title, description, amount, due_date }) => {
+  createMilestone: async ({ contract_id, title, description, amount, tasks, start_date, due_date, status }) => {
     return apiClient.post(ENDPOINTS.MILESTONES.BASE, {
       contract_id,
       title,
       description,
       amount,
+      tasks,
+      start_date,
       due_date,
+      status,
     });
   },
 
@@ -24,12 +27,15 @@ export const milestonesApi = {
   },
 
   // Update milestone
-  updateMilestone: async (id, { title, description, amount, due_date }) => {
+  updateMilestone: async (id, { title, description, amount, tasks, start_date, due_date, status }) => {
     return apiClient.put(ENDPOINTS.MILESTONES.DETAIL(id), {
       title,
       description,
       amount,
+      tasks,
+      start_date,
       due_date,
+      status,
     });
   },
 
