@@ -3,12 +3,12 @@
 // 03-11-2026
 // TechGuild public landing page with hero, features, process, escrow, and FAQ sections.
 // Last Changed: 16-10-2026 - eco tiles click+hover select, ranks SS/SSS centered row, escrow all blue, learn-more Coming Soon, nav/footer logo mark, new guild card imgs, FAQ chevron icon, footer copyright
-// Last Changed: 15-10-2026 - icons #103CA4->#103CA4, sidebar 16px + stats icons, footer LinkedIn only, c4 wrapper, encoding fixed (₹ ✓ → ◆ ✦)
-// Flow: every navigation to another page (Learn more, footer links, Get Started)
-// goes to the Sign In page first. Sign In -> /login, Sign Up -> /signup.
-// After signing in, the user is returned to the page they originally clicked.
-import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useNavigationType } from "react-router-dom";
+// Last Changed: 15-10-2026 - icons #2456e6->#103CA4, sidebar 16px + stats icons, footer LinkedIn only, c4 wrapper, encoding fixed (₹ ✓ → ◆ ✦)
+// Account CTAs navigate to the active sign-in and sign-up pages.
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { showSnackbar } from "@/store/slices/snackbarSlice";
 import Icon from "@/Components/icons/Icon";
 import Footer from "@/flows/landing/LandingLink/Footer/Footer";
 import "./LandingPage.css";
@@ -169,11 +169,8 @@ export default function LandingPage() {
           <a href="#ranks">Ranks</a>
         </nav>
         <div className="tg-nav-cta">
-          {/* Auth navigation disabled until launch — redirect to the login page. */}
-          {/* <Link to="/login" state={{ from: "/" }} className="tg-signin">Sign In</Link> */}
-          {/* <Link to="/signup" className="tg-btn-primary">Sign Up</Link> */}
-          <button type="button" className="tg-signin" onClick={goToLogin}>Sign In</button>
-          <button type="button" className="tg-btn-primary" onClick={goToLogin}>Sign Up</button>
+          <Link to="/login" className="tg-signin">Sign In</Link>
+          <Link to="/signup" className="tg-btn-primary">Sign Up</Link>
         </div>
       </header>
 
@@ -190,11 +187,9 @@ export default function LandingPage() {
               trusted ecosystem where professionals collaborate on meaningful projects, build
               reputation, and unlock better opportunities.
             </p>
-            {/* Explore Features scrolls within the page; Get Started goes to sign up. */}
             <div className="tg-hero-actions">
-              <a href="#features" className="tg-btn-white">Explore Features</a>
-              {/* <Link to="/signup" className="tg-btn-primary lg">Get Started</Link> */}
-              <button type="button" className="tg-btn-primary lg" onClick={goToLogin}>Get Started</button>
+              <Link to="/signup" className="tg-btn-white">Explore Quest Board</Link>
+              <Link to="/signup" className="tg-btn-primary lg">Get Started</Link>
             </div>
           </div>
 
@@ -448,8 +443,7 @@ export default function LandingPage() {
               <p className="tg-verified">✓ Verified Client · Rank A · Trust 92%</p>
               <div className="tg-counts"><span>18 Applicants</span><i>·</i><span>245 Views</span></div>
             </div>
-            Explore: "Coming Soon" message only, no navigation.
-            <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary full">Explore Quest Board <span aria-hidden="true">→</span></Link>
+            <Link to="/signup" className="tg-btn-primary full">Explore Quest Board <span aria-hidden="true">→</span></Link>
           </div>
           <div className="tg-browser">
             <div className="tg-browser-bar"><span className="dot r" /><span className="dot y" /><span className="dot g" /><span className="tg-url">✓ techguild.io/quests</span></div>
@@ -489,7 +483,7 @@ export default function LandingPage() {
               <div><strong>28</strong><span>Completed Quests</span></div>
               <div><strong>A</strong><span>Rank</span></div>
             </div>
-            <Link to="/party" className="tg-btn-primary">Learn more</Link>
+            <Link to="/signup" className="tg-btn-primary">Build Your Party +</Link>
           </div>
           <div className="tg-party-card">
             <div className="tg-browser-bar"><span className="dot r" /><span className="dot y" /><span className="dot g" /><span className="tg-url">✓ techguild.io/party</span></div>
@@ -569,8 +563,7 @@ export default function LandingPage() {
             <p className="tg-eyebrow light">AI-POWERED COLLABORATION</p>
             <h2 className="light">Find the right people.<br />Build the right Party.</h2>
             <p className="tg-ai-sub">TechGuild uses intelligent recommendations to help professionals discover relevant Quests and connect with compatible Party members.</p>
-            Find Your Match: "Coming Soon" message only, no navigation.
-            <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary light">Find Your Match ✦</Link>
+            <Link to="/signup" className="tg-btn-primary light">Find Your Match ✦</Link>
           </div>
           <div className="tg-match-frame">
             <div className="tg-match-card">

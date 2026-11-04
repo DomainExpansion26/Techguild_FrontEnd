@@ -1,17 +1,37 @@
 // 9-11-2026
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { DashboardLayout } from "@/Components";
-import { projectsApi, applicationsApi } from "@/services/api";
+import { taskManagementApi } from "@/services/api";
 import { showSnackbar } from "@/store";
 import "./projects.css";
 
+function formatQuestBudget(quest) {
+  if (quest.budget_inr != null) {
+    return `₹${Number(quest.budget_inr).toLocaleString("en-IN")}`;
+  }
+
+  const minBudget = quest.min_budget ?? quest.budget;
+  const maxBudget = quest.max_budget ?? quest.budget;
+  if (minBudget != null && maxBudget != null && minBudget !== maxBudget) {
+    return `$${minBudget} - $${maxBudget}`;
+  }
+  return minBudget != null ? `$${minBudget}` : "Negotiable";
+}
+
 export default function Projects() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { questId } = useParams();
 
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [hasMore, setHasMore] = useState(false);
+  const [nextCursor, setNextCursor] = useState(null);
   const [error, setError] = useState(null);
+  const [previewProject, setPreviewProject] = useState(null);
+  const [previewError, setPreviewError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedExp, setSelectedExp] = useState("all");
@@ -23,17 +43,33 @@ export default function Projects() {
   const [deliveryDays, setDeliveryDays] = useState("14");
   const [submitting, setSubmitting] = useState(false);
 
-  const fetchProjects = useCallback(async () => {
+  const fetchProjects = useCallback(async (cursor = null, append = false) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await projectsApi.getProjects();
-      const list = response?.data?.projects || response?.data || response?.projects || [];
-      setProjects(Array.isArray(list) ? list : []);
+      const response = await taskManagementApi.listQuests(cursor ? { cursor } : {});
+      if (!Array.isArray(response?.quests)) {
+        throw new Error("The quests API returned an invalid response.");
+      }
+
+      setProjects((current) => {
+        if (!append) return response.quests;
+        const existingIds = new Set(current.map((quest) => String(quest.id)));
+        return [
+          ...current,
+          ...response.quests.filter((quest) => !existingIds.has(String(quest.id))),
+        ];
+      });
+      setHasMore(Boolean(response.has_more && response.next_cursor));
+      setNextCursor(response.next_cursor || null);
     } catch (err) {
-      console.error("Error fetching projects from API:", err);
-      setError(err?.message || "Failed to load projects from server.");
-      setProjects([]);
+      console.error("Error fetching quests from API:", err);
+      setError(err?.message || "Failed to load quests from server.");
+      if (!append) {
+        setProjects([]);
+        setHasMore(false);
+        setNextCursor(null);
+      }
     } finally {
       setLoading(false);
     }
@@ -43,11 +79,61 @@ export default function Projects() {
     fetchProjects();
   }, [fetchProjects]);
 
+  useEffect(() => {
+    if (!questId) {
+      setPreviewProject(null);
+      setPreviewError(null);
+      return undefined;
+    }
+
+    const listedProject = projects.find(
+      (project) => String(project.id || project._id) === questId
+    );
+    if (listedProject) {
+      setPreviewProject(listedProject);
+      setPreviewError(null);
+      return undefined;
+    }
+
+    if (loading) return undefined;
+
+    let active = true;
+    setPreviewProject(null);
+    setPreviewError(null);
+
+    taskManagementApi.getQuest(questId)
+      .then((response) => {
+        if (!active) return;
+        const project = response?.quest || response;
+        if (project && typeof project === "object") {
+          setPreviewProject(project);
+        } else {
+          setPreviewError("This quest could not be found.");
+        }
+      })
+      .catch((err) => {
+        if (!active) return;
+        console.error("Error fetching quest details:", err);
+        setPreviewError(err?.response?.data?.message || err?.message || "Failed to load this quest.");
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [questId, projects, loading]);
+
+  const openQuestPreview = (project) => {
+    const projectId = project.id || project._id;
+    if (projectId) navigate(`/quest-board/${projectId}`);
+  };
+
+  const closeQuestPreview = () => navigate("/quest-board");
+
   const handleApplyClick = (project, e) => {
-    e.stopPropagation();
+    e?.stopPropagation();
     setSelectedProject(project);
     setProposalText("");
-    const defaultRate = project.max_budget || project.min_budget || project.budget || "";
+    const defaultRate = project.budget_inr || project.max_budget || project.min_budget || project.budget || "";
     setProposedRate(defaultRate ? `${defaultRate}` : "");
   };
 
@@ -61,13 +147,13 @@ export default function Projects() {
     setSubmitting(true);
 
     try {
-      await applicationsApi.applyToProject(selectedProject.id || selectedProject._id, {
+      await taskManagementApi.applyToQuest(selectedProject.id || selectedProject._id, {
         cover_letter: proposalText.trim(),
         proposed_rate: Number(proposedRate) || 0,
         delivery_days: Number(deliveryDays) || 14,
       });
 
-      dispatch(showSnackbar({ message: "Proposal submitted successfully to the client!", type: "success" }));
+      dispatch(showSnackbar({ message: "Application submitted successfully to the client!", type: "success" }));
       setSelectedProject(null);
       fetchProjects();
     } catch (err) {
@@ -99,7 +185,8 @@ export default function Projects() {
 
     const matchesExp =
       selectedExp === "all" ||
-      (item.experience_level && item.experience_level.toLowerCase() === selectedExp.toLowerCase());
+      ((item.complexity || item.experience_level) &&
+        (item.complexity || item.experience_level).toLowerCase() === selectedExp.toLowerCase());
 
     return matchesSearch && matchesCategory && matchesExp;
   });
@@ -111,7 +198,7 @@ export default function Projects() {
           <div>
             <h1 className="quest-board-title">Quest Board</h1>
             <p className="quest-board-subtitle">
-              Browse live available projects and contracts directly from clients.
+              Browse live quests and opportunities posted by clients.
             </p>
           </div>
           <button
@@ -175,18 +262,18 @@ export default function Projects() {
         {loading ? (
           <div className="text-center py-5">
             <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading projects...</span>
+              <span className="visually-hidden">Loading quests...</span>
             </div>
-            <p className="text-secondary mt-2">Loading live projects from backend...</p>
+            <p className="text-secondary mt-2">Loading live quests from backend...</p>
           </div>
         ) : filteredProjects.length === 0 ? (
           <div className="text-center py-5 bg-white rounded-3 border p-5 shadow-sm">
             <div className="mb-3 fs-1">🛡️</div>
-            <h4 className="fw-bold mb-2">No Projects Found</h4>
+            <h4 className="fw-bold mb-2">No Quests Found</h4>
             <p className="text-secondary mb-0">
               {searchTerm || selectedCategory !== "all"
                 ? "No live projects match your current filters. Try adjusting your search query."
-                : "There are currently no open project quests available. Check back shortly as clients post new work."}
+                : "There are currently no open quests available. Check back shortly as clients post new work."}
             </p>
           </div>
         ) : (
@@ -201,15 +288,22 @@ export default function Projects() {
               const clientName = project.client?.company_name || project.client?.name || project.client_name || "Client";
               const initials = clientName.substring(0, 2).toUpperCase();
               
-              const minB = project.min_budget || project.budget;
-              const maxB = project.max_budget || project.budget;
-              const budgetText = minB && maxB && minB !== maxB ? `$${minB} - $${maxB}` : minB ? `$${minB}` : "Negotiable";
+              const budgetText = formatQuestBudget(project);
+              const complexity = project.complexity || project.experience_level;
 
               return (
                 <div
                   key={projectId}
                   className="quest-card"
-                  onClick={() => setSelectedProject(project)}
+                  onClick={() => openQuestPreview(project)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      openQuestPreview(project);
+                    }
+                  }}
                 >
                   <div className="quest-card-header">
                     <div className="quest-client-info">
@@ -223,7 +317,8 @@ export default function Projects() {
                         </div>
                         <span className="quest-posted-time">
                           {project.created_at ? new Date(project.created_at).toLocaleDateString() : "Active"}
-                          {project.duration && ` • ${project.duration}`}
+                          {(project.timeline_days || project.duration) &&
+                            ` • ${project.timeline_days ? `${project.timeline_days} days` : project.duration}`}
                         </span>
                       </div>
                     </div>
@@ -238,7 +333,8 @@ export default function Projects() {
                   <div className="d-flex flex-wrap gap-1 mb-2">
                     {project.category && <span className="badge bg-light text-secondary border">{project.category}</span>}
                     {project.project_type && <span className="badge bg-light text-secondary border text-capitalize">{project.project_type}</span>}
-                    {project.experience_level && <span className="badge bg-light text-secondary border text-capitalize">{project.experience_level}</span>}
+                    {complexity && <span className="badge bg-light text-secondary border text-capitalize">{complexity}</span>}
+                    {project.required_min_rank && <span className="badge bg-light text-secondary border">Rank {project.required_min_rank}+</span>}
                   </div>
 
                   {skillsList.length > 0 && (
@@ -258,7 +354,10 @@ export default function Projects() {
                     <button
                       type="button"
                       className="quest-apply-btn"
-                      onClick={(e) => handleApplyClick(project, e)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleApplyClick(project);
+                      }}
                     >
                       Apply Now
                     </button>
@@ -266,6 +365,101 @@ export default function Projects() {
                 </div>
               );
             })}
+          </div>
+        )}
+
+        {!loading && hasMore && (
+          <div className="text-center mt-4">
+            <button
+              type="button"
+              className="btn btn-outline-primary px-4"
+              onClick={() => fetchProjects(nextCursor, true)}
+              disabled={loading}
+            >
+              Load More Quests
+            </button>
+          </div>
+        )}
+
+        {questId && (
+          <div className="quest-preview-overlay" onClick={closeQuestPreview}>
+            <section
+              className="quest-preview-card"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="quest-preview-title"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <button
+                type="button"
+                className="proposal-modal-close"
+                onClick={closeQuestPreview}
+                aria-label="Close quest preview"
+              >
+                ✕
+              </button>
+              {previewProject ? (
+                <>
+                  <div className="quest-preview-heading">
+                    <div>
+                      <p className="quest-preview-eyebrow">Quest Preview</p>
+                      <h2 id="quest-preview-title">{previewProject.title || "Quest details"}</h2>
+                    </div>
+                    <span className="quest-budget-badge">
+                      {formatQuestBudget(previewProject)}
+                    </span>
+                  </div>
+                  <p className="quest-preview-client">
+                    Posted by {previewProject.client?.company_name || previewProject.client?.name || previewProject.client_name || "Client"}
+                    {previewProject.created_at && ` · ${new Date(previewProject.created_at).toLocaleDateString()}`}
+                  </p>
+                  <div className="quest-preview-tags">
+                    {[previewProject.category, previewProject.complexity || previewProject.experience_level, previewProject.status]
+                      .filter(Boolean)
+                      .map((tag) => <span key={tag}>{tag}</span>)}
+                  </div>
+                  <div className="quest-preview-section">
+                    <h3>About this quest</h3>
+                    <p>{previewProject.description || "No description provided."}</p>
+                  </div>
+                  {(() => {
+                    const skills = Array.isArray(previewProject.required_skills)
+                      ? previewProject.required_skills
+                      : Array.isArray(previewProject.skills)
+                        ? previewProject.skills
+                        : [];
+                    return skills.length > 0 && (
+                      <div className="quest-preview-section">
+                        <h3>Skills required</h3>
+                        <div className="quest-skills-list">
+                          {skills.map((skill, index) => (
+                            <span key={skill?.id || skill?._id || skill?.name || skill || index} className="quest-skill-tag">
+                              {typeof skill === "object" ? skill.name : skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })()}
+                  <div className="quest-preview-facts">
+                    <div><span>Duration</span><strong>{previewProject.timeline_days ? `${previewProject.timeline_days} days` : previewProject.duration || "Not specified"}</strong></div>
+                    <div><span>Milestones</span><strong>{previewProject.milestone_count ?? "Not specified"}</strong></div>
+                    <div><span>Applications</span><strong>{previewProject.applications_count || previewProject.proposals_count || 0}</strong></div>
+                    <div><span>Deadline</span><strong>{previewProject.application_deadline ? new Date(previewProject.application_deadline).toLocaleDateString() : "Not specified"}</strong></div>
+                  </div>
+                  <div className="quest-preview-actions">
+                    <button type="button" className="btn btn-outline-secondary" onClick={closeQuestPreview}>Back to quests</button>
+                    <button type="button" className="quest-apply-btn" onClick={() => handleApplyClick(previewProject)}>
+                      Apply Now
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <div className="quest-preview-loading" role="status">
+                  {previewError || "Loading quest preview..."}
+                </div>
+              )}
+            </section>
           </div>
         )}
 
@@ -299,7 +493,7 @@ export default function Projects() {
 
                 <div className="row g-3 mb-4">
                   <div className="col-md-6">
-                    <label className="proposal-label">Proposed Bid / Rate ($ USD) *</label>
+                    <label className="proposal-label">Proposed Bid / Rate (₹ INR) *</label>
                     <input
                       type="number"
                       className="proposal-input"
