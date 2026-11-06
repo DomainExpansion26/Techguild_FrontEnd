@@ -1,14 +1,15 @@
+// 6-11-2026
 import { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import { LoadingSpinner, NotFound } from "@/Components/feedback";
+import { AuthGuard } from "@/permissions";
 
 import { authRoutes } from "@/flows/auth/routes";
 import { landingRoutes } from "@/flows/landing/routes";
-
-// TEMPORARY: dashboard + all role-based flows (individual / client / agency /
-// admin) are removed — the app shows ONLY the landing page plus the temporary
-// Coming Soon auth entries (/login, /signup). No dashboard navigation exists.
-// To restore, re-add the AuthGuard route block and flow imports (see git history).
+import { individualRoutes } from "@/flows/individual/routes";
+import { clientRoutes } from "@/flows/client/routes";
+import { agencyRoutes } from "@/flows/agency/routes";
+import { adminRoutes } from "@/flows/admin/routes";
 
 export default function AppRoutes() {
   return (
@@ -19,8 +20,16 @@ export default function AppRoutes() {
         {/* Public Marketing & Landing Flow */}
         {landingRoutes}
 
-        {/* Authentication Flow (temporarily Coming Soon pages) */}
+        {/* Authentication Flow */}
         {authRoutes}
+
+        {/* Protected Role-Based Flows (Requires Active Session) */}
+        <Route element={<AuthGuard />}>
+          {individualRoutes}
+          {clientRoutes}
+          {agencyRoutes}
+          {adminRoutes}
+        </Route>
 
         {/* 404 Fallback */}
         <Route path="*" element={<NotFound />} />

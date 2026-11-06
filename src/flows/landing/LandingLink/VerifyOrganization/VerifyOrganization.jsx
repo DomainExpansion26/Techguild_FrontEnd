@@ -1,3 +1,4 @@
+// 6-11-2026
 // 03-11-2026
 // Organization verification page for business identity and representative checks.
 import { useDispatch } from "react-redux";
@@ -130,11 +131,6 @@ export default function VerifyOrganization() {
   return (
     <DashboardShell>
       <header className="dash-page-head">
-        <nav className="dash-crumb" aria-label="Breadcrumb">
-          <span>Dashboard</span>
-          <Icon name="ChevronRight" size={12} color="#94a3b8" />
-          <span className="on">Verification</span>
-        </nav>
         <h1>Verify Your Organization</h1>
         <p>Build credibility with professionals and create a more trusted environment for your Quests.</p>
       </header>
