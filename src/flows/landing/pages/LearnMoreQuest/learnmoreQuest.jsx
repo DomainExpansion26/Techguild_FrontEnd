@@ -1,3 +1,4 @@
+// 6-11-2026
 // 03-11-2026
 // Learn More About Quests page explaining how quests work for freelancers and clients.
 import { Link } from "react-router-dom";
@@ -89,16 +90,6 @@ export default function LearnMoreQuest() {
       <PublicHeader />
 
       <main>
-        <div className="lmq-wrap">
-          <nav className="lmq-breadcrumb" aria-label="Breadcrumb">
-            <Link to="/">Home</Link>
-            <span aria-hidden="true">/</span>
-            <Link to="/features">Features</Link>
-            <span aria-hidden="true">/</span>
-            <span aria-current="page">Quest Board</span>
-          </nav>
-        </div>
-
         <section className="lmq-hero">
           <div className="lmq-wrap lmq-hero-grid">
             <div className="lmq-hero-copy">

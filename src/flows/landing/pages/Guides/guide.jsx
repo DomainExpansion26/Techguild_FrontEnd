@@ -1,3 +1,4 @@
+// 6-11-2026
 // 03-11-2026
 // Getting Started guide article for new TechGuild users.
 import { useState } from "react";
@@ -194,13 +195,6 @@ export default function Guides() {
       <main>
         <section className="gd-hero">
           <div className="gd-wrap gd-hero-inner">
-            <nav className="gd-breadcrumb" aria-label="Breadcrumb">
-              <Link to="/guides">Guides</Link>
-              <Icon name="ChevronRight" size={10} color="#94a3b8" />
-              <Link to="/guides/getting-started">Getting Started</Link>
-              <Icon name="ChevronRight" size={10} color="#94a3b8" />
-              <span>Create an Account</span>
-            </nav>
             <h1>Getting Started with TechGuild</h1>
             <p className="gd-hero-sub">
               Follow these step-by-step guides to create your account, complete verification and

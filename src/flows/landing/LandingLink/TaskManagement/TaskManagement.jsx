@@ -1,3 +1,4 @@
+// 6-11-2026
 // 03-11-2026
 // Task Management feature page showing milestones, approvals, and project progress.
 import { useDispatch } from "react-redux";
@@ -142,14 +143,6 @@ export default function TaskManagement() {
       <PublicHeader />
 
       <main className="tm-main">
-        <nav className="tm-crumb" aria-label="Breadcrumb">
-          <span>Home</span>
-          <Icon name="ChevronRight" size={11} color="#94a3b8" />
-          <span>Features</span>
-          <Icon name="ChevronRight" size={11} color="#94a3b8" />
-          <span className="on">Task Management</span>
-        </nav>
-
         <section className="tm-hero">
           <div className="tm-hero-copy">
             <p className="tm-eyebrow">FEATURE</p>

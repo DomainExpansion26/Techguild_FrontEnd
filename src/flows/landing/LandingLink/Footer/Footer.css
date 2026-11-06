@@ -1,3 +1,4 @@
+/* 6-11-2026 */
 /* 03-11-2026 */
 /* Styles for the site-wide Footer component. */
 .ftr {
@@ -84,7 +85,7 @@
 
 .ftr-col .ftr-active,
 .ftr-col .ftr-active:hover {
-  color: #0062ff;
+  color: #103CA4;
 }
 
 .ftr-social {
@@ -112,77 +113,6 @@
 
 .ftr-social .ftr-social-linkedin svg path {
   stroke: #ffffff;
-}
-
-.ftr-newsletter {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 40px;
-  margin-top: 64px;
-  padding-top: 44px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.ftr-newsletter strong {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 17px;
-  font-weight: 700;
-}
-
-.ftr-newsletter p {
-  margin: 0;
-  color: #8b96ac;
-  font-size: 14px;
-}
-
-.ftr-newsletter form {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  max-width: 520px;
-}
-
-.ftr-newsletter input {
-  flex: 1;
-  min-width: 0;
-  height: 46px;
-  padding: 0 18px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 10px;
-  outline: none;
-  background: rgba(255, 255, 255, 0.04);
-  color: #ffffff;
-  font-family: inherit;
-  font-size: 14px;
-}
-
-.ftr-newsletter input::placeholder {
-  color: #7c879b;
-}
-
-.ftr-newsletter input:focus {
-  border-color: rgba(0, 98, 255, 0.7);
-}
-
-.ftr-newsletter button {
-  height: 46px;
-  padding: 0 28px;
-  border: 0;
-  border-radius: 10px;
-  background: #0062ff;
-  color: #ffffff;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.ftr-newsletter button:hover {
-  background: #0052d6;
 }
 
 .ftr-giant {
@@ -233,24 +163,6 @@
 
   .ftr-brand {
     grid-column: 1 / -1;
-  }
-
-  .ftr-newsletter {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 22px;
-    margin-top: 48px;
-    padding-top: 32px;
-  }
-
-  .ftr-newsletter form {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .ftr-newsletter input,
-  .ftr-newsletter button {
-    width: 100%;
   }
 
   .ftr-giant {

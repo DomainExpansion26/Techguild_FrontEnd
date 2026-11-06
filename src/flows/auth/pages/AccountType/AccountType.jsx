@@ -1,3 +1,4 @@
+// 6-11-2026
 // [TechGuild Update: 30-09-2026] Bg uses existing img2.png (no visual change).
 import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -187,21 +188,16 @@ export default function AccountType() {
     selectionDispatch({ type: "SUBMIT_START" });
 
     try {
-      // 1. Register account type on backend
-      await authApi.registerAccountType({
-        email,
-        password,
-        account_type: selected,
-      });
-
-      // 2. Log in with the same credentials to obtain a real JWT.
-      // No rollback is possible server-side if this fails, so surface the
-      // error and route to login instead of entering the app session-less.
+      // 1. Log in first to obtain a real JWT (backend supports setting the
+      // account type only for authenticated users).
       const loginRes = await authApi.login({ email, password });
       const realToken = loginRes?.access_token;
       if (!realToken) {
         throw new Error(loginRes?.message || FORM_ERRORS.AUTH.ACCOUNT_TYPE_FAILED);
       }
+
+      // 2. Set the account type with the authenticated endpoint.
+      await authApi.setAccountTypeAuthenticated({ account_type: selected, token: realToken });
 
       await login(
         {
@@ -211,7 +207,9 @@ export default function AccountType() {
           avatar: fullName.charAt(0).toUpperCase(),
         },
         realToken,
-        selected
+        selected,
+        loginRes?.refresh_token,
+        loginRes?.expires_in
       );
       scrubPendingPassword();
 

@@ -1,3 +1,4 @@
+// 6-11-2026
 // 03-11-2026
 // Guide topic landing page that lists guides for a selected topic.
 import { Link, Navigate, useParams } from "react-router-dom";
@@ -34,12 +35,6 @@ export default function GuideTopic() {
       <main>
         <section className="gt-hero">
           <div className="gt-wrap">
-            <nav className="gt-breadcrumb" aria-label="Breadcrumb">
-              <Link to="/guides">Guides</Link>
-              <Icon name="ChevronRight" size={10} color="#94a3b8" />
-              <span>{topic.title}</span>
-            </nav>
-
             <div className="gt-hero-main">
               <span className="gt-hero-icon" aria-hidden="true">
                 <Icon name={topic.icon} size={22} color="#2563eb" />

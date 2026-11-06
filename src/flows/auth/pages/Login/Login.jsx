@@ -1,3 +1,4 @@
+// 6-11-2026
 // [TechGuild Update: 30-09-2026] Prefetch post-login chunks + shell bg while user types / on success (no visual change).
 import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -284,9 +285,12 @@ export default function Login() {
 
         const isUnverified =
           err?.status === 401 && err?.message?.toLowerCase().includes("verify your email");
+        const isRejected = err?.status === 401;
         const msg = isUnverified
           ? TOAST_MESSAGES.AUTH.VERIFY_EMAIL_REQUIRED
-          : err?.message || FORM_ERRORS.AUTH.INVALID_CREDENTIALS;
+          : isRejected
+            ? `${FORM_ERRORS.AUTH.INVALID_CREDENTIALS} If you just signed up, verify your email first.`
+            : err?.message || FORM_ERRORS.AUTH.INVALID_CREDENTIALS;
         fail(msg);
 
         if (isUnverified) {
@@ -337,6 +341,14 @@ export default function Login() {
                     style={{ color: "inherit", fontWeight: 600, textDecoration: "underline" }}
                   >
                     Set or reset password
+                  </Link>
+                  {" · "}
+                  <Link
+                    to="/verify-email"
+                    state={{ email }}
+                    style={{ color: "inherit", fontWeight: 600, textDecoration: "underline" }}
+                  >
+                    Resend verification email
                   </Link>
                 </div>
               </div>

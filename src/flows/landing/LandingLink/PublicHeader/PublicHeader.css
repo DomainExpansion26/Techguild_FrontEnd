@@ -1,3 +1,4 @@
+/* 6-11-2026 */
 .pub-header {
   background: #ffffff;
 }
@@ -42,9 +43,13 @@
 
 .pub-login {
   color: #0b1220;
+  font-family: inherit;
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
 }
 
 .pub-login:hover {
@@ -59,10 +64,13 @@
   border-radius: 8px;
   background: #0062ff;
   color: #ffffff;
+  font-family: inherit;
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
   transition: background 0.2s ease;
+  border: 0;
+  cursor: pointer;
 }
 
 .pub-cta:hover {

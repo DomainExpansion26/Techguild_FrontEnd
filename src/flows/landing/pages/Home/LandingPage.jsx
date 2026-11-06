@@ -1,3 +1,4 @@
+// 6-11-2026
 // 03-11-2026
 // TechGuild public landing page with hero, features, process, escrow, and FAQ sections.
 // Last Changed: 16-10-2026 - eco tiles click+hover select, ranks SS/SSS centered row, escrow all blue, learn-more Coming Soon, nav/footer logo mark, new guild card imgs, FAQ chevron icon, footer copyright
@@ -7,6 +8,8 @@
 // After signing in, the user is returned to the page they originally clicked.
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { showSnackbar } from "@/store/slices/snackbarSlice";
 import Icon from "@/Components/icons/Icon";
 import Footer from "@/flows/landing/LandingLink/Footer/Footer";
 import "./LandingPage.css";
@@ -97,9 +100,15 @@ function Marquee({ items }) {
 }
 
 export default function LandingPage() {
+  const dispatch = useDispatch();
   const [openFaq, setOpenFaq] = useState(null);
   const [ecoSelected, setEcoSelected] = useState(null);
   const [ecoHover, setEcoHover] = useState(null);
+
+  const handleComingSoon = (event) => {
+    if (event) event.preventDefault();
+    dispatch(showSnackbar({ message: "Coming Soon", type: "info" }));
+  };
 
   return (
     <div className="tg-landing">
@@ -112,15 +121,17 @@ export default function LandingPage() {
         <nav className="tg-nav-links">
           <a href="#home">Home</a>
           <a href="#about">About</a>
-          <a href="#features">Features</a>
-          <a href="#how">How It Works</a>
           <a href="#services">Services</a>
-          <Link to="/features/quest-board">Quests</Link>
-          <a href="#trust">Trust System</a>
+          <a href="#how">How It Works</a>
+          <a href="#features">Features</a>
+          <a href="#ranks">Ranks</a>
         </nav>
         <div className="tg-nav-cta">
-          <Link to="/login" state={{ from: "/" }} className="tg-signin">Sign In</Link>
-          <Link to="/signup" className="tg-btn-primary">Sign Up</Link>
+          {/* Auth navigation disabled until launch — show "Coming Soon" instead. */}
+          {/* <Link to="/login" state={{ from: "/" }} className="tg-signin">Sign In</Link> */}
+          {/* <Link to="/signup" className="tg-btn-primary">Sign Up</Link> */}
+          <button type="button" className="tg-signin" onClick={handleComingSoon}>Sign In</button>
+          <button type="button" className="tg-btn-primary" onClick={handleComingSoon}>Sign Up</button>
         </div>
       </header>
 
@@ -140,7 +151,8 @@ export default function LandingPage() {
             {/* Explore Features scrolls within the page; Get Started goes to sign up. */}
             <div className="tg-hero-actions">
               <a href="#features" className="tg-btn-white">Explore Features</a>
-              <Link to="/signup" className="tg-btn-primary lg">Get Started</Link>
+              {/* <Link to="/signup" className="tg-btn-primary lg">Get Started</Link> */}
+              <button type="button" className="tg-btn-primary lg" onClick={handleComingSoon}>Get Started</button>
             </div>
           </div>
 
@@ -457,7 +469,7 @@ export default function LandingPage() {
       </section>
 
       {/* ============ RANK ============ */}
-      <section className="tg-rank">
+      <section className="tg-rank" id="ranks">
         <div className="tg-wrap">
           <p className="tg-eyebrow">RANK &amp; REPUTATION</p>
           <h2>Your reputation is your<br />career</h2>
