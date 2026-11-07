@@ -1,3 +1,4 @@
+// 6-11-2026
 import { useDispatch } from "react-redux";
 import DashboardShell from "@/flows/landing/LandingLink/DashboardShell/DashboardShell";
 import Icon from "@/Components/icons/Icon";
@@ -47,11 +48,6 @@ export default function GetVerified() {
   return (
     <DashboardShell>
       <header className="dash-page-head">
-        <nav className="dash-crumb" aria-label="Breadcrumb">
-          <span>Dashboard</span>
-          <Icon name="ChevronRight" size={12} color="#94a3b8" />
-          <span className="on">Verification</span>
-        </nav>
         <h1>Get Verified</h1>
         <p>
           Build trust, strengthen your professional profile, and unlock better opportunities across the TechGuild

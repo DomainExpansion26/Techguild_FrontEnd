@@ -1,3 +1,4 @@
+/* 6-11-2026 */
 .dash-workspace .dash-content {
   flex: 1 1 auto;
   min-height: 0;
@@ -7,7 +8,7 @@
   width: 100%;
   padding: 26px 4px 0;
   color: #0b1220;
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-family: "SF Pro Display", "SF Pro Text", "Inter", system-ui, -apple-system, sans-serif;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }

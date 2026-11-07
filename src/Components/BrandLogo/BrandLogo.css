@@ -1,8 +1,20 @@
+/* 6-11-2026 */
 .brand {
-  font-size: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 21px;
   font-weight: 700;
+  line-height: 1;
   margin-bottom: 4px;
   letter-spacing: -0.02em;
+}
+
+.brand-mark {
+  display: block;
+  flex-shrink: 0;
+  width: auto;
+  height: 30px;
 }
 
 .tech {
@@ -10,5 +22,5 @@
 }
 
 .guild {
-  color: #2563EB;
+  color: #103ca4;
 }

@@ -1,7 +1,7 @@
+// 6-11-2026
 // 03-11-2026
 // Shared layout for full guide articles with hero, sticky table of contents, and search.
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import PublicHeader from "@/flows/landing/LandingLink/PublicHeader/PublicHeader";
 import Footer from "@/flows/landing/LandingLink/Footer/Footer";
@@ -44,11 +44,6 @@ export default function FullGuideLayout({
         <section className={`fg-hero${heroVariant === "card" ? " is-card" : ""}`}>
           <div className="fg-wrap fg-hero-inner">
             <div className="fg-hero-copy">
-              <nav className="fg-breadcrumb" aria-label="Breadcrumb">
-                <Link to="/guides">Guides</Link>
-                <Icon name="ChevronRight" size={10} color="#94a3b8" />
-                <span>{title}</span>
-              </nav>
               <h1>{title}</h1>
               <p className="fg-hero-sub">{subtitle}</p>
             </div>

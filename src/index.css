@@ -1,3 +1,4 @@
+/* 6-11-2026 */
 /* 03-11-2026 */
 /* Global base styles and shared layout resets for the application. */
 * {
@@ -15,7 +16,7 @@ body {
   overflow: hidden;
   background-color: #ffffff;
   color: #1a1a1a;
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'SF Pro Display', 'SF Pro Text', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

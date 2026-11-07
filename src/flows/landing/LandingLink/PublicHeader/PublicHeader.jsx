@@ -1,11 +1,19 @@
+// 6-11-2026
 // 03-11-2026
 // Public site header with TechGuild branding, login, and signup actions.
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { showSnackbar } from "@/store/slices/snackbarSlice";
 import logoMark from "@/assets/landing-Img/ttttttt 1@2x.png";
 import "./PublicHeader.css";
 
 export default function PublicHeader({ hideLogin = false }) {
-  const location = useLocation();
+  const dispatch = useDispatch();
+
+  const handleComingSoon = (event) => {
+    if (event) event.preventDefault();
+    dispatch(showSnackbar({ message: "Coming Soon", type: "info" }));
+  };
 
   return (
     <header className="pub-header">
@@ -16,13 +24,22 @@ export default function PublicHeader({ hideLogin = false }) {
         </Link>
         <nav className="pub-actions" aria-label="Account">
           {!hideLogin && (
-            <Link to="/login" state={{ from: `${location.pathname}${location.search}${location.hash}` }} className="pub-login">
-              Log in
-            </Link>
+            <>
+              {/* Auth navigation disabled until launch — show "Coming Soon" instead. */}
+              {/* <Link to="/login" state={{ from: `${location.pathname}${location.search}${location.hash}` }} className="pub-login">
+                Log in
+              </Link> */}
+              <button type="button" className="pub-login" onClick={handleComingSoon}>
+                Log in
+              </button>
+            </>
           )}
-          <Link to="/signup" className="pub-cta">
+          {/* <Link to="/signup" className="pub-cta">
             Get started
-          </Link>
+          </Link> */}
+          <button type="button" className="pub-cta" onClick={handleComingSoon}>
+            Get started
+          </button>
         </nav>
       </div>
     </header>
