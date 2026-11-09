@@ -1,3 +1,4 @@
+// 9-11-2026
 // [TechGuild Update: 30-09-2026] Bg uses existing img2.png (no visual change).
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import { useNavigate, useSearchParams, useParams, Link } from "react-router-dom";
@@ -158,7 +159,7 @@ export default function EmailVerified() {
                 <Link to="/verify-email" className="btn btn-sm btn-outline-secondary">
                   Resend Verification Email
                 </Link>
-                <Link to="/login" className="btn btn-sm text-white" style={{ backgroundColor: "#103ca4" }}>
+                <Link to="/login" className="btn btn-sm text-white" style={{ backgroundColor: "#103CA4" }}>
                   Sign In
                 </Link>
               </div>

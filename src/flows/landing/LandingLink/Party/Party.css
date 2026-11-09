@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 .pt-page {
   height: 100vh;
   min-height: 100vh;
@@ -33,7 +34,7 @@
 
 .pt-eyebrow {
   margin: 0 0 16px;
-  color: #0062ff;
+  color: #103CA4;
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -71,16 +72,16 @@
   gap: 10px;
   padding: 13px 22px;
   border-radius: 8px;
-  background: #0062ff;
+  background: #103CA4;
   font-size: 14px;
 }
 
 .pt-cta:hover:not(:disabled) {
-  background: #0052d6;
+  background: #0C3083;
 }
 
 .pt-cta:active:not(:disabled) {
-  background: #0052d6;
+  background: #0C3083;
 }
 
 .pt-hero-art {
@@ -144,7 +145,7 @@
   height: 22px;
   border-radius: 50%;
   background: #DBEAFE;
-  color: #0062ff;
+  color: #103CA4;
   font-size: 7px;
   font-weight: 700;
 }
@@ -176,7 +177,7 @@
 
 .pt-dash-side span.on {
   background: #EFF6FF;
-  color: #0062ff;
+  color: #103CA4;
   font-weight: 600;
 }
 
@@ -251,8 +252,8 @@
 }
 
 .pt-dash-btns span.primary {
-  border-color: #0062ff;
-  background: #0062ff;
+  border-color: #103CA4;
+  background: #103CA4;
   color: #ffffff;
 }
 
@@ -289,7 +290,7 @@
 .pt-dash-stats strong {
   display: block;
   margin-bottom: 2px;
-  color: #0062ff;
+  color: #103CA4;
   font-size: 11px;
   font-weight: 800;
 }

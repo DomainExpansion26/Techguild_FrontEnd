@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* ==========================================================================
    Proposals & Applications Tracker (Figma Aligned)
    ========================================================================== */
@@ -51,12 +52,12 @@
 }
 
 .proposals-tab-btn:hover {
-  color: #103ca4;
+  color: #103CA4;
 }
 
 .proposals-tab-btn.active {
-  color: #103ca4;
-  border-bottom-color: #103ca4;
+  color: #103CA4;
+  border-bottom-color: #103CA4;
 }
 
 .proposals-list {

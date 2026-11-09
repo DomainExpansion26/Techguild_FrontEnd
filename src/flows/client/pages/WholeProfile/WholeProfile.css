@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* [TechGuild Update: 30-09-2026] Removed unreachable bg-image reference (it 404'd); page renders exactly as before. */
 /* [TechGuild Update: 21-09-2026] Client whole profile stylesheet, layout tokens & modal styling */
 /* [TechGuild Update: 28-09-26] Scoped edit modal, slug/URL card, logo menu, banner/avatar sync & responsive polish */
@@ -1433,7 +1434,7 @@ body,
 }
 
 .wp-link-action:hover {
-  color: #103ca4;
+  color: #103CA4;
 }
 
 .wp-link-action svg,
@@ -1446,8 +1447,8 @@ body,
 .wp-link-action:hover svg,
 .wp-link-action:hover svg path,
 .wp-link-action:hover path {
-  color: #103ca4 !important;
-  stroke: #103ca4 !important;
+  color: #103CA4 !important;
+  stroke: #103CA4 !important;
 }
 
 /* Profile completion */
@@ -1744,7 +1745,7 @@ body,
 }
 
 .wp-action-btn:hover .wp-action-text {
-  color: #103ca4;
+  color: #103CA4;
 }
 
 .wp-action-chevron {
@@ -1754,7 +1755,7 @@ body,
 }
 
 .wp-action-btn:hover .wp-action-chevron {
-  color: #103ca4;
+  color: #103CA4;
 }
 
 /* Rank Progression (trust card redesign) */
@@ -1869,33 +1870,26 @@ body,
   user-select: none;
 }
 
-.wp-rank-node.passed .wp-rank-circle {
-  background: #eef3fd;
-  color: #103CA4;
-  border-color: #d3e0f8;
-}
-
-.wp-rank-node.current .wp-rank-circle {
+.wp-trust-node.active .wp-trust-circle {
   background: #103CA4;
-  border-color: #103CA4;
   color: #ffffff;
-  font-size: 12px;
-  box-shadow: 0 4px 12px rgba(16, 60, 164, 0.35);
+  border: 2px solid #103CA4;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(16, 60, 164, 0.15);
 }
 
 .wp-rank-you {
   font-size: 11px;
-  font-weight: 800;
-  color: #103CA4;
-  line-height: 1;
+  color: #94a3b8;
+  min-height: 14px;
+  font-weight: 500;
+  text-align: center;
 }
 
-/* Progress bar + count */
-.wp-rank-progress-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
+.wp-trust-node.active .wp-trust-node-label {
+  color: #103CA4;
+  font-weight: 700;
 }
 
 .wp-rank-progress-bar {
@@ -2020,50 +2014,9 @@ body,
   flex-shrink: 0;
 }
 
-.wp-rank-nextbox {
-  flex: 0 0 250px;
-  width: 250px;
-  max-width: 100%;
-  background: #f4f6fb;
-  border: 1px solid #e6ebf3;
-  border-radius: 12px;
-  padding: 14px 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.wp-rank-nextinfo {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.wp-rank-next-label {
-  font-size: 12px;
-  color: #8a94a8;
-}
-
-.wp-rank-next-value {
-  font-size: 18px;
-  font-weight: 800;
+.wp-trust-next b {
   color: #103CA4;
-  line-height: 1.15;
-}
-
-.wp-rank-next-sub {
-  font-size: 12px;
-  color: #8a94a8;
-  line-height: 1.45;
-}
-
-.wp-rank-ring {
-  position: relative;
-  width: 64px;
-  height: 64px;
-  flex-shrink: 0;
+  font-weight: 700;
 }
 
 .wp-rank-ring-text {
@@ -3299,4 +3252,4 @@ body,
 
 .wp-inline-alert-close:hover {
   opacity: 1;
-}
+}

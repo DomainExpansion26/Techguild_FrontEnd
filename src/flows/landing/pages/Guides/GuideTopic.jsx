@@ -1,3 +1,4 @@
+// 9-11-2026
 // 6-11-2026
 // 03-11-2026
 // Guide topic landing page that lists guides for a selected topic.
@@ -93,7 +94,7 @@ export default function GuideTopic() {
               <p>Our support team is here to help. Reach out anytime and we&apos;ll get back to you.</p>
             </div>
             <Link to="/contact" className="gt-support-btn">
-              <Icon name="MessageSquareMore" size={13} color="#103ca4" />
+              <Icon name="MessageSquareMore" size={13} color="#103CA4" />
               Contact Support
             </Link>
           </div>

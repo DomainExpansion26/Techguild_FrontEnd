@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 .signup-page {
   /* Figma "Frame 3466088": SOLID white at 0.5 opacity */
   --signup-card-bg: rgba(255, 255, 255, 0.5);
@@ -7,7 +8,7 @@
   --signup-placeholder: #6b7280;
   --signup-placeholder-first: #6a717d;
   --signup-divider-line: #7e8a7d;
-  --signup-primary: #103ca4;
+  --signup-primary: #103CA4;
   --signup-radius: 9px;
 
   width: 100%;

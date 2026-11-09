@@ -1,12 +1,12 @@
+// 9-11-2026
 // 03-11-2026
 // Party feature page explaining team collaboration for freelancers, clients, and agencies.
-import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import PublicHeader from "@/flows/landing/LandingLink/PublicHeader/PublicHeader";
 import Footer from "@/flows/landing/LandingLink/Footer/Footer";
 import FeatureHelp from "@/flows/landing/LandingLink/FeatureHelp/FeatureHelp";
 import PrimaryButton from "@/Components/Button/Primarybutton";
 import Icon from "@/Components/icons/Icon";
-import { showSnackbar } from "@/store/slices/snackbarSlice";
 import "./Party.css";
 
 const HELP = [
@@ -72,7 +72,7 @@ function PartyDashboard() {
             <div className="pt-dash-title">
               <strong>
                 PixelForge
-                <Icon name="BadgeCheck" size={10} color="#0062FF" fill="#0062FF" />
+                <Icon name="BadgeCheck" size={10} color="#103CA4" fill="#103CA4" />
               </strong>
               <span>Product Design + Development + AI Solutions</span>
               <p>A team of passionate builders creating digital products.</p>
@@ -116,10 +116,10 @@ function PartyDashboard() {
 }
 
 export default function Party() {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const comingSoon = () => {
-    dispatch(showSnackbar({ message: "Coming Soon", type: "info" }));
+  const goToLogin = () => {
+    navigate("/login");
   };
 
   return (
@@ -137,7 +137,7 @@ export default function Party() {
               Clients can explore Party profiles, review collective skills, verified members, completed quests and
               rank before choosing the right team for their project.
             </p>
-            <PrimaryButton className="pt-cta" onClick={comingSoon}>
+            <PrimaryButton className="pt-cta" onClick={goToLogin}>
               Explore Party Management
               <span aria-hidden="true">→</span>
             </PrimaryButton>

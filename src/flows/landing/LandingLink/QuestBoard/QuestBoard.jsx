@@ -1,8 +1,8 @@
+// 9-11-2026
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import DashboardShell from "@/flows/landing/LandingLink/DashboardShell/DashboardShell";
 import Icon from "@/Components/icons/Icon";
-import { showSnackbar } from "@/store/slices/snackbarSlice";
 import "./QuestBoard.css";
 
 const PROCESS = [
@@ -82,7 +82,7 @@ function QuestArt() {
 }
 
 export default function QuestBoard() {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [checks, setChecks] = useState({
     requirements: false,
     budget: false,
@@ -90,8 +90,8 @@ export default function QuestBoard() {
     skills: false,
   });
 
-  const comingSoon = () => {
-    dispatch(showSnackbar({ message: "Coming Soon", type: "info" }));
+  const goToLogin = () => {
+    navigate("/login");
   };
 
   const toggleCheck = (id) => {
@@ -113,7 +113,7 @@ export default function QuestBoard() {
           <section className="qb-welcome">
             <div className="qb-welcome-copy">
               <span className="qb-pill">
-                <Icon name="Sparkles" size={14} color="#0062FF" />
+                <Icon name="Sparkles" size={14} color="#103CA4" />
                 GETTING STARTED
               </span>
               <h2>Welcome to Quest Creation</h2>
@@ -125,11 +125,11 @@ export default function QuestBoard() {
               </p>
               <div className="qb-trust">
                 <span>
-                  <Icon name="BadgeCheck" size={17} color="#0062FF" />
+                  <Icon name="BadgeCheck" size={17} color="#103CA4" />
                   Verified Experts
                 </span>
                 <span>
-                  <Icon name="Lock" size={17} color="#0062FF" />
+                  <Icon name="Lock" size={17} color="#103CA4" />
                   Escrow Protected
                 </span>
               </div>
@@ -155,7 +155,7 @@ export default function QuestBoard() {
           <section className="qb-why">
             <div className="qb-why-head">
               <h2>Why Post a Quest on TechGuild?</h2>
-              <Icon name="Sparkles" size={20} color="#0062FF" />
+              <Icon name="Sparkles" size={20} color="#103CA4" />
             </div>
             <div className="qb-why-grid">
               {WHY.map(({ title, text }) => (
@@ -172,7 +172,7 @@ export default function QuestBoard() {
         </div>
 
         <aside className="qb-side">
-          <button type="button" className="dash-btn dash-btn-primary qb-start" onClick={comingSoon}>
+          <button type="button" className="dash-btn dash-btn-primary qb-start" onClick={goToLogin}>
             Start Creating Quest
           </button>
 
@@ -196,16 +196,16 @@ export default function QuestBoard() {
           </section>
 
           <section className="qb-help">
-            <Icon name="CircleQuestionMark" size={25} color="#0062FF" />
+            <Icon name="CircleQuestionMark" size={25} color="#103CA4" />
             <h2>Need Help?</h2>
             <p>
               Unsure about how to structure your escrow? Our guides cover best practices for client-contractor
               relations.
             </p>
-            <button type="button" className="qb-help-link" onClick={comingSoon}>
+            <button type="button" className="qb-help-link" onClick={goToLogin}>
               View Guide
             </button>
-            <button type="button" className="qb-help-link" onClick={comingSoon}>
+            <button type="button" className="qb-help-link" onClick={goToLogin}>
               Contact Support
             </button>
           </section>

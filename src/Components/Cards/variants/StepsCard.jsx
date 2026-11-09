@@ -1,3 +1,4 @@
+// 9-11-2026
 import React from 'react';
 import BaseCard from './BaseCard';
 
@@ -36,7 +37,7 @@ export default function StepsCard({
                   width: '22px',
                   height: '22px',
                   borderRadius: '50%',
-                  backgroundColor: '#103ca4',
+                  backgroundColor: '#103CA4',
                   color: '#ffffff',
                   display: 'flex',
                   alignItems: 'center',

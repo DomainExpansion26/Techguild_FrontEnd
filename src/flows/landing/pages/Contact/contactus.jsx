@@ -1,3 +1,4 @@
+// 9-11-2026
 // 03-11-2026
 // Contact Us page with a support form and social/contact channels.
 import { useState } from "react";
@@ -162,7 +163,7 @@ function ContactUs() {
               <div className="ctu-reach-list">
                 <div className="ctu-reach-row">
                   <span className="ctu-reach-icon">
-                    <Icon name="Mail" size={20} color="#2456e6" />
+                    <Icon name="Mail" size={20} color="#103CA4" />
                   </span>
                   <div className="ctu-reach-text">
                     <strong>Email</strong>
@@ -177,7 +178,7 @@ function ContactUs() {
 
                 <div className="ctu-reach-row">
                   <span className="ctu-reach-icon">
-                    <Icon name="Phone" size={20} color="#2456e6" />
+                    <Icon name="Phone" size={20} color="#103CA4" />
                   </span>
                   <div className="ctu-reach-text">
                     <strong>Phone</strong>
@@ -192,7 +193,7 @@ function ContactUs() {
 
                 <div className="ctu-reach-row">
                   <span className="ctu-reach-icon">
-                    <Icon name="MapPin" size={20} color="#2456e6" />
+                    <Icon name="MapPin" size={20} color="#103CA4" />
                   </span>
                   <div className="ctu-reach-text">
                     <strong>Headquarters</strong>
@@ -212,7 +213,7 @@ function ContactUs() {
               <div className="ctu-office-grid">
                 <div className="ctu-office">
                   <span className="ctu-office-icon">
-                    <Icon name="Building2" size={18} color="#2456e6" />
+                    <Icon name="Building2" size={18} color="#103CA4" />
                   </span>
                   <div>
                     <strong>Pune, India</strong>
@@ -221,7 +222,7 @@ function ContactUs() {
                 </div>
                 <div className="ctu-office">
                   <span className="ctu-office-icon">
-                    <Icon name="Globe" size={18} color="#2456e6" />
+                    <Icon name="Globe" size={18} color="#103CA4" />
                   </span>
                   <div>
                     <strong>Global</strong>

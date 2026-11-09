@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 .vp-hero {
   display: grid;
   grid-template-columns: 1.2fr 0.9fr;
@@ -16,7 +17,7 @@
 }
 
 .vp-eyebrow {
-  color: #0062ff;
+  color: #103CA4;
   font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -183,7 +184,7 @@
 
 .vp-verify-icon.blue {
   background: #EFF6FF;
-  color: #0062ff;
+  color: #103CA4;
 }
 
 .vp-verify-icon.teal {
@@ -198,7 +199,7 @@
 
 .vp-verify-icon.indigo {
   background: #e9eefb;
-  color: #0062ff;
+  color: #103CA4;
 }
 
 .vp-verify-item h3 {

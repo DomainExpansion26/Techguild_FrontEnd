@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* 6-11-2026 */
 /* 03-11-2026 */
 /* Styles for the Getting Started guide page. */
@@ -21,11 +22,11 @@
 }
 
 .gd-page .pub-cta {
-  background: #103ca4;
+  background: #103CA4;
 }
 
 .gd-page .pub-cta:hover {
-  background: #0c3083;
+  background: #0C3083;
 }
 
 .gd-wrap {
@@ -71,7 +72,7 @@
 }
 
 .gd-breadcrumb a:hover {
-  color: #103ca4;
+  color: #103CA4;
 }
 
 .gd-hero h1 {
@@ -170,7 +171,7 @@
 
 .gd-toc {
   position: sticky;
-  top: 28px;
+  top: 84px;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -189,11 +190,11 @@
 }
 
 .gd-toc a:hover {
-  color: #103ca4;
+  color: #103CA4;
 }
 
 .gd-toc a.is-active {
-  color: #103ca4;
+  color: #103CA4;
   font-weight: 700;
 }
 
@@ -205,7 +206,7 @@
   left: -19px;
   width: 2px;
   border-radius: 2px;
-  background: #103ca4;
+  background: #103CA4;
 }
 
 /* ---------- sections ---------- */
@@ -356,7 +357,7 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #103ca4;
+  background: #103CA4;
   color: #ffffff;
   font-size: 11.5px;
   font-weight: 700;
@@ -419,14 +420,14 @@
   width: 14px;
   height: 14px;
   border-radius: 4px;
-  background: linear-gradient(135deg, #2563eb, #103ca4);
+  background: linear-gradient(135deg, #2563eb, #103CA4);
 }
 
 .gd-mock-btn {
   align-self: flex-start;
   padding: 7px 12px;
   border-radius: 6px;
-  background: #103ca4;
+  background: #103CA4;
   color: #ffffff;
   font-size: 10.5px;
   font-weight: 600;
@@ -474,7 +475,7 @@
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #2563eb, #103ca4);
+  background: linear-gradient(135deg, #2563eb, #103CA4);
 }
 
 .gd-mock-mail-check {
@@ -532,7 +533,7 @@
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #2563eb, #103ca4);
+  background: linear-gradient(135deg, #2563eb, #103CA4);
   flex-shrink: 0;
 }
 
@@ -728,7 +729,7 @@
   height: 46px;
   padding: 0 20px;
   border-radius: 8px;
-  background: #103ca4;
+  background: #103CA4;
   color: #ffffff;
   font-size: 14px;
   font-weight: 600;
@@ -738,7 +739,7 @@
 }
 
 .gd-support-btn:hover {
-  background: #0c3083;
+  background: #0C3083;
   color: #ffffff;
 }
 
@@ -802,7 +803,7 @@
   }
 
   .gd-toc a.is-active {
-    border-color: #103ca4;
+    border-color: #103CA4;
     background: #eef4ff;
   }
 

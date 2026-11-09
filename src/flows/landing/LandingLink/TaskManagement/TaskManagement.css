@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 .tm-page {
   height: 100vh;
   min-height: 100vh;
@@ -45,7 +46,7 @@
 
 .tm-eyebrow {
   margin: 0 0 16px;
-  color: #0062ff;
+  color: #103CA4;
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -82,12 +83,12 @@
   height: auto;
   padding: 13px 22px;
   border-radius: 8px;
-  background: #0062ff;
+  background: #103CA4;
   font-size: 14px;
 }
 
 .tm-cta:hover:not(:disabled) {
-  background: #0052d6;
+  background: #0C3083;
 }
 
 .tm-hero-art {
@@ -150,7 +151,7 @@
   width: 21px;
   height: 21px;
   border-radius: 50%;
-  background: #0062ff;
+  background: #103CA4;
   color: #ffffff;
   font-size: 7px;
   font-weight: 700;
@@ -182,7 +183,7 @@
 
 .tm-side span.on {
   background: #eff6ff;
-  color: #0062ff;
+  color: #103CA4;
   font-weight: 600;
 }
 
@@ -239,8 +240,8 @@
 }
 
 .tm-tabs span.on {
-  border-bottom: 1.5px solid #0062ff;
-  color: #0062ff;
+  border-bottom: 1.5px solid #103CA4;
+  color: #103CA4;
   font-weight: 600;
 }
 
@@ -301,7 +302,7 @@
 }
 
 .tm-steprow span.done i {
-  background: #0062ff;
+  background: #103CA4;
 }
 
 .tm-ms-head {
@@ -325,7 +326,7 @@
   margin-left: auto;
   padding: 3px 5px;
   border-radius: 4px;
-  background: #0062ff;
+  background: #103CA4;
   color: #ffffff;
   font-size: 5.6px;
   font-style: normal;
@@ -388,7 +389,7 @@
 }
 
 .tm-ms em {
-  color: #0062ff;
+  color: #103CA4;
   font-size: 5.4px;
   font-style: normal;
   font-weight: 600;

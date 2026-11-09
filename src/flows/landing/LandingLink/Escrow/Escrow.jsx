@@ -1,3 +1,4 @@
+// 9-11-2026
 // 03-11-2026
 // Escrow feature page explaining secure, milestone-based payments.
 import PublicHeader from "@/flows/landing/LandingLink/PublicHeader/PublicHeader";
@@ -75,7 +76,7 @@ const WHY = [
   {
     title: "For Clients",
     icon: "User",
-    iconColor: "#0062FF",
+    iconColor: "#103CA4",
     benefits: CLIENT_BENEFITS,
   },
   {
@@ -178,7 +179,7 @@ export default function Escrow() {
 
             <div className="es-side-card">
               <span className="es-side-icon">
-                <Icon name="User" size={24} color="#0062FF" />
+                <Icon name="User" size={24} color="#103CA4" />
               </span>
               <strong>Client</strong>
               <p>Funds are secured in escrow</p>
@@ -233,7 +234,7 @@ export default function Escrow() {
               <article className="es-step" key={n}>
                 <div className="es-step-top">
                   <span className="es-step-num">{n}</span>
-                  <Icon name={icon} size={21} color="#0062FF" />
+                  <Icon name={icon} size={21} color="#103CA4" />
                 </div>
                 <h3>{title}</h3>
                 <p>{text}</p>
@@ -280,13 +281,13 @@ export default function Escrow() {
           <div className="es-example-card">
             <div className="es-project">
               <span className="es-project-icon">
-                <Icon name="FileText" size={26} color="#0062FF" />
+                <Icon name="FileText" size={26} color="#103CA4" />
               </span>
               <strong>Website Redesign</strong>
               <span className="es-project-label">Total Project Amount</span>
               <p className="es-project-total">₹ 20,000</p>
               <span className="es-held">
-                <Icon name="Lock" size={14} color="#0062FF" />
+                <Icon name="Lock" size={14} color="#103CA4" />
                 Held in Escrow
               </span>
             </div>
@@ -296,7 +297,7 @@ export default function Escrow() {
                 <div className="es-ms" key={title}>
                   <span className="es-ms-dot" />
                   <span className="es-ms-icon">
-                    <Icon name={icon} size={18} color="#0062FF" />
+                    <Icon name={icon} size={18} color="#103CA4" />
                   </span>
                   <div className="es-ms-info">
                     <strong>{title}</strong>
@@ -317,7 +318,7 @@ export default function Escrow() {
             {NOTES.map(({ icon, title, text }) => (
               <article className="es-note" key={title}>
                 <span className="es-note-icon">
-                  <Icon name={icon} size={20} color="#0062FF" />
+                  <Icon name={icon} size={20} color="#103CA4" />
                 </span>
                 <div>
                   <h3>{title}</h3>

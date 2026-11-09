@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* ==========================================================================
    Global Animated Redux Snackbar (Right-to-Left Slide Animation)
    ========================================================================== */
@@ -90,12 +91,12 @@
 }
 
 .tg-snackbar-info {
-  border-left: 5px solid #103ca4;
+  border-left: 5px solid #103CA4;
   background: #f8faff;
 }
 
 .tg-snackbar-info .tg-snackbar-icon {
-  color: #103ca4;
+  color: #103CA4;
   background: #eff6ff;
 }
 
@@ -181,7 +182,7 @@
 }
 
 .tg-snackbar-info .tg-snackbar-progress-bar {
-  background: #103ca4;
+  background: #103CA4;
 }
 
 @keyframes tgProgressCountdown {
