@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* 6-11-2026 */
 /* 03-11-2026 */
 /* Styles for the Learn More About Quests page. */
@@ -23,11 +24,11 @@
 }
 
 .lmq-page .pub-cta {
-  background: #103ca4;
+  background: #103CA4;
 }
 
 .lmq-page .pub-cta:hover {
-  background: #0c3083;
+  background: #0C3083;
 }
 
 /* ---------- breadcrumb ---------- */
@@ -49,7 +50,7 @@
 }
 
 .lmq-breadcrumb a:hover {
-  color: #0062ff;
+  color: #103CA4;
 }
 
 .lmq-breadcrumb span[aria-current="page"] {
@@ -71,7 +72,7 @@
 
 .lmq-eyebrow {
   margin: 0 0 14px;
-  color: #0062ff;
+  color: #103CA4;
   font-size: 11.5px;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -203,7 +204,7 @@
   margin-top: 1px;
   flex-shrink: 0;
   border-radius: 50%;
-  background: #103ca4;
+  background: #103CA4;
 }
 
 /* ---------- filters ---------- */
@@ -323,7 +324,7 @@
   flex-shrink: 0;
   padding: 14px 22px;
   border-radius: 8px;
-  background: #103ca4;
+  background: #103CA4;
   color: #ffffff;
   font-size: 14px;
   font-weight: 600;
@@ -333,7 +334,7 @@
 }
 
 .lmq-cta-btn:hover {
-  background: #0c3083;
+  background: #0C3083;
   color: #ffffff;
 }
 

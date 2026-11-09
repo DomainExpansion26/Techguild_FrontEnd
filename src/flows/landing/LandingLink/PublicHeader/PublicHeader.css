@@ -1,26 +1,68 @@
+/* 9-11-2026 */
 /* 6-11-2026 */
+/* Floating pill header matching the landing page navbar. */
 .pub-header {
-  background: #ffffff;
+  position: sticky;
+  top: 14px;
+  z-index: 60;
+  max-width: 1144px;
+  margin: 14px auto 0;
+  padding: 8px 8px 8px 20px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 18px 50px rgba(2, 6, 23, 0.14);
+}
+
+/* Float the navbar over pages with a full-bleed hero (image or gradient). */
+.ab-page .pub-header,
+.crd-page .pub-header,
+.pp-page .pub-header,
+.cm-page .pub-header,
+.hc-page .pub-header,
+.gh-page .pub-header,
+.gt-page .pub-header,
+.gd-page .pub-header,
+.fg-page .pub-header,
+.ctu-page .pub-header {
+  margin-bottom: -65px;
+}
+
+/* Keep hero content clear of the floating navbar. */
+.crd-page .crd-hero,
+.pp-page .pp-hero,
+.cm-page .cm-hero,
+.hc-page .hc-hero,
+.gh-page .gh-hero,
+.gt-page .gt-hero,
+.gd-page .gd-hero,
+.fg-page .fg-hero:not(.is-card) {
+  padding-top: 65px;
+}
+
+.ctu-page .ctu-top {
+  padding-top: 129px;
 }
 
 .pub-header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 26px 72px;
+  gap: 16px;
+  padding: 0 !important;
 }
 
 .pub-logo {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   color: #0b1220;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 800;
   letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: nowrap;
   text-decoration: none;
 }
 
@@ -38,67 +80,57 @@
 .pub-actions {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 8px;
 }
 
 .pub-login {
   color: #0b1220;
   font-family: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  padding: 10px 14px;
   background: none;
   border: 0;
   cursor: pointer;
 }
 
 .pub-login:hover {
-  color: #0062ff;
+  color: #103CA4;
 }
 
 .pub-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 22px;
-  border-radius: 8px;
-  background: #0062ff;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 999px;
+  background: #103CA4;
   color: #ffffff;
   font-family: inherit;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
   text-decoration: none;
-  transition: background 0.2s ease;
-  border: 0;
+  box-shadow: 0 10px 28px rgba(16, 60, 164, 0.4);
   cursor: pointer;
+  border: 0;
+  transition: background 0.2s ease;
 }
 
 .pub-cta:hover {
-  background: #1748b8;
+  background: #0C3083;
   color: #ffffff;
 }
 
-@media (max-width: 760px) {
-  .pub-header-inner {
-    padding: 20px 24px;
-  }
-
-  .pub-actions {
-    gap: 18px;
-  }
-
-  .pub-logo {
-    font-size: 19px;
-  }
-
-  .pub-logo-mark {
-    height: 28px;
-  }
-}
-
-@media (max-width: 460px) {
-  .pub-header-inner {
-    padding: 16px 18px;
+@media (max-width: 640px) {
+  .pub-header {
+    margin-left: 18px;
+    margin-right: 18px;
+    padding-left: 18px;
   }
 
   .pub-login {
@@ -106,6 +138,6 @@
   }
 
   .pub-cta {
-    padding: 10px 16px;
+    padding: 10px 18px;
   }
 }

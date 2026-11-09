@@ -1,13 +1,13 @@
+// 9-11-2026
 // 6-11-2026
 // 03-11-2026
 // Task Management feature page showing milestones, approvals, and project progress.
-import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import PublicHeader from "@/flows/landing/LandingLink/PublicHeader/PublicHeader";
 import Footer from "@/flows/landing/LandingLink/Footer/Footer";
 import FeatureHelp from "@/flows/landing/LandingLink/FeatureHelp/FeatureHelp";
 import PrimaryButton from "@/Components/Button/Primarybutton";
 import Icon from "@/Components/icons/Icon";
-import { showSnackbar } from "@/store/slices/snackbarSlice";
 import "./TaskManagement.css";
 
 const NAV = ["Dashboard", "My Quests", "Task Management", "Communication", "Finance", "Guild Hall", "Rank Progression", "Subscription", "Settings"];
@@ -115,7 +115,7 @@ function TaskDashboard() {
             <div className="tm-ms-list">
               {MILESTONES.map((m) => (
                 <div className="tm-ms" key={m.title}>
-                  <Icon name="ClipboardList" size={12} color="#0062FF" />
+                  <Icon name="ClipboardList" size={12} color="#103CA4" />
                   <strong>{m.title}</strong>
                   <span className={`tm-status ${m.tone}`}>{m.status}</span>
                   <span>{m.due}</span>
@@ -132,10 +132,10 @@ function TaskDashboard() {
 }
 
 export default function TaskManagement() {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const comingSoon = () => {
-    dispatch(showSnackbar({ message: "Coming Soon", type: "info" }));
+  const goToLogin = () => {
+    navigate("/login");
   };
 
   return (
@@ -157,7 +157,7 @@ export default function TaskManagement() {
               create milestones and tasks for the project, and send them to the client for approval. Clients can
               review, approve and track the progress — all in one place.
             </p>
-            <PrimaryButton className="tm-cta" onClick={comingSoon}>
+            <PrimaryButton className="tm-cta" onClick={goToLogin}>
               Explore Task Management
             </PrimaryButton>
           </div>

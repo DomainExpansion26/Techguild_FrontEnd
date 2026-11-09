@@ -1,3 +1,4 @@
+// 9-11-2026
 import Icon from "@/Components/icons/Icon";
 import "./FeatureHelp.css";
 
@@ -8,7 +9,7 @@ export default function FeatureHelp({ items, variant = "inline" }) {
         <article className={`fh-card ${type}`} key={title}>
           <div className="fh-head">
             <span className="fh-icon">
-              <Icon name={icon} size={21} color={iconColor || "#0062FF"} />
+              <Icon name={icon} size={21} color={iconColor || "#103CA4"} />
             </span>
             <h3>{title}</h3>
           </div>

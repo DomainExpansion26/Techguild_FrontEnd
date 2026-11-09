@@ -1,3 +1,4 @@
+// 9-11-2026
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -127,7 +128,7 @@ export default function QuestBoard() {
             <button
               type="button"
               className="btn btn-primary px-4 py-2 fw-semibold"
-              style={{ backgroundColor: "#103ca4", borderColor: "#103ca4" }}
+              style={{ backgroundColor: "#103CA4", borderColor: "#103CA4" }}
               onClick={() => setShowCreateModal(true)}
             >
               + Post a New Quest
@@ -152,7 +153,7 @@ export default function QuestBoard() {
             <button
               type="button"
               className="btn btn-primary px-4 py-2 fw-semibold"
-              style={{ backgroundColor: "#103ca4", borderColor: "#103ca4" }}
+              style={{ backgroundColor: "#103CA4", borderColor: "#103CA4" }}
               onClick={() => setShowCreateModal(true)}
             >
               Post Your First Quest
@@ -403,7 +404,7 @@ export default function QuestBoard() {
                     <button
                       type="submit"
                       className="btn btn-primary px-4 fw-semibold"
-                      style={{ backgroundColor: "#103ca4", borderColor: "#103ca4" }}
+                      style={{ backgroundColor: "#103CA4", borderColor: "#103CA4" }}
                       disabled={creating}
                     >
                       {creating ? "Publishing Quest..." : "Publish Quest"}

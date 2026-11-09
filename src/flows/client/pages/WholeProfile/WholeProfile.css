@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* [TechGuild Update: 30-09-2026] Removed unreachable bg-image reference (it 404'd); page renders exactly as before. */
 /* [TechGuild Update: 21-09-2026] Client whole profile stylesheet, layout tokens & modal styling */
 /* ===== whole_Profile.css =====
@@ -1352,7 +1353,7 @@ body,
 }
 
 .wp-link-action:hover {
-  color: #103ca4;
+  color: #103CA4;
 }
 
 .wp-link-action svg,
@@ -1365,8 +1366,8 @@ body,
 .wp-link-action:hover svg,
 .wp-link-action:hover svg path,
 .wp-link-action:hover path {
-  color: #103ca4 !important;
-  stroke: #103ca4 !important;
+  color: #103CA4 !important;
+  stroke: #103CA4 !important;
 }
 
 /* Profile completion */
@@ -1663,7 +1664,7 @@ body,
 }
 
 .wp-action-btn:hover .wp-action-text {
-  color: #103ca4;
+  color: #103CA4;
 }
 
 .wp-action-chevron {
@@ -1673,7 +1674,7 @@ body,
 }
 
 .wp-action-btn:hover .wp-action-chevron {
-  color: #103ca4;
+  color: #103CA4;
 }
 
 /* Trust journey */
@@ -1766,9 +1767,9 @@ body,
 }
 
 .wp-trust-node.active .wp-trust-circle {
-  background: #103ca4;
+  background: #103CA4;
   color: #ffffff;
-  border: 2px solid #103ca4;
+  border: 2px solid #103CA4;
   font-size: 13px;
   font-weight: 700;
   box-shadow: 0 0 10px rgba(16, 60, 164, 0.15);
@@ -1783,7 +1784,7 @@ body,
 }
 
 .wp-trust-node.active .wp-trust-node-label {
-  color: #103ca4;
+  color: #103CA4;
   font-weight: 700;
 }
 
@@ -1799,7 +1800,7 @@ body,
 .wp-trust-progress-fill {
   height: 100%;
   border-radius: 999px;
-  background: #103ca4;
+  background: #103CA4;
   transition: width 0.3s ease;
 }
 
@@ -1823,7 +1824,7 @@ body,
 }
 
 .wp-trust-next b {
-  color: #103ca4;
+  color: #103CA4;
   font-weight: 700;
 }
 

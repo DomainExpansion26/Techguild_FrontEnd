@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 .fh-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -74,7 +75,7 @@
   height: 16px;
   margin-top: 1px;
   border-radius: 50%;
-  background: #0062ff;
+  background: #103CA4;
 }
 
 .fh-card.clients .fh-check {

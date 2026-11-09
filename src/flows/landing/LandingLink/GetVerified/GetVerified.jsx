@@ -1,8 +1,8 @@
+// 9-11-2026
 // 6-11-2026
-import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import DashboardShell from "@/flows/landing/LandingLink/DashboardShell/DashboardShell";
 import Icon from "@/Components/icons/Icon";
-import { showSnackbar } from "@/store/slices/snackbarSlice";
 import "./GetVerified.css";
 
 const WHY_CARDS = [
@@ -39,10 +39,10 @@ const NEEDED = [
 ];
 
 export default function GetVerified() {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const comingSoon = () => {
-    dispatch(showSnackbar({ message: "Coming Soon", type: "info" }));
+  const goToLogin = () => {
+    navigate("/login");
   };
 
   return (
@@ -66,7 +66,7 @@ export default function GetVerified() {
             Confirming your credibility is the first step to unlocking premium enterprise opportunities. The
             verification process is secure, quick, and helps establish a trusted environment for all professionals.
           </p>
-          <button type="button" className="dash-btn dash-btn-primary" onClick={comingSoon}>
+          <button type="button" className="dash-btn dash-btn-primary" onClick={goToLogin}>
             Start Verification
             <span aria-hidden="true">→</span>
           </button>
@@ -77,7 +77,7 @@ export default function GetVerified() {
           <span className="gv-panel" aria-hidden="true" />
           <span className="gv-ring" aria-hidden="true" />
           <span className="gv-shield">
-            <Icon name="Shield" size={58} color="#0062FF" />
+            <Icon name="Shield" size={58} color="#103CA4" />
           </span>
           <span className="gv-check">
             <Icon name="Check" size={19} color="#ffffff" />
@@ -127,7 +127,7 @@ export default function GetVerified() {
           </section>
 
           <section className="gv-protected">
-            <Icon name="Lock" size={21} color="#0062FF" />
+            <Icon name="Lock" size={21} color="#103CA4" />
             <div>
               <h3>Your information is protected</h3>
               <p>
@@ -144,7 +144,7 @@ export default function GetVerified() {
           <Icon name="Clock" size={20} color="#334155" />
           Verification takes only a few minutes to begin.
         </span>
-        <button type="button" className="dash-btn dash-btn-primary" onClick={comingSoon}>
+        <button type="button" className="dash-btn dash-btn-primary" onClick={goToLogin}>
           Start Verification
           <span aria-hidden="true">→</span>
         </button>

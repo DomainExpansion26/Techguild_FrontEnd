@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* [TechGuild Update: 21-09-2026] Individual freelancer whole profile stylesheet & responsive tokens */
 /* Individual Whole Profile - sized to match client whole-profile (wp-*) tokens.
    Freelancer accents kept: blue section titles, light-blue avatar,
@@ -569,7 +570,7 @@
   flex-shrink: 0;
   text-decoration: none;
 }
-.ind-wp-ext:hover { color: #103ca4; }
+.ind-wp-ext:hover { color: #103CA4; }
 .ind-wp-download {
   display: inline-flex;
   align-items: center;
@@ -667,16 +668,16 @@
   user-select: none;
 }
 .ind-wp-rank.active .ind-wp-rank-circle {
-  background: #103ca4;
+  background: #103CA4;
   color: #ffffff;
-  border: 2px solid #103ca4;
+  border: 2px solid #103CA4;
   font-size: 13px;
   font-weight: 700;
   box-shadow: 0 0 10px rgba(16, 60, 164, 0.15);
 }
 .ind-wp-rank-you {
   font-size: 11px;
-  color: #103ca4;
+  color: #103CA4;
   font-weight: 700;
   min-height: 14px;
   text-align: center;
@@ -699,7 +700,7 @@
   margin-bottom: 12px;
 }
 .ind-wp-next { font-size: 12px; color: #64748b; font-weight: 400; }
-.ind-wp-next b { color: #103ca4; font-weight: 700; }
+.ind-wp-next b { color: #103CA4; font-weight: 700; }
 .ind-wp-trust-track {
   width: 100%;
   height: 6px;
@@ -710,7 +711,7 @@
 .ind-wp-trust-fill {
   height: 100%;
   border-radius: 999px;
-  background: #103ca4;
+  background: #103CA4;
   transition: width 0.3s ease;
 }
 
@@ -760,7 +761,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.ind-wp-qa-btn:hover .ind-wp-qa-left span:last-child { color: #103ca4; }
+.ind-wp-qa-btn:hover .ind-wp-qa-left span:last-child { color: #103CA4; }
 
 /* Prevent long text from forcing overflow */
 .ind-wp-root img,

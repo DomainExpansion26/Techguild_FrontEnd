@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 .tp-page {
   height: 100vh;
   min-height: 100vh;
@@ -35,7 +36,7 @@
 
 .tp-eyebrow {
   margin: 0 0 18px;
-  color: #0062ff;
+  color: #103CA4;
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -88,7 +89,7 @@
   width: 48px;
   height: 48px;
   border-radius: 13px;
-  background: #0062ff;
+  background: #103CA4;
   box-shadow: 0 8px 18px rgba(26, 86, 219, 0.28);
 }
 
@@ -124,7 +125,7 @@
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: #0062ff;
+  background: #103CA4;
 }
 
 .tp-progress-note {
@@ -185,7 +186,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: #0062ff;
+  background: #103CA4;
   box-shadow: 0 12px 26px rgba(26, 86, 219, 0.3);
 }
 
@@ -287,7 +288,7 @@
 
 .tp-step-icon.blue {
   background: #EFF6FF;
-  color: #0062ff;
+  color: #103CA4;
 }
 
 .tp-step-icon.green {
@@ -340,7 +341,7 @@
 
 .tp-points.blue {
   background: #EFF6FF;
-  color: #0062ff;
+  color: #103CA4;
 }
 
 .tp-points.green {
@@ -381,7 +382,7 @@
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  background: #0062ff;
+  background: #103CA4;
 }
 
 .tp-total-copy {
@@ -397,7 +398,7 @@
 }
 
 .tp-total-copy strong {
-  color: #0062ff;
+  color: #103CA4;
   font-size: 26px;
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -470,7 +471,7 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #0062ff;
+  background: #103CA4;
   color: #ffffff;
   font-size: 12px;
   font-weight: 700;

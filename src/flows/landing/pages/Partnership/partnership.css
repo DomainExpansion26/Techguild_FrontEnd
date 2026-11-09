@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* 6-11-2026 */
 /* 03-11-2026 */
 /* Styles for the Partnership page. */
@@ -24,7 +25,7 @@
 
 .pp-eyebrow {
   margin: 0 0 14px;
-  color: #0062ff;
+  color: #103CA4;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -113,15 +114,15 @@
 }
 
 .pp-btn-primary {
-  background: #0062ff;
+  background: #103CA4;
   color: #ffffff;
-  box-shadow: 0 8px 22px rgba(0, 98, 255, 0.24);
+  box-shadow: 0 8px 22px rgba(16, 60, 164, 0.24);
 }
 
 .pp-btn-primary:hover {
-  background: #0052d6;
+  background: #0C3083;
   color: #ffffff;
-  box-shadow: 0 10px 26px rgba(0, 98, 255, 0.3);
+  box-shadow: 0 10px 26px rgba(16, 60, 164, 0.3);
 }
 
 /* ---------- partner types ---------- */
@@ -187,7 +188,7 @@
   align-items: center;
   gap: 6px;
   margin-top: auto;
-  color: #0062ff;
+  color: #103CA4;
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
@@ -196,7 +197,7 @@
 
 .pp-learn:hover {
   gap: 9px;
-  color: #0052d6;
+  color: #0C3083;
 }
 
 /* ---------- why partner ---------- */
@@ -500,7 +501,7 @@
 
 .pp-required {
   margin-left: 2px;
-  color: #0062ff;
+  color: #103CA4;
 }
 
 .pp-field input,
@@ -552,8 +553,8 @@
 .pp-field select:focus,
 .pp-field textarea:focus,
 .pp-phone-input:focus-within {
-  border-color: #0062ff;
-  box-shadow: 0 0 0 3px rgba(0, 98, 255, 0.12);
+  border-color: #103CA4;
+  box-shadow: 0 0 0 3px rgba(16, 60, 164, 0.12);
 }
 
 .pp-phone-input {
@@ -611,8 +612,8 @@
   padding: 0 22px;
   border: 0;
   border-radius: 8px;
-  background: #0062ff;
-  box-shadow: 0 8px 22px rgba(0, 98, 255, 0.22);
+  background: #103CA4;
+  box-shadow: 0 8px 22px rgba(16, 60, 164, 0.22);
   color: #ffffff;
   font-family: inherit;
   font-size: 14px;
@@ -622,8 +623,8 @@
 }
 
 .pp-submit:hover {
-  background: #0052d6;
-  box-shadow: 0 10px 26px rgba(0, 98, 255, 0.28);
+  background: #0C3083;
+  box-shadow: 0 10px 26px rgba(16, 60, 164, 0.28);
 }
 
 .pp-info-card {

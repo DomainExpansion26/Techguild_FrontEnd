@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* 6-11-2026 */
 /* 03-11-2026 */
 /* Styles for the legal pages (Privacy Policy, Terms of Service, Security). */
@@ -87,7 +88,7 @@
 
 .lg-side {
   position: sticky;
-  top: 24px;
+  top: 84px;
   padding: 12px;
   border: 1px solid #e6ebf3;
   border-radius: 12px;

@@ -1,15 +1,14 @@
+// 9-11-2026
 // 6-11-2026
 // 03-11-2026
 // TechGuild public landing page with hero, features, process, escrow, and FAQ sections.
 // Last Changed: 16-10-2026 - eco tiles click+hover select, ranks SS/SSS centered row, escrow all blue, learn-more Coming Soon, nav/footer logo mark, new guild card imgs, FAQ chevron icon, footer copyright
-// Last Changed: 15-10-2026 - icons #2456e6->#103CA4, sidebar 16px + stats icons, footer LinkedIn only, c4 wrapper, encoding fixed (₹ ✓ → ◆ ✦)
+// Last Changed: 15-10-2026 - icons #103CA4->#103CA4, sidebar 16px + stats icons, footer LinkedIn only, c4 wrapper, encoding fixed (₹ ✓ → ◆ ✦)
 // Flow: every navigation to another page (Learn more, footer links, Get Started)
 // goes to the Sign In page first. Sign In -> /login, Sign Up -> /signup.
 // After signing in, the user is returned to the page they originally clicked.
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { showSnackbar } from "@/store/slices/snackbarSlice";
+import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate, useNavigationType } from "react-router-dom";
 import Icon from "@/Components/icons/Icon";
 import Footer from "@/flows/landing/LandingLink/Footer/Footer";
 import "./LandingPage.css";
@@ -100,18 +99,61 @@ function Marquee({ items }) {
 }
 
 export default function LandingPage() {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const navigationType = useNavigationType();
+  const scrollRef = useRef(null);
   const [openFaq, setOpenFaq] = useState(null);
   const [ecoSelected, setEcoSelected] = useState(null);
   const [ecoHover, setEcoHover] = useState(null);
 
-  const handleComingSoon = (event) => {
+  const goToLogin = (event) => {
     if (event) event.preventDefault();
-    dispatch(showSnackbar({ message: "Coming Soon", type: "info" }));
+    navigate("/login");
   };
 
+  // Restore the landing scroll position when returning with the browser back button.
+  useEffect(() => {
+    if (navigationType !== "POP") return undefined;
+    const node = scrollRef.current;
+    const saved = sessionStorage.getItem("tg-landing-scroll");
+    if (!node || saved === null) return undefined;
+
+    const restore = () => {
+      const previous = node.style.scrollBehavior;
+      node.style.scrollBehavior = "auto";
+      node.scrollTop = Number(saved);
+      node.style.scrollBehavior = previous;
+    };
+
+    const frame = requestAnimationFrame(restore);
+    const timer = setTimeout(restore, 150);
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(timer);
+    };
+  }, [navigationType]);
+
+  // Remember the landing scroll position while the user scrolls.
+  useEffect(() => {
+    const node = scrollRef.current;
+    if (!node) return undefined;
+    let frame = 0;
+    const handleScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        sessionStorage.setItem("tg-landing-scroll", String(node.scrollTop));
+      });
+    };
+    node.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      node.removeEventListener("scroll", handleScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
-    <div className="tg-landing">
+    <div className="tg-landing" ref={scrollRef}>
       {/* ============ NAV ============ */}
       <header className="tg-nav-float">
         <Link to="/home" className="tg-logo tg-logo-nav">
@@ -127,11 +169,11 @@ export default function LandingPage() {
           <a href="#ranks">Ranks</a>
         </nav>
         <div className="tg-nav-cta">
-          {/* Auth navigation disabled until launch — show "Coming Soon" instead. */}
+          {/* Auth navigation disabled until launch — redirect to the login page. */}
           {/* <Link to="/login" state={{ from: "/" }} className="tg-signin">Sign In</Link> */}
           {/* <Link to="/signup" className="tg-btn-primary">Sign Up</Link> */}
-          <button type="button" className="tg-signin" onClick={handleComingSoon}>Sign In</button>
-          <button type="button" className="tg-btn-primary" onClick={handleComingSoon}>Sign Up</button>
+          <button type="button" className="tg-signin" onClick={goToLogin}>Sign In</button>
+          <button type="button" className="tg-btn-primary" onClick={goToLogin}>Sign Up</button>
         </div>
       </header>
 
@@ -152,7 +194,7 @@ export default function LandingPage() {
             <div className="tg-hero-actions">
               <a href="#features" className="tg-btn-white">Explore Features</a>
               {/* <Link to="/signup" className="tg-btn-primary lg">Get Started</Link> */}
-              <button type="button" className="tg-btn-primary lg" onClick={handleComingSoon}>Get Started</button>
+              <button type="button" className="tg-btn-primary lg" onClick={goToLogin}>Get Started</button>
             </div>
           </div>
 

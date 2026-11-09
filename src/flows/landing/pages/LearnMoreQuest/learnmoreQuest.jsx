@@ -1,3 +1,4 @@
+// 9-11-2026
 // 6-11-2026
 // 03-11-2026
 // Learn More About Quests page explaining how quests work for freelancers and clients.
@@ -62,7 +63,7 @@ function HelpCard({ icon, title, subtitle, points }) {
     <article className="lmq-help-card">
       <div className="lmq-help-head">
         <span className="lmq-help-icon">
-          <Icon name={icon} size={24} color="#0062ff" />
+          <Icon name={icon} size={24} color="#103CA4" />
         </span>
         <div>
           <h3>{title}</h3>
@@ -147,7 +148,7 @@ export default function LearnMoreQuest() {
               {FILTERS.map(({ icon, title, text }) => (
                 <article className="lmq-filter-card" key={title}>
                   <span className="lmq-filter-icon">
-                    <Icon name={icon} size={20} color="#0062ff" />
+                    <Icon name={icon} size={20} color="#103CA4" />
                   </span>
                   <h3>{title}</h3>
                   <p>{text}</p>
@@ -161,7 +162,7 @@ export default function LearnMoreQuest() {
           <div className="lmq-wrap">
             <div className="lmq-cta">
               <span className="lmq-cta-icon">
-                <Icon name="Lightbulb" size={28} color="#0062ff" />
+                <Icon name="Lightbulb" size={28} color="#103CA4" />
               </span>
 
               <div className="lmq-cta-copy">

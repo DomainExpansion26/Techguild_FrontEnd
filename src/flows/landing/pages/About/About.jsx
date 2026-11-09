@@ -1,3 +1,4 @@
+// 9-11-2026
 // 03-11-2026
 // Marketing About page describing TechGuild's purpose, approach, and ecosystem.
 import { Link } from "react-router-dom";
@@ -155,7 +156,7 @@ function About() {
                     Explore quests <Icon name="ArrowRight" size={16} color="#ffffff" />
                   </Link>
                   <Link to="/login" state={{ from: "/escrow" }} className="ab-btn ab-btn-light">
-                    Learn about escrow <Icon name="ArrowRight" size={16} color="#0062ff" />
+                    Learn about escrow <Icon name="ArrowRight" size={16} color="#103CA4" />
                   </Link>
                 </div>
               </div>

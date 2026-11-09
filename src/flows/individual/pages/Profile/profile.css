@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* [TechGuild Update: 21-09-2026] Individual wizard styling, button actions & bottom scroll clearance */
 @keyframes fadeInProfile {
   from {
@@ -809,7 +810,7 @@
 }
 
 .profile-welcome-highlight {
-  color: #103ca4;
+  color: #103CA4;
 }
 
 .profile-welcome-hero-subtitle {
@@ -821,7 +822,7 @@
 }
 
 .profile-welcome-cta-btn {
-  background: #103ca4 !important;
+  background: #103CA4 !important;
   color: #ffffff !important;
   font-size: 15px !important;
   font-weight: 600 !important;
@@ -970,7 +971,7 @@
   border-radius: 50%;
   background: #edf4ff !important;
   border: 1.5px solid #bfdbfe !important;
-  color: #103ca4 !important;
+  color: #103CA4 !important;
   font-size: 15px !important;
   font-weight: 700 !important;
   display: flex;
@@ -1193,7 +1194,7 @@
 
 .profile-suggestion-item:hover {
   background-color: #eff6ff;
-  color: #103ca4;
+  color: #103CA4;
   font-weight: 500;
 }
 

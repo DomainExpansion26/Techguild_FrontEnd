@@ -1,11 +1,11 @@
+// 9-11-2026
 // 03-11-2026
 // Ranking feature page explaining trust points and rank progression.
-import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import PublicHeader from "@/flows/landing/LandingLink/PublicHeader/PublicHeader";
 import Footer from "@/flows/landing/LandingLink/Footer/Footer";
 import { PrimaryButton } from "@/Components";
 import Icon from "@/Components/icons/Icon";
-import { showSnackbar } from "@/store";
 import rankingArt from "@/assets/landing-Img/Right Hero Graphic_ Ascending Staircase Graphic.png";
 import "./Ranking.css";
 
@@ -60,10 +60,10 @@ const BENEFITS = [
 ];
 
 export default function Ranking() {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const comingSoon = () => {
-    dispatch(showSnackbar({ message: "Coming Soon", type: "info" }));
+  const goToLogin = () => {
+    navigate("/login");
   };
 
   return (
@@ -84,7 +84,7 @@ export default function Ranking() {
               successful projects and maintain a good track record, you move to higher ranks and gain more visibility
               and opportunities.
             </p>
-            <PrimaryButton className="rk-cta" onClick={comingSoon}>
+            <PrimaryButton className="rk-cta" onClick={goToLogin}>
               View my rank
               <span aria-hidden="true">→</span>
             </PrimaryButton>
@@ -129,7 +129,7 @@ export default function Ranking() {
             {BENEFITS.map(({ icon, title, text }) => (
               <article className="rk-benefit" key={title}>
                 <span className="rk-benefit-icon">
-                  <Icon name={icon} size={24} color="#0062FF" />
+                  <Icon name={icon} size={24} color="#103CA4" />
                 </span>
                 <h3>{title}</h3>
                 <p>{text}</p>

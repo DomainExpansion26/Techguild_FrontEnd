@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* =========================================================
    INDIVIDUAL DASHBOARD STYLES (Scoped)
    ========================================================= */
@@ -128,7 +129,7 @@
 
 .trust-card-link {
   font-size: clamp(0.7rem, 0.78vw, 1.0rem);
-  color: #103ca4;
+  color: #103CA4;
   font-weight: 700;
   text-decoration: none;
   display: inline-flex;

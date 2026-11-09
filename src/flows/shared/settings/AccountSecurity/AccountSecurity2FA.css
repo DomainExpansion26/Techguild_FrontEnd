@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* src/Modules/Individual/Screen/Pages/Settings/AccountSecurity/AccountSecurity2FA.css
    Multi-step 2FA management popup (Figma "popups" flow) */
 
@@ -63,7 +64,7 @@
   justify-content: center;
   width: 26px;
   height: 26px;
-  color: #103ca4;
+  color: #103CA4;
   background: #ffffff;
   border-radius: 5px;
   box-shadow: 0 4px 4px rgba(16, 60, 164, 0.25);
@@ -77,7 +78,7 @@
   height: 100%;
   font-size: 12px;
   font-weight: 700;
-  color: #103ca4;
+  color: #103CA4;
   background: #ffffff;
   border-radius: 5px;
   box-shadow: 0 4px 4px rgba(16, 60, 164, 0.25);
@@ -391,15 +392,15 @@
 }
 
 .as2fa-choice-input:checked+.as2fa-choice-radio {
-  border-color: #103ca4;
+  border-color: #103CA4;
 }
 
 .as2fa-choice-input:checked+.as2fa-choice-radio::after {
-  background: #103ca4;
+  background: #103CA4;
 }
 
 .as2fa-choice-input:focus-visible+.as2fa-choice-radio {
-  outline: 2px solid #103ca4;
+  outline: 2px solid #103CA4;
   outline-offset: 2px;
 }
 
@@ -409,13 +410,13 @@
   justify-content: center;
   flex: none;
   padding: 8px;
-  color: #103ca4;
+  color: #103CA4;
   background: rgba(16, 60, 164, 0.1);
   border-radius: 8px;
 }
 
 .as2fa-choice-chip svg path {
-  stroke: #103ca4;
+  stroke: #103CA4;
 }
 
 .as2fa-choice-text {
@@ -514,13 +515,13 @@
 }
 
 .as2fa-footer-row .secondary-btn {
-  color: #103ca4;
+  color: #103CA4;
   background: rgba(16, 60, 164, 0.15);
   border-color: transparent;
 }
 
 .as2fa-footer-row .secondary-btn:hover:not(:disabled) {
-  color: #103ca4;
+  color: #103CA4;
   background: rgba(16, 60, 164, 0.22);
   border-color: transparent;
 }
@@ -561,7 +562,7 @@
 }
 
 .as2fa-success-footer .secondary-btn svg path {
-  stroke: #103ca4;
+  stroke: #103CA4;
 }
 
 .as2fa-success-footer .primary-btn {

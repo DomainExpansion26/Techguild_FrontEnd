@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* [TechGuild Update: 30-09-2026] Faster card fade-in 0.35s -> 0.25s + reduced-motion guard (end state unchanged). */
 /* ==========================================================================
    TechGuild Universal Card Design System (cards.css)
@@ -63,7 +64,7 @@
 
 /* 5. Gradient (TechGuild Navy Accent) */
 .tg-card--gradient {
-  background: linear-gradient(135deg, #092055 0%, #103ca4 100%);
+  background: linear-gradient(135deg, #092055 0%, #103CA4 100%);
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 12px 30px rgba(16, 60, 164, 0.22);
@@ -104,7 +105,7 @@
 }
 
 .tg-card--clickable:focus-visible {
-  outline: 2px solid #103ca4;
+  outline: 2px solid #103CA4;
   outline-offset: 2px;
 }
 
@@ -141,7 +142,7 @@
   width: 28px;
   height: 28px;
   border: 3px solid #e2e8f0;
-  border-top-color: #103ca4;
+  border-top-color: #103CA4;
   border-radius: 50%;
   animation: tgCardSpin 0.75s linear infinite;
 }
@@ -239,7 +240,7 @@
   padding: 4px 10px;
   border-radius: 9999px;
   line-height: 1;
-  background-color: #103ca4;
+  background-color: #103CA4;
   color: #ffffff;
 }
 
@@ -409,7 +410,7 @@
 
 .trust-card-link {
   font-size: clamp(0.7rem, 0.78vw, 1.0rem);
-  color: #103ca4;
+  color: #103CA4;
   font-weight: 700;
   text-decoration: none;
   display: inline-flex;
