@@ -1,3 +1,4 @@
+// 9-11-2026
 // 03-11-2026
 // Trust Points feature page explaining how users earn points and unlock ranks.
 import PublicHeader from "@/flows/landing/LandingLink/PublicHeader/PublicHeader";
@@ -131,7 +132,7 @@ export default function TrustPoints() {
                 </div>
               </div>
               <span className="tp-total-arrow">
-                <Icon name="ArrowDown" size={18} color="#0062FF" />
+                <Icon name="ArrowDown" size={18} color="#103CA4" />
               </span>
               <div className="tp-unlock">
                 <span className="tp-unlock-rank">F</span>

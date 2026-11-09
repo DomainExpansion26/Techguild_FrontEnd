@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 .otp-group {
   display: flex;
   gap: 16px;
@@ -38,7 +39,7 @@
 }
 
 .otp-input:focus {
-  border-color: #103ca4;
+  border-color: #103CA4;
   box-shadow: 0 0 0 3px rgba(16, 60, 164, 0.15);
 }
 

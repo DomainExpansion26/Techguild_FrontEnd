@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* ===== Login design tokens (consolidated from Figma frame 109:35 "Login") =====
  * Figbridge audits on the frame:
  * - palette: 9 distinct colors -> consolidated to 6 tokens below
@@ -14,7 +15,7 @@
   --login-placeholder: #6b7280; /* Figma #8E8E93 (3.26:1) -> 4.83:1, passes AA */
   --login-border: #d1d5db; /* merges Figma #B3B3B3 / #D9D9D9 */
   --login-icon: #6a717d; /* Figma icon gray, kept as canonical */
-  --login-primary: #103ca4; /* Figma primary blue */
+  --login-primary: #103CA4; /* Figma primary blue */
   --login-primary-hover: #0c3188;
   --login-error-bg: #fee2e2;
   --login-error-ink: #b91c1c;

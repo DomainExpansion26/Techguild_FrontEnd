@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* 6-11-2026 */
 /* 03-11-2026 */
 /* Styles for the GuideTopic page. */
@@ -21,11 +22,11 @@
 }
 
 .gt-page .pub-cta {
-  background: #103ca4;
+  background: #103CA4;
 }
 
 .gt-page .pub-cta:hover {
-  background: #0c3083;
+  background: #0C3083;
 }
 
 .gt-wrap {
@@ -64,7 +65,7 @@
 }
 
 .gt-breadcrumb a:hover {
-  color: #103ca4;
+  color: #103CA4;
 }
 
 .gt-hero-main {
@@ -189,7 +190,7 @@
   height: 38px;
   border-radius: 10px;
   background: #eef4ff;
-  color: #103ca4;
+  color: #103CA4;
   font-size: 12.5px;
   font-weight: 700;
   flex-shrink: 0;
@@ -265,10 +266,10 @@
   gap: 9px;
   height: 44px;
   padding: 0 18px;
-  border: 1px solid #103ca4;
+  border: 1px solid #103CA4;
   border-radius: 8px;
   background: #ffffff;
-  color: #103ca4;
+  color: #103CA4;
   font-size: 13.5px;
   font-weight: 600;
   text-decoration: none;
@@ -277,7 +278,7 @@
 }
 
 .gt-support-btn:hover {
-  background: #103ca4;
+  background: #103CA4;
   color: #ffffff;
 }
 

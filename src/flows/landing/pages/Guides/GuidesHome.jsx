@@ -1,3 +1,4 @@
+// 9-11-2026
 // 03-11-2026
 // Guides home page with topic browsing, popular guides, and search.
 import { Link } from "react-router-dom";
@@ -112,7 +113,7 @@ export default function GuidesHome() {
                 <svg width="20" height="24" viewBox="0 0 18 22" fill="none">
                   <path
                     d="M1.4 1.2 16 10.9l-6.2 1.4-3.1 6.2L1.4 1.2Z"
-                    fill="#103ca4"
+                    fill="#103CA4"
                     stroke="#ffffff"
                     strokeWidth="1.2"
                   />
@@ -192,7 +193,7 @@ export default function GuidesHome() {
               <p>Our support team is here to help. Reach out anytime and we&apos;ll get back to you.</p>
             </div>
             <Link to="/contact" className="gh-support-btn">
-              <Icon name="MessageSquareMore" size={13} color="#103ca4" />
+              <Icon name="MessageSquareMore" size={13} color="#103CA4" />
               Contact Support
             </Link>
           </div>

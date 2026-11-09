@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* ===========================================================
    Layout gap (moved out of the inline style on DashboardLayout)
    =========================================================== */
@@ -83,7 +84,7 @@
   line-height: 1.5;
   border: 0;
   border-radius: 10px;
-  background-color: #103ca4;
+  background-color: #103CA4;
   color: #ffffff;
   white-space: nowrap;
 }
@@ -166,7 +167,7 @@
 .profile-progress-fill {
   height: 100%;
   border-radius: 999px;
-  background-color: #103ca4;
+  background-color: #103CA4;
   transition: width 0.3s ease;
 }
 
@@ -228,9 +229,9 @@
   height: 32px;
   padding: 0 14px;
   border-radius: 8px;
-  border: 1px solid #103ca4;
+  border: 1px solid #103CA4;
   background-color: #ffffff;
-  color: #103ca4;
+  color: #103CA4;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -324,7 +325,7 @@
 }
 
 .profile-footer-actions .settings-btn-primary {
-  background-color: #103ca4;
+  background-color: #103CA4;
   color: #ffffff;
   border: 0;
 }

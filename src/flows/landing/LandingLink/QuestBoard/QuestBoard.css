@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 .qb-head {
   max-width: 900px;
 }
@@ -44,7 +45,7 @@
   padding: 7px 12px;
   border-radius: 999px;
   background: #eef2ff;
-  color: #0062ff;
+  color: #103CA4;
   font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -79,7 +80,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #0062ff;
+  color: #103CA4;
   font-size: 12px;
   font-weight: 600;
 }
@@ -137,7 +138,7 @@
 }
 
 .qb-process-icon.blue {
-  background: #0062ff;
+  background: #103CA4;
 }
 
 .qb-process-icon.pink {
@@ -295,8 +296,8 @@
 }
 
 .qb-check-row input:checked {
-  background: #0062ff;
-  border-color: #0062ff;
+  background: #103CA4;
+  border-color: #103CA4;
 }
 
 .qb-check-row input:checked::after {
@@ -338,7 +339,7 @@
   padding: 0;
   border: 0;
   background: none;
-  color: #0062ff;
+  color: #103CA4;
   font: inherit;
   font-size: 13px;
   font-weight: 700;

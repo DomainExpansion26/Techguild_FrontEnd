@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 .es-page {
   height: 100vh;
   min-height: 100vh;
@@ -35,7 +36,7 @@
 
 .es-eyebrow {
   margin: 0 0 16px;
-  color: #0062ff;
+  color: #103CA4;
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -65,16 +66,16 @@
   gap: 10px;
   padding: 13px 22px;
   border-radius: 8px;
-  background: #0062ff;
+  background: #103CA4;
   font-size: 14px;
 }
 
 .es-cta:hover:not(:disabled) {
-  background: #0052d6;
+  background: #0C3083;
 }
 
 .es-cta:active:not(:disabled) {
-  background: #0052d6;
+  background: #0C3083;
 }
 
 .es-flow {
@@ -165,7 +166,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: #0062ff;
+  background: #103CA4;
   box-shadow: 0 8px 18px rgba(26, 86, 219, 0.3);
 }
 
@@ -226,7 +227,7 @@
   width: 44px;
   height: 44px;
   border-radius: 10px;
-  background: #0062ff;
+  background: #103CA4;
 }
 
 .es-safe-card h3 {
@@ -299,7 +300,7 @@
   height: 30px;
   border-radius: 50%;
   background: #EFF6FF;
-  color: #0062ff;
+  color: #103CA4;
   font-size: 12px;
   font-weight: 700;
 }
@@ -376,7 +377,7 @@
   height: 18px;
   margin-top: 1px;
   border-radius: 50%;
-  background: #0062ff;
+  background: #103CA4;
 }
 
 .es-benefit-row strong {
@@ -452,7 +453,7 @@
   padding: 6px 12px;
   border-radius: 999px;
   background: #EFF6FF;
-  color: #0062ff;
+  color: #103CA4;
   font-size: 12px;
   font-weight: 600;
 }
@@ -490,7 +491,7 @@
   height: 9px;
   margin-left: 1px;
   border-radius: 50%;
-  background: #0062ff;
+  background: #103CA4;
 }
 
 .es-ms-icon {
@@ -537,7 +538,7 @@
 
 .es-status.review {
   background: #EFF6FF;
-  color: #0062ff;
+  color: #103CA4;
 }
 
 .es-status.pending {

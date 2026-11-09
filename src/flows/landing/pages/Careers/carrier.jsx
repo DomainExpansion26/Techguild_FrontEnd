@@ -1,3 +1,4 @@
+// 9-11-2026
 // 03-11-2026
 // Careers page with open roles, culture highlights, and a job application form.
 import { useRef, useState } from "react";
@@ -84,7 +85,7 @@ function TeamScene() {
         <rect x="52" y="42" width="126" height="76" rx="14" fill="#ffffff" />
         <rect x="68" y="86" width="12" height="18" rx="4" fill="#a7c6fb" />
         <rect x="88" y="74" width="12" height="30" rx="4" fill="#4b8bf5" />
-        <rect x="108" y="62" width="12" height="42" rx="4" fill="#2456e6" />
+        <rect x="108" y="62" width="12" height="42" rx="4" fill="#103CA4" />
         <path d="M128 74 l14 -10" stroke="#22c55e" strokeWidth="3" strokeLinecap="round" />
         <rect x="140" y="54" width="24" height="14" rx="7" fill="#e6f8ee" />
       </g>
@@ -102,10 +103,10 @@ function TeamScene() {
         <path
           d="M352 25 l10 4 v7 c0 7 -5 10 -10 12 c-5 -2 -10 -5 -10 -12 v-7 Z"
           fill="#dbe8ff"
-          stroke="#2456e6"
+          stroke="#103CA4"
           strokeWidth="2"
         />
-        <path d="M347 36 l4 4 l7 -8" stroke="#2456e6" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M347 36 l4 4 l7 -8" stroke="#103CA4" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
       </g>
 
       <g filter="url(#crdShadow)">
@@ -113,13 +114,13 @@ function TeamScene() {
         <rect x="52" y="170" width="52" height="8" rx="4" fill="#dbe7fa" />
         <rect x="52" y="186" width="38" height="8" rx="4" fill="#e8effb" />
         <rect x="52" y="202" width="46" height="8" rx="4" fill="#e8effb" />
-        <circle cx="98" cy="234" r="12" fill="#2456e6" />
+        <circle cx="98" cy="234" r="12" fill="#103CA4" />
         <path d="M93 234 l4 4 l7 -8" stroke="#ffffff" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
       </g>
 
       <g filter="url(#crdShadow)">
         <rect x="604" y="168" width="86" height="68" rx="14" fill="#ffffff" />
-        <path d="M618 214 l14 -14 l10 8 l18 -20" stroke="#2456e6" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M618 214 l14 -14 l10 8 l18 -20" stroke="#103CA4" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M650 188 h10 v10" stroke="#22c55e" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
       </g>
 
@@ -149,7 +150,7 @@ function TeamScene() {
       <g>
         <path d="M448 322 L442 396" stroke="#1c2f52" strokeWidth="13" strokeLinecap="round" />
         <path d="M466 322 L474 396" stroke="#1c2f52" strokeWidth="13" strokeLinecap="round" />
-        <path d="M434 258 C440 244 476 244 482 258 L488 328 L428 328 Z" fill="#2456e6" />
+        <path d="M434 258 C440 244 476 244 482 258 L488 328 L428 328 Z" fill="#103CA4" />
         <path d="M476 266 C498 246 506 230 510 214" stroke="#8a5a44" strokeWidth="11" strokeLinecap="round" fill="none" />
         <circle cx="511" cy="211" r="6" fill="#8a5a44" />
         <path d="M438 268 C428 286 428 302 432 316" stroke="#8a5a44" strokeWidth="11" strokeLinecap="round" fill="none" />
@@ -322,7 +323,7 @@ function Carrier() {
               {JOBS.map((job) => (
                 <article key={job.title} className="crd-job-card">
                   <span className="crd-job-icon">
-                    <Icon name={job.icon} size={24} color="#0062ff" />
+                    <Icon name={job.icon} size={24} color="#103CA4" />
                   </span>
                   <h3>{job.title}</h3>
                   <p>{job.text}</p>
@@ -433,7 +434,7 @@ function Carrier() {
             </span>
             <div className={`crd-resume-box ${errors.resume ? "has-error" : ""}`.trim()}>
               <span className="crd-resume-icon">
-                <Icon name="Upload" size={18} color="#0062ff" />
+                <Icon name="Upload" size={18} color="#103CA4" />
               </span>
               <div className="crd-resume-copy">
                 <span className="crd-resume-title">

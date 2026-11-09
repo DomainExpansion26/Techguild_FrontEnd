@@ -1,3 +1,4 @@
+// 9-11-2026
 // 03-11-2026
 // Partnership page describing partner types, benefits, and the partnership application form.
 import { useState } from "react";
@@ -186,13 +187,13 @@ function Partnership() {
               {PARTNER_CARDS.map((card) => (
                 <article key={card.title} className="pp-partner-card">
                   <span className="pp-partner-icon">
-                    <Icon name={card.icon} size={21} color="#0062ff" />
+                    <Icon name={card.icon} size={21} color="#103CA4" />
                   </span>
                   <h3>{card.title}</h3>
                   <p>{card.text}</p>
                   <a href="#partnership-inquiry" className="pp-learn">
                     Learn more
-                    <Icon name="ArrowRight" size={14} color="#0062ff" />
+                    <Icon name="ArrowRight" size={14} color="#103CA4" />
                   </a>
                 </article>
               ))}
@@ -222,7 +223,7 @@ function Partnership() {
               {BENEFITS.map((benefit) => (
                 <article key={benefit.title} className="pp-benefit">
                   <span className="pp-benefit-icon">
-                    <Icon name={benefit.icon} size={20} color="#0062ff" />
+                    <Icon name={benefit.icon} size={20} color="#103CA4" />
                   </span>
                   <h3>{benefit.title}</h3>
                   <p>{benefit.text}</p>
@@ -248,7 +249,7 @@ function Partnership() {
                   <span className="pp-step-num">{index + 1}</span>
                   <div className="pp-step-card">
                     <span className="pp-step-icon">
-                      <Icon name={step.icon} size={18} color="#0062ff" />
+                      <Icon name={step.icon} size={18} color="#103CA4" />
                     </span>
                     <h3>{step.title}</h3>
                     <p>{step.text}</p>
@@ -443,7 +444,7 @@ function Partnership() {
                 <div className="pp-contact-list">
                   <div className="pp-contact-item">
                     <span className="pp-contact-icon">
-                      <Icon name="Mail" size={18} color="#0062ff" />
+                      <Icon name="Mail" size={18} color="#103CA4" />
                     </span>
                     <div>
                       <p className="pp-contact-label">Email</p>
@@ -454,7 +455,7 @@ function Partnership() {
 
                   <div className="pp-contact-item">
                     <span className="pp-contact-icon">
-                      <Icon name="Phone" size={18} color="#0062ff" />
+                      <Icon name="Phone" size={18} color="#103CA4" />
                     </span>
                     <div>
                       <p className="pp-contact-label">Phone</p>
@@ -465,7 +466,7 @@ function Partnership() {
 
                   <div className="pp-contact-item">
                     <span className="pp-contact-icon">
-                      <Icon name="MapPin" size={18} color="#0062ff" />
+                      <Icon name="MapPin" size={18} color="#103CA4" />
                     </span>
                     <div>
                       <p className="pp-contact-label">Our office</p>

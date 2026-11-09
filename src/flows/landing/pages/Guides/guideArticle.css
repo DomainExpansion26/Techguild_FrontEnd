@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* 6-11-2026 */
 /* 03-11-2026 */
 /* Styles for full guide articles and their reusable content blocks. */
@@ -22,11 +23,11 @@
 }
 
 .fg-page .pub-cta {
-  background: #103ca4;
+  background: #103CA4;
 }
 
 .fg-page .pub-cta:hover {
-  background: #0c3083;
+  background: #0C3083;
 }
 
 .fg-wrap {
@@ -77,7 +78,7 @@
 }
 
 .fg-breadcrumb a:hover {
-  color: #103ca4;
+  color: #103CA4;
 }
 
 .fg-hero h1 {
@@ -274,7 +275,7 @@
 
 .fg-toc {
   position: sticky;
-  top: 20px;
+  top: 84px;
   display: flex;
   flex-direction: column;
   gap: 2px;

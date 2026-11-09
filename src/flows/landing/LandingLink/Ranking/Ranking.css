@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* 03-11-2026 */
 /* Styles for the Ranking feature page. */
 .rk-page {
@@ -37,7 +38,7 @@
 
 .rk-eyebrow {
   margin: 0 0 16px;
-  color: #0062ff;
+  color: #103CA4;
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -66,16 +67,16 @@
   gap: 10px;
   padding: 14px 24px;
   border-radius: 999px;
-  background: #0062ff;
+  background: #103CA4;
   font-size: 14px;
 }
 
 .rk-cta:hover:not(:disabled) {
-  background: #0052d6;
+  background: #0C3083;
 }
 
 .rk-cta:active:not(:disabled) {
-  background: #0052d6;
+  background: #0C3083;
 }
 
 .rk-hero-art {
@@ -150,7 +151,7 @@
 
 .rk-how-icon.blue {
   background: #EFF6FF;
-  color: #0062ff;
+  color: #103CA4;
 }
 
 .rk-how-icon.green {

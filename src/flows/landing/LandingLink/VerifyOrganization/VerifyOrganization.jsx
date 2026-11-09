@@ -1,11 +1,10 @@
+// 9-11-2026
 // 6-11-2026
 // 03-11-2026
 // Organization verification page for business identity and representative checks.
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DashboardShell from "@/flows/landing/LandingLink/DashboardShell/DashboardShell";
 import Icon from "@/Components/icons/Icon";
-import { showSnackbar } from "@/store/slices/snackbarSlice";
 import "./VerifyOrganization.css";
 
 const VERIFY_ITEMS = [
@@ -122,10 +121,10 @@ function HexBackdrop() {
 }
 
 export default function VerifyOrganization() {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const comingSoon = () => {
-    dispatch(showSnackbar({ message: "Coming Soon", type: "info" }));
+  const goToLogin = () => {
+    navigate("/login");
   };
 
   return (
@@ -148,7 +147,7 @@ export default function VerifyOrganization() {
               Start Verification
               <span aria-hidden="true">→</span>
             </Link>
-            <button type="button" className="dash-btn dash-btn-white" onClick={comingSoon}>
+            <button type="button" className="dash-btn dash-btn-white" onClick={goToLogin}>
               Learn More
             </button>
           </div>
@@ -166,10 +165,10 @@ export default function VerifyOrganization() {
             <strong>TechGuild Global</strong>
             <span className="vp-id-sub">Verified Organization</span>
             <div className="vp-id-icons">
-              <Icon name="Shield" size={14} color="#0062FF" />
-              <Icon name="Lock" size={14} color="#0062FF" />
-              <Icon name="Star" size={14} color="#0062FF" />
-              <Icon name="BadgeCheck" size={14} color="#0062FF" />
+              <Icon name="Shield" size={14} color="#103CA4" />
+              <Icon name="Lock" size={14} color="#103CA4" />
+              <Icon name="Star" size={14} color="#103CA4" />
+              <Icon name="BadgeCheck" size={14} color="#103CA4" />
             </div>
           </div>
         </div>
@@ -195,7 +194,7 @@ export default function VerifyOrganization() {
           </section>
 
           <div className="vp-note">
-            <Icon name="Lock" size={20} color="#0062FF" />
+            <Icon name="Lock" size={20} color="#103CA4" />
             <p>
               Your information is securely encrypted and only used for verification purposes to maintain a trusted,
               professional ecosystem.
@@ -210,7 +209,7 @@ export default function VerifyOrganization() {
             </span>
             <h2>Your Verification Status</h2>
             <span className="vp-status-pill">
-              <Icon name="Clock" size={14} color="#0062FF" />
+              <Icon name="Clock" size={14} color="#103CA4" />
               Not Started
             </span>
             <p>Complete the process to unlock the "Verified Organization" badge.</p>

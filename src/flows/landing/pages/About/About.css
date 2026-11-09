@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* 6-11-2026 */
 /* 03-11-2026 */
 /* Styles for the About page. */
@@ -24,7 +25,7 @@
 
 .ab-eyebrow {
   margin: 0 0 16px;
-  color: #0062ff;
+  color: #103CA4;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -275,7 +276,7 @@
   height: 24px;
   margin-top: 1px;
   border-radius: 50%;
-  background: #0062ff;
+  background: #103CA4;
 }
 
 .ab-cta {
@@ -326,26 +327,26 @@
 }
 
 .ab-btn-primary {
-  background: #0062ff;
+  background: #103CA4;
   color: #ffffff;
-  box-shadow: 0 8px 22px rgba(0, 98, 255, 0.24);
+  box-shadow: 0 8px 22px rgba(16, 60, 164, 0.24);
 }
 
 .ab-btn-primary:hover {
-  background: #0052d6;
+  background: #0C3083;
   color: #ffffff;
 }
 
 .ab-btn-light {
   border: 1px solid #ffffff;
   background: #ffffff;
-  color: #0062ff;
+  color: #103CA4;
 }
 
 .ab-btn-light:hover {
   border-color: #dbe7ff;
   background: #f7faff;
-  color: #0052d6;
+  color: #0C3083;
 }
 
 /* ---------- footer ---------- */
@@ -500,7 +501,7 @@
 }
 
 .ab-newsletter input:focus {
-  border-color: rgba(0, 98, 255, 0.7);
+  border-color: rgba(16, 60, 164, 0.7);
 }
 
 .ab-newsletter button {
@@ -508,7 +509,7 @@
   padding: 0 28px;
   border: 0;
   border-radius: 10px;
-  background: #0062ff;
+  background: #103CA4;
   color: #ffffff;
   font-family: inherit;
   font-size: 14px;
@@ -518,7 +519,7 @@
 }
 
 .ab-newsletter button:hover {
-  background: #0052d6;
+  background: #0C3083;
 }
 
 .ab-giant {

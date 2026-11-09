@@ -1,3 +1,4 @@
+// 9-11-2026
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { DashboardLayout } from "@/Components";
@@ -100,7 +101,7 @@ export default function PartyManagement() {
           <button
             type="button"
             className="btn btn-primary"
-            style={{ backgroundColor: "#103ca4", borderColor: "#103ca4" }}
+            style={{ backgroundColor: "#103CA4", borderColor: "#103CA4" }}
             onClick={() => setShowCreateModal(true)}
           >
             + Create New Party
@@ -215,7 +216,7 @@ export default function PartyManagement() {
                     <button type="button" className="btn btn-secondary" onClick={() => setShowCreateModal(false)}>
                       Cancel
                     </button>
-                    <button type="submit" className="btn btn-primary" style={{ backgroundColor: "#103ca4" }} disabled={creating}>
+                    <button type="submit" className="btn btn-primary" style={{ backgroundColor: "#103CA4" }} disabled={creating}>
                       {creating ? "Creating..." : "Create Party"}
                     </button>
                   </div>
@@ -269,7 +270,7 @@ export default function PartyManagement() {
                     <button type="button" className="btn btn-secondary" onClick={() => setSelectedTeam(null)}>
                       Close
                     </button>
-                    <button type="submit" className="btn btn-primary" style={{ backgroundColor: "#103ca4" }} disabled={inviting}>
+                    <button type="submit" className="btn btn-primary" style={{ backgroundColor: "#103CA4" }} disabled={inviting}>
                       {inviting ? "Sending..." : "Send Invitation"}
                     </button>
                   </div>

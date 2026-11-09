@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* 6-11-2026 */
 /* 03-11-2026 */
 /* Styles for the Contact Us page. */
@@ -43,7 +44,7 @@
 
 .ctu-eyebrow {
   margin: 0 0 16px;
-  color: #0062ff;
+  color: #103CA4;
   font-size: 12.5px;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -139,7 +140,7 @@
 }
 
 .ctu-field em {
-  color: #2456e6;
+  color: #103CA4;
   font-style: normal;
 }
 
@@ -176,8 +177,8 @@
 
 .ctu-field input:focus,
 .ctu-field textarea:focus {
-  border-color: #2456e6;
-  box-shadow: 0 0 0 3px rgba(36, 86, 230, 0.1);
+  border-color: #103CA4;
+  box-shadow: 0 0 0 3px rgba(16, 60, 164, 0.1);
 }
 
 .ctu-message-field {
@@ -254,7 +255,7 @@
 
 .ctu-reach-icon svg path,
 .ctu-office-icon svg path {
-  stroke: #2456e6;
+  stroke: #103CA4;
 }
 
 .ctu-reach-text strong {
@@ -276,7 +277,7 @@
 }
 
 .ctu-reach-text a:hover {
-  color: #2456e6;
+  color: #103CA4;
 }
 
 .ctu-reach-text .ctu-reach-note {
@@ -375,7 +376,7 @@
 .ctu-social a:hover {
   border-color: #b9ccf4;
   background: #f5f9ff;
-  color: #2456e6;
+  color: #103CA4;
 }
 
 .ctu-social .ctu-social-linkedin svg path {
