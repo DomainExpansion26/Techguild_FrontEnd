@@ -90,5 +90,6 @@ Cards.Guild = GuildCard;
 
 // Alias export for singular "Card"
 export const Card = Cards;
+export { BaseCard };
 
 export default Cards;
