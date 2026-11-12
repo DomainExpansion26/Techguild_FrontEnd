@@ -4,7 +4,7 @@ export const INDIVIDUAL_MENU_ITEMS = [
   { id: "quest-board", label: "Quest Board", icon: "Files", path: "/quest-board", aliases: ["/individual/quest-board", "/individual/projects"] },
   { id: "communication", label: "Communication", icon: "MessageSquareMore", path: "/communication", aliases: [] },
   { id: "task-management", label: "Task Management", icon: "NotebookText", path: "/task-management", aliases: ["/active-quests", "/individual/active-quests"] },
-  { id: "analytics", label: "Analytics", icon: "BarChart3", path: "/analytics", aliases: ["/reputation-rank"] },
+  { id: "analytics", label: "Analytics", icon: "BarChart3", path: "/analytics", aliases: ["/reputation-rank", "/rank-progression", "/individual/rank-progression"] },
   { id: "finance", label: "Finance", icon: "IndianRupee", path: "/finance", aliases: ["/earnings-payouts"] },
   { id: "party-formation", label: "Party Formation", icon: "Group", path: "/party-formation", aliases: ["/party-management", "/individual/party"] },
   { id: "guild-hall", label: "Guild Hall", icon: "Building2", path: "/guild-hall", aliases: ["/reviews-feedback"] },

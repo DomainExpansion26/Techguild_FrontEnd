@@ -36,6 +36,7 @@ export const individualRoutes = (
     <Route path="/party-formation" element={<PartyManagement />} />
     <Route path="/reputation-rank" element={<ReputationRank />} />
     <Route path="/analytics" element={<ReputationRank />} />
+    <Route path="/rank-progression" element={<ReputationRank />} />
     <Route path="/verification-hub" element={<Verification />} />
     <Route path="/subscription" element={<Verification />} />
     <Route path="/earnings-payouts" element={<Earnings />} />
@@ -57,6 +58,8 @@ export const individualRoutes = (
     <Route path="/individual/proposals" element={<Proposals />} />
     <Route path="/individual/active-quests" element={<ActiveQuests />} />
     <Route path="/individual/party" element={<PartyManagement />} />
+    <Route path="/individual/reputation-rank" element={<ReputationRank />} />
+    <Route path="/individual/rank-progression" element={<ReputationRank />} />
     <Route path="/individual/earnings" element={<Earnings />} />
     <Route path="/individual/reviews" element={<Reviews />} />
     <Route path="/individual/settings" element={<IndividualSettingsWrapper />} />
