@@ -1,6 +1,7 @@
 // 6-11-2026
 import { lazy } from "react";
 import { Route } from "react-router-dom";
+import { GuestGuard } from "@/permissions";
 
 const SignUp = lazy(() => import("./pages/Register/SignUp"));
 const Login = lazy(() => import("./pages/Login/Login"));

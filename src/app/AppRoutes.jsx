@@ -10,7 +10,6 @@ import { adminRoutes } from "@/flows/admin/routes";
 import { agencyRoutes } from "@/flows/agency/routes";
 import { clientRoutes } from "@/flows/client/routes";
 import { individualRoutes } from "@/flows/individual/routes";
-import { AuthGuard } from "@/permissions";
 
 export default function AppRoutes() {
   return (

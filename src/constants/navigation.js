@@ -3,7 +3,7 @@ export const INDIVIDUAL_MENU_ITEMS = [
   { id: "profile", label: "Profile (Guild Card)", icon: "User", path: "/profile", aliases: ["/individual/profile"] },
   { id: "quest-board", label: "Quest Board", icon: "Files", path: "/quest-board", aliases: ["/individual/quest-board", "/individual/projects"] },
   { id: "communication", label: "Communication", icon: "MessageSquareMore", path: "/communication", aliases: [] },
-  { id: "task-management", label: "Task Management", icon: "NotebookText", path: "/task-management", aliases: ["/active-quests", "/individual/active-quests"] },
+  { id: "task-management", label: "Task Management", icon: "NotebookText", path: "/active-quests", aliases: ["/individual/active-quests"] },
   { id: "analytics", label: "Analytics", icon: "BarChart3", path: "/analytics", aliases: ["/reputation-rank", "/rank-progression", "/individual/rank-progression"] },
   { id: "finance", label: "Finance", icon: "IndianRupee", path: "/finance", aliases: ["/earnings-payouts"] },
   { id: "party-formation", label: "Party Formation", icon: "Group", path: "/party-formation", aliases: ["/party-management", "/individual/party"] },

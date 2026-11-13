@@ -7,6 +7,10 @@ const LANDING_MENU_ITEMS = INDIVIDUAL_MENU_ITEMS.map((item) => {
     return { ...item, path: "/quest-board", aliases: ["/individual/quest-board", "/individual/projects"] };
   }
 
+  if (item.id === "task-management") {
+    return { ...item, path: "/task-management", aliases: [] };
+  }
+
   if (item.id === "verification") {
     return {
       ...item,

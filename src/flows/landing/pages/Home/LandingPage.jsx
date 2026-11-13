@@ -5,9 +5,9 @@
 // Last Changed: 16-10-2026 - eco tiles click+hover select, ranks SS/SSS centered row, escrow all blue, learn-more Coming Soon, nav/footer logo mark, new guild card imgs, FAQ chevron icon, footer copyright
 // Last Changed: 15-10-2026 - icons #2456e6->#103CA4, sidebar 16px + stats icons, footer LinkedIn only, c4 wrapper, encoding fixed (₹ ✓ → ◆ ✦)
 // Account CTAs navigate to the active sign-in and sign-up pages.
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useNavigationType } from "react-router-dom";
 import { showSnackbar } from "@/store/slices/snackbarSlice";
 import Icon from "@/Components/icons/Icon";
 import Footer from "@/flows/landing/LandingLink/Footer/Footer";
