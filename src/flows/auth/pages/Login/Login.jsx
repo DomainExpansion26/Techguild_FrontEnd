@@ -1,7 +1,8 @@
+// 17-11-2026
 // 6-11-2026
 // [TechGuild Update: 30-09-2026] Prefetch post-login chunks + shell bg while user types / on success (no visual change).
 import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Google, GitHub, Mail, Lock, Eye, EyeOff } from "@/Components/icons";
 import "./login.css";
 import {
@@ -21,6 +22,11 @@ import { useDispatch } from "react-redux";
 import { showSnackbar } from "@/store";
 import { APP_STRINGS, APP_CONFIG, TOAST_MESSAGES, FORM_ERRORS } from "@/constants/string";
 import { ROLES } from "@/permissions/roles";
+import {
+  resolvePostLoginPath,
+  savePendingRedirect,
+  clearPendingRedirect,
+} from "@/utils/postLoginRoute";
 import { prefetchOnPublicPage, prefetchPostLogin } from "@/app/prefetch";
 
 const REMEMBERED_EMAIL_KEY = "techguild_remembered_email";
@@ -98,13 +104,6 @@ function deriveDisplayName(cleanEmail) {
   );
 }
 
-function resolveDashboardPath(role) {
-  if (role === ROLES.CLIENT || role === "client" || role === "client_admin" || role === "client_member") return "/client-dashboard";
-  if (role === ROLES.AGENCY || role === "agency" || role === "agency_admin") return "/agency/dashboard";
-  if (role === ROLES.INDIVIDUAL || role === "individual") return "/dashboard";
-  return "/account-type";
-}
-
 export default function Login() {
   const dispatch = useDispatch();
   const STRINGS = APP_STRINGS.AUTH.LOGIN;
@@ -114,6 +113,8 @@ export default function Login() {
 
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirectFrom = location.state?.from ?? null;
   const redirectTimer = useRef(null);
 
   // Restore remembered email (rememberMe now actually persists).
@@ -183,6 +184,7 @@ export default function Login() {
             state: {
               temporary_token: response.temporary_token,
               email: cleanEmail,
+              from: redirectFrom,
             },
           });
           return;
@@ -261,7 +263,8 @@ export default function Login() {
           navigate("/account-type", { state: { email: cleanEmail } });
         } else {
           prefetchPostLogin(role);
-          navigate(resolveDashboardPath(role));
+          navigate(resolvePostLoginPath(role, redirectFrom));
+          clearPendingRedirect();
         }
       } catch (err) {
         const errData = err?.data || err?.response?.data;
@@ -278,6 +281,7 @@ export default function Login() {
             state: {
               temporary_token: tempToken,
               email: cleanEmail,
+              from: redirectFrom,
             },
           });
           return;
@@ -302,16 +306,18 @@ export default function Login() {
         formDispatch({ type: "SUBMIT_END" });
       }
     },
-    [email, password, rememberMe, login, navigate, dispatch, fail]
+    [email, password, rememberMe, login, navigate, dispatch, fail, redirectFrom]
   );
 
   const handleGoogleLogin = useCallback(() => {
+    savePendingRedirect(redirectFrom);
     oauthApi.redirectToGoogle();
-  }, []);
+  }, [redirectFrom]);
 
   const handleGithubLogin = useCallback(() => {
+    savePendingRedirect(redirectFrom);
     oauthApi.redirectToGithub();
-  }, []);
+  }, [redirectFrom]);
 
   const canSubmit = useMemo(
     () => email.trim().length > 0 && password.length > 0 && !loading,

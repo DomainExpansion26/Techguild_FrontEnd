@@ -1,3 +1,4 @@
+// 17-11-2026
 // 9-11-2026
 // 6-11-2026
 // 03-11-2026
@@ -174,7 +175,7 @@ export default function LearnMoreQuest() {
                 </p>
               </div>
 
-              <Link to="/quest-board" className="lmq-cta-btn">
+              <Link to="/login" state={{ from: "/quest-board" }} className="lmq-cta-btn">
                 Explore the Quest Board
                 <Icon name="ArrowRight" size={16} color="#ffffff" strokeWidth={2.2} />
               </Link>
