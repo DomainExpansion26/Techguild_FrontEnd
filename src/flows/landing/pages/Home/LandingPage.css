@@ -58,7 +58,7 @@ footer.tg-footer .tg-foot-grid .tg-logo > span { display: inline-flex; align-ite
 .tg-logo-mark { height: 32px; width: auto; display: block; flex-shrink: 0; }
 
 /* ---------- floating nav - rounded edges align with hero content lines ---------- */
-.tg-nav-float { position: sticky; top: 14px; z-index: 60; max-width: 1144px; margin: 14px auto -84px; display: flex; align-items: center; justify-content: space-between; gap: 16px; background: rgba(255,255,255,.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 18px; box-shadow: 0 18px 50px rgba(2,6,23,.14); padding: 8px 8px 8px 20px; }
+.tg-nav-float { position: sticky; top: 14px; z-index: 60; max-width: 1144px; margin: 14px auto -84px; display: flex; align-items: center; justify-content: space-between; gap: 16px; background: rgba(255,255,255,.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 18px; box-shadow: 0 18px 50px rgba(2,6,23,.14); padding: 8px 8px 8px 20px; }
 .tg-nav-links { display: flex; gap: 26px; align-items: center; }
 .tg-nav-links a { color: #475569; text-decoration: none; font-size: 14.5px; font-weight: 500; line-height: 1; white-space: nowrap; }
 .tg-nav-links a:hover { color: #103CA4; }
