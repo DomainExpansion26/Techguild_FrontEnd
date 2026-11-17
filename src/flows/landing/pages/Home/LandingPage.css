@@ -1,5 +1,7 @@
+/* 17-11-2026 */
 /* 9-11-2026 */
 /* 6-11-2026 */
+/* Last Changed: 17-11-2026 - nav 85% opacity, hero pt 109 (25 gap), section/marquee/footer gap 25, marquee-next 25 */
 /* Last Changed: 16-10-2026 - sec gap 80->50, svc card 400, rank SS/SSS centered same-size, eco select+hover, nav slim + logo mark, faq chevron, giant faint + copyright, cards equal box */
 /* Last Changed: 15-10-2026 - sec gap 150->80 (60/40 mob), blue #103CA4->#103CA4, hero span #5082FC, svc shadow off, nav 1144 align, hero pad-top 154 (gap 70), dash nowrap/icons/bars/chips aligned */
 /* ============ TechGuild Landing (Figma flow) ============ */
@@ -12,7 +14,7 @@
 .tg-landing > section:not(.tg-hero),
 .tg-landing > div.tg-marquee,
 .tg-landing > footer.tg-footer {
-  margin-top: 50px;
+  margin-top: 25px;
 }
 .tg-landing > header.tg-nav-float + section.tg-hero {
   margin-top: 0;
@@ -56,7 +58,7 @@ footer.tg-footer .tg-foot-grid .tg-logo > span { display: inline-flex; align-ite
 .tg-logo-mark { height: 32px; width: auto; display: block; flex-shrink: 0; }
 
 /* ---------- floating nav - rounded edges align with hero content lines ---------- */
-.tg-nav-float { position: sticky; top: 14px; z-index: 60; max-width: 1144px; margin: 14px auto -84px; display: flex; align-items: center; justify-content: space-between; gap: 16px; background: rgba(255,255,255,.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 18px; box-shadow: 0 18px 50px rgba(2,6,23,.14); padding: 8px 8px 8px 20px; }
+.tg-nav-float { position: sticky; top: 14px; z-index: 60; max-width: 1144px; margin: 14px auto -84px; display: flex; align-items: center; justify-content: space-between; gap: 16px; background: rgba(255,255,255,.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 18px; box-shadow: 0 18px 50px rgba(2,6,23,.14); padding: 8px 8px 8px 20px; }
 .tg-nav-links { display: flex; gap: 26px; align-items: center; }
 .tg-nav-links a { color: #475569; text-decoration: none; font-size: 14.5px; font-weight: 500; line-height: 1; white-space: nowrap; }
 .tg-nav-links a:hover { color: #103CA4; }
@@ -68,7 +70,7 @@ footer.tg-footer .tg-foot-grid .tg-logo > span { display: inline-flex; align-ite
 .tg-hero { position: relative; background: #0a0e1e; overflow: hidden; }
 .tg-hero-art { position: absolute; top: 0; right: 0; width: 58%; height: 100%; object-fit: cover; opacity: .9; pointer-events: none; -webkit-mask-image: linear-gradient(to right, transparent 0, #000 30%), linear-gradient(to top, transparent 0, #000 28%); -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, transparent 0, #000 30%), linear-gradient(to top, transparent 0, #000 28%); mask-composite: intersect; }
 .tg-hero-glow { position: absolute; left: -120px; bottom: -200px; width: 520px; height: 520px; background: radial-gradient(circle, rgba(124,58,237,.5), transparent 65%); pointer-events: none; }
-.tg-hero-grid { position: relative; display: grid; grid-template-columns: 1.02fr .98fr; gap: 48px; align-items: center; padding-top: 154px; padding-bottom: 96px; }
+.tg-hero-grid { position: relative; display: grid; grid-template-columns: 1.02fr .98fr; gap: 48px; align-items: center; padding-top: 109px; padding-bottom: 96px; }
 .tg-hero-eyebrow { color: #4f7cff; font-size: 12.5px; letter-spacing: .24em; font-weight: 700; margin: 0 0 22px; }
 .tg-hero-eyebrow i { font-style: normal; margin-right: 10px; }
 .tg-hero h1 { color: #fff; font-size: clamp(46px, 5.6vw, 78px); line-height: 1.02; font-weight: 800; letter-spacing: -0.03em; margin: 0 0 24px; }
@@ -368,7 +370,7 @@ footer.tg-footer .tg-foot-grid .tg-logo > span { display: inline-flex; align-ite
   .tg-landing > section:not(.tg-hero),
   .tg-landing > div.tg-marquee,
   .tg-landing > footer.tg-footer {
-    margin-top: 60px;
+    margin-top: 25px;
   }
   .tg-nav-links { display: none; }
   .tg-hero-grid, .tg-split { grid-template-columns: 1fr; }
@@ -390,12 +392,12 @@ footer.tg-footer .tg-foot-grid .tg-logo > span { display: inline-flex; align-ite
   .tg-landing > section:not(.tg-hero),
   .tg-landing > div.tg-marquee,
   .tg-landing > footer.tg-footer {
-    margin-top: 40px;
+    margin-top: 25px;
   }
   .tg-wrap, .tg-nav-float { padding-left: 18px; padding-right: 18px; }
   .tg-nav-float { margin-left: 18px; margin-right: 18px; }
   .tg-signin { display: none; }
-  .tg-hero-grid { padding-top: 150px; padding-bottom: 64px; }
+  .tg-hero-grid { padding-top: 109px; padding-bottom: 64px; }
   .tg-steps { grid-template-columns: 1fr 1fr; }
   .tg-rank-row { grid-template-columns: 1fr 1fr; }
   .tg-rank-row-center .tg-rank-card { flex-basis: calc((100% - 16px) / 2); max-width: calc((100% - 16px) / 2); }
@@ -405,3 +407,6 @@ footer.tg-footer .tg-foot-grid .tg-logo > span { display: inline-flex; align-ite
   .tg-dash-side { display: none; }
   .tg-chip.c1 { top: 0; } .tg-chip.c2 { top: 60px; } .tg-chip.c3 { bottom: 30%; } .tg-chip.c4 { bottom: 2%; left: auto; right: 0; transform: none; }
 }
+
+/* Marquee strips: 25px gap to the next section's content (all breakpoints) */
+.tg-landing > div.tg-marquee + section { margin-top: 0; padding-top: 25px; }

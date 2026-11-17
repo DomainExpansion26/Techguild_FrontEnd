@@ -1,3 +1,4 @@
+// 17-11-2026
 // [TechGuild Update: 30-09-2026] Bg uses existing img1.png + prefetch before dashboard navigation (no visual change).
 import { useCallback, useEffect, useReducer } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -16,6 +17,11 @@ import {
 } from "@/constants/string";
 import { AUTH_ROUTES } from "@/constants/navigation";
 import { ROLES } from "@/permissions/roles";
+import {
+  resolvePostLoginPath,
+  readPendingRedirect,
+  clearPendingRedirect,
+} from "@/utils/postLoginRoute";
 import { prefetchPostLogin } from "@/app/prefetch";
 import authBg from "@/assets/img1.png";
 import "./TwoFactor.css";
@@ -112,14 +118,6 @@ function decodeJwtPayload(token) {
   }
 }
 
-function resolveDashboardPath(role) {
-  if (role === ROLES.CLIENT || role === "client" || role === "client_admin" || role === "client_member") return "/client-dashboard";
-  if (role === ROLES.AGENCY || role === "agency" || role === "agency_admin") return "/agency/dashboard";
-  if (role === ROLES.INDIVIDUAL || role === "individual") return "/dashboard";
-  if (role === ROLES.ADMIN || role === "admin") return "/admin/dashboard";
-  return "/account-type";
-}
-
 // Login-time 2FA challenge (Figma "for 6- digit code" / "for 8 digit code").
 // Reached from Login when the backend answers with requires_2fa /
 // temporary_token. Authenticator mode takes a 6-digit TOTP; recovery mode
@@ -131,6 +129,7 @@ export default function TwoFactor() {
   const STRINGS = APP_STRINGS.AUTH.TWO_FACTOR;
   const navigate = useNavigate();
   const location = useLocation();
+  const redirectFrom = location.state?.from ?? readPendingRedirect();
   const { login } = useAuth();
 
   const [state, stateDispatch] = useReducer(reducer, initialState);
@@ -305,14 +304,15 @@ export default function TwoFactor() {
         navigate("/account-type", { replace: true, state: { email: cleanEmail } });
       } else {
         prefetchPostLogin(role);
-        navigate(resolveDashboardPath(role), { replace: true });
+        navigate(resolvePostLoginPath(role, redirectFrom), { replace: true });
+        clearPendingRedirect();
       }
     } catch (err) {
       fail(err?.message || FORM_ERRORS.AUTH.TWO_FA_FAILED);
     } finally {
       stateDispatch({ type: "SUBMIT_END" });
     }
-  }, [challenge, code, codeLength, mode, login, navigate, dispatch, fail]);
+  }, [challenge, code, codeLength, mode, login, navigate, dispatch, fail, redirectFrom]);
 
   const canSubmit = code.join("").length === codeLength && !loading;
 
