@@ -6,7 +6,7 @@ const ClientProfile = lazy(() => import("./pages/Profile/Profile"));
 const ClientWholeProfile = lazy(() => import("./pages/WholeProfile/WholeProfile"));
 const ClientQuestBoard = lazy(() => import("./pages/QuestBoard/QuestBoard"));
 const ClientApplications = lazy(() => import("./pages/Applications/Applications"));
-const ClientActiveQuests = lazy(() => import("./pages/ActiveQuests/ActiveQuests"));
+const ClientActiveQuests = lazy(() => import("../individual/pages/ActiveQuests/ActiveQuests"));
 const ClientCompanyReputation = lazy(() => import("./pages/CompanyReputation/CompanyReputation"));
 const ClientVerificationHub = lazy(() => import("./pages/VerificationHub/VerificationHub"));
 const ClientPayouts = lazy(() => import("./pages/Payouts/Payouts"));
