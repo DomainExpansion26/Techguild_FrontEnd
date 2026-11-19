@@ -60,6 +60,77 @@ export const ENDPOINTS = {
     REOPEN: (projectId) => `/v1/projects/${projectId}/reopen`,
   },
 
+  // 4a. Quests and quest milestones
+  QUESTS: {
+    BASE: "/v1/quests",
+    MY_WORK: "/v1/quests/my-work",
+    DETAIL: (questId) => `/v1/quests/${questId}`,
+    ACCEPT: (questId) => `/v1/quests/${questId}/accept`,
+    APPLICATIONS: (questId) => `/v1/quests/${questId}/applications`,
+    ACCEPT_APPLICATION: (questId, applicationId) =>
+      `/v1/quests/${questId}/applications/${applicationId}/accept`,
+    REJECT_APPLICATION: (questId, applicationId) =>
+      `/v1/quests/${questId}/applications/${applicationId}/reject`,
+    WITHDRAW_APPLICATION: (questId, applicationId) =>
+      `/v1/quests/${questId}/applications/${applicationId}/withdraw`,
+    APPLY: (questId) => `/v1/quests/${questId}/apply`,
+    MILESTONES: (questId) => `/v1/quests/${questId}/milestones`,
+    APPROVE_ROADMAP: (questId) => `/v1/quests/${questId}/milestones/approve-roadmap`,
+    SUBMIT_ROADMAP: (questId) => `/v1/quests/${questId}/milestones/submit-roadmap`,
+    MILESTONE: (questId, milestoneId) =>
+      `/v1/quests/${questId}/milestones/${milestoneId}`,
+    APPROVE_MILESTONE: (questId, milestoneId) =>
+      `/v1/quests/${questId}/milestones/${milestoneId}/approve`,
+    FUND_MILESTONE: (questId, milestoneId) =>
+      `/v1/quests/${questId}/milestones/${milestoneId}/fund`,
+    CONFIRM_MILESTONE_FUNDING: (questId, milestoneId) =>
+      `/v1/quests/${questId}/milestones/${milestoneId}/fund/confirm`,
+    MILESTONE_PAYMENT: (questId, milestoneId) =>
+      `/v1/quests/${questId}/milestones/${milestoneId}/payment`,
+    MILESTONE_REFUND: (questId, milestoneId) =>
+      `/v1/quests/${questId}/milestones/${milestoneId}/refund`,
+    RELEASE_MILESTONE: (questId, milestoneId) =>
+      `/v1/quests/${questId}/milestones/${milestoneId}/release`,
+    REQUEST_MILESTONE_REVISION: (questId, milestoneId) =>
+      `/v1/quests/${questId}/milestones/${milestoneId}/request-revision`,
+    RESUBMIT_MILESTONE: (questId, milestoneId) =>
+      `/v1/quests/${questId}/milestones/${milestoneId}/resubmit`,
+    MILESTONE_REVISIONS: (questId, milestoneId) =>
+      `/v1/quests/${questId}/milestones/${milestoneId}/revisions`,
+    SEND_MILESTONE_FOR_REVIEW: (questId, milestoneId) =>
+      `/v1/quests/${questId}/milestones/${milestoneId}/send-for-review`,
+    SUBMIT_MILESTONE_FOR_RELEASE: (questId, milestoneId) =>
+      `/v1/quests/${questId}/milestones/${milestoneId}/submit-for-release`,
+    PUBLISH: (questId) => `/v1/quests/${questId}/publish`,
+    REJECT: (questId) => `/v1/quests/${questId}/reject`,
+  },
+
+  // 4b. Client task-management dashboard and task operations
+  CLIENT_TASK_MANAGEMENT: {
+    METRICS: "/v1/client/task-management/metrics",
+    ACTIVE_QUESTS: "/v1/client/task-management/quests/active",
+    QUEST_ACTIVITIES: (questId) =>
+      `/v1/client/task-management/quests/${questId}/activities`,
+    APPROVE_QUEST: (questId) =>
+      `/v1/client/task-management/quests/${questId}/approve`,
+    CANCEL_QUEST_APPROVAL: (questId) =>
+      `/v1/client/task-management/quests/${questId}/cancel-approval`,
+    QUEST_DASHBOARD: (questId) =>
+      `/v1/client/task-management/quests/${questId}/dashboard`,
+    QUEST_MILESTONES: (questId) =>
+      `/v1/client/task-management/quests/${questId}/milestones`,
+    MILESTONE: (milestoneId) =>
+      `/v1/client/task-management/milestones/${milestoneId}`,
+    APPROVE_MILESTONE: (milestoneId) =>
+      `/v1/client/task-management/milestones/${milestoneId}/approve`,
+    CANCEL_MILESTONE_APPROVAL: (milestoneId) =>
+      `/v1/client/task-management/milestones/${milestoneId}/cancel-approval`,
+    MILESTONE_TASKS: (milestoneId) =>
+      `/v1/client/task-management/milestones/${milestoneId}/tasks`,
+    TASK_STATUS: (taskId) =>
+      `/v1/client/task-management/tasks/${taskId}/status`,
+  },
+
   // 5. Applications
   APPLICATIONS: {
     MY: "/v1/applications/my",
