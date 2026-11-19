@@ -1,8 +1,6 @@
-// 6-11-2026
 import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { LoadingSpinner, NotFound } from "@/Components/feedback";
-import { AuthGuard } from "@/permissions";
 
 import { authRoutes } from "@/flows/auth/routes";
 import { landingRoutes } from "@/flows/landing/routes";
