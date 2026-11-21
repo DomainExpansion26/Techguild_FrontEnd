@@ -1,0 +1,500 @@
+/* [TechGuild Update: 13-10-2026] Join Party — right rail */
+
+.jr {
+  width: 100%;
+}
+
+.jr__title {
+  margin: 0;
+  font-size: 15px;
+  line-height: 21px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.jr__title--blue {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #103ca4;
+}
+
+.jr__sub {
+  margin: 4px 0 0;
+  font-size: 12px;
+  line-height: 18px;
+  color: #64748b;
+}
+
+.jr__note {
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 17px;
+  color: #94a3b8;
+  text-align: center;
+}
+
+.jr__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.jr__link {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #103ca4;
+}
+
+.jr__link:hover {
+  text-decoration: underline;
+}
+
+.jr__label {
+  margin: 16px 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+}
+
+.jr__label--green {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #00a63e;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* ==========================================================================
+   Requirement checklist
+   ========================================================================== */
+.jr__reqs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.jr__req {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  line-height: 18px;
+  color: #334155;
+}
+
+.jr__req.is-met {
+  color: #334155;
+}
+
+.jr__req.is-unmet {
+  color: #e7000b;
+}
+
+.jr__req-icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.jr__req-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.jr__req-meta strong {
+  color: #103ca4;
+}
+
+.jr__progress {
+  height: 4px;
+  margin-top: 6px;
+  border-radius: 2px;
+  background-color: #e2e8f0;
+  overflow: hidden;
+}
+
+.jr__progress > span {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+  background-color: #103ca4;
+  transition: width 0.3s ease;
+}
+
+.jr__cta {
+  width: 100%;
+  height: 44px;
+  margin-top: 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Chips + pills
+   ========================================================================== */
+.jr__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.jr__chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  background-color: #ffffff;
+  font-size: 12px;
+  line-height: 17px;
+  font-weight: 510;
+  color: #475467;
+  white-space: nowrap;
+}
+
+.jr__chip--have {
+  border-color: #a7f3c3;
+  background-color: #ecfdf5;
+  color: #00a63e;
+}
+
+.jr__pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 17px;
+}
+
+.jr__pill--green {
+  background-color: #ecfdf5;
+  color: #00a63e;
+}
+
+/* ==========================================================================
+   Matched-with block
+   ========================================================================== */
+.jr__matched {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 14px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background-color: #ffffff;
+}
+
+.jr__matched-label {
+  display: block;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.jr__matched-value {
+  display: block;
+  margin-top: 1px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #103ca4;
+}
+
+.jr__matched-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #c7d7fe;
+  background-color: #eef4ff;
+}
+
+/* ==========================================================================
+   Tips
+   ========================================================================== */
+.jr--tips .jr__tips-body {
+  margin: 12px 0 0;
+  font-size: 12px;
+  line-height: 19px;
+  color: #475467;
+}
+
+.jr__tipicon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background-color: #fffbeb;
+}
+
+.jr__bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding-left: 18px;
+}
+
+.jr__bullets li {
+  font-size: 12px;
+  line-height: 18px;
+  color: #103ca4;
+}
+
+/* ==========================================================================
+   Party lead
+   ========================================================================== */
+.jr__lead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.jr__lead-name {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.jr__lead-role,
+.jr__lead-handle {
+  margin: 1px 0 0;
+  font-size: 12px;
+  line-height: 17px;
+  color: #64748b;
+}
+
+.jr__lead-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.jr__half.secondary-btn {
+  flex: 1 1 0;
+  width: auto;
+  height: 38px;
+  border-radius: 9px;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  font-size: 13px;
+  font-weight: 510;
+  color: #334155;
+}
+
+/* ==========================================================================
+   Facts list
+   ========================================================================== */
+.jr__facts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 14px 0 0;
+}
+
+.jr__facts--tight {
+  gap: 9px;
+  margin-top: 14px;
+}
+
+.jr__fact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.jr__fact dt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 17px;
+  color: #94a3b8;
+}
+
+.jr__fact dd {
+  margin: 0;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+  color: #0f172a;
+  text-align: right;
+}
+
+/* ==========================================================================
+   Identity block (request rail)
+   ========================================================================== */
+.jr__ident {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.jr__logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.jr__ident-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.jr__rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.jr__rating-value {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.jr__stack {
+  display: flex;
+  align-items: center;
+}
+
+.jr__stack > * + * {
+  margin-left: -8px;
+}
+
+.jr__more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  background-color: #eef4ff;
+  color: #103ca4;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: -8px;
+}
+
+/* ==========================================================================
+   Warning
+   ========================================================================== */
+.jr__warn {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: 1px solid #fde68a;
+  border-radius: 10px;
+  background-color: #fffbeb;
+}
+
+.jr__warn-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #b45309;
+}
+
+.jr__warn-body {
+  margin: 4px 0 0;
+  font-size: 12px;
+  line-height: 18px;
+  color: #b45309;
+}
+
+/* ==========================================================================
+   Guild ID card
+   ========================================================================== */
+.jr--id {
+  /* spacing comes from .jp-rail's flex gap */
+}
+
+.jr__id {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.jr__id-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+}
+
+.jr__id-value {
+  display: block;
+  margin-top: 2px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.jr__id-copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+}
+
+.jr__id-copy:hover {
+  background-color: #eef4ff;
+}
+
+@media (max-width: 1100px) {
+  .jr {
+    /* the rail gap handles stacking once it drops below the form */
+  }
+}

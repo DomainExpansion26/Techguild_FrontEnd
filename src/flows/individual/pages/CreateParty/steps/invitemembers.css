@@ -1,0 +1,401 @@
+/* [TechGuild Update: 13-10-2026] Create Party wizard — Step 2 "Invite Members" */
+
+.cp-grow {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* ==========================================================================
+   Tabs
+   ========================================================================== */
+.cp-tabs {
+  display: flex;
+  gap: 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.cp-tab {
+  position: relative;
+  padding: 0 0 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  color: #667085;
+  transition: color 0.18s ease;
+}
+
+.cp-tab:hover {
+  color: #103ca4;
+}
+
+.cp-tab.is-active {
+  color: #103ca4;
+  font-weight: 600;
+}
+
+.cp-tab.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  border-radius: 2px;
+  background-color: #103ca4;
+}
+
+.cp-tab:focus-visible {
+  outline: 2px solid #103ca4;
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Search row
+   ========================================================================== */
+.cp-searchbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cp-searchbar .text-input-wrapper {
+  height: 48px !important;
+  border-width: 1.5px !important;
+}
+
+.cp-filters-btn.secondary-btn {
+  width: auto;
+  height: 48px;
+  flex-shrink: 0;
+  padding: 0 18px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  border: 1.5px solid #e5e7eb;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+/* ==========================================================================
+   Directory list
+   ========================================================================== */
+.cp-userlist {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+.cp-empty {
+  margin: 0;
+  padding: 28px 16px;
+  text-align: center;
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.cp-user {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+}
+
+.cp-user + .cp-user {
+  border-top: 1px solid #f1f5f9;
+}
+
+.cp-user__who {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.cp-user__name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.cp-user__handle {
+  margin: 1px 0 0;
+  font-size: 12px;
+  line-height: 17px;
+  color: #9ca3af;
+}
+
+.cp-user__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.cp-tagline {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  background-color: #f9fafb;
+  font-size: 12px;
+  line-height: 17px;
+  color: #374151;
+  white-space: nowrap;
+}
+
+.cp-token--sm {
+  padding: 4px 9px;
+  font-size: 12px;
+  border-radius: 999px;
+}
+
+.cp-invite-btn.secondary-btn {
+  width: auto;
+  min-width: 84px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1.5px solid #103ca4;
+  background-color: #ffffff;
+  color: #103ca4;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.cp-invite-btn.secondary-btn:hover:not(:disabled) {
+  background-color: #eef2ff;
+  border-color: #0c3188;
+}
+
+.cp-invite-btn.secondary-btn:disabled {
+  border-color: #e5e7eb;
+  background-color: #f9fafb;
+  color: #9ca3af;
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Text link button
+   ========================================================================== */
+.cp-linkbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: center;
+  padding: 4px 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #103ca4;
+}
+
+.cp-linkbtn:hover {
+  color: #0c3188;
+  text-decoration: underline;
+}
+
+.cp-linkbtn--danger {
+  color: #e7000b;
+}
+
+.cp-linkbtn--danger:hover {
+  color: #b30009;
+}
+
+/* ==========================================================================
+   Invited list
+   ========================================================================== */
+.cp-invited {
+  margin-top: 4px;
+}
+
+.cp-invited__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.cp-invited__title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.cp-invited__count {
+  font-weight: 500;
+  color: #667085;
+}
+
+.cp-invited__list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+.cp-user--invited .cp-user__name {
+  flex-wrap: wrap;
+}
+
+.cp-role-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background-color: #eef2ff;
+  color: #103ca4;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.cp-lead-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #00a63e;
+}
+
+.cp-pending-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background-color: #ffedd4;
+  color: #b45309;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 17px;
+}
+
+.cp-iconbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+}
+
+.cp-iconbtn:hover {
+  background-color: #fef2f2;
+}
+
+/* ==========================================================================
+   Minimum-members hint
+   ========================================================================== */
+.cp-minhint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 26px 20px;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.45);
+  text-align: center;
+}
+
+.cp-minhint--done {
+  border-style: solid;
+  border-color: #bbf7d0;
+  background-color: #f0fdf4;
+}
+
+.cp-minhint__title {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.cp-minhint__body {
+  margin: 0;
+  font-size: 12px;
+  line-height: 18px;
+  color: #9ca3af;
+}
+
+/* ==========================================================================
+   Invite-link card
+   ========================================================================== */
+.cp-linkcard__title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.cp-linkcard__body {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 20px;
+  color: #667085;
+}
+
+.cp-linkcard__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.cp-linkcard__url {
+  flex: 1 1 240px;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background-color: #f9fafb;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  color: #374151;
+  overflow-wrap: anywhere;
+}
+
+.cp-linkcard__copy.primary-btn {
+  width: auto;
+  height: 46px;
+  padding: 0 20px;
+  border-radius: 10px;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 860px) {
+  .cp-user {
+    flex-wrap: wrap;
+  }
+
+  .cp-user__meta {
+    order: 4;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+}

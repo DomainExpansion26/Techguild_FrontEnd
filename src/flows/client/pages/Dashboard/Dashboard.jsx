@@ -1,5 +1,5 @@
-// [TechGuild Update: 30-09-2026] Reduced card stagger delays 0.1-0.4s -> 0.03-0.09s so styled content appears instantly (end state unchanged).
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   DashboardLayout,
   Cards,
@@ -9,6 +9,7 @@ import {
 import "./client-dashboard.css";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   return (
     <DashboardLayout mainWorkspaceClass="client-dashboard-workspace">
       <div className="client-dashboard-content">
@@ -48,7 +49,7 @@ export default function Dashboard() {
               title="You haven't posted any Quests yet."
               description="Post your Quests to receive applications from top agencies and freelancers."
               buttonText="+ Post Your First Quest"
-              onButtonClick={() => { }}
+              onButtonClick={() => navigate("/client-quest-board")}
             />
           </div>
 

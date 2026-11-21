@@ -1,3 +1,4 @@
+// 9-11-2026
 import React, { useState, useEffect, useCallback } from "react";
 import { DashboardLayout } from "@/Components";
 import { projectsApi, applicationsApi } from "@/services/api";
@@ -190,7 +191,7 @@ export default function Applications() {
                         <button
                           type="button"
                           className="btn btn-primary btn-sm"
-                          style={{ backgroundColor: "#103ca4", borderColor: "#103ca4" }}
+                          style={{ backgroundColor: "#103CA4", borderColor: "#103CA4" }}
                           onClick={() => handleAcceptProposal(appId)}
                           disabled={actionLoading === appId}
                         >

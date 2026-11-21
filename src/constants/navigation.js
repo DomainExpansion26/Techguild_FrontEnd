@@ -4,10 +4,10 @@ export const INDIVIDUAL_MENU_ITEMS = [
   { id: "quest-board", label: "Quest Board", icon: "Files", path: "/quest-board", aliases: ["/individual/quest-board", "/individual/projects"] },
   { id: "communication", label: "Communication", icon: "MessageSquareMore", path: "/communication", aliases: [] },
   { id: "task-management", label: "Task Management", icon: "NotebookText", path: "/task-management", aliases: ["/active-quests", "/individual/active-quests"] },
-  { id: "analytics", label: "Analytics", icon: "BarChart3", path: "/analytics", aliases: ["/reputation-rank"] },
+  { id: "analytics", label: "Analytics", icon: "BarChart3", path: "/analytics", aliases: ["/reputation-rank", "/rank-progression", "/individual/rank-progression"] },
   { id: "finance", label: "Finance", icon: "IndianRupee", path: "/finance", aliases: ["/earnings-payouts"] },
   { id: "party-formation", label: "Party Formation", icon: "Group", path: "/party-formation", aliases: ["/party-management", "/individual/party"] },
-  { id: "guild-hall", label: "Guild Hall", icon: "Building2", path: "/guild-hall", aliases: ["/reviews-feedback"] },
+  { id: "guild-hall", label: "Guild Hall", icon: "Building2", path: "/guild-hall", aliases: ["/reviews-feedback", "/individual/guild-hall"] },
   { id: "subscription", label: "Subscription", icon: "Star", path: "/subscription", aliases: [] },
   { id: "verification", label: "Verification", icon: "Verified", path: "/verification", aliases: ["/verification-hub"] },
   { id: "settings", label: "Settings", icon: "Settings", path: "/settings", aliases: ["/individual/settings"] },
@@ -23,7 +23,7 @@ export const CLIENT_MENU_ITEMS = [
   { id: "analytics", label: "Analytics", icon: "BarChart3", path: "/client-analytics", aliases: ["/client-company-reputation", "/client/company-reputation", "/client/analytics"] },
   { id: "finance", label: "Finance", icon: "IndianRupee", path: "/client-finance", aliases: ["/client-payouts", "/client/payouts", "/client/finance"] },
   { id: "party-formation", label: "Party Formation", icon: "Group", path: "/client-party-formation", aliases: ["/client/party-formation"] },
-  { id: "guild-hall", label: "Guild Hall", icon: "Building2", path: "/client-guild-hall", aliases: ["/client-notifications", "/client/notifications", "/client/guild-hall"] },
+  { id: "guild-hall", label: "Guild Hall", icon: "Building2", path: "/client-guild-hall", aliases: ["/client/guild-hall"] },
   { id: "subscription", label: "Subscription", icon: "Star", path: "/client-subscription", aliases: ["/client/subscription"] },
   { id: "verification", label: "Verification", icon: "Verified", path: "/client-verification", aliases: ["/client-verification-hub", "/client/verification-hub", "/client/verification"] },
   { id: "settings", label: "Settings", icon: "Settings", path: "/client-settings", aliases: ["/client/settings"] },
@@ -52,6 +52,26 @@ export const ADMIN_MENU_ITEMS = [
   { id: "analytics", label: "Analytics", icon: "BarChart3", path: "/admin/analytics" },
   { id: "cms", label: "CMS", icon: "NotebookText", path: "/admin/cms" },
   { id: "settings", label: "Settings", icon: "Settings", path: "/admin/settings" },
+];
+
+export const FINANCE_SUBMENU_ITEMS = [
+  { id: "overview", label: "Overview" },
+  { id: "escrow", label: "Escrow" },
+  { id: "transactions", label: "Transactions" },
+  { id: "payment-methods", label: "Payment Methods" },
+  { id: "tax-documents", label: "Tax Documents" },
+];
+
+/* Individual (freelancer) Finance submenu — matches Finance Dashboard mock:
+   Overview, Withdraw Funds, Withdrawal History, Escrow, Transactions, Payment Methods */
+export const INDIVIDUAL_FINANCE_SUBMENU_ITEMS = [
+  { id: "overview", label: "Overview" },
+  { id: "withdraw-funds", label: "Withdraw Funds" },
+  { id: "withdrawal-history", label: "Withdrawal History" },
+  { id: "escrow", label: "Escrow" },
+  { id: "transactions", label: "Transactions" },
+  { id: "payment-methods", label: "Payment Methods" },
+  { id: "tax-documents", label: "Tax Documents" },
 ];
 
 export const SETTINGS_SUBMENU_ITEMS = [

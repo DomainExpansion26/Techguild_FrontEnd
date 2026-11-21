@@ -106,6 +106,17 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const handleAuthExpired = () => {
       clearLocalSession();
+      const currentPath = window.location.pathname;
+      const isExempt =
+        currentPath.startsWith("/login") ||
+        currentPath.startsWith("/signup") ||
+        currentPath.startsWith("/session-expired") ||
+        currentPath.startsWith("/error-preview") ||
+        currentPath.startsWith("/errors");
+
+      if (!isExempt) {
+        window.location.href = "/session-expired";
+      }
     };
 
     window.addEventListener("techguild:auth_expired", handleAuthExpired);

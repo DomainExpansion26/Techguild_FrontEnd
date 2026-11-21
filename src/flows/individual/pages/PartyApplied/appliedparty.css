@@ -1,0 +1,396 @@
+/* [TechGuild Update: 23-10-2026] Party Management — applicant state
+   (Figma "Party management for Applied party screen" 230:1216). The frame is
+   authored ~1.22x; sizes below are normalised to the 1440px app scale. */
+
+.pa-page {
+  width: 100%;
+  margin: 0 auto;
+  padding: 28px 0 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   Page head
+   ========================================================================== */
+.pa-head {
+  margin-bottom: -4px;
+}
+
+.pa-title {
+  margin: 0;
+  font-size: 40px;
+  line-height: 48px;
+  font-weight: 700;
+  color: #101a3b;
+}
+
+.pa-sub {
+  margin: 10px 0 0;
+  font-size: 18px;
+  line-height: 26px;
+  color: #65779d;
+}
+
+/* ==========================================================================
+   Blue hero card
+   ========================================================================== */
+.pa-hero__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.pa-hero__switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #075bff;
+}
+
+.pa-hero__title {
+  margin: 10px 0 0;
+  font-size: 26px;
+  line-height: 34px;
+  font-weight: 700;
+  color: #101a3b;
+}
+
+.pa-hero__body {
+  margin: 8px 0 0;
+  max-width: 560px;
+  font-size: 13px;
+  line-height: 21px;
+  color: #65779d;
+}
+
+/* Decorative cluster (tilted chat tile, dots, floating hourglass). */
+.pa-hero__art {
+  position: relative;
+  flex-shrink: 0;
+  width: 220px;
+  height: 150px;
+}
+
+.pa-hero__tile {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-70%) rotate(-6deg);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 18px 22px;
+  border-radius: 14px;
+  box-shadow: 0 8px 18px rgba(16, 60, 164, 0.1);
+  background-color: #ffffff;
+}
+
+.pa-hero__chat {
+  display: inline-flex;
+}
+
+.pa-hero__chat span {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  margin-left: -5px;
+}
+
+.pa-hero__chat span:first-child {
+  margin-left: 0;
+}
+
+.pa-hero__bell {
+  position: absolute;
+  right: 34px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  box-shadow: 0 8px 18px rgba(16, 60, 164, 0.12);
+}
+
+.pa-hero__arrow {
+  position: absolute;
+  top: 4px;
+  right: 10px;
+}
+
+/* ==========================================================================
+   Panels + shared bits
+   ========================================================================== */
+.pa-panel__head {
+  margin-bottom: 18px;
+}
+
+.pa-panel__head--split {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.pa-panel__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 21px;
+  line-height: 30px;
+  font-weight: 700;
+  color: #101a3b;
+}
+
+.pa-panel__sub {
+  margin: 6px 0 0;
+  font-size: 14px;
+  line-height: 21px;
+  color: #65779d;
+}
+
+.pa-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background-color: #eaf2ff;
+  font-size: 12px;
+  font-weight: 700;
+  color: #075bff;
+}
+
+.pa-linkout {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #075bff;
+}
+
+.pa-linkout:hover,
+.pa-strip__cta:hover {
+  text-decoration: underline;
+}
+
+.pa-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Application rows
+   ========================================================================== */
+.pa-apps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pa-app {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 20px;
+  border: 1px solid #e8edf5;
+  border-radius: 12px;
+  background-color: #ffffff;
+}
+
+.pa-app__logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.pa-app__ident {
+  flex: 1;
+  min-width: 0;
+}
+
+.pa-app__name {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+  color: #101a3b;
+}
+
+.pa-app__tagline {
+  margin-top: 2px;
+  font-size: 13px;
+  line-height: 18px;
+  color: #65779d;
+}
+
+.pa-app__facts {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.pa-app__facts > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #53678b;
+}
+
+.pa-app__when {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex-shrink: 0;
+  min-width: 120px;
+}
+
+.pa-app__applied {
+  font-size: 13px;
+  color: #62759a;
+}
+
+.pa-app__date {
+  font-size: 13px;
+  color: #8392ad;
+}
+
+.pa-chip--status {
+  height: 30px;
+  flex-shrink: 0;
+  padding: 0 12px;
+  font-size: 12px;
+}
+
+.pa-app__action {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 42px;
+  padding: 0 16px;
+  border: 1px solid #b7d2ff;
+  border-radius: 8px;
+  background-color: #ffffff;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #075bff;
+}
+
+.pa-app__action:hover {
+  border-color: #075bff;
+}
+
+/* ==========================================================================
+   Info / tip strips
+   ========================================================================== */
+.pa-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 14px 18px;
+  border: 1px solid #cfe1ff;
+  border-radius: 8px;
+  background-color: #edf5ff;
+}
+
+.pa-strip p {
+  flex: 1;
+  margin: 0;
+  font-size: 13px;
+  line-height: 20px;
+  color: #607399;
+}
+
+.pa-strip__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #075bff;
+}
+
+/* ==========================================================================
+   Explore grid — reuses JoinParty's PartyCard
+   ========================================================================== */
+.pa-explore {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 1100px) {
+  .pa-explore {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pa-hero__row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pa-app {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 860px) {
+  .pa-app__when,
+  .pa-app__action {
+    flex: 1;
+  }
+}

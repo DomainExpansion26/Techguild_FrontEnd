@@ -1,4 +1,6 @@
-// Last Changed: 16-10-2026 - added TechGuildMark SVG (exact box+t mark) with color prop
+// 6-11-2026
+// Last Changed: 06-11-2026 - uses the same logo icon as the navbar
+import logoMark from "@/assets/landing-Img/ttttttt 1@2x.png";
 import "./BrandLogo.css";
 
 export const TechGuildMark = ({ size = 30, color = "#0B3DAD" }) => (
@@ -39,7 +41,7 @@ export const TechGuildMark = ({ size = 30, color = "#0B3DAD" }) => (
 const BrandLogo = () => {
   return (
     <div className="brand">
-      <TechGuildMark />
+      <img src={logoMark} className="brand-mark" alt="TechGuild logo" />
       <span className="tech">Tech</span>
       <span className="guild">Guild</span>
     </div>

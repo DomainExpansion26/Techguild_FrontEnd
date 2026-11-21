@@ -1,6 +1,7 @@
+/* 9-11-2026 */
 /* ===== Forgot Password — Figma frame 119:13 ("Forgot Password", 1440x900) ===== */
 .forgetpass-page {
-  --forget-primary: #103ca4;
+  --forget-primary: #103CA4;
   --forget-ink: #000000;
   --forget-muted: #59595d; /* Figma #79797D, shifted for AA (was 4.33:1) */
   --forget-placeholder: #6b7280; /* Figma #8E8E93, shifted for AA (was 3.26:1) */

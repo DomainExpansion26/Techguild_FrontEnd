@@ -1,6 +1,7 @@
+/* 9-11-2026 */
 /* ===== Reset Password — Figma frame 123:33 ("Reset pass", 1440x900) ===== */
 .resetpass-page {
-  --reset-primary: #103ca4;
+  --reset-primary: #103CA4;
   --reset-ink: #000000;
   --reset-muted: #59595d; /* sibling-frame gray, shifted for AA */
   --reset-placeholder: #6b7280; /* sibling-frame gray, shifted for AA */

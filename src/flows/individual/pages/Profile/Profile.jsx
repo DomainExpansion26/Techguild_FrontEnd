@@ -1,3 +1,4 @@
+// 9-11-2026
 // [TechGuild Update: 21-09-2026] Individual freelancer profile wizard & OpenAPI save integration
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -963,33 +964,33 @@ export default function Profile() {
         <p className="section-subtitle text-secondary">{WIZARD_STRINGS.STEPS.STEP_5_SUBTITLE}</p>
       </div>
 
-      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
+      <Cards variant="base" radius="md" className="review-summary-card d-flex align-items-center justify-content-between w-100 mb-3">
         <span className="review-summary-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_1_LABEL}</span>
         <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(1)} role="button">
           {WIZARD_STRINGS.BUTTONS.EDIT}
         </span>
-      </div>
+      </Cards>
 
-      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
+      <Cards variant="base" radius="md" className="review-summary-card d-flex align-items-center justify-content-between w-100 mb-3">
         <span className="review-summary-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_2_LABEL}</span>
         <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(2)} role="button">
           {WIZARD_STRINGS.BUTTONS.EDIT}
         </span>
-      </div>
+      </Cards>
 
-      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
+      <Cards variant="base" radius="md" className="review-summary-card d-flex align-items-center justify-content-between w-100 mb-3">
         <span className="review-summary-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_3_LABEL}</span>
         <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(3)} role="button">
           {WIZARD_STRINGS.BUTTONS.EDIT}
         </span>
-      </div>
+      </Cards>
 
-      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
+      <Cards variant="base" radius="md" className="review-summary-card d-flex align-items-center justify-content-between w-100 mb-4">
         <span className="review-summary-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_4_LABEL}</span>
         <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(4)} role="button">
           {WIZARD_STRINGS.BUTTONS.EDIT}
         </span>
-      </div>
+      </Cards>
 
       {submitError && (
         <div
@@ -1099,7 +1100,7 @@ export default function Profile() {
         <Cards className="profile-welcome-hero-card" padding="0" shadow="none">
           <div className="profile-hero-illustration-wrapper">
             <div className="profile-hero-icon-container">
-              <Icon name="IdCard" size={36} color="#103ca4" />
+              <Icon name="IdCard" size={36} color="#103CA4" />
             </div>
           </div>
 

@@ -1,5 +1,6 @@
+/* 9-11-2026 */
 /* Toggle Switch
-   Base: 44x24, knob 18x18, ON #103ca4, OFF #e0e0e0.
+   Base: 44x24, knob 18x18, ON #103CA4, OFF #e0e0e0.
    All values are CSS variables so they can be overridden
    via props (activeColor / inactiveColor / thumbColor) or inline style. */
 .toggle-switch {
@@ -8,7 +9,7 @@
   --toggle-padding: 3px;
   --toggle-thumb-size: 18px;
 
-  --toggle-active-bg: #103ca4;
+  --toggle-active-bg: #103CA4;
   --toggle-inactive-bg: #e0e0e0;
   --toggle-thumb-bg: #ffffff;
 

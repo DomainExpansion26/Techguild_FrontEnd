@@ -1,3 +1,4 @@
+// 9-11-2026
 import React from 'react';
 import './stepper.css';
 
@@ -8,7 +9,7 @@ import './stepper.css';
  * @param {number} currentStep - 1-based index for current active step (e.g. 1, 2, 3...)
  * @param {function} onStepClick - Optional callback when a step circle/label is clicked
  * @param {boolean} allowClick - Whether steps can be clicked to navigate
- * @param {string} activeColor - Custom active/completed highlight color (default: #103ca4)
+ * @param {string} activeColor - Custom active/completed highlight color (default: #103CA4)
  * @param {string} className - Additional CSS class
  * @param {object} style - Additional inline styles
  */
@@ -17,7 +18,7 @@ export default function Stepper({
   currentStep = 1,
   onStepClick,
   allowClick = false,
-  activeColor = '#103ca4',
+  activeColor = '#103CA4',
   className = '',
   style = {},
 }) {

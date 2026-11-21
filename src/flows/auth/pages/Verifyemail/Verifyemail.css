@@ -1,6 +1,7 @@
+/* 9-11-2026 */
 /* ===== Verify Email — Figma frame 129:6 ("Verify email.", 1440x900) ===== */
 .verify-page {
-  --verify-primary: #103ca4;
+  --verify-primary: #103CA4;
   --verify-ink: #000000;
   --verify-border: #b3b3b3; /* outline button stroke */
   --verify-hairline: #e5e7eb; /* card stroke */

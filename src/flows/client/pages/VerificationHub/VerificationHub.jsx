@@ -1,3 +1,4 @@
+// 9-11-2026
 import React, { useState, useEffect, useCallback } from "react";
 import { DashboardLayout } from "@/Components";
 import { verificationApi } from "@/services/api";
@@ -144,7 +145,7 @@ export default function VerificationHub() {
               <button
                 type="submit"
                 className="btn btn-primary px-4 py-2"
-                style={{ backgroundColor: "#103ca4", borderColor: "#103ca4" }}
+                style={{ backgroundColor: "#103CA4", borderColor: "#103CA4" }}
                 disabled={submitting}
               >
                 {submitting ? "Submitting for Verification..." : "Submit Documents"}

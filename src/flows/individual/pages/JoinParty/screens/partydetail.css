@@ -1,0 +1,488 @@
+/* [TechGuild Update: 13-10-2026] Join Party — Step 2 party detail */
+
+.jd,
+.jd-hero {
+  width: 100%;
+}
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+.jd-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 20px;
+  align-items: start;
+}
+
+.jd-hero__main {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  min-width: 0;
+}
+
+.jd-hero__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.jd-hero__ident {
+  min-width: 0;
+}
+
+.jd-hero__title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.jd-hero__name {
+  margin: 0;
+  font-size: 26px;
+  line-height: 32px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.jd-hero__verified {
+  display: inline-flex;
+  align-items: center;
+}
+
+.jd-hero__rank,
+.jd-hero__active {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 17px;
+  font-weight: 700;
+}
+
+.jd-hero__active {
+  background-color: #ecfdf5;
+  color: #00a63e;
+}
+
+.jd-hero__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #00a63e;
+}
+
+.jd-hero__sub {
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 19px;
+  color: #64748b;
+}
+
+.jd-hero__facts {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.jd-hero__facts > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #475467;
+}
+
+.jd-hero__facts strong {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.jd-hero__muted {
+  color: #94a3b8;
+}
+
+.jd-hero__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.jd-iconbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.jd-iconbtn:hover {
+  border-color: #c7d7fe;
+  background-color: #f5f8ff;
+}
+
+.jd-iconbtn--sm {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+}
+
+.jd-hero__cta.primary-btn {
+  width: auto;
+  height: 44px;
+  padding: 0 22px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Stat strip
+   ========================================================================== */
+.jd-stats {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 16px 4px 0;
+  border-top: 1px solid #eef2f7;
+}
+
+.jd-stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.jd-stat__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background-color: #eef4ff;
+}
+
+.jd-stat__value {
+  margin: 0;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.jd-stat__label {
+  margin: 1px 0 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+}
+
+/* ==========================================================================
+   Shared card bits
+   ========================================================================== */
+.jd__title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.jd__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.jd__meta {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.jd__full {
+  color: #00a63e;
+}
+
+.jd__p {
+  margin: 12px 0 0;
+  font-size: 13px;
+  line-height: 21px;
+  color: #475467;
+}
+
+.jd__rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.jd__rating strong {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* ==========================================================================
+   Facts
+   ========================================================================== */
+.jd__facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 24px;
+  margin: 20px 0 0;
+  padding: 18px 20px;
+  border: 1px solid #eef2f7;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.jd__fact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.jd__fact dt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.jd__fact dd {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+  text-align: right;
+}
+
+/* ==========================================================================
+   Positions
+   ========================================================================== */
+.jd__positions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.jd__position {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background-color: #ffffff;
+}
+
+.jd__position.is-open {
+  border-color: #c7d7fe;
+  background-color: #f5f8ff;
+}
+
+.jd__position-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background-color: #ffffff;
+}
+
+.jd__position-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.jd__position-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.jd__position-desc {
+  margin: 2px 0 0;
+  font-size: 12px;
+  line-height: 18px;
+  color: #64748b;
+}
+
+.jd__tag {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 17px;
+}
+
+.jd__tag--open {
+  background-color: #dcfce7;
+  color: #00a63e;
+}
+
+.jd__tag--filled {
+  background-color: #f1f5f9;
+  color: #94a3b8;
+}
+
+/* ==========================================================================
+   Members
+   ========================================================================== */
+.jd__members {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.jd__member {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background-color: #ffffff;
+}
+
+.jd__member-who {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.jd__member-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.jd__leadpill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background-color: #eef4ff;
+  color: #103ca4;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.jd__member-sub {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* ==========================================================================
+   Skills + reviews
+   ========================================================================== */
+.jd__skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.jd__skill {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background-color: #ffffff;
+  font-size: 12px;
+  font-weight: 510;
+  color: #475467;
+}
+
+.jd__reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.jd__review {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background-color: #ffffff;
+}
+
+.jd__review-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.jd__review-name {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.jd__review-when {
+  margin: 1px 0 0;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.jd__review-text {
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 20px;
+  color: #475467;
+}
+
+@media (max-width: 900px) {
+  .jd-hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .jd__facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .jd-stats {
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+}

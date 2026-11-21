@@ -1,3 +1,5 @@
+// 03-11-2026
+// Central registry mapping icon names to their SVG React components.
 import LayoutDashboard from "../../assets/icons/layout-dashboard.svg?react";
 import User2 from "../../assets/icons/user2.svg?react";
 import User from "../../assets/icons/user.svg?react";
@@ -13,7 +15,9 @@ import Settings from "../../assets/icons/settings.svg?react";
 import CircleQuestionMark from "../../assets/icons/circle-question-mark.svg?react";
 import Focus from "../../assets/icons/focus.svg?react";
 import CircleCheck from "../../assets/icons/circle-check.svg?react";
+import CircleCheckFill from "../../assets/icons/circle-check-fill.svg?react";
 import Mail from "../../assets/icons/mail.svg?react";
+import Phone from "../../assets/icons/phone.svg?react";
 import Check from "../../assets/icons/check.svg?react";
 import ArrowLeft from "../../assets/icons/arrow-left.svg?react";
 import ArrowRight from "../../assets/icons/arrow-right.svg?react";
@@ -37,6 +41,7 @@ import Eye from "../../assets/icons/eye.svg?react";
 import EyeOff from "../../assets/icons/eye-off.svg?react";
 import Building2 from "../../assets/icons/building2.svg?react";
 import Shield from "../../assets/icons/shield.svg?react";
+import ShieldCheck from "../../assets/icons/shield-check.svg?react";
 import Trash from "../../assets/icons/trash.svg?react";
 import LogOut from "../../assets/icons/log-out.svg?react";
 import MessageSquareMore from "../../assets/icons/message-square-more.svg?react";
@@ -73,10 +78,51 @@ import MonitorSpeaker from "../../assets/icons/monitor-speaker.svg?react";
 import RectangleVertical from "../../assets/icons/rectangle-vertical.svg?react";
 import TvMinimal from "../../assets/icons/tv-minimal.svg?react";
 import QrCode from "../../assets/icons/qr-code.svg?react";
+// [28-09-26] Copy icon for copy-link buttons
+import Copy from "../../assets/icons/copy.svg?react";
 import Palette from "../../assets/icons/palette.svg?react";
 import Tag from "../../assets/icons/tag.svg?react";
 import LifeBuoy from "../../assets/icons/life-buoy.svg?react";
 import FolderOpen from "../../assets/icons/folder-open.svg?react";
+import Heart from "../../assets/icons/heart.svg?react";
+import Share2 from "../../assets/icons/share2.svg?react";
+import MessageSquare from "../../assets/icons/message-square.svg?react";
+import Image from "../../assets/icons/image.svg?react";
+import Code from "../../assets/icons/code.svg?react";
+import Zap from "../../assets/icons/zap.svg?react";
+import ChevronLeft from "../../assets/icons/chevron-left.svg?react";
+import Sprout from "../../assets/icons/sprout.svg?react";
+import Trees from "../../assets/icons/trees.svg?react";
+import Gem from "../../assets/icons/gem.svg?react";
+import Network from "../../assets/icons/network.svg?react";
+import RotateCw from "../../assets/icons/rotate-cw.svg?react";
+import GripVertical from "../../assets/icons/grip-vertical.svg?react";
+import Wallet from "../../assets/icons/wallet.svg?react";
+import BadgeCheckFill from "../../assets/icons/badge-check-fill.svg?react";
+import UserRoundCog from "../../assets/icons/user-round-cog.svg?react";
+import Handshake from "../../assets/icons/handshake.svg?react";
+import ChartNoAxesCombined from "../../assets/icons/chart-no-axes-combined.svg?react";
+import Send from "../../assets/icons/send.svg?react";
+import Trophy from "../../assets/icons/trophy.svg?react";
+import Medal from "../../assets/icons/medal.svg?react";
+import Filter from "../../assets/icons/filter.svg?react";
+import SortAsc from "../../assets/icons/sort-asc.svg?react";
+import SortDesc from "../../assets/icons/sort-desc.svg?react";
+import Banknote from "../../assets/icons/banknote.svg?react";
+import ShoppingBag from "../../assets/icons/shopping-bag.svg?react";
+import ListFilter from "../../assets/icons/list-filter.svg?react";
+import Sparkles from "../../assets/icons/sparkles.svg?react";
+import MousePointer from "../../assets/icons/mouse-pointer.svg?react";
+import Server from "../../assets/icons/server.svg?react";
+import Megaphone from "../../assets/icons/megaphone.svg?react";
+import Smile from "../../assets/icons/smile.svg?react";
+import ChartNoAxesColumn from "../../assets/icons/chart-no-axes-column.svg?react";
+import Fingerprint from "../../assets/icons/fingerprint.svg?react";
+import Crown from "../../assets/icons/crown.svg?react";
+import Flag from "../../assets/icons/flag.svg?react";
+import RefreshCw from "../../assets/icons/refresh-cw.svg?react";
+import GraduationCap from "../../assets/icons/graduation-cap.svg?react";
+import Compass from "../../assets/icons/compass.svg?react";
 
 export {
   ArrowLeft,
@@ -85,10 +131,6 @@ export {
   LayoutDashboard,
   User,
   User2,
-  UserCheck,
-  CreditCard,
-  IdCard,
-  IdCardLanyard,
   Files,
   FileText,
   Group,
@@ -101,8 +143,16 @@ export {
   CircleQuestionMark,
   Focus,
   CircleCheck,
+  CircleCheckFill,
+  BadgeCheckFill,
+  BadgeCheck,
   Mail,
+  Phone,
   Check,
+  UserCheck,
+  CreditCard,
+  IdCard,
+  IdCardLanyard,
   Clock9,
   Lightbulb,
   Briefcase,
@@ -113,18 +163,17 @@ export {
   ChevronDown,
   Google,
   GitHub,
-  GitHub as Github,
   Lock,
   Eye,
   EyeOff,
   Building2,
   Shield,
+  ShieldCheck,
   Trash,
   LogOut,
   MessageSquareMore,
   NotebookText,
   BarChart3,
-  BadgeCheck,
   Laptop,
   Monitor,
   Smartphone,
@@ -155,9 +204,49 @@ export {
   RectangleVertical,
   TvMinimal,
   QrCode,
+  // [28-09-26] Copy icon export
+  Copy,
   Palette,
   Tag,
   LifeBuoy,
   FolderOpen,
+  Heart,
+  Share2,
+  MessageSquare,
+  Image,
+  Code,
+  Zap,
+  ChevronLeft,
+  Sprout,
+  Trees,
+  Gem,
+  Network,
+  RotateCw,
+  GripVertical,
+  Share2 as Share,
+  Wallet,
+  UserRoundCog,
+  Handshake,
+  ChartNoAxesCombined,
+  Send,
+  Trophy,
+  Medal,
+  Filter,
+  SortAsc,
+  SortDesc,
+  Banknote,
+  ShoppingBag,
+  ListFilter,
+  Sparkles,
+  MousePointer,
+  Server,
+  Megaphone,
+  Smile,
+  ChartNoAxesColumn,
+  Fingerprint,
+  Crown,
+  Flag,
+  RefreshCw,
+  GraduationCap,
+  Compass,
 };
-

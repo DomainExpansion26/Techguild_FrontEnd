@@ -1,3 +1,4 @@
+// 9-11-2026
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -527,7 +528,7 @@ export default function Projects() {
                   <button
                     type="submit"
                     className="btn btn-primary px-4 fw-semibold"
-                    style={{ backgroundColor: "#103ca4", borderColor: "#103ca4" }}
+                    style={{ backgroundColor: "#103CA4", borderColor: "#103CA4" }}
                     disabled={submitting}
                   >
                     {submitting ? "Submitting..." : "Send Proposal"}

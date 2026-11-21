@@ -1,0 +1,445 @@
+/* ==========================================================================
+   TechGuild Reusable Error Pages Design System (ErrorPages.css)
+   Fully scoped classes for all 5 error screen variants
+   - 100% full-width coverage matching the exact level of the SearchBar
+   - SearchBar / Header fixed sticky at the top during scrolling
+   - Contents below searchbar move smoothly underneath
+   - Scrolling feature fully enabled, but scrollbars are completely hidden
+   ========================================================================== */
+
+/* Main Workspace inside DashboardLayout:
+   Acts as the primary scroll container, keeping Header & SearchBar pinned sticky at top */
+.tg-error-workspace {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE / Edge */
+}
+
+.tg-error-workspace::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Edge, Opera */
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Ensure Header Card (with SearchBar) stays fixed/sticky at the top */
+.tg-error-workspace .header-card {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+  flex-shrink: 0 !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  --tg-card-bg: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(16, 60, 164, 0.12) !important;
+  margin-bottom: 0 !important;
+}
+
+/* Error Container: content below searchbar that moves and scrolls smoothly */
+.tg-error-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 1.6vw, 24px);
+  box-sizing: border-box;
+  padding-top: clamp(16px, 1.6vw, 24px);
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+  animation: tgErrorFadeIn 0.28s ease both;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.tg-error-container::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Edge, Opera */
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Standalone layout scrolling */
+.tg-error-standalone-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  overflow-y: auto !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.tg-error-standalone-layout::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.tg-error-standalone-container {
+  max-width: 100%;
+  padding: 0 16px;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.tg-error-standalone-container::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+@keyframes tgErrorFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Base Error Glassmorphic Card */
+.tg-error-card {
+  position: relative;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(16, 60, 164, 0.06);
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* ==========================================================================
+   Hero Card (Full Width)
+   ========================================================================== */
+.tg-error-hero-card {
+  width: 100%;
+  padding: clamp(28px, 3.5vw, 44px) 24px clamp(32px, 4vw, 48px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.tg-error-illustration-wrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tg-error-illustration {
+  display: block;
+  filter: drop-shadow(0 4px 12px rgba(16, 60, 164, 0.05));
+  transition: transform 0.3s ease;
+}
+
+.tg-error-hero-content {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tg-error-title {
+  font-size: clamp(22px, 2.3vw, 28px);
+  font-weight: 700;
+  color: #0F172A;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+  margin: 0 0 10px 0;
+}
+
+.tg-error-desc {
+  font-size: clamp(14px, 1.1vw, 16px);
+  color: #64748B;
+  line-height: 1.55;
+  margin: 0 0 28px 0;
+  max-width: 560px;
+}
+
+/* Action Buttons Container */
+.tg-error-actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Explicit size tuning for error buttons so they do not stretch full-width */
+.tg-error-btn {
+  width: auto !important;
+  min-width: 170px !important;
+  height: 44px !important;
+  padding: 0 24px !important;
+  font-size: 14.5px !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.tg-error-btn-primary {
+  background-color: #103CA4 !important;
+  color: #FFFFFF !important;
+}
+
+.tg-error-btn-primary:hover:not(:disabled) {
+  background-color: #0C3188 !important;
+  transform: translateY(-1px);
+}
+
+.tg-error-btn-secondary {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  color: #0F172A !important;
+  border: 1px solid #E2E8F0 !important;
+}
+
+.tg-error-btn-secondary:hover:not(:disabled) {
+  background-color: #FFFFFF !important;
+  border-color: #CBD5E1 !important;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Middle Info Section (Session Expired & Access Denied - Full Width)
+   ========================================================================== */
+.tg-error-info-card {
+  width: 100%;
+  padding: 20px clamp(18px, 2.5vw, 32px);
+  display: grid;
+  gap: clamp(16px, 2.2vw, 32px);
+  align-items: flex-start;
+}
+
+.tg-error-info-cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.tg-error-info-cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.tg-error-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.tg-error-info-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.tg-error-info-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.tg-error-info-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0F172A;
+  margin: 0 0 4px 0;
+  line-height: 1.35;
+}
+
+.tg-error-info-desc {
+  font-size: 13.5px;
+  color: #64748B;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ==========================================================================
+   Bottom Help / Exploration Section (Full Width)
+   ========================================================================== */
+.tg-error-help-card {
+  width: 100%;
+  padding: clamp(20px, 2.5vw, 28px);
+}
+
+.tg-error-help-header {
+  margin-bottom: 20px;
+}
+
+.tg-error-help-title {
+  font-size: clamp(17px, 1.4vw, 20px);
+  font-weight: 700;
+  color: #0F172A;
+  margin: 0 0 4px 0;
+  line-height: 1.3;
+}
+
+.tg-error-help-subtitle {
+  font-size: 14px;
+  color: #64748B;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.tg-error-help-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+/* Navigation Shortcut Item */
+.tg-error-shortcut-item,
+.tg-error-troubleshoot-item {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  box-sizing: border-box;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s ease;
+}
+
+.tg-error-shortcut-item {
+  cursor: pointer;
+}
+
+.tg-error-shortcut-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 60, 164, 0.08);
+  border-color: #93C5FD;
+}
+
+.tg-error-shortcut-item:active {
+  transform: translateY(0);
+}
+
+.tg-error-shortcut-icon-box {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tg-error-shortcut-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.tg-error-shortcut-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0F172A;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tg-error-shortcut-desc {
+  font-size: 12px;
+  color: #64748B;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tg-error-shortcut-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #9CA3AF;
+  transition: transform 0.2s ease;
+}
+
+.tg-error-shortcut-item:hover .tg-error-shortcut-arrow {
+  transform: translateX(3px);
+  color: #103CA4;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .tg-error-help-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .tg-error-workspace {
+    overflow-y: auto !important;
+  }
+
+  .tg-error-workspace .header-card {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    --tg-card-bg: #ffffff !important;
+    box-shadow: 0 2px 10px rgba(16, 60, 164, 0.10) !important;
+  }
+
+  .tg-error-container {
+    overflow-y: visible !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .tg-error-info-cols-3,
+  .tg-error-info-cols-2 {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .tg-error-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .tg-error-btn {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .tg-error-help-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -13,6 +13,7 @@ const ClientPayouts = lazy(() => import("./pages/Payouts/Payouts"));
 const ClientNotifications = lazy(() => import("./pages/Notifications/Notifications"));
 const ClientHelpSupport = lazy(() => import("./pages/HelpSupport/HelpSupport"));
 const ClientSettingsWrapper = lazy(() => import("./pages/Settings/Settings"));
+const GuildHall = lazy(() => import("../shared/GuildHall/GuildHall"));
 
 export const clientRoutes = (
   <>
@@ -23,6 +24,9 @@ export const clientRoutes = (
     <Route path="/client-whole-profile" element={<ClientWholeProfile />} />
     <Route path="/client-profile/whole" element={<ClientWholeProfile />} />
     <Route path="/client-quest-board" element={<ClientQuestBoard />} />
+    <Route path="/client-quest-board/create" element={<ClientQuestBoard />} />
+    <Route path="/client-quest-board/create/:step" element={<ClientQuestBoard />} />
+    <Route path="/client-quest-board/view/:questId" element={<ClientQuestBoard />} />
     <Route path="/client-quest-board/:questId" element={<ClientQuestBoard />} />
     {/* Semantic menu paths (parallel to Individual); implementation paths kept as aliases */}
     <Route path="/client-communication" element={<ClientApplications />} />
@@ -37,7 +41,7 @@ export const clientRoutes = (
     <Route path="/client-verification-hub" element={<ClientVerificationHub />} />
     <Route path="/client-finance" element={<ClientPayouts />} />
     <Route path="/client-payouts" element={<ClientPayouts />} />
-    <Route path="/client-guild-hall" element={<ClientNotifications />} />
+    <Route path="/client-guild-hall" element={<GuildHall />} />
     <Route path="/client-notifications" element={<ClientNotifications />} />
     <Route path="/client-help-support" element={<ClientHelpSupport />} />
     <Route path="/client-settings" element={<ClientSettingsWrapper />} />
@@ -49,7 +53,15 @@ export const clientRoutes = (
     <Route path="/client/profile/:step" element={<ClientProfile />} />
     <Route path="/client/whole-profile" element={<ClientWholeProfile />} />
     <Route path="/client/quest-board" element={<ClientQuestBoard />} />
+    <Route path="/client/quest-board/create" element={<ClientQuestBoard />} />
+    <Route path="/client/quest-board/create/:step" element={<ClientQuestBoard />} />
+    <Route path="/client/quest-board/view/:questId" element={<ClientQuestBoard />} />
+    <Route path="/client/quest-board/:questId" element={<ClientQuestBoard />} />
     <Route path="/client/projects" element={<ClientQuestBoard />} />
+    <Route path="/client/projects/create" element={<ClientQuestBoard />} />
+    <Route path="/client/projects/create/:step" element={<ClientQuestBoard />} />
+    <Route path="/client/projects/view/:questId" element={<ClientQuestBoard />} />
+    <Route path="/client/projects/:questId" element={<ClientQuestBoard />} />
     <Route path="/client/communication" element={<ClientApplications />} />
     <Route path="/client/applications" element={<ClientApplications />} />
     <Route path="/client/task-management" element={<ClientActiveQuests />} />
@@ -62,7 +74,7 @@ export const clientRoutes = (
     <Route path="/client/verification-hub" element={<ClientVerificationHub />} />
     <Route path="/client/finance" element={<ClientPayouts />} />
     <Route path="/client/payouts" element={<ClientPayouts />} />
-    <Route path="/client/guild-hall" element={<ClientNotifications />} />
+    <Route path="/client/guild-hall" element={<GuildHall />} />
     <Route path="/client/notifications" element={<ClientNotifications />} />
     <Route path="/client/help-support" element={<ClientHelpSupport />} />
     <Route path="/client/settings" element={<ClientSettingsWrapper />} />

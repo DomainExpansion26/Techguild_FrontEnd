@@ -1,3 +1,4 @@
+// 9-11-2026
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Cards, DashboardLayout, Dropdown, Popup, PrimaryButton, SecondaryButton } from "@/Components";
@@ -1810,7 +1811,7 @@ export default function ActiveQuests() {
                   <button
                     type="submit"
                     className="btn btn-primary"
-                    style={{ backgroundColor: "#103ca4", borderColor: "#103ca4" }}
+                    style={{ backgroundColor: "#103CA4", borderColor: "#103CA4" }}
                     disabled={submitting}
                   >
                     {submitting ? "Submitting Work..." : "Submit to Client"}

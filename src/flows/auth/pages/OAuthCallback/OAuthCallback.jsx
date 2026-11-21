@@ -1,3 +1,4 @@
+// 17-11-2026
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
@@ -6,14 +7,7 @@ import { LoadingSpinner } from "@/Components/feedback";
 import { prefetchPostLogin } from "@/app/prefetch";
 import { APP_STRINGS, APP_CONFIG } from "@/constants/string";
 import { ROLES } from "@/permissions/roles";
-
-function resolveDashboardPath(role) {
-  if (role === ROLES.CLIENT || role === "client" || role === "client_admin" || role === "client_member") return "/client-dashboard";
-  if (role === ROLES.AGENCY || role === "agency" || role === "agency_admin") return "/agency/dashboard";
-  if (role === ROLES.INDIVIDUAL || role === "individual") return "/dashboard";
-  if (role === ROLES.ADMIN || role === "admin") return "/admin/dashboard";
-  return "/account-type";
-}
+import { resolvePostLoginPath, readPendingRedirect, clearPendingRedirect } from "@/utils/postLoginRoute";
 
 function decodeJwtPayload(token) {
   try {
@@ -168,10 +162,12 @@ export default function OAuthCallback() {
             // Existing member with role: log in with their actual role and open their role dashboard
             await login(resolvedUser, token, selectedAccountType, refreshToken, expiresIn);
             prefetchPostLogin(selectedAccountType);
-            navigate(resolveDashboardPath(selectedAccountType), { replace: true });
+            navigate(resolvePostLoginPath(selectedAccountType, readPendingRedirect()), { replace: true });
+            clearPendingRedirect();
           } else {
             // New user without role: do not default to any role, prompt account type selection
             await login(resolvedUser, token, null, refreshToken, expiresIn);
+            clearPendingRedirect();
             navigate("/account-type", { replace: true, state: { email: resolvedUser.email } });
           }
           return;
@@ -280,9 +276,11 @@ export default function OAuthCallback() {
         if (selectedAccountType) {
           await login(resolvedUser, directToken, selectedAccountType, refreshToken);
           prefetchPostLogin(selectedAccountType);
-          navigate(resolveDashboardPath(selectedAccountType), { replace: true });
+          navigate(resolvePostLoginPath(selectedAccountType, readPendingRedirect()), { replace: true });
+          clearPendingRedirect();
         } else {
           await login(resolvedUser, directToken, null, refreshToken);
+          clearPendingRedirect();
           navigate("/account-type", { replace: true, state: { email: resolvedEmail } });
         }
       }
