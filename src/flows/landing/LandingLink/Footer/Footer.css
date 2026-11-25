@@ -1,3 +1,4 @@
+/* 25-11-2026 */
 /* 6-11-2026 */
 /* 03-11-2026 */
 /* Styles for the site-wide Footer component. */
@@ -163,6 +164,24 @@
 
   .ftr-brand {
     grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .ftr-social {
+    justify-content: center;
+  }
+
+  .ftr-col {
+    align-items: center;
+    text-align: center;
+  }
+
+  .ftr-col a,
+  .ftr-col button {
+    text-align: center;
   }
 
   .ftr-giant {
@@ -173,6 +192,6 @@
 
 @media (max-width: 420px) {
   .ftr-grid {
-    grid-template-columns: 1fr;
+    gap: 28px 20px;
   }
 }

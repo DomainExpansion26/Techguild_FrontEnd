@@ -1,3 +1,4 @@
+/* 25-11-2026 */
 /* [TechGuild Update: 30-09-2026] Fallback paint color behind bg (no visual change). */
 *,
 *::before,
@@ -46,7 +47,9 @@
   .dashboard-layout {
     flex-direction: column;
     height: 100vh;
+    height: 100dvh;
     min-height: 100vh;
+    min-height: 100dvh;
     overflow-x: hidden;
     overflow-y: auto;
     padding: 12px;
@@ -60,5 +63,49 @@
     gap: 12px;
     min-height: min-content;
     height: 100%;
+  }
+
+  /* Client pages that use inline desktop padding. */
+  .client-contracts-page,
+  .applications-page,
+  .client-quest-board-page,
+  .client-verification-page {
+    padding: 20px 16px !important;
+  }
+
+  .client-contracts-page > header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .milestone-row {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 10px;
+  }
+
+  .milestone-row > div:last-child {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .applications-page > header {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 12px;
+  }
+
+  .applications-page > header > div:last-child {
+    width: 100%;
+  }
+
+  .applications-page > header select {
+    min-width: 0 !important;
+    flex: 1;
+  }
+
+  .payouts-card-head {
+    flex-wrap: wrap;
+    gap: 8px;
   }
 }

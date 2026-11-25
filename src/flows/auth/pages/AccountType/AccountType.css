@@ -1,3 +1,4 @@
+/* 25-11-2026 */
 /* 9-11-2026 */
 /* ===== Account-type design tokens (from Figma frame 115:11 "Account type") =====
  * Figbridge audits on the frame:
@@ -439,6 +440,19 @@
 }
 
 @media (max-width: 768px) {
+  .account-page {
+    height: 100vh;
+    height: 100dvh;
+    padding: 72px 16px 24px;
+    box-sizing: border-box;
+  }
+
+  .account-page .signup-card {
+    transform: none !important;
+    max-height: calc(100vh - 96px) !important;
+    max-height: calc(100dvh - 96px) !important;
+  }
+
   .auth-header {
     top: 16px;
     left: 20px;

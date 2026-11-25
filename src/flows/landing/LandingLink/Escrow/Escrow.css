@@ -1,3 +1,4 @@
+/* 25-11-2026 */
 /* 9-11-2026 */
 .es-page {
   height: 100vh;
@@ -681,9 +682,30 @@
   }
 
   .es-flow {
-    min-height: 255px;
-    transform: scale(0.84);
-    transform-origin: top center;
+    flex-direction: column;
+    min-height: 0;
+    padding-top: 0;
+    gap: 20px;
+    transform: none;
+  }
+
+  .es-flow-lines {
+    display: none;
+  }
+
+  .es-side-card,
+  .es-escrow-card {
+    width: 100%;
+    max-width: 280px;
+    margin-top: 0;
+  }
+
+  .es-escrow-card {
+    padding-top: 20px;
+  }
+
+  .es-arch {
+    margin-top: 0;
   }
 
   .es-what h2,
@@ -735,11 +757,6 @@
 @media (max-width: 480px) {
   .es-hero h1 {
     font-size: 28px;
-  }
-
-  .es-flow {
-    min-height: 205px;
-    transform: scale(0.62);
   }
 
   .es-safe-card {

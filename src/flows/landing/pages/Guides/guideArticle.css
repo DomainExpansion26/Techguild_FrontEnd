@@ -1,3 +1,4 @@
+/* 25-11-2026 */
 /* 9-11-2026 */
 /* 6-11-2026 */
 /* 03-11-2026 */
@@ -1110,6 +1111,7 @@
   }
 
   .fg-hero.is-card {
+    margin-top: 68px;
     padding-top: 10px;
   }
 
@@ -1240,3 +1242,8 @@
     padding: 13px 12px 14px;
   }
 }
+
+@media (max-width: 767px) {
+  .fg-page { height: auto; min-height: 100vh; overflow: visible; }
+}
+

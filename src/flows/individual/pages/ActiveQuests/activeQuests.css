@@ -1,3 +1,4 @@
+/* 25-11-2026 */
 /* 9-11-2026 */
 /* ==========================================================================
    Active Quests & Contracts Workroom (Figma Aligned)
@@ -148,3 +149,13 @@
 .submit-work-btn:hover {
   background: #0d2f82;
 }
+
+@media (max-width: 767px) {
+  .active-quests-page { padding: 20px 16px; }
+  .active-quests-header { flex-wrap: wrap; gap: 12px; }
+  .contract-card { padding: 18px 16px; }
+  .contract-card-header { flex-wrap: wrap; gap: 10px; }
+  .milestone-item { flex-direction: column; align-items: stretch; gap: 10px; }
+  .milestone-item > div:last-child { flex-wrap: wrap; justify-content: flex-start; }
+}
+

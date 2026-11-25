@@ -1,3 +1,4 @@
+/* 25-11-2026 */
 /* 9-11-2026 */
 /* ===== Reset Password — Figma frame 123:33 ("Reset pass", 1440x900) ===== */
 .resetpass-page {
@@ -293,16 +294,32 @@
 
 /* ===== Mobile adjustments ===== */
 @media (max-width: 767px) {
+  .resetpass-page {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px 40px;
+    box-sizing: border-box;
+  }
+
   .resetpass-page .auth-card-wrapper {
     left: auto;
     top: auto;
     width: 100%;
     max-width: 504px;
+    margin: 0 auto;
   }
 
   .resetpass-page .signup-card {
     min-height: auto;
+    max-height: none;
     padding: 28px 24px;
+    overflow: visible;
   }
 
   .reset-title {

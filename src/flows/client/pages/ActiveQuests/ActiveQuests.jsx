@@ -1,3 +1,4 @@
+// 25-11-2026
 import React, { useState, useEffect, useCallback } from "react";
 import { DashboardLayout } from "@/Components";
 import { contractsApi, submissionsApi } from "@/services/api";
@@ -61,7 +62,7 @@ export default function ActiveQuests() {
 
   return (
     <DashboardLayout>
-      <div style={{ padding: "32px 40px", maxWidth: "1380px", margin: "0 auto", width: "100%", flex: 1, minHeight: 0, overflowY: "auto" }}>
+      <div className="client-contracts-page" style={{ padding: "32px 40px", maxWidth: "1380px", margin: "0 auto", width: "100%", flex: 1, minHeight: 0, overflowY: "auto" }}>
         <header className="d-flex justify-content-between align-items-center mb-4">
           <div>
             <h1 className="fs-3 fw-bold mb-1">Active Client Contracts &amp; Workrooms</h1>
@@ -125,7 +126,7 @@ export default function ActiveQuests() {
                             const latestSubmission = m.submission || m.latest_submission;
 
                             return (
-                              <div key={mId} className="p-3 bg-light rounded-3 border d-flex justify-content-between align-items-center">
+                              <div key={mId} className="milestone-row p-3 bg-light rounded-3 border d-flex justify-content-between align-items-center">
                                 <div>
                                   <div className="fw-bold fs-6">{m.title || `Milestone ${idx + 1}`}</div>
                                   <div className="text-success fw-semibold fs-7">${m.amount || "0"}</div>

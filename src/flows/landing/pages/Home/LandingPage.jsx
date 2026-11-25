@@ -1,3 +1,4 @@
+// 25-11-2026
 // 9-11-2026
 // 6-11-2026
 // 03-11-2026
@@ -335,7 +336,6 @@ export default function LandingPage() {
                   e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
                 }}
               >
-                <p className="tg-svc-num">SERVICE {n}</p>
                 <span className="tg-svc-ico"><Icon name={icon} size={24} color="#ffffff" /></span>
                 <h3>{t}</h3><p>{d}</p>
                 <span className="tg-svc-arrow" aria-hidden="true">→</span>
@@ -517,14 +517,7 @@ export default function LandingPage() {
           <h2>Your reputation is your<br />career</h2>
           <p className="tg-muted">Every successful Quest strengthens your professional reputation.</p>
           <div className="tg-rank-row">
-            {RANKS.slice(0, 7).map((x) => (
-              <div key={x.r} className={`tg-rank-card${x.active ? " active" : ""}`}>
-                <b>{x.r}</b><strong>{x.label}</strong><span>{x.sub}</span>
-              </div>
-            ))}
-          </div>
-          <div className="tg-rank-row tg-rank-row-center">
-            {RANKS.slice(7).map((x) => (
+            {RANKS.map((x) => (
               <div key={x.r} className={`tg-rank-card${x.active ? " active" : ""}`}>
                 <b>{x.r}</b><strong>{x.label}</strong><span>{x.sub}</span>
               </div>
@@ -537,7 +530,7 @@ export default function LandingPage() {
       <section className="tg-trust" id="trust">
         <div className="tg-wrap">
           <p className="tg-eyebrow">TRUST &amp; SECURITY</p>
-          <h2>Built on trust. Protected at<br />every step.</h2>
+          <h2>Built on trust. Protected at every step.</h2>
           <div className="tg-trust-grid">
             {TRUST_CARDS.map((c) => (
               <div key={c.title} className="tg-trust-card">
