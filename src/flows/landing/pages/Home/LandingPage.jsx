@@ -338,7 +338,6 @@ export default function LandingPage() {
               >
                 <span className="tg-svc-ico"><Icon name={icon} size={24} color="#ffffff" /></span>
                 <h3>{t}</h3><p>{d}</p>
-                <span className="tg-svc-arrow" aria-hidden="true">→</span>
               </div>
             ))}
           </div>
