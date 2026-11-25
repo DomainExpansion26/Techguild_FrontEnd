@@ -1,3 +1,4 @@
+/* 25-11-2026 */
 /* 9-11-2026 */
 /* [TechGuild Update: 21-09-2026] Individual freelancer whole profile stylesheet & responsive tokens */
 /* [TechGuild Update: 28-09-26] Avatar edit menu, banner image state, QA/checklist polish, edit modal system */
@@ -965,6 +966,10 @@
     aspect-ratio: 530 / 275.6 !important;
   }
   .ind-wp-card-inner { padding: 18px 16px; }
+  .ind-wp-ranks { gap: 0; }
+  .ind-wp-rank-circle { width: 26px; height: 26px; font-size: 10px; }
+  .ind-wp-rank.active .ind-wp-rank-circle { font-size: 10.5px; }
+  .ind-wp-rank-you { font-size: 9px; }
   .ind-wp-grid-2,
   .ind-wp-grid-exp,
   .ind-wp-grid-3,

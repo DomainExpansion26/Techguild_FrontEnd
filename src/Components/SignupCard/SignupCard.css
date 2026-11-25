@@ -1,3 +1,4 @@
+/* 25-11-2026 */
 /* ===== Auth Card Wrapper (holds card + footer text) ===== */
 .auth-card-wrapper {
   position: absolute;
@@ -104,7 +105,6 @@
     max-width: 100% !important;
     height: auto !important;
     min-height: auto !important;
-    max-height: none !important;
     padding: 24px 20px !important;
     background: rgba(255, 255, 255, 0.92) !important;
     backdrop-filter: blur(16px) !important;
@@ -112,7 +112,6 @@
     border: 1px solid rgba(255, 255, 255, 0.8) !important;
     border-radius: 16px !important;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08) !important;
-    overflow: visible !important;
     box-sizing: border-box !important;
   }
 }
