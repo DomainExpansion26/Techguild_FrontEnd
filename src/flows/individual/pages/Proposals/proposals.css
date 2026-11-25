@@ -1,3 +1,4 @@
+/* 25-11-2026 */
 /* 9-11-2026 */
 /* ==========================================================================
    Proposals & Applications Tracker (Figma Aligned)
@@ -152,3 +153,15 @@
   background: #fef2f2;
   border-color: #fca5a5;
 }
+
+@media (max-width: 767px) {
+  .proposals-page { padding: 20px 16px; }
+  .proposals-header { flex-wrap: wrap; gap: 12px; }
+  .proposals-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .proposals-tab-btn { flex: 0 0 auto; padding: 10px 14px; }
+  .proposal-item-card { flex-direction: column; align-items: stretch; gap: 14px; }
+  .proposal-info { min-width: 0; }
+  .proposal-meta { flex-wrap: wrap; gap: 6px 14px; }
+  .proposal-actions { justify-content: flex-end; }
+}
+

@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+// 25-11-2026
+import React, { useState, useEffect, useCallback } from "react";
 import { DashboardLayout } from "@/Components";
 import { taskManagementApi } from "@/services/api";
 
@@ -36,7 +36,7 @@ export default function ActiveQuests() {
 
   return (
     <DashboardLayout>
-      <main style={{ padding: "32px 40px", maxWidth: "1380px", margin: "0 auto", width: "100%", flex: 1, minHeight: 0, overflowY: "auto" }}>
+      <div className="client-contracts-page" style={{ padding: "32px 40px", maxWidth: "1380px", margin: "0 auto", width: "100%", flex: 1, minHeight: 0, overflowY: "auto" }}>
         <header className="d-flex justify-content-between align-items-center mb-4">
           <div>
             <h1 className="fs-3 fw-bold mb-1">Active Quests</h1>
@@ -92,8 +92,67 @@ export default function ActiveQuests() {
                         {String(quest.status || "Active").replaceAll("_", " ")}
                       </span>
                     </div>
-                    {quest.description && <p className="text-secondary mt-3 mb-0">{quest.description}</p>}
-                  </article>
+
+                    <div>
+                      <h6 className="fw-bold text-secondary text-uppercase fs-7 mb-3">Milestone Deliverables</h6>
+                      {milestones.length === 0 ? (
+                        <p className="text-muted fs-6">No milestones configured for this contract.</p>
+                      ) : (
+                        <div className="d-flex flex-column gap-3">
+                          {milestones.map((m, idx) => {
+                            const mId = m.id || m._id || idx;
+                            const status = (m.status || "pending").toLowerCase();
+                            const latestSubmission = m.submission || m.latest_submission;
+
+                            return (
+                              <div key={mId} className="milestone-row p-3 bg-light rounded-3 border d-flex justify-content-between align-items-center">
+                                <div>
+                                  <div className="fw-bold fs-6">{m.title || `Milestone ${idx + 1}`}</div>
+                                  <div className="text-success fw-semibold fs-7">${m.amount || "0"}</div>
+                                  {latestSubmission?.notes && (
+                                    <div className="mt-2 text-secondary fs-7">
+                                      <strong>Notes:</strong> {latestSubmission.notes}
+                                    </div>
+                                  )}
+                                  {latestSubmission?.deliverable_url && (
+                                    <div className="mt-1">
+                                      <a href={latestSubmission.deliverable_url} target="_blank" rel="noreferrer" className="text-primary fs-7">
+                                        🔗 View Deliverable Link
+                                      </a>
+                                    </div>
+                                  )}
+                                </div>
+
+                                <div className="d-flex align-items-center gap-2">
+                                  <span className="badge bg-white text-dark border text-capitalize">{status}</span>
+                                  {latestSubmission && status !== "approved" && (
+                                    <>
+                                      <button
+                                        type="button"
+                                        className="btn btn-sm btn-outline-warning"
+                                        onClick={() => handleRequestRevision(latestSubmission.id || latestSubmission._id)}
+                                        disabled={actionLoading === (latestSubmission.id || latestSubmission._id)}
+                                      >
+                                        Request Revision
+                                      </button>
+                                      <button
+                                        type="button"
+                                        className="btn btn-sm btn-success"
+                                        onClick={() => handleApproveWork(latestSubmission.id || latestSubmission._id)}
+                                        disabled={actionLoading === (latestSubmission.id || latestSubmission._id)}
+                                      >
+                                        {actionLoading === (latestSubmission.id || latestSubmission._id) ? "Approving..." : "Approve & Pay"}
+                                      </button>
+                                    </>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               );
             })}

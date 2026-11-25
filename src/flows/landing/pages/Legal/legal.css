@@ -1,3 +1,4 @@
+/* 25-11-2026 */
 /* 9-11-2026 */
 /* 6-11-2026 */
 /* 03-11-2026 */
@@ -575,3 +576,8 @@
     margin-left: 0;
   }
 }
+
+@media (max-width: 767px) {
+  .lg-page { height: auto; min-height: 100vh; overflow: visible; }
+}
+

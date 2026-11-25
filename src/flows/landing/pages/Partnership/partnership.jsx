@@ -1,3 +1,4 @@
+// 25-11-2026
 // 9-11-2026
 // 03-11-2026
 // Partnership page describing partner types, benefits, and the partnership application form.
@@ -274,9 +275,7 @@ function Partnership() {
               <form className="pp-form-card" onSubmit={handleSubmit}>
                 <div className="pp-form-grid">
                   <div className="pp-field">
-                    <label htmlFor="firstName">
-                      First name<span className="pp-required">*</span>
-                    </label>
+                    <label htmlFor="firstName">First name</label>
                     <input
                       id="firstName"
                       name="firstName"
@@ -290,9 +289,7 @@ function Partnership() {
                   </div>
 
                   <div className="pp-field">
-                    <label htmlFor="lastName">
-                      Last name<span className="pp-required">*</span>
-                    </label>
+                    <label htmlFor="lastName">Last name</label>
                     <input
                       id="lastName"
                       name="lastName"
@@ -307,7 +304,7 @@ function Partnership() {
 
                   <div className="pp-field">
                     <label htmlFor="workEmail">
-                      Work email address<span className="pp-required">*</span>
+                      Email address<span className="pp-required">*</span>
                     </label>
                     <input
                       id="workEmail"
@@ -322,9 +319,7 @@ function Partnership() {
                   </div>
 
                   <div className="pp-field">
-                    <label htmlFor="contactNumber">
-                      Contact number<span className="pp-required">*</span>
-                    </label>
+                    <label htmlFor="contactNumber">Contact number</label>
                     <div className="pp-phone-input">
                       <span className="pp-prefix">+91</span>
                       <input
@@ -341,9 +336,7 @@ function Partnership() {
                   </div>
 
                   <div className="pp-field pp-field-full">
-                    <label htmlFor="organizationName">
-                      Organization name<span className="pp-required">*</span>
-                    </label>
+                    <label htmlFor="organizationName">Organization name</label>
                     <input
                       id="organizationName"
                       name="organizationName"
@@ -357,9 +350,7 @@ function Partnership() {
                   </div>
 
                   <div className="pp-field">
-                    <label htmlFor="organizationType">
-                      Organization type<span className="pp-required">*</span>
-                    </label>
+                    <label htmlFor="organizationType">Organization type</label>
                     <select
                       id="organizationType"
                       name="organizationType"
@@ -379,9 +370,7 @@ function Partnership() {
                   </div>
 
                   <div className="pp-field">
-                    <label htmlFor="partnershipType">
-                      Type of partnership<span className="pp-required">*</span>
-                    </label>
+                    <label htmlFor="partnershipType">Type of partnership</label>
                     <select
                       id="partnershipType"
                       name="partnershipType"

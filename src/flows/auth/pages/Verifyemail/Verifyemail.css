@@ -1,3 +1,4 @@
+/* 25-11-2026 */
 /* 9-11-2026 */
 /* ===== Verify Email — Figma frame 129:6 ("Verify email.", 1440x900) ===== */
 .verify-page {
@@ -229,6 +230,11 @@
 
 /* ===== Mobile ===== */
 @media (max-width: 767px) {
+  .verify-page {
+    height: 100vh;
+    height: 100dvh;
+  }
+
   .verify-header {
     top: 16px;
     left: 16px;
@@ -241,7 +247,10 @@
 
   .verify-page .signup-card {
     min-height: auto;
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
     padding: 56px 24px 24px 24px;
+    overflow-y: auto;
   }
 
   .verify-buttons {
