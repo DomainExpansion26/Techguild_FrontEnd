@@ -516,7 +516,14 @@ export default function LandingPage() {
           <h2>Your reputation is your<br />career</h2>
           <p className="tg-muted">Every successful Quest strengthens your professional reputation.</p>
           <div className="tg-rank-row">
-            {RANKS.map((x) => (
+            {RANKS.slice(0, 7).map((x) => (
+              <div key={x.r} className={`tg-rank-card${x.active ? " active" : ""}`}>
+                <b>{x.r}</b><strong>{x.label}</strong><span>{x.sub}</span>
+              </div>
+            ))}
+          </div>
+          <div className="tg-rank-row tg-rank-row-center">
+            {RANKS.slice(7).map((x) => (
               <div key={x.r} className={`tg-rank-card${x.active ? " active" : ""}`}>
                 <b>{x.r}</b><strong>{x.label}</strong><span>{x.sub}</span>
               </div>
