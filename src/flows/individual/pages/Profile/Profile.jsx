@@ -1,3 +1,4 @@
+// 9-11-2026
 // [TechGuild Update: 21-09-2026] Individual freelancer profile wizard & OpenAPI save integration
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -1099,7 +1100,7 @@ export default function Profile() {
         <Cards className="profile-welcome-hero-card" padding="0" shadow="none">
           <div className="profile-hero-illustration-wrapper">
             <div className="profile-hero-icon-container">
-              <Icon name="IdCard" size={36} color="#103ca4" />
+              <Icon name="IdCard" size={36} color="#103CA4" />
             </div>
           </div>
 

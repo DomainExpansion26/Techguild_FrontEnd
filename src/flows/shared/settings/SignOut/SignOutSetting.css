@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* SignOutSetting.css */
 
 .signout-card {
@@ -67,7 +68,7 @@
   top: 53px;
   width: 57px;
   height: 57px;
-  background-color: #103ca4;
+  background-color: #103CA4;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -131,13 +132,13 @@
   font-size: 16px !important;
   line-height: 20px !important;
   background-color: #e1ebff !important;
-  color: #103ca4 !important;
+  color: #103CA4 !important;
   flex: none !important;
 }
 
 .signout-actions .cancel-btn:hover {
   background-color: #c7d2fe !important;
-  color: #103ca4 !important;
+  color: #103CA4 !important;
 }
 
 .signout-actions .btn-custom-confirm {
@@ -149,7 +150,7 @@
   font-weight: 600 !important;
   font-size: 16px !important;
   line-height: 20px !important;
-  background-color: #103ca4 !important;
+  background-color: #103CA4 !important;
   color: white !important;
   display: inline-flex !important;
   align-items: center !important;

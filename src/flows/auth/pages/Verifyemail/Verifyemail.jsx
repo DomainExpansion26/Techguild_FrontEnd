@@ -1,3 +1,4 @@
+// 9-11-2026
 // [TechGuild Update: 30-09-2026] Bg uses existing img2.png (no visual change).
 import { useEffect, useReducer, useState, useCallback } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
@@ -248,7 +249,7 @@ export default function VerifyEmail() {
             <button
               type="button"
               className="btn btn-sm btn-link text-decoration-none"
-              style={{ color: "#103ca4", fontWeight: 600, fontSize: "13px" }}
+              style={{ color: "#103CA4", fontWeight: 600, fontSize: "13px" }}
               disabled={checking}
               onClick={() => checkVerifiedStatus(true)}
             >

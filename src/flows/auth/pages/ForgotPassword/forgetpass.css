@@ -1,6 +1,8 @@
+/* 25-11-2026 */
+/* 9-11-2026 */
 /* ===== Forgot Password — Figma frame 119:13 ("Forgot Password", 1440x900) ===== */
 .forgetpass-page {
-  --forget-primary: #103ca4;
+  --forget-primary: #103CA4;
   --forget-ink: #000000;
   --forget-muted: #59595d; /* Figma #79797D, shifted for AA (was 4.33:1) */
   --forget-placeholder: #6b7280; /* Figma #8E8E93, shifted for AA (was 3.26:1) */
@@ -284,22 +286,40 @@
 
 /* ===== Mobile adjustments ===== */
 @media (max-width: 767px) {
+  .forgetpass-page {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px 40px;
+    box-sizing: border-box;
+  }
+
   .forgetpass-page .auth-card-wrapper {
     left: auto;
     top: auto;
     width: 100%;
     max-width: 504px;
+    margin: 0 auto;
   }
 
   .forgetpass-page .signup-card {
     min-height: auto;
+    max-height: none;
     padding: 28px 24px;
+    overflow: visible;
   }
 
   .forgetpass-page .signup-card.success-state {
     width: 100%;
     min-height: auto;
+    max-height: none;
     padding: 28px 24px;
+    overflow: visible;
   }
 
   .forget-title {

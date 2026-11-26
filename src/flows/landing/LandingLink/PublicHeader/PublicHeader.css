@@ -1,0 +1,146 @@
+/* 25-11-2026 */
+/* 17-11-2026 */
+/* 9-11-2026 */
+/* 6-11-2026 */
+/* Floating pill header matching the landing page navbar. */
+.pub-header {
+  position: sticky;
+  top: 14px;
+  z-index: 60;
+  max-width: 1144px;
+  margin: 14px auto 0;
+  padding: 8px 8px 8px 20px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 18px 50px rgba(2, 6, 23, 0.14);
+}
+
+/* Float the navbar over pages with a full-bleed hero (image or gradient). */
+.ab-page .pub-header,
+.crd-page .pub-header,
+.pp-page .pub-header,
+.cm-page .pub-header,
+.hc-page .pub-header,
+.gh-page .pub-header,
+.gt-page .pub-header,
+.gd-page .pub-header,
+.fg-page .pub-header,
+.ctu-page .pub-header {
+  margin-bottom: -65px;
+}
+
+/* Keep hero content clear of the floating navbar. */
+.crd-page .crd-hero,
+.pp-page .pp-hero,
+.cm-page .cm-hero,
+.hc-page .hc-hero,
+.gh-page .gh-hero,
+.gt-page .gt-hero,
+.gd-page .gd-hero,
+.fg-page .fg-hero:not(.is-card) {
+  padding-top: 65px;
+}
+
+.ctu-page .ctu-top {
+  padding-top: 129px;
+}
+
+.pub-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 !important;
+}
+
+.pub-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #0b1220;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.pub-logo:hover {
+  color: #0b1220;
+}
+
+.pub-logo-mark {
+  display: block;
+  flex-shrink: 0;
+  width: auto;
+  height: 32px;
+}
+
+.pub-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pub-login {
+  color: #0b1220;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  padding: 10px 14px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.pub-login:hover {
+  color: #103CA4;
+}
+
+.pub-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 999px;
+  background: #103CA4;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  box-shadow: 0 10px 28px rgba(16, 60, 164, 0.4);
+  cursor: pointer;
+  border: 0;
+  transition: background 0.2s ease;
+}
+
+.pub-cta:hover {
+  background: #0C3083;
+  color: #ffffff;
+}
+
+@media (max-width: 640px) {
+  .pub-header {
+    margin-left: 18px;
+    margin-right: 18px;
+    padding-left: 18px;
+  }
+
+  .pub-login {
+    display: none;
+  }
+
+  .pub-cta {
+    padding: 9px 18px;
+    font-size: 13.5px;
+  }
+}

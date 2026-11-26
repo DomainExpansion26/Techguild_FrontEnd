@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* Login-time 2FA challenge — Figma "for 6- digit code" / "for 8 digit code".
    Glass card centered over the shared auth photo background (same image +
    pattern as AuthHomeScreen on login/signup).
@@ -7,7 +8,7 @@
 .twofa-page {
   --twofa-ink: #111827;
   --twofa-muted: #6a717d;
-  --twofa-accent: #103ca4;
+  --twofa-accent: #103CA4;
   min-height: 100vh;
   background-size: cover;
   background-position: center;

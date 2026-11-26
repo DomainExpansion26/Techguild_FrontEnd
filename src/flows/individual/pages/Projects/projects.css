@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* ==========================================================================
    Quest Board / Projects Styles (Figma Aligned)
    ========================================================================== */
@@ -68,7 +69,7 @@
 }
 
 .quest-search-input:focus {
-  border-color: #103ca4;
+  border-color: #103CA4;
   background: #ffffff;
 }
 
@@ -134,7 +135,7 @@
   height: 36px;
   border-radius: 8px;
   background: #eff6ff;
-  color: #103ca4;
+  color: #103CA4;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -217,7 +218,7 @@
 }
 
 .quest-apply-btn {
-  background: #103ca4;
+  background: #103CA4;
   color: #ffffff;
   border: none;
   padding: 8px 16px;
@@ -295,7 +296,7 @@
 }
 
 .proposal-textarea:focus {
-  border-color: #103ca4;
+  border-color: #103CA4;
 }
 
 .proposal-input {
@@ -308,5 +309,5 @@
 }
 
 .proposal-input:focus {
-  border-color: #103ca4;
+  border-color: #103CA4;
 }

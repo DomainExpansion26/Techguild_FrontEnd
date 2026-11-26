@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 .sidebar {
   width: 211px;
   height: 100%;
@@ -47,7 +48,7 @@
 }
 
 .logo-guild {
-  color: #103ca4;
+  color: #103CA4;
 }
 
 .sidebar-menu-container {
@@ -101,7 +102,7 @@
 
 .sidebar-item.active {
   background-color: #e9f0fe;
-  color: #103ca4;
+  color: #103CA4;
   font-weight: 600;
 }
 
@@ -123,7 +124,7 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background-color: #103ca4;
+  background-color: #103CA4;
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -220,7 +221,7 @@
 
 .sidebar-rail-item.active {
   background-color: #e9f0fe;
-  color: #103ca4;
+  color: #103CA4;
 }
 
 .sidebar-rail-item svg {
@@ -289,13 +290,13 @@
 
 .sidebar-sub-item.active {
   background-color: #e9f0fe;
-  color: #103ca4;
+  color: #103CA4;
   font-weight: 600;
 }
 
 .sidebar-sub-item.active svg {
-  color: #103ca4;
-  stroke: #103ca4;
+  color: #103CA4;
+  stroke: #103CA4;
 }
 
 .sidebar-sub-item.danger {
@@ -417,7 +418,7 @@
 
 .mobile-drawer-item.active {
   background-color: #e9f0fe;
-  color: #103ca4;
+  color: #103CA4;
   font-weight: 600;
 }
 

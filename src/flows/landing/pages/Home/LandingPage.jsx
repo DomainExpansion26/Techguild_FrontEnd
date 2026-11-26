@@ -1,19 +1,26 @@
+// 25-11-2026
+// 9-11-2026
+// 6-11-2026
+// 03-11-2026
+// TechGuild public landing page with hero, features, process, escrow, and FAQ sections.
 // Last Changed: 16-10-2026 - eco tiles click+hover select, ranks SS/SSS centered row, escrow all blue, learn-more Coming Soon, nav/footer logo mark, new guild card imgs, FAQ chevron icon, footer copyright
-// Last Changed: 15-10-2026 - icons #2456e6->#103CA4, sidebar 16px + stats icons, footer LinkedIn only, c4 wrapper, encoding fixed (₹ ✓ → ◆ ✦)
-// Flow: only the landing page. Every CTA (Sign In / Sign Up / Explore /
-// Get Started / etc.) shows a "Coming Soon" message on click — no navigation anywhere.
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { showSnackbar } from "@/store/slices/snackbarSlice";
+// Last Changed: 15-10-2026 - icons #103CA4->#103CA4, sidebar 16px + stats icons, footer LinkedIn only, c4 wrapper, encoding fixed (₹ ✓ → ◆ ✦)
+// Flow: every navigation to another page (Learn more, footer links, Get Started)
+// goes to the Sign In page first. Sign In -> /login, Sign Up -> /signup.
+// After signing in, the user is returned to the page they originally clicked.
+import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate, useNavigationType } from "react-router-dom";
 import Icon from "@/Components/icons/Icon";
+import Footer from "@/flows/landing/LandingLink/Footer/Footer";
 import "./LandingPage.css";
 
 import heroBg from "@/assets/landing-Img/Frame 1707482940.png";
-import aiTexture from "@/assets/landing-Img/Frame 1707482940.png";
+// Removed from output (AI section):
+// import aiTexture from "@/assets/landing-Img/Frame 1707482940.png";
 import questBoard from "@/assets/landing-Img/QuestBoardShot.png";
 import taskMgmt from "@/assets/landing-Img/TaskMgmtShot.png";
-import milestonePlanner from "@/assets/landing-Img/MilestoneShot.png";
+// Milestone Planner section removed from output:
+// import milestonePlanner from "@/assets/landing-Img/MilestoneShot.png";
 import frontCard from "@/assets/landing-Img/GuildCardFrontNew.png";
 import backCard from "@/assets/landing-Img/GuildCardBackNew.png";
 import logoMark from "@/assets/landing-Img/ttttttt 1@2x.png";
@@ -93,20 +100,61 @@ function Marquee({ items }) {
 }
 
 export default function LandingPage() {
+  const navigate = useNavigate();
+  const navigationType = useNavigationType();
+  const scrollRef = useRef(null);
   const [openFaq, setOpenFaq] = useState(null);
   const [ecoSelected, setEcoSelected] = useState(null);
   const [ecoHover, setEcoHover] = useState(null);
-  const dispatch = useDispatch();
 
-  // All auth / CTA buttons (Sign In, Sign Up, Explore, Get Started, etc.) only
-  // show a "Coming Soon" message on click — no navigation anywhere.
-  const handleComingSoon = (e) => {
-    if (e) e.preventDefault();
-    dispatch(showSnackbar({ message: "Coming Soon", type: "info" }));
+  const goToLogin = (event) => {
+    if (event) event.preventDefault();
+    navigate("/login");
   };
 
+  // Restore the landing scroll position when returning with the browser back button.
+  useEffect(() => {
+    if (navigationType !== "POP") return undefined;
+    const node = scrollRef.current;
+    const saved = sessionStorage.getItem("tg-landing-scroll");
+    if (!node || saved === null) return undefined;
+
+    const restore = () => {
+      const previous = node.style.scrollBehavior;
+      node.style.scrollBehavior = "auto";
+      node.scrollTop = Number(saved);
+      node.style.scrollBehavior = previous;
+    };
+
+    const frame = requestAnimationFrame(restore);
+    const timer = setTimeout(restore, 150);
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(timer);
+    };
+  }, [navigationType]);
+
+  // Remember the landing scroll position while the user scrolls.
+  useEffect(() => {
+    const node = scrollRef.current;
+    if (!node) return undefined;
+    let frame = 0;
+    const handleScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        sessionStorage.setItem("tg-landing-scroll", String(node.scrollTop));
+      });
+    };
+    node.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      node.removeEventListener("scroll", handleScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
-    <div className="tg-landing">
+    <div className="tg-landing" ref={scrollRef}>
       {/* ============ NAV ============ */}
       <header className="tg-nav-float">
         <Link to="/home" className="tg-logo tg-logo-nav">
@@ -116,16 +164,17 @@ export default function LandingPage() {
         <nav className="tg-nav-links">
           <a href="#home">Home</a>
           <a href="#about">About</a>
-          <a href="#features">Features</a>
-          <a href="#how">How It Works</a>
           <a href="#services">Services</a>
-          <a href="#quests">Quests</a>
-          <a href="#trust">Trust System</a>
+          <a href="#how">How It Works</a>
+          <a href="#features">Features</a>
+          <a href="#ranks">Ranks</a>
         </nav>
-        {/* Sign In / Sign Up: "Coming Soon" message only, no navigation. */}
         <div className="tg-nav-cta">
-          <Link to="/login" onClick={handleComingSoon} className="tg-signin">Sign In</Link>
-          <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary">Sign Up</Link>
+          {/* Auth navigation disabled until launch — redirect to the login page. */}
+          {/* <Link to="/login" state={{ from: "/" }} className="tg-signin">Sign In</Link> */}
+          {/* <Link to="/signup" className="tg-btn-primary">Sign Up</Link> */}
+          <button type="button" className="tg-signin" onClick={goToLogin}>Sign In</button>
+          <button type="button" className="tg-btn-primary" onClick={goToLogin}>Sign Up</button>
         </div>
       </header>
 
@@ -142,10 +191,11 @@ export default function LandingPage() {
               trusted ecosystem where professionals collaborate on meaningful projects, build
               reputation, and unlock better opportunities.
             </p>
-            {/* Explore Quest Board / Get Started: "Coming Soon" message only, no navigation. */}
+            {/* Explore Features scrolls within the page; Get Started goes to sign up. */}
             <div className="tg-hero-actions">
-              <Link to="/signup" onClick={handleComingSoon} className="tg-btn-white">Explore Quest Board</Link>
-              <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary lg">Get Started</Link>
+              <a href="#features" className="tg-btn-white">Explore Features</a>
+              {/* <Link to="/signup" className="tg-btn-primary lg">Get Started</Link> */}
+              <button type="button" className="tg-btn-primary lg" onClick={goToLogin}>Get Started</button>
             </div>
           </div>
 
@@ -241,6 +291,7 @@ export default function LandingPage() {
       </section>
 
       {/* ============ WHY ============ */}
+      {/* Removed from output:
       <section className="tg-why">
         <div className="tg-wrap">
           <p className="tg-eyebrow">WHY TECHGUILD</p>
@@ -260,6 +311,7 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      */}
 
       <Marquee items={["100% VERIFIED", "SECURE ESCROW", "TRUST-BASED RANKING", "AI COLLABORATION", "TRANSPARENT MILESTONES"]} />
 
@@ -284,10 +336,8 @@ export default function LandingPage() {
                   e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
                 }}
               >
-                <p className="tg-svc-num">SERVICE {n}</p>
                 <span className="tg-svc-ico"><Icon name={icon} size={24} color="#ffffff" /></span>
                 <h3>{t}</h3><p>{d}</p>
-                <span className="tg-svc-arrow" aria-hidden="true">→</span>
               </div>
             ))}
           </div>
@@ -348,7 +398,7 @@ export default function LandingPage() {
               <p className="tg-eyebrow sm">FEATURE 01</p>
               <h3>Quest Board</h3>
               <p className="tg-muted">Discover verified opportunities with transparent budgets, skills, timelines, client ranks, and Quest types.</p>
-              <Link to="/features" onClick={handleComingSoon} className="tg-learn">Learn more <span aria-hidden="true">→</span></Link>
+              <Link to="/features/quest-board" className="tg-learn">Learn more <span aria-hidden="true">→</span></Link>
             </div>
             <div className="tg-shot-wrap"><img className="tg-shot" src={questBoard} alt="Quest Board dashboard" loading="lazy" /></div>
           </div>
@@ -359,10 +409,11 @@ export default function LandingPage() {
               <p className="tg-eyebrow sm">FEATURE 02</p>
               <h3>Task Management Dashboard</h3>
               <p className="tg-muted">Track Quests, monitor milestones, manage deadlines, and collaborate seamlessly from one centralized workspace.</p>
-              <Link to="/features" onClick={handleComingSoon} className="tg-learn">Learn more <span aria-hidden="true">→</span></Link>
+              <Link to="/task-management" className="tg-learn">Learn more <span aria-hidden="true">→</span></Link>
             </div>
           </div>
 
+          {/* Removed from output:
           <div className="tg-feature-row">
             <div className="tg-feature-text">
               <p className="tg-eyebrow sm">FEATURE 03</p>
@@ -372,10 +423,12 @@ export default function LandingPage() {
             </div>
             <div className="tg-shot-wrap"><img className="tg-shot" src={milestonePlanner} alt="AI Milestone Planner" loading="lazy" /></div>
           </div>
+          */}
         </div>
       </section>
 
       {/* ============ DISCOVER QUEST ============ */}
+      {/* Removed from output:
       <section className="tg-quest" id="quests">
         <div className="tg-wrap tg-split">
           <div>
@@ -394,7 +447,7 @@ export default function LandingPage() {
               <p className="tg-verified">✓ Verified Client · Rank A · Trust 92%</p>
               <div className="tg-counts"><span>18 Applicants</span><i>·</i><span>245 Views</span></div>
             </div>
-            {/* Explore: "Coming Soon" message only, no navigation. */}
+            Explore: "Coming Soon" message only, no navigation.
             <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary full">Explore Quest Board <span aria-hidden="true">→</span></Link>
           </div>
           <div className="tg-browser">
@@ -421,6 +474,7 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      */}
 
       {/* ============ PARTY ============ */}
       <section className="tg-party" id="party">
@@ -434,8 +488,7 @@ export default function LandingPage() {
               <div><strong>28</strong><span>Completed Quests</span></div>
               <div><strong>A</strong><span>Rank</span></div>
             </div>
-            {/* Build Your Party: "Coming Soon" message only, no navigation. */}
-            <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary">Build Your Party +</Link>
+            <Link to="/party" className="tg-btn-primary">Learn more</Link>
           </div>
           <div className="tg-party-card">
             <div className="tg-browser-bar"><span className="dot r" /><span className="dot y" /><span className="dot g" /><span className="tg-url">✓ techguild.io/party</span></div>
@@ -457,7 +510,7 @@ export default function LandingPage() {
       </section>
 
       {/* ============ RANK ============ */}
-      <section className="tg-rank">
+      <section className="tg-rank" id="ranks">
         <div className="tg-wrap">
           <p className="tg-eyebrow">RANK &amp; REPUTATION</p>
           <h2>Your reputation is your<br />career</h2>
@@ -483,7 +536,7 @@ export default function LandingPage() {
       <section className="tg-trust" id="trust">
         <div className="tg-wrap">
           <p className="tg-eyebrow">TRUST &amp; SECURITY</p>
-          <h2>Built on trust. Protected at<br />every step.</h2>
+          <h2>Built on trust. Protected at every step.</h2>
           <div className="tg-trust-grid">
             {TRUST_CARDS.map((c) => (
               <div key={c.title} className="tg-trust-card">
@@ -507,6 +560,7 @@ export default function LandingPage() {
       </section>
 
       {/* ============ AI ============ */}
+      {/* Removed from output - choose another one:
       <section className="tg-ai" style={{ backgroundImage: `url(${aiTexture})` }}>
         <div className="tg-ai-overlay" />
         <div className="tg-wrap tg-split tg-ai-inner">
@@ -514,7 +568,7 @@ export default function LandingPage() {
             <p className="tg-eyebrow light">AI-POWERED COLLABORATION</p>
             <h2 className="light">Find the right people.<br />Build the right Party.</h2>
             <p className="tg-ai-sub">TechGuild uses intelligent recommendations to help professionals discover relevant Quests and connect with compatible Party members.</p>
-            {/* Find Your Match: "Coming Soon" message only, no navigation. */}
+            Find Your Match: "Coming Soon" message only, no navigation.
             <Link to="/signup" onClick={handleComingSoon} className="tg-btn-primary light">Find Your Match ✦</Link>
           </div>
           <div className="tg-match-frame">
@@ -524,12 +578,13 @@ export default function LandingPage() {
               {[["Skills Match", "98%"], ["Experience Match", "92%"], ["Trust Compatibility", "95%"], ["Availability", "90%"]].map(([k, v]) => (
                 <div key={k} className="tg-bar-row"><span>{k}</span><em>{v}</em><div className="tg-bar"><i style={{ width: v }} /></div></div>
               ))}
-              {/* 14-10-2026: Coming Soon, no navigation */}
+              14-10-2026: Coming Soon, no navigation
               <button type="button" className="tg-btn-primary full" onClick={handleComingSoon}>Find Your Match</button>
             </div>
           </div>
         </div>
       </section>
+      */}
 
       {/* ============ DIFFERENCE ============ */}
       <section className="tg-diff">
@@ -564,6 +619,7 @@ export default function LandingPage() {
       </section>
 
       {/* ============ TESTIMONIALS ============ */}
+      {/* Removed from output:
       <section className="tg-testimonials">
         <div className="tg-wrap">
           <p className="tg-eyebrow">TESTIMONIALS</p>
@@ -587,6 +643,7 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      */}
 
       {/* ============ FAQ ============ */}
       <section className="tg-faq" id="faq">
@@ -621,26 +678,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ============ FOOTER ============ */}
-      <footer className="tg-footer">
-        <div className="tg-wrap">
-          <div className="tg-foot-grid">
-            <div>
-              <p className="tg-logo"><img src={logoMark} className="tg-logo-mark" alt="TechGuild logo" /><span><span className="tg-logo-tech light">Tech</span><span className="tg-logo-guild">Guild</span></span></p>
-              <p className="tg-dark-muted sm">The trust-first ecosystem for professional collaboration.</p>
-              <div className="tg-social">
-                <a href="#home" aria-label="LinkedIn"><Icon name="Linkedin" size={18} color="#ffffff" /></a>
-              </div>
-            </div>
-            <div><strong>Platform</strong><span>Quest Board</span><span>Parties</span><span>Trust System</span><span>Rankings</span><span>Escrow</span></div>
-            <div><strong>Company</strong><span>About</span><span>Careers</span><span>Contact</span><span>Partners</span></div>
-            <div><strong>Resources</strong><span>Help Center</span><span>Guides</span><span>Community</span><span>FAQ</span></div>
-            <div><strong>Legal</strong><span>Privacy</span><span>Terms</span><span>Security</span></div>
-          </div>
-          <div className="tg-giant">TECHGUILD</div>
-          <p className="tg-copy">© 2026 TechGuild. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

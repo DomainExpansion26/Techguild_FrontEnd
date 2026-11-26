@@ -1,3 +1,4 @@
+// 9-11-2026
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -202,7 +203,7 @@ export default function Verification() {
           >
             <div className="v-doc-card-top">
               <div className="v-doc-icon-box">
-                <Icon name={doc.icon} size={24} color="#103ca4" />
+                <Icon name={doc.icon} size={24} color="#103CA4" />
               </div>
               <div className="v-radio-indicator"></div>
             </div>
@@ -286,7 +287,7 @@ export default function Verification() {
             <button
               type="button"
               className="btn btn-sm text-white ms-3 flex-shrink-0"
-              style={{ backgroundColor: "#103ca4" }}
+              style={{ backgroundColor: "#103CA4" }}
               onClick={() => navigate("/login")}
             >
               Sign In Now
@@ -322,7 +323,7 @@ export default function Verification() {
             else navigate("/dashboard");
           }}
         >
-          <Icon name="ArrowLeft" size={24} color="#103ca4" />
+          <Icon name="ArrowLeft" size={24} color="#103CA4" />
         </button>
 
         {currentStep > 0 && (

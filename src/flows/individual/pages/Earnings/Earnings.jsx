@@ -1,3 +1,4 @@
+// 9-11-2026
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { DashboardLayout, Cards } from "@/Components";
@@ -54,7 +55,7 @@ export default function Earnings() {
           <button
             type="button"
             className="btn btn-primary px-4 py-2 rounded-3 fw-medium"
-            style={{ backgroundColor: "#103ca4", border: "none" }}
+            style={{ backgroundColor: "#103CA4", border: "none" }}
             onClick={() => navigate("/active-quests")}
           >
             View Active Quests & Milestones
