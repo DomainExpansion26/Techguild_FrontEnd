@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docker:update": "node scripts/update-docker.js --strict",
+    "postinstall": "node scripts/update-docker.js"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.12.0",
