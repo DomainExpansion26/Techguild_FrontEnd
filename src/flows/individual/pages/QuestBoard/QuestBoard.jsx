@@ -1,51 +1,146 @@
-// [TechGuild Update: 12-10-26] Individual QuestBoard — UI only.
+// [TechGuild Update: 12-10-26] Individual QuestBoard — wired to the Quest Board API.
 // Single JSX + single CSS. Uses shared components (DashboardLayout, Cards,
 // PrimaryButton, SecondaryButton, Icon) like client WholeProfile / QuestBoard.
 // Flow: intro -> list (+ filter / sort drawers) -> details -> apply modal -> success modal -> home
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
 import { DashboardLayout, Cards, PrimaryButton, SecondaryButton } from "@/Components";
 import Icon from "@/Components/icons/Icon";
 import { ICON_SIZES } from "@/constants/sizes";
+import { questsApi } from "@/services/api";
+import { showSnackbar } from "@/store";
+import { useAuth } from "@/context/AuthContext";
 import "./QuestBoard.css";
 
-/* ---------------- UI-only mock (no API) ---------------- */
-const PROFILE = { name: "Arjun Mehta", rank: "Rank A", trust: "96%", skills: 8, quests: 12, strength: 92 };
+const PAGE_SIZE = 12;
 
-const QUESTS = [
-  { id: "q1", tag: "Standard", tone: "standard", title: "Cloud-Native Architecture Overhaul", desc: "Transition legacy monolith to AWS microservices. Requires deep Kubernetes and Go expertise for high-traffic workloads.", budget: "₹75,000", type: "Fixed Price", dur: "20 Days", date: "15 Aug 2026", skills: ["AWS", "Kubernetes", "Golang"], skillTone: "blue", match: "Recommended for Your Party • 94% Match", squad: false, client: "TechNova Pvt. Ltd.", trust: "92% Trust", count: "148 Quests", apps: "18 Applicants", views: "245 Views", posted: "Posted 2h ago", saved: false, seed: "technova", rankTone: "rk-purple" },
-  { id: "q2", tag: "Emergency", tone: "emergency", title: "Security Breach Remediation", desc: "Urgent requirement for a CyberSec Lead to audit and patch vulnerability in a high-traffic e-commerce platform.", budget: "₹1,20,000", type: "Fixed Price", dur: "3 Days", date: "ASAP", asap: true, skills: ["Security Audit", "DevSecOps"], skillTone: "purple", match: null, client: "SecureLink Systems", trust: "99% Trust", count: "842 Quests", apps: "4 Applicants", views: "890 Views", posted: "Posted 15m ago", saved: false, seed: "securelink", rankTone: "rk-purple" },
-  { id: "q3", tag: "Long-term", tone: "longterm", title: "Design System Orchestration", desc: "Lead the unification of 4 disparate product lines into a single, cohesive design language. 6-month contract.", budget: "₹3,50,000", type: "Retainer", dur: "180 Days", date: "Rolling", skills: ["Figma", "UI Design", "Storybook"], skillTone: "green", match: "Recommended for Your Party • 98% Match", squad: false, client: "DesignCollective", trust: "95% Trust", count: "32 Quests", apps: "32 Applicants", views: "1,4k Views", posted: "Posted 4h ago", saved: true, seed: "designco", rankTone: "rk-blue" },
-  { id: "q4", tag: "Multi-skill", tone: "multiskill", title: "Full-stack Marketplace MVP", desc: "End-to-end development of a niche B2B marketplace. Includes branding, UI/UX, Backend, and Stripe integration.", budget: "₹5,00,000", type: "Project Milestone", dur: "60 Days", date: "30 Sep 2026", skills: ["React", "Node.js", "UI Design", "+2 more"], skillTone: "blue", match: "Perfect for 3-Person Engineering Squads", squad: true, client: "AlphaLaunch Labs", trust: "88% Trust", count: "12 Quests", apps: "12 Applicants", views: "156 Views", posted: "Posted 6h ago", saved: false, seed: "alphalaunch", rankTone: "rk-orange" },
-  { id: "q5", tag: "Standard", tone: "standard", title: "API Documentation Overhaul", desc: "Write comprehensive Swagger documentation for a complex financial API suite. Technical writing skills required.", budget: "₹45,000", type: "Project Based", dur: "15 Days", date: "01 Oct 2026", skills: ["Swagger", "REST", "Technical Writing"], skillTone: "blue", match: null, client: "FinStream Inc.", trust: "94% Trust", count: "210 Quests", apps: "8 Applicants", views: "92 Views", posted: "Posted 8h ago", saved: false, seed: "finstream", rankTone: "rk-blue" },
-  { id: "q6", tag: "Long-term", tone: "longterm", title: "DevOps Culture Implementation", desc: "Ongoing advisory role for a mid-size enterprise looking to adopt CI/CD and automated scaling best practices.", budget: "₹2,00,000", type: "Monthly Retainer", dur: "1 Year", date: "Recurring", skills: ["Terraform", "Jenkins", "Docker"], skillTone: "purple", match: null, client: "Global Core Tech", trust: "97% Trust", count: "512 Quests", apps: "2 Applicants", views: "45 Views", posted: "Posted 1d ago", saved: false, seed: "globalcore", rankTone: "rk-blue" },
-];
+const PROFILE_FALLBACK = { rank: "Rank F", trust: "96%", skills: 8, quests: 12, strength: 92 };
 
-const FEATURED = {
-  title: "Website Redesign for FinTech Startup",
-  desc: "Design a modern responsive website for a growing FinTech startup. The goal is to improve user engagement and streamline the onboarding process for new retail investors.",
-  budget: "₹75,000", budgetType: "Fixed Price", timeline: "20 Days", deadline: "15 Aug 2026",
-  about: "TechNova is seeking a highly skilled UI/UX designer to overhaul our main marketing website and user dashboard. We are moving towards a more premium, trustworthy aesthetic to appeal to enterprise clients while remaining accessible to retail investors.\n\nThe current platform suffers from high bounce rates on the pricing page and a confusing user flow during the initial KYC onboarding. Your mission is to simplify these flows, introduce a modern visual language, and deliver comprehensive Figma prototypes ready for our dev team.",
-  skills: ["Figma", "UI Design", "UX Research", "Prototyping", "FinTech"],
+const QUEST_TYPE_META = {
+  standard: { label: "Standard", tone: "standard" },
+  emergency: { label: "Emergency", tone: "emergency" },
+  long_term: { label: "Long-term", tone: "longterm" },
+  multi_skill: { label: "Multi-skill", tone: "multiskill" },
 };
 
-const STATS = [
-  { label: "APPLIED", value: "2,390", sub: "Lifetime submissions", color: "#1e5eff" },
-  { label: "UNDER REVIEW", value: "22", sub: "Awaiting client decision", color: "#16a34a" },
-  { label: "SHORTLISTED", value: "22", sub: "Final candidate stages", color: "#f59e0b" },
-  { label: "ACTIVE QUEST", value: "22", sub: "In progress delivery", color: "#7c3aed" },
-];
+const SORT_TO_API = {
+  newest: "newest",
+  "high-low": "budget_desc",
+  "low-high": "budget_asc",
+  emergency: "emergency_first",
+};
 
-/* ---------------- small pieces (same file, imported via composition) ---------------- */
-function Crumb({ trail }) {
-  return (
-    <p className="ind-qb-crumb">
-      {trail.map((t, i) => (
-        <span key={i}>{i > 0 && " > "}{i === trail.length - 1 ? <strong>{t}</strong> : t}</span>
-      ))}
-    </p>
-  );
+const TIMELINE_TO_API = {
+  "Under 7 Days": "under_7",
+  "7–15 Days": "7_15",
+  "15–30 Days": "15_30",
+  "30+ Days": "30_plus",
+};
+
+const QUEST_TYPE_TO_API = {
+  Standard: "standard",
+  Emergency: "emergency",
+  "Long-term": "long_term",
+  "Multi-skill": "multi_skill",
+};
+
+const APPLICATION_STATUS_META = {
+  applied: { label: "Application Submitted", tone: "blue", note: "Your application was submitted successfully.", noteIcon: "Send", noteColor: "#6b7280" },
+  under_review: { label: "Application Under Review", tone: "amber", note: "Estimated decision within 48h", noteIcon: "Clock", noteColor: "#6b7280" },
+  shortlisted: { label: "Shortlisted", tone: "green", note: "Client shortlisted your application.", noteIcon: "Star", noteColor: "#15803d" },
+  application_viewed: { label: "Application Viewed", tone: "blue", note: "Viewed by client recently", noteIcon: "Eye", noteColor: "#6b7280" },
+  accepted: { label: "Accepted", tone: "green", note: "Client accepted your application.", noteIcon: "CircleCheck", noteColor: "#15803d" },
+  rejected: { label: "Not Selected", tone: "amber", note: "Client moved forward with another candidate.", noteIcon: "X", noteColor: "#b45309" },
+};
+
+function formatINR(value) {
+  const amount = Number(value);
+  if (!Number.isFinite(amount)) return "—";
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  }).format(amount);
 }
 
+function formatDate(value) {
+  if (!value) return "—";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "—";
+  return date.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+}
+
+function timeAgo(value) {
+  if (!value) return "recently";
+  const then = new Date(value).getTime();
+  if (Number.isNaN(then)) return "recently";
+  const diff = Date.now() - then;
+  if (diff < 0) return "just now";
+  const minutes = Math.floor(diff / 60000);
+  if (minutes < 1) return "just now";
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  if (days < 30) return `${days}d ago`;
+  return formatDate(value);
+}
+
+function deadlineFrom(publishedAt, timelineDays) {
+  if (!publishedAt || !timelineDays) return "—";
+  const date = new Date(publishedAt);
+  if (Number.isNaN(date.getTime())) return "—";
+  date.setDate(date.getDate() + Number(timelineDays));
+  return formatDate(date);
+}
+
+function rankTone(rank) {
+  const value = String(rank || "").toUpperCase();
+  if (value === "B") return "rk-purple";
+  if (value === "C") return "rk-orange";
+  return "rk-blue";
+}
+
+function mapQuest(q) {
+  const type = QUEST_TYPE_META[q?.quest_type] || QUEST_TYPE_META.standard;
+  const skills = Array.isArray(q?.skills)
+    ? q.skills.map((skill) => (typeof skill === "string" ? skill : skill?.name)).filter(Boolean)
+    : [];
+
+  return {
+    id: q?.id,
+    tag: type.label,
+    tone: type.tone,
+    title: q?.title || "Untitled Quest",
+    desc: q?.description || "",
+    budget: formatINR(q?.budget_inr),
+    type: "Fixed Price",
+    dur: q?.timeline_days ? `${q.timeline_days} Days` : "—",
+    date: formatDate(q?.published_at || q?.created_at),
+    asap: q?.quest_type === "emergency",
+    skills,
+    skillTone: "blue",
+    match: q?.match_percentage ? `Recommended for Your Party • ${q.match_percentage}% Match` : null,
+    matchPercent: q?.match_percentage ?? null,
+    squad: q?.quest_type === "multi_skill",
+    client: q?.client_name || "Client",
+    rank: q?.client_rank || q?.required_min_rank || "F",
+    rankTone: rankTone(q?.client_rank || q?.required_min_rank),
+    trust: q?.client_rank ? `Rank ${q.client_rank} Client` : "Verified Client",
+    count: `${q?.milestone_count ?? 0} Milestones`,
+    apps: `${q?.applicants_count ?? 0} Applicants`,
+    views: `${q?.views_count ?? 0} Views`,
+    posted: `Posted ${timeAgo(q?.published_at || q?.created_at)}`,
+    saved: Boolean(q?.is_saved),
+    seed: q?.id,
+    applicantsCount: q?.applicants_count ?? 0,
+    viewsCount: q?.views_count ?? 0,
+    milestoneCount: q?.milestone_count ?? 0,
+    raw: q,
+  };
+}
+
+/* ---------------- small pieces (same file, imported via composition) ---------------- */
 function QuestCard({ q, onView, onApply, onSave }) {
   return (
     <Cards variant="base" shadow="none" className="ind-qb-card ind-qb-quest">
@@ -64,7 +159,9 @@ function QuestCard({ q, onView, onApply, onSave }) {
           ? <span className="asap"><Icon name="TriangleAlert" size={ICON_SIZES.XS} color="#d92d20" /> ASAP</span>
           : <span><Icon name="Calendar" size={ICON_SIZES.XS} color="#6b7280" /> {q.date}</span>}
       </p>
-      <div className="ind-qb-skills">{q.skills.map((s) => <span key={s} className={`ind-qb-skill ${q.skillTone}`}>{s}</span>)}</div>
+      {q.skills.length > 0 && (
+        <div className="ind-qb-skills">{q.skills.map((s) => <span key={s} className={`ind-qb-skill ${q.skillTone}`}>{s}</span>)}</div>
+      )}
       {q.match && (
         <p className="ind-qb-match">
           <Icon name={q.squad ? "Users" : "UserCheck"} size={ICON_SIZES.MD} color="#2f6bff" strokeWidth={1.8} />
@@ -72,9 +169,9 @@ function QuestCard({ q, onView, onApply, onSave }) {
         </p>
       )}
       <div className="ind-qb-client">
-        <span className="ind-qb-logo">{q.client.slice(0, 1)}<img src={`https://picsum.photos/seed/tg-${q.seed}/72/72`} alt="" loading="lazy" onError={(e) => { e.currentTarget.style.display = "none"; }} /></span>
+        <span className="ind-qb-logo">{q.client.slice(0, 1)}</span>
         <div className="ind-qb-client-text">
-          <strong>{q.client} <Icon name="BadgeCheckFill" size={ICON_SIZES.XS} color="#16a34a" /> <em className={q.rankTone || "rk-blue"}>RANK F</em></strong>
+          <strong>{q.client} <Icon name="BadgeCheckFill" size={ICON_SIZES.XS} color="#16a34a" /> <em className={q.rankTone || "rk-blue"}>RANK {q.rank}</em></strong>
           <span className="ind-qb-muted sm">{q.trust} &nbsp; {q.count}</span>
         </div>
       </div>
@@ -89,31 +186,185 @@ function QuestCard({ q, onView, onApply, onSave }) {
 
 /* ---------------- main page ---------------- */
 export default function QuestBoard() {
+  const dispatch = useDispatch();
+  const { user } = useAuth();
+
   // step: intro | list | details | home
   const [step, setStep] = useState("intro");
-  const [quests, setQuests] = useState(QUESTS);
-  const [selected, setSelected] = useState(QUESTS[0]);
+  const [quests, setQuests] = useState([]);
+  const [selected, setSelected] = useState(null);
+  const [detail, setDetail] = useState(null);
+  const [detailLoading, setDetailLoading] = useState(false);
+  const [summary, setSummary] = useState(null);
+  const [loadingQuests, setLoadingQuests] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [questError, setQuestError] = useState(null);
+  const [nextCursor, setNextCursor] = useState(null);
+  const [hasMore, setHasMore] = useState(false);
+  const [totalQuests, setTotalQuests] = useState(0);
   const [filterOpen, setFilterOpen] = useState(false);
   const [sortOpen, setSortOpen] = useState(false);
   const [sort, setSort] = useState("newest");
+  const [appliedFilters, setAppliedFilters] = useState({});
   const [applyOpen, setApplyOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
   // apply form (UI only)
   const [pitch, setPitch] = useState("");
-  const [picked, setPicked] = useState(["Figma", "UX Research"]);
+  const [picked, setPicked] = useState([]);
   const [avail, setAvail] = useState("now");
   const [agree, setAgree] = useState(false);
-  // filter (UI only, defaults match reference)
+  // filter drafts (UI state; sent to API on Apply Filters)
   const [filterSkills, setFilterSkills] = useState(["UI Design", "Figma"]);
   const [filterTimelines, setFilterTimelines] = useState(["15–30 Days"]);
   const [questType, setQuestType] = useState("Standard");
   const [skillSearch, setSkillSearch] = useState("");
   const [budgetVal, setBudgetVal] = useState(500000);
 
-  const openDetails = (q) => { setSelected(q); setStep("details"); };
-  const openApply = (q) => { if (q) setSelected(q); setApplyOpen(true); };
-  const toggleSave = (id) => setQuests((p) => p.map((q) => (q.id === id ? { ...q, saved: !q.saved } : q)));
+  const profileName =
+    user?.name ||
+    user?.full_name ||
+    [user?.first_name, user?.last_name].filter(Boolean).join(" ") ||
+    "Freelancer";
+  const profileInitials =
+    profileName.split(/\s+/).filter(Boolean).map((part) => part[0]).join("").slice(0, 2).toUpperCase() || "TG";
+  const profileAvatar = user?.avatar_url || user?.avatar || null;
+  const profileRank = user?.rank
+    ? `Rank ${String(user.rank).replace(/^rank\s*/i, "")}`
+    : PROFILE_FALLBACK.rank;
+
+  const fetchSummary = useCallback(async () => {
+    try {
+      const res = await questsApi.getBoardSummary();
+      setSummary(res || null);
+    } catch (err) {
+      dispatch(showSnackbar({ message: err?.message || "Failed to load your quest board summary.", type: "error" }));
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    fetchSummary();
+  }, [fetchSummary]);
+
+  useEffect(() => {
+    if (step === "home") fetchSummary();
+  }, [step, fetchSummary]);
+
+  const fetchQuests = useCallback(async ({ append = false, cursor } = {}) => {
+    if (append) {
+      setLoadingMore(true);
+    } else {
+      setLoadingQuests(true);
+    }
+    setQuestError(null);
+
+    try {
+      const params = {
+        limit: PAGE_SIZE,
+        sort: SORT_TO_API[sort] || "newest",
+        ...appliedFilters,
+      };
+      if (cursor) params.cursor = cursor;
+
+      const res = await questsApi.getQuests(params);
+      const list = Array.isArray(res?.quests) ? res.quests.map(mapQuest) : [];
+
+      setQuests((prev) => (append ? [...prev, ...list] : list));
+      setNextCursor(res?.next_cursor || null);
+      setHasMore(Boolean(res?.has_more));
+      setTotalQuests((prev) => {
+        const serverTotal = Number(res?.total);
+        if (Number.isFinite(serverTotal) && serverTotal > 0) return serverTotal;
+        return append ? prev + list.length : list.length;
+      });
+    } catch (err) {
+      setQuestError(err?.message || "Failed to load quests.");
+      if (!append) setQuests([]);
+      dispatch(showSnackbar({ message: err?.message || "Failed to load quests.", type: "error" }));
+    } finally {
+      if (append) {
+        setLoadingMore(false);
+      } else {
+        setLoadingQuests(false);
+      }
+    }
+  }, [appliedFilters, sort, dispatch]);
+
+  useEffect(() => {
+    if (step !== "list") return undefined;
+    fetchQuests();
+    return undefined;
+  }, [step, fetchQuests]);
+
+  const openDetails = async (q) => {
+    if (!q?.id) return;
+    setSelected(q);
+    setDetail(null);
+    setStep("details");
+    setDetailLoading(true);
+    try {
+      const res = await questsApi.getQuestById(q.id);
+      setDetail(res || null);
+    } catch (err) {
+      dispatch(showSnackbar({ message: err?.message || "Failed to load quest details.", type: "error" }));
+    } finally {
+      setDetailLoading(false);
+    }
+  };
+
+  const openApply = (q) => {
+    const quest = q || selected;
+    if (q) setSelected(q);
+    const skills = Array.isArray(quest?.skills)
+      ? quest.skills.map((skill) => (typeof skill === "string" ? skill : skill?.name)).filter(Boolean)
+      : [];
+    setPicked(skills.slice(0, 5));
+    setApplyOpen(true);
+  };
+
+  const toggleSave = async (id) => {
+    if (!id) return;
+    const current = quests.find((q) => q.id === id) || (selected?.id === id ? selected : null);
+    const wasSaved = Boolean(current?.saved);
+    const applySaved = (saved) => {
+      setQuests((prev) => prev.map((q) => (q.id === id ? { ...q, saved } : q)));
+      setSelected((prev) => (prev && prev.id === id ? { ...prev, saved } : prev));
+      setDetail((prev) => (prev && prev.id === id ? { ...prev, is_saved: saved } : prev));
+    };
+
+    applySaved(!wasSaved);
+
+    try {
+      const res = await questsApi.toggleSaveQuest(id);
+      const saved = Boolean(res?.saved);
+      applySaved(saved);
+      dispatch(showSnackbar({ message: saved ? "Quest saved." : "Quest removed from saved.", type: "success" }));
+    } catch (err) {
+      applySaved(wasSaved);
+      dispatch(showSnackbar({ message: err?.message || "Failed to update bookmark.", type: "error" }));
+    }
+  };
+
   const toggleSkill = (s) => setPicked((p) => (p.includes(s) ? p.filter((x) => x !== s) : [...p, s]));
+
+  const applyFilters = () => {
+    const params = {};
+    if (filterSkills.length > 0) params.skills = filterSkills.join(",");
+    const timelineBucket = filterTimelines.map((t) => TIMELINE_TO_API[t]).filter(Boolean)[0];
+    if (timelineBucket) params.timeline_bucket = timelineBucket;
+    if (questType && QUEST_TYPE_TO_API[questType]) params.quest_type = QUEST_TYPE_TO_API[questType];
+    if (budgetVal && budgetVal < 500000) params.max_budget = budgetVal;
+    setAppliedFilters(params);
+    setFilterOpen(false);
+  };
+
+  const clearFilters = () => {
+    setFilterSkills([]);
+    setFilterTimelines([]);
+    setQuestType("");
+    setBudgetVal(500000);
+    setSkillSearch("");
+    setAppliedFilters({});
+  };
 
   const SORT_OPTIONS = [
     { id: "newest", title: "Newest", desc: "Show the most recently posted quests first.", icon: "Clock" },
@@ -124,13 +375,61 @@ export default function QuestBoard() {
   const sortLabel = (SORT_OPTIONS.find((o) => o.id === sort) || SORT_OPTIONS[0]).title;
   const sortButtonLabel = sort === "newest" ? "Most Recent" : sortLabel;
 
-  const parseBudget = (b) => Number(String(b || "").replace(/[^0-9]/g, "")) || 0;
-  const ordered = (() => {
-    if (sort === "emergency") return [...quests].sort((a, b) => (b.tone === "emergency") - (a.tone === "emergency"));
-    if (sort === "high-low") return [...quests].sort((a, b) => parseBudget(b.budget) - parseBudget(a.budget));
-    if (sort === "low-high") return [...quests].sort((a, b) => parseBudget(a.budget) - parseBudget(b.budget));
-    return quests;
-  })();
+  const kpis = summary?.kpis || {};
+  const homeStats = [
+    { label: "APPLIED", value: String(kpis.applied_count ?? 0), sub: "Lifetime submissions", subTone: "gray", color: "#1e5eff", icon: "FileText" },
+    { label: "UNDER REVIEW", value: String(kpis.under_review_count ?? 0), sub: "Awaiting client decision", subTone: "orange", color: "#16a34a", icon: "Clock" },
+    { label: "SHORTLISTED", value: String(kpis.shortlisted_count ?? 0), sub: "Final candidate stages", subTone: "orange", color: "#f59e0b", icon: "Bookmark" },
+    { label: "ACTIVE QUEST", value: String(kpis.active_quests_count ?? 0), sub: "In progress delivery", subTone: "blue", color: "#7c3aed", icon: "NotebookText" },
+  ];
+
+  const recentApplications = useMemo(() => {
+    return (summary?.recent_applications || []).map((application) => {
+      const statusKey = String(application.status || "applied").toLowerCase().replace(/\s+/g, "_");
+      const meta = APPLICATION_STATUS_META[statusKey] || APPLICATION_STATUS_META.applied;
+      return {
+        id: application.quest_id,
+        title: application.quest_title || "Quest",
+        tag1: "Quest Application",
+        tag2: application.budget_inr != null ? formatINR(application.budget_inr) : "",
+        meta: application.applied_at ? `Applied ${formatDate(application.applied_at)}` : "",
+        status: meta.label,
+        tone: meta.tone,
+        note: meta.note,
+        noteIcon: meta.noteIcon,
+        noteColor: meta.noteColor,
+        primary: meta.tone === "green",
+      };
+    });
+  }, [summary]);
+
+  const recommendedQuests = useMemo(
+    () => (summary?.recommended_quests || []).map(mapQuest),
+    [summary]
+  );
+
+  const activityItems = useMemo(() => {
+    return (summary?.recent_applications || []).slice(0, 4).map((application) => {
+      const statusKey = String(application.status || "applied").toLowerCase().replace(/\s+/g, "_");
+      const meta = APPLICATION_STATUS_META[statusKey] || APPLICATION_STATUS_META.applied;
+      const bg = meta.tone === "green" ? "#dcfce7" : meta.tone === "amber" ? "#fef3c7" : "#e8efff";
+      return [meta.label, application.quest_title || "Quest", timeAgo(application.applied_at), meta.noteIcon, meta.noteColor, bg];
+    });
+  }, [summary]);
+
+  const detailMatchesSelected = Boolean(detail && selected && detail.id === selected.id);
+  const detailQuest = detailMatchesSelected ? detail : {};
+  const activeQuest = selected || {};
+  const detailType = detailQuest.quest_type
+    ? QUEST_TYPE_META[detailQuest.quest_type]?.label || "Standard"
+    : activeQuest.tag || "Standard";
+  const detailSkills = detailMatchesSelected && Array.isArray(detailQuest.skills)
+    ? detailQuest.skills.map((skill) => (typeof skill === "string" ? skill : skill?.name)).filter(Boolean)
+    : (activeQuest.skills || []);
+  const detailMilestones = Array.isArray(detailQuest.milestones) ? detailQuest.milestones : [];
+  const detailSaved = detailMatchesSelected ? Boolean(detailQuest.is_saved) : Boolean(activeQuest.saved);
+  const detailStatus = String(detailQuest.status || "open").replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
+  const applySkillOptions = detailSkills.length > 0 ? detailSkills : ["Figma", "UI Design", "UX Research", "Prototyping", "Design Systems"];
 
   return (
     <DashboardLayout containerClass="ind-qb-root" mainWorkspaceClass="ind-qb-workspace">
@@ -139,7 +438,6 @@ export default function QuestBoard() {
         {/* ============ 1 · INTRO ============ */}
         {step === "intro" && (
           <>
-            <Crumb trail={["Dashboard", "Quest Board"]} />
             <h1 className="ind-qb-h1">Welcome to the Quest Board</h1>
             <p className="ind-qb-sub">Discover trusted projects, connect with verified clients, and build your reputation through meaningful work.</p>
             <div className="ind-qb-intro-grid">
@@ -158,7 +456,6 @@ export default function QuestBoard() {
                     ))}
                   </div>
                   <div><PrimaryButton text="Explore Available Quests →" onClick={() => setStep("list")} className="ind-qb-primary slim" /></div>
-                  <button type="button" className="ind-qb-link" onClick={() => setStep("list")}>Learn How Quests Work</button>
                 </Cards>
                 <div className="ind-qb-how-head">
                   <h3>How Quest Works</h3>
@@ -183,24 +480,24 @@ export default function QuestBoard() {
                   <PrimaryButton text="Explore Available Quests →" onClick={() => setStep("list")} className="ind-qb-primary block top-cta" />
                   <h4 className="ind-qb-h4">Your Profile</h4>
                   <div className="ind-qb-me">
-                    <span className="ind-qb-avatar photo">AM<img src="https://randomuser.me/api/portraits/men/32.jpg" alt={PROFILE.name} onError={(e) => { e.currentTarget.style.display = "none"; }} /></span>
-                    <div className="ind-qb-me-text"><strong>{PROFILE.name}</strong><span className="ind-qb-rank">{PROFILE.rank}</span></div>
+                    <span className="ind-qb-avatar photo">{profileInitials}{profileAvatar && <img src={profileAvatar} alt={profileName} onError={(e) => { e.currentTarget.style.display = "none"; }} />}</span>
+                    <div className="ind-qb-me-text"><strong>{profileName}</strong><span className="ind-qb-rank">{profileRank}</span></div>
                   </div>
-                  <div className="ind-qb-prow"><span className="ind-qb-plabel"><Icon name="Shield" size={ICON_SIZES.XS} color="#6b7280" /> Trust Score</span><strong className="green">96%</strong></div>
-                  <div className="ind-qb-prow"><span className="ind-qb-plabel"><Icon name="Medal" size={ICON_SIZES.XS} color="#6b7280" /> Skills Verified</span><strong>8</strong></div>
-                  <div className="ind-qb-prow"><span className="ind-qb-plabel"><Icon name="CircleCheck" size={ICON_SIZES.XS} color="#6b7280" /> Quests Completed</span><strong>12</strong></div>
+                  <div className="ind-qb-prow"><span className="ind-qb-plabel"><Icon name="Shield" size={ICON_SIZES.XS} color="#6b7280" /> Trust Score</span><strong className="green">{PROFILE_FALLBACK.trust}</strong></div>
+                  <div className="ind-qb-prow"><span className="ind-qb-plabel"><Icon name="Medal" size={ICON_SIZES.XS} color="#6b7280" /> Skills Verified</span><strong>{PROFILE_FALLBACK.skills}</strong></div>
+                  <div className="ind-qb-prow"><span className="ind-qb-plabel"><Icon name="CircleCheck" size={ICON_SIZES.XS} color="#6b7280" /> Quests Completed</span><strong>{PROFILE_FALLBACK.quests}</strong></div>
                   <div className="ind-qb-strength">
-                    <div className="ind-qb-strength-top"><span>Profile Strength</span><em>92%</em></div>
-                    <div className="ind-qb-bar"><i style={{ width: "92%" }} /></div>
+                    <div className="ind-qb-strength-top"><span>Profile Strength</span><em>{PROFILE_FALLBACK.strength}%</em></div>
+                    <div className="ind-qb-bar"><i style={{ width: `${PROFILE_FALLBACK.strength}%` }} /></div>
                   </div>
                   <SecondaryButton text="View Profile →" onClick={() => setStep("list")} className="ind-qb-outline block view-btn" />
                 </Cards>
                 <Cards variant="base" shadow="none" className="ind-qb-card why-card">
                   <h4 className="ind-qb-h4">Why Freelancers Choose TechGuild</h4>
                   <div className="ind-qb-why">
-                    <Cards variant="base" shadow="none" className="ind-qb-why-item"><Icon name="ShieldCheck" size={ICON_SIZES.DEFAULT} color="#2f6bff" strokeWidth={1.8} /><span>Verified Opportunities</span></Cards>
+                    <Cards variant="base" shadow="none" className="ind-qb-why-item"><Icon name="ShieldCheck" size={ICON_SIZES.DEFAULT} color="#103CA4" strokeWidth={1.8} /><span>Verified Opportunities</span></Cards>
                     <Cards variant="base" shadow="none" className="ind-qb-why-item"><Icon name="Eye" size={ICON_SIZES.DEFAULT} color="#7c3aed" strokeWidth={1.8} /><span>Transparent Projects</span></Cards>
-                    <Cards variant="base" shadow="none" className="ind-qb-why-item"><Icon name="Medal" size={ICON_SIZES.DEFAULT} color="#0e9f8a" strokeWidth={1.8} /><span>Reputation That Matters</span></Cards>
+                    <Cards variant="base" shadow="none" className="ind-qb-why-item"><Icon name="Medal" size={ICON_SIZES.DEFAULT} color="#0d9488" strokeWidth={1.8} /><span>Reputation That Matters</span></Cards>
                     <Cards variant="base" shadow="none" className="ind-qb-why-item"><Icon name="TrendingUp" size={ICON_SIZES.DEFAULT} color="#16a34a" strokeWidth={1.8} /><span>Professional Growth</span></Cards>
                   </div>
                 </Cards>
@@ -214,93 +511,116 @@ export default function QuestBoard() {
           <>
             <div className="ind-qb-list-head">
               <div><h1 className="ind-qb-h1">Available Quests</h1>
-                <p className="ind-qb-muted">Discover 42 high-stakes engineering projects matching your party's specialization.</p></div>
+                <p className="ind-qb-muted">Discover {totalQuests ? `${totalQuests} ` : ""}high-stakes engineering projects matching your party's specialization.</p></div>
               <div className="ind-qb-tools">
                 <SecondaryButton text="Filter" icon={<Icon name="Filter" size={ICON_SIZES.MD} />} iconPosition="left" onClick={() => { setFilterOpen(true); setSortOpen(false); }} className="ind-qb-tool" />
                 <SecondaryButton text={`Sort: ${sortButtonLabel}`} icon={<Icon name="ChevronDown" size={ICON_SIZES.MD} />} iconPosition="right" onClick={() => { setSortOpen(true); setFilterOpen(false); }} className="ind-qb-tool" />
               </div>
             </div>
-            <div className="ind-qb-grid">
-              {ordered.map((q) => <QuestCard key={q.id} q={q} onView={openDetails} onApply={openApply} onSave={toggleSave} />)}
-            </div>
-            <p className="ind-qb-center-muted">Showing {ordered.length} of 42 active quests</p>
-            <div className="ind-qb-center"><SecondaryButton text="Load More Quests" icon={<Icon name="ChevronDown" size={ICON_SIZES.MD} />} iconPosition="right" onClick={() => {}} className="ind-qb-load" /></div>
+            {loadingQuests && quests.length === 0 && (
+              <p className="ind-qb-center-muted">Loading quests…</p>
+            )}
+            {questError && (
+              <>
+                <p className="ind-qb-center-muted">{questError}</p>
+                <div className="ind-qb-center"><SecondaryButton text="Retry" onClick={() => fetchQuests()} className="ind-qb-load" /></div>
+              </>
+            )}
+            {!loadingQuests && !questError && quests.length === 0 && (
+              <p className="ind-qb-center-muted">No quests match your filters yet.</p>
+            )}
+            {quests.length > 0 && (
+              <div className="ind-qb-grid">
+                {quests.map((q) => <QuestCard key={q.id} q={q} onView={openDetails} onApply={openApply} onSave={toggleSave} />)}
+              </div>
+            )}
+            <p className="ind-qb-center-muted">Showing {quests.length} of {totalQuests || quests.length} active quests</p>
+            {hasMore && (
+              <div className="ind-qb-center">
+                <SecondaryButton
+                  text={loadingMore ? "Loading..." : "Load More Quests"}
+                  icon={!loadingMore ? <Icon name="ChevronDown" size={ICON_SIZES.MD} /> : undefined}
+                  iconPosition="right"
+                  onClick={() => fetchQuests({ append: true, cursor: nextCursor })}
+                  disabled={loadingMore}
+                  className="ind-qb-load"
+                />
+              </div>
+            )}
           </>
         )}
 
         {/* ============ 3 · DETAILS ============ */}
         {step === "details" && (
           <>
-            <Crumb trail={["Quest Board", "Quest Details"]} />
+            {detailLoading && <p className="ind-qb-center-muted">Loading latest quest details…</p>}
             <div className="ind-qb-details-grid">
               {/* Top — single full-width card like Figma (hero left + budget panel right) */}
               <div className="ind-qb-card ind-qb-top-card">
                 <div className="ind-qb-top-left">
-                  <span className="ind-qb-mini">STANDARD</span>
-                  <h1 className="ind-qb-h1 sm">{FEATURED.title}</h1>
-                  <p className="ind-qb-detail-desc">{FEATURED.desc}</p>
+                  <span className="ind-qb-mini">{detailType.toUpperCase()}</span>
+                  <h1 className="ind-qb-h1 sm">{activeQuest.title || "Quest"}</h1>
+                  <p className="ind-qb-detail-desc">{activeQuest.desc || detailQuest.description || ""}</p>
                   <p className="ind-qb-detail-meta">
-                    <span><Icon name="Clock" size={ICON_SIZES.XS} color="#6b7280" /> Posted 2 hours ago</span>
-                    <span><Icon name="Eye" size={ICON_SIZES.XS} color="#6b7280" /> Views: 245</span>
-                    <span><Icon name="Users" size={ICON_SIZES.XS} color="#6b7280" /> Applicants: 18</span>
+                    <span><Icon name="Clock" size={ICON_SIZES.XS} color="#6b7280" /> Posted {timeAgo(detailQuest.published_at || detailQuest.created_at)}</span>
+                    <span><Icon name="Eye" size={ICON_SIZES.XS} color="#6b7280" /> Views: {detailQuest.views_count ?? activeQuest.viewsCount ?? 0}</span>
+                    <span><Icon name="Users" size={ICON_SIZES.XS} color="#6b7280" /> Applicants: {detailQuest.applicants_count ?? activeQuest.applicantsCount ?? 0}</span>
                   </p>
                 </div>
                 <div className="ind-qb-top-right">
                   <div className="ind-qb-budget-top">
                     <span className="cap ind-qb-budget-cap">BUDGET</span>
-                    <span className="ind-qb-open"><Icon name="CircleCheck" size={12} color="#fff" strokeWidth={2} /> Open</span>
+                    <span className="ind-qb-open"><Icon name="CircleCheck" size={12} color="#fff" strokeWidth={2} /> {detailStatus}</span>
                   </div>
-                  <strong className="ind-qb-budget-value">{FEATURED.budget}</strong>
-                  <span className="ind-qb-muted sm">{FEATURED.budgetType}</span>
+                  <strong className="ind-qb-budget-value">{activeQuest.budget || formatINR(detailQuest.budget_inr)}</strong>
+                  <span className="ind-qb-muted sm">{activeQuest.type || "Fixed Price"}</span>
                   <div className="ind-qb-budget-grid">
-                    <div><span className="ind-qb-budget-label">Timeline</span><strong>{FEATURED.timeline}</strong></div>
-                    <div><span className="ind-qb-budget-label">Deadline</span><strong>{FEATURED.deadline}</strong></div>
+                    <div><span className="ind-qb-budget-label">Timeline</span><strong>{detailQuest.timeline_days ? `${detailQuest.timeline_days} Days` : activeQuest.dur || "—"}</strong></div>
+                    <div><span className="ind-qb-budget-label">Deadline</span><strong>{deadlineFrom(detailQuest.published_at || detailQuest.created_at, detailQuest.timeline_days)}</strong></div>
                   </div>
                   <div className="ind-qb-actions ind-qb-budget-actions">
                     <PrimaryButton text="Apply to Quest" onClick={() => openApply(selected)} className="ind-qb-primary ind-qb-budget-apply" />
-                    <button type="button" className="ind-qb-bookmark-btn" aria-label="Save quest">
-                      <Icon name="Bookmark" size={ICON_SIZES.MD} color="#111827" strokeWidth={1.8} />
+                    <button type="button" className="ind-qb-bookmark-btn" aria-label="Save quest" onClick={() => toggleSave(selected?.id)}>
+                      <Icon name="Bookmark" size={ICON_SIZES.MD} color={detailSaved ? "#0f3d9e" : "#111827"} strokeWidth={1.8} />
                     </button>
                   </div>
                 </div>
               </div>
               <Cards shadow="none" className="ind-qb-card ind-qb-about-card">
                 <h3 className="ind-qb-h3">About This Quest</h3>
-                {FEATURED.about.split("\n\n").map((para, i) => (
+                {(activeQuest.desc || detailQuest.description || "No description provided.").split(/\n{2,}/).map((para, i) => (
                   <p key={i} className="ind-qb-muted ind-qb-about-text">{para}</p>
                 ))}
               </Cards>
               <Cards shadow="none" className="ind-qb-card ind-qb-client-card">
                 <span className="cap ind-qb-client-cap">ABOUT THE CLIENT</span>
                 <div className="ind-qb-me ind-qb-client-me">
-                  <span className="ind-qb-tn">TN</span>
+                  <span className="ind-qb-tn">{(detailQuest.client_name || activeQuest.client || "C").slice(0, 2).toUpperCase()}</span>
                   <div className="ind-qb-client-info">
-                    <strong>TechNova Pvt. Ltd. <Icon name="BadgeCheckFill" size={ICON_SIZES.XS} color="#16a34a" /></strong>
-                    <span className="ind-qb-muted sm ind-qb-loc"><Icon name="MapPin" size={12} color="#6b7280" /> Mumbai, IN</span>
+                    <strong>{detailQuest.client_name || activeQuest.client || "Client"} <Icon name="BadgeCheckFill" size={ICON_SIZES.XS} color="#16a34a" /></strong>
+                    <span className="ind-qb-muted sm ind-qb-loc"><Icon name="MapPin" size={12} color="#6b7280" /> {detailQuest.industry || detailQuest.category || "TechGuild Client"}</span>
                   </div>
                 </div>
                 <div className="ind-qb-client-stats">
-                  <div><span>Trust Score</span><strong className="green">94%</strong></div>
-                  <div><span>Completed</span><strong>20</strong></div>
-                  <div><span>On-time payment</span><strong>96%</strong></div>
-                  <div><span>Avg Rating</span><strong className="amber">4.8 <Icon name="Star" size={12} color="#f59e0b" /></strong></div>
+                  <div><span>Required Rank</span><strong className="blue">{detailQuest.required_min_rank || activeQuest.rank || "—"}</strong></div>
+                  <div><span>Milestones</span><strong>{detailMilestones.length || detailQuest.milestone_count || activeQuest.milestoneCount || 0}</strong></div>
+                  <div><span>Applicants</span><strong>{detailQuest.applicants_count ?? activeQuest.applicantsCount ?? 0}</strong></div>
+                  <div><span>Views</span><strong>{detailQuest.views_count ?? activeQuest.viewsCount ?? 0}</strong></div>
                 </div>
                 <SecondaryButton text="View Client Profile" onClick={() => {}} className="ind-qb-outline block ind-qb-client-btn" />
               </Cards>
               <Cards shadow="none" className="ind-qb-card ind-qb-skills-card">
                 <h3 className="ind-qb-h3">Required Skills</h3>
                 <div className="ind-qb-skills ind-qb-req-skills">
-                  <span className="ind-qb-pill-skill pill-blue">Figma</span>
-                  <span className="ind-qb-pill-skill pill-orange">UI Design</span>
-                  <span className="ind-qb-pill-skill pill-green">UX Research</span>
-                  <span className="ind-qb-pill-skill pill-purple">Prototyping</span>
-                  <span className="ind-qb-pill-skill pill-navy">FinTech</span>
+                  {detailSkills.length > 0 ? detailSkills.map((skill, index) => (
+                    <span key={`${skill}-${index}`} className={`ind-qb-pill-skill ${["pill-blue", "pill-orange", "pill-green", "pill-purple", "pill-navy"][index % 5]}`}>{skill}</span>
+                  )) : <span className="ind-qb-muted sm">No specific skills listed.</span>}
                 </div>
               </Cards>
               <Cards shadow="none" className="ind-qb-card ind-qb-before-card">
                 <span className="cap ind-qb-before-cap">BEFORE YOU ACCEPT</span>
-                <p className="ind-qb-before-line"><Icon name="Info" size={ICON_SIZES.SM} color="#6b7280" /> <span>Review the full milestone schedule.</span></p>
-                <p className="ind-qb-before-line"><Icon name="Info" size={ICON_SIZES.SM} color="#6b7280" /> <span>Ensure you have the required Figma bandwidth.</span></p>
+                <p className="ind-qb-before-line"><Icon name="Info" size={ICON_SIZES.SM} color="#6b7280" /> <span>{detailMilestones.length > 0 ? `Review the ${detailMilestones.length} milestone${detailMilestones.length > 1 ? "s" : ""} defined for this quest.` : "Review the full milestone schedule."}</span></p>
+                <p className="ind-qb-before-line"><Icon name="Info" size={ICON_SIZES.SM} color="#6b7280" /> <span>{detailSkills.length > 0 ? `Ensure you have the required ${detailSkills[0]} bandwidth.` : "Ensure you have the required bandwidth."}</span></p>
               </Cards>
               <div className="ind-qb-nav">
                 <SecondaryButton
@@ -325,10 +645,9 @@ export default function QuestBoard() {
         {/* ============ 6 · HOME (freelancer dashboard after apply) ============ */}
         {step === "home" && (
           <>
-            <Crumb trail={["Dashboard", "Quest Board"]} />
             <div className="ind-qb-home-head">
               <div>
-                <h1 className="ind-qb-h1">Good morning,</h1>
+                <h1 className="ind-qb-h1">Good morning, {profileName.split(/\s+/)[0]}</h1>
                 <p className="ind-qb-muted">Here&apos;s what&apos;s happening with your quests and applications.</p>
               </div>
               <PrimaryButton
@@ -342,12 +661,7 @@ export default function QuestBoard() {
             <div className="ind-qb-home-grid">
               <div className="ind-qb-col ind-qb-home-main">
                 <div className="ind-qb-stats">
-                  {[
-                    { label: "APPLIED", value: "2,390", sub: "Lifetime submissions", subTone: "gray", color: "#1e5eff", icon: "FileText" },
-                    { label: "UNDER REVIEW", value: "22", sub: "Awaiting client decision", subTone: "orange", color: "#16a34a", icon: "Clock" },
-                    { label: "SHORTLISTED", value: "22", sub: "Final candidate stages", subTone: "orange", color: "#f59e0b", icon: "Bookmark" },
-                    { label: "ACTIVE QUEST", value: "22", sub: "In progress delivery", subTone: "blue", color: "#7c3aed", icon: "NotebookText" },
-                  ].map((s) => (
+                  {homeStats.map((s) => (
                     <Cards key={s.label} shadow="none" className="ind-qb-card ind-qb-stat" style={{ "--stat-color": s.color }}>
                       <div className="ind-qb-stat-top"><span className="cap ind-qb-stat-cap">{s.label}</span><span className="ind-qb-stat-ic" style={{ background: s.color }}><Icon name={s.icon} size={14} color="#fff" strokeWidth={2} /></span></div>
                       <h2 className="ind-qb-stat-val">{s.value}</h2>
@@ -357,25 +671,22 @@ export default function QuestBoard() {
                 </div>
                 <Cards shadow="none" className="ind-qb-card ind-qb-updates-card">
                   <div className="ind-qb-row ind-qb-updates-head">
-                    <div><h3 className="ind-qb-h3">Application Updates <em className="ind-qb-recent-pill">3 Recent</em></h3>
+                    <div><h3 className="ind-qb-h3">Application Updates <em className="ind-qb-recent-pill">{recentApplications.length} Recent</em></h3>
                       <p className="ind-qb-muted sm">Real-time status of your recently submitted proposals</p></div>
                     <button type="button" className="ind-qb-arrow-link" aria-label="See all">→</button>
                   </div>
-                  {[
-                    { title: "Website Redesign for SaaS Platform", tag1: "Standard Quest", tag2: "Rank A Client", meta: "Applied Aug 4, 2026 · ₹45,000 – ₹60,000", skills: ["UI/UX Design", "Figma", "SaaS"], status: "Application Under Review", tone: "amber", note: "Estimated decision within 48h", noteIcon: "Clock", noteColor: "#6b7280", primary: false },
-                    { title: "Mobile App UI/UX Design", tag1: "Multi-Skill Quest", tag2: "Rank A Client", meta: "Applied Aug 2, 2026 · ₹35,000 – ₹50,000", skills: ["UI/UX", "Figma", "Mobile Design"], status: "Shortlisted", tone: "green", note: "Client initiated collaboration chat", noteIcon: "MessageSquare", noteColor: "#15803d", primary: true },
-                    { title: "E-Commerce Website Redesign", tag1: "Standard Quest", tag2: "Rank A Client", meta: "Applied Jul 30, 2026 · ₹25,000 – ₹40,000", skills: ["UI/UX", "E-Commerce", "Figma"], status: "Application Viewed", tone: "blue", note: "Viewed by client 1 hour ago", noteIcon: "Eye", noteColor: "#6b7280", primary: false },
-                  ].map((a) => (
-                    <div key={a.title} className="ind-qb-app">
+                  {recentApplications.length === 0 ? (
+                    <p className="ind-qb-center-muted">No applications yet. Explore the Quest Board to get started.</p>
+                  ) : recentApplications.map((a) => (
+                    <div key={a.id || a.title} className="ind-qb-app">
                       <div className="ind-qb-row ind-qb-app-top"><strong className="ind-qb-app-title">{a.title}</strong><span className={`ind-qb-status ${a.tone}`}><i /> {a.status}</span></div>
-                      <p className="ind-qb-app-tags">{a.tag1} · {a.tag2}</p>
+                      <p className="ind-qb-app-tags">{a.tag1}{a.tag2 ? ` · ${a.tag2}` : ""}</p>
                       <p className="ind-qb-app-meta">{a.meta}</p>
-                      <div className="ind-qb-skills ind-qb-app-skills">{a.skills.map((s) => <span key={s} className="ind-qb-app-skill">{s}</span>)}</div>
                       <div className="ind-qb-row ind-qb-app-foot">
                         <p className={`ind-qb-muted sm ind-qb-app-note ${a.primary ? "green" : ""}`}><Icon name={a.noteIcon} size={12} color={a.noteColor} /> {a.note}</p>
                         <div className="ind-qb-app-btns">
-                          <SecondaryButton text="View Application" onClick={() => setStep("details")} className={a.primary ? "ind-qb-mini-btn ind-qb-mini-primary" : "ind-qb-mini-btn"} />
-                          <SecondaryButton text="View Quest" onClick={() => setStep("list")} className="ind-qb-mini-btn" />
+                          <SecondaryButton text="View Application" onClick={() => openDetails({ id: a.id, title: a.title })} className={a.primary ? "ind-qb-mini-btn ind-qb-mini-primary" : "ind-qb-mini-btn"} />
+                          <SecondaryButton text="View Quest" onClick={() => openDetails({ id: a.id, title: a.title })} className="ind-qb-mini-btn" />
                         </div>
                       </div>
                     </div>
@@ -383,14 +694,12 @@ export default function QuestBoard() {
                 </Cards>
                 <Cards shadow="none" className="ind-qb-card ind-qb-rec-card">
                   <div className="ind-qb-row"><div><h3 className="ind-qb-h3">Recommended Quests</h3><p className="ind-qb-muted sm">Opportunities matching your skills and experience.</p></div><button type="button" className="ind-qb-link" onClick={() => setStep("list")}>View Quest Board →</button></div>
-                  {[
-                    { t: "Fintech Dashboard UI Design", m: "92% Match", rank: "Rank A", budget: "₹35,000 – ₹50,000", time: "3–4 weeks", skills: ["UI/UX Design", "Figma", "Dashboard Design"] },
-                    { t: "Healthcare Mobile App Design", m: "88% Match", rank: "Rank A", budget: "₹40,000 – ₹55,000", time: "4 weeks", skills: ["Mobile UI", "Healthcare", "iOS Guidelines"] },
-                    { t: "SaaS Landing Page Redesign", m: "85% Match", rank: "Rank B", budget: "₹25,000 – ₹35,000", time: "2 weeks", skills: ["Web Design", "Landing Page", "Conversion"] },
-                  ].map((r) => (
-                    <div key={r.t} className="ind-qb-rec">
-                      <div className="ind-qb-rec-left"><strong>{r.t} <em className="green">{r.m}</em></strong><p className="ind-qb-rec-meta"><span className="ind-qb-verified-text">Verified Client</span> · {r.rank} · <span className="ind-qb-budget-text">{r.budget}</span> <span className="ind-qb-time-text">{r.time}</span></p><div className="ind-qb-skills ind-qb-rec-skills">{r.skills.map((s) => <span key={s} className="ind-qb-rec-skill">{s}</span>)}</div></div>
-                      <SecondaryButton text="View Quest" onClick={() => setStep("list")} className="ind-qb-mini-btn ind-qb-rec-btn" />
+                  {recommendedQuests.length === 0 ? (
+                    <p className="ind-qb-center-muted">No recommendations yet. Explore the Quest Board to get matched.</p>
+                  ) : recommendedQuests.map((r) => (
+                    <div key={r.id} className="ind-qb-rec">
+                      <div className="ind-qb-rec-left"><strong>{r.title} {r.matchPercent != null && <em className="green">{r.matchPercent}% Match</em>}</strong><p className="ind-qb-rec-meta"><span className="ind-qb-verified-text">Verified Client</span> · Rank {r.rank} · <span className="ind-qb-budget-text">{r.budget}</span> <span className="ind-qb-time-text">{r.dur}</span></p>{r.skills.length > 0 && <div className="ind-qb-skills ind-qb-rec-skills">{r.skills.map((s) => <span key={s} className="ind-qb-rec-skill">{s}</span>)}</div>}</div>
+                      <SecondaryButton text="View Quest" onClick={() => openDetails(r)} className="ind-qb-mini-btn ind-qb-rec-btn" />
                     </div>
                   ))}
                 </Cards>
@@ -398,27 +707,24 @@ export default function QuestBoard() {
               <div className="ind-qb-col ind-qb-home-side">
                 <Cards shadow="none" className="ind-qb-card ind-qb-profile-card">
                   <div className="ind-qb-row"><span className="cap ind-qb-side-cap">YOUR GUILD PROFILE</span><Icon name="Settings" size={14} color="#9ca3af" /></div>
-                  <div className="ind-qb-me"><span className="ind-qb-avatar ind-qb-avatar-blue">A</span><div><strong>Rank F Specialist <Icon name="BadgeCheckFill" size={12} color="#16a34a" /></strong><span className="ind-qb-muted sm">Top 5% Guild Performance</span></div></div>
+                  <div className="ind-qb-me"><span className="ind-qb-avatar ind-qb-avatar-blue">{profileInitials}</span><div><strong>{profileRank} Specialist <Icon name="BadgeCheckFill" size={12} color="#16a34a" /></strong><span className="ind-qb-muted sm">Top 5% Guild Performance</span></div></div>
                   <div className="ind-qb-profile-stats">
-                    <div><span>Trust Score</span><strong>96%</strong></div>
-                    <div><span>Profile Strength</span><strong>92%</strong></div>
-                    <div><span>Skills Verified</span><strong>6</strong></div>
-                    <div><span>Quests Done</span><strong>12</strong></div>
+                    <div><span>Trust Score</span><strong>{PROFILE_FALLBACK.trust}</strong></div>
+                    <div><span>Profile Strength</span><strong>{PROFILE_FALLBACK.strength}%</strong></div>
+                    <div><span>Skills Verified</span><strong>{PROFILE_FALLBACK.skills}</strong></div>
+                    <div><span>Quests Done</span><strong>{PROFILE_FALLBACK.quests}</strong></div>
                   </div>
-                  <div className="ind-qb-strength-top"><span>Next Milestone: Rank 5</span><em>92%</em></div>
-                  <div className="ind-qb-bar"><i style={{ width: "92%" }} /></div>
+                  <div className="ind-qb-strength-top"><span>Next Milestone: Rank 5</span><em>{PROFILE_FALLBACK.strength}%</em></div>
+                  <div className="ind-qb-bar"><i style={{ width: `${PROFILE_FALLBACK.strength}%` }} /></div>
                   <SecondaryButton text="View Profile" onClick={() => {}} className="ind-qb-outline block" />
                 </Cards>
                 <Cards shadow="none" className="ind-qb-card ind-qb-activity-card">
                   <span className="cap ind-qb-side-cap">QUEST ACTIVITY</span>
                   <div className="ind-qb-activity-list">
-                  {[
-                    ["Application viewed by client", "Website Redesign for SaaS Platform", "1 hour ago", "Eye", "#2f6bff", "#e8efff"],
-                    ["Application submitted", "Website Redesign for SaaS Platform", "2 hours ago", "Send", "#475569", "#f1f5f9"],
-                    ["Shortlisted", "Mobile App UI/UX Design", "Yesterday", "Star", "#16a34a", "#dcfce7"],
-                    ["Quest saved", "Fintech Dashboard UI Design", "Yesterday", "Bookmark", "#475569", "#f1f5f9"],
-                  ].map(([t, q, w, ic, c, bg]) => (
-                    <div key={t} className="ind-qb-activity-row">
+                  {activityItems.length === 0 ? (
+                    <p className="ind-qb-muted sm">No quest activity yet.</p>
+                  ) : activityItems.map(([t, q, w, ic, c, bg], index) => (
+                    <div key={`${t}-${index}`} className="ind-qb-activity-row">
                       <span className="ind-qb-activity-ic" style={{ background: bg }}><Icon name={ic} size={14} color={c} strokeWidth={1.9} /></span>
                       <div className="ind-qb-activity-text"><strong>{t}</strong><p className="ind-qb-activity-quest">{q}</p><p className="ind-qb-activity-time">{w}</p></div>
                     </div>
@@ -501,9 +807,10 @@ export default function QuestBoard() {
               <span className="ind-qb-filter-cap">QUEST TYPE</span>
               <div className="ind-qb-qtype-list">
                 {[
-                  ["Standard", "#2f6bff"],
+                  ["Standard", "#103CA4"],
                   ["Emergency", "#b42318"],
                   ["Long-term", "#7c3aed"],
+                  ["Multi-skill", "#0d9488"],
                 ].map(([t, dot]) => (
                   <button key={t} type="button" className="ind-qb-qtype-row" onClick={() => setQuestType(t)}>
                     <span className={questType === t ? "ind-qb-qtype-name on" : "ind-qb-qtype-name"}>{t}</span>
@@ -515,11 +822,11 @@ export default function QuestBoard() {
               <span className="ind-qb-filter-cap">CLIENT RANK</span>
               <span className="ind-qb-rankbox">F</span>
 
-              <PrimaryButton text="Apply Filters" onClick={() => setFilterOpen(false)} className="ind-qb-primary block ind-qb-apply-filters" />
+              <PrimaryButton text="Apply Filters" onClick={applyFilters} className="ind-qb-primary block ind-qb-apply-filters" />
               <button
                 type="button"
                 className="ind-qb-clear-filters"
-                onClick={() => { setFilterSkills([]); setFilterTimelines([]); setQuestType(""); setBudgetVal(500000); setSkillSearch(""); }}
+                onClick={clearFilters}
               >
                 Clear Filters
               </button>
@@ -588,16 +895,16 @@ export default function QuestBoard() {
             <div className="ind-qb-modal-body">
               <div className="ind-qb-apply-sum">
                 <div className="ind-qb-apply-sum-left">
-                  <strong>{selected?.title || FEATURED.title}</strong>
-                  <span className="ind-qb-apply-meta"><em className="ind-qb-mini-pill">Standard Quest</em> <span className="ind-qb-apply-days"><Icon name="Clock" size={12} color="#6b7280" /> 20 Days</span></span>
+                  <strong>{selected?.title || "Quest"}</strong>
+                  <span className="ind-qb-apply-meta"><em className="ind-qb-mini-pill">{detailType} Quest</em> <span className="ind-qb-apply-days"><Icon name="Clock" size={12} color="#6b7280" /> {selected?.dur || "—"}</span></span>
                   <span className="ind-qb-apply-client">
-                    <span className="ind-qb-apply-logo">T</span>
-                    <span>TechNova Pvt. Ltd.</span>
+                    <span className="ind-qb-apply-logo">{(selected?.client || "C").slice(0, 1)}</span>
+                    <span>{selected?.client || "Client"}</span>
                     <span className="ind-qb-verified"><Icon name="BadgeCheckFill" size={12} color="#16a34a" /> Verified Client</span>
-                    <span className="ind-qb-rank-a">· Rank A</span>
+                    <span className="ind-qb-rank-a">· Rank {selected?.rank || "—"}</span>
                   </span>
                 </div>
-                <strong className="blue ind-qb-apply-budget">₹75,000</strong>
+                <strong className="blue ind-qb-apply-budget">{selected?.budget || "—"}</strong>
               </div>
               <label className="ind-qb-field-label">Your Application <span>Tell the client why you're a strong fit.</span></label>
               <div className="ind-qb-textarea-wrap">
@@ -606,7 +913,7 @@ export default function QuestBoard() {
               </div>
               <label className="ind-qb-field-label">Relevant Skills <span>Select the skills you want to highlight.</span></label>
               <div className="ind-qb-skills ind-qb-pick-skills">
-                {["Figma", "UI Design", "UX Research", "Prototyping", "Design Systems"].map((s) => (
+                {applySkillOptions.map((s) => (
                   <button key={s} type="button" className={picked.includes(s) ? "ind-qb-pick on" : "ind-qb-pick"} onClick={() => toggleSkill(s)}>
                     {picked.includes(s) ? <Icon name="Check" size={12} color="#0f3d9e" strokeWidth={2.5} /> : null}{s}
                   </button>
@@ -627,7 +934,7 @@ export default function QuestBoard() {
               </label>
               <div className="ind-qb-modal-btns ind-qb-apply-btns">
                 <SecondaryButton text="Cancel" onClick={() => setApplyOpen(false)} className="ind-qb-outline ind-qb-cancel-btn" />
-                <PrimaryButton text="Submit Application" disabled={!pitch.trim() || !agree} onClick={() => { setApplyOpen(false); setSuccessOpen(true); }} className="ind-qb-primary ind-qb-submit-btn" />
+                <PrimaryButton text="Submit Application" disabled={!pitch.trim() || !agree} onClick={() => { setApplyOpen(false); setSuccessOpen(true); dispatch(showSnackbar({ message: "Application submitted successfully.", type: "success" })); }} className="ind-qb-primary ind-qb-submit-btn" />
               </div>
             </div>
           </div>
@@ -640,15 +947,15 @@ export default function QuestBoard() {
           <div className="ind-qb-modal narrow ind-qb-success-modal" onClick={(e) => e.stopPropagation()}>
             <span className="ind-qb-tick"><Icon name="Check" size={20} color="#fff" strokeWidth={2.5} /></span>
             <h2 className="ind-qb-success-title">Quest Applied!</h2>
-            <p className="ind-qb-muted sm ind-qb-success-sub">You've successfully accepted this Quest. The Quest has been added to your active work.</p>
+            <p className="ind-qb-muted sm ind-qb-success-sub">Your application has been submitted successfully. The client will review it shortly.</p>
             <div className="ind-qb-success-box">
               <span className="cap ind-qb-success-cap">QUEST</span>
-              <strong className="ind-qb-success-quest">{selected?.title || FEATURED.title}</strong>
+              <strong className="ind-qb-success-quest">{selected?.title || "Quest"}</strong>
               <div className="ind-qb-success-grid">
-                <div><span className="cap ind-qb-success-cap">CLIENT</span><span className="ind-qb-success-val">TechNova Pvt. Ltd. <Icon name="BadgeCheckFill" size={12} color="#16a34a" /></span></div>
-                <div><span className="cap ind-qb-success-cap">STATUS</span><span className="ind-qb-success-status"><i /> Accepted</span></div>
-                <div><span className="cap ind-qb-success-cap">BUDGET</span><span className="ind-qb-success-val">₹75,000</span></div>
-                <div><span className="cap ind-qb-success-cap">TIMELINE</span><span className="ind-qb-success-val">20 Days</span></div>
+                <div><span className="cap ind-qb-success-cap">CLIENT</span><span className="ind-qb-success-val">{selected?.client || "Client"} <Icon name="BadgeCheckFill" size={12} color="#16a34a" /></span></div>
+                <div><span className="cap ind-qb-success-cap">STATUS</span><span className="ind-qb-success-status"><i /> Submitted</span></div>
+                <div><span className="cap ind-qb-success-cap">BUDGET</span><span className="ind-qb-success-val">{selected?.budget || "—"}</span></div>
+                <div><span className="cap ind-qb-success-cap">TIMELINE</span><span className="ind-qb-success-val">{selected?.dur || "—"}</span></div>
               </div>
             </div>
             <div className="ind-qb-next">

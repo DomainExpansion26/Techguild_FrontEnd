@@ -3,6 +3,7 @@ export { oauthApi } from "./oauthApi";
 export { twoFaApi } from "./twoFaApi";
 export { profileApi, default as profile } from "./profileApi";
 export { projectsApi, default as projects } from "./projectsApi";
+export { questsApi, default as quests } from "./questsApi";
 export { applicationsApi, default as applications } from "./applicationsApi";
 export { contractsApi, default as contracts } from "./contractsApi";
 export { milestonesApi, default as milestones } from "./milestonesApi";
