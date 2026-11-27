@@ -1,3 +1,4 @@
+// 27-11-2026
 export const ENDPOINTS = {
   // 1. Authentication
   AUTH: {
@@ -60,7 +61,21 @@ export const ENDPOINTS = {
     REOPEN: (projectId) => `/v1/projects/${projectId}/reopen`,
   },
 
-  // 5. Applications
+  // 5. Quests
+  QUESTS: {
+    BASE: "/v1/quests",
+    BOARD_SUMMARY: "/v1/quests/board/summary",
+    SAVED: "/v1/quests/saved",
+    DETAIL: (questId) => `/v1/quests/${questId}`,
+    PUBLISH: (questId) => `/v1/quests/${questId}/publish`,
+    REJECT: (questId) => `/v1/quests/${questId}/reject`,
+    SAVE: (questId) => `/v1/quests/${questId}/save`,
+    APPLY: (questId) => `/v1/quests/${questId}/apply`,
+    QUEST_APPLICATIONS: (questId) => `/v1/quests/${questId}/applications`,
+    FUND_MILESTONE: (questId, milestoneId) => `/v1/quests/${questId}/milestones/${milestoneId}/fund`,
+  },
+
+  // 6. Applications
   APPLICATIONS: {
     MY: "/v1/applications/my",
     APPLY: (projectId) => `/v1/projects/${projectId}/apply`,
@@ -69,9 +84,11 @@ export const ENDPOINTS = {
     ACCEPT: (applicationId) => `/v1/applications/${applicationId}/accept`,
     SHORTLIST: (applicationId) => `/v1/applications/${applicationId}/shortlist`,
     REJECT: (applicationId) => `/v1/applications/${applicationId}/reject`,
+    QUEST_APPLICATION: (questId) => `/v1/quests/${questId}/apply`,
+    QUEST_APPLICATIONS: (questId) => `/v1/quests/${questId}/applications`,
   },
 
-  // 6. Contracts
+  // 7. Contracts
   CONTRACTS: {
     BASE: "/contracts",
     CLIENT: "/contracts/client",
@@ -82,7 +99,7 @@ export const ENDPOINTS = {
     CANCEL: (id) => `/contracts/${id}/cancel`,
   },
 
-  // 7. Milestones
+  // 8. Milestones
   MILESTONES: {
     BASE: "/milestones",
     CONTRACT: (contractId) => `/milestones/contract/${contractId}`,
@@ -93,21 +110,21 @@ export const ENDPOINTS = {
     PAY: (id) => `/milestones/${id}/pay`,
   },
 
-  // 8. Settings
+  // 9. Settings
   SETTINGS: {
     ACCOUNT: "/v1/settings/account",
     NOTIFICATIONS: "/v1/settings/notifications",
     PRIVACY: "/v1/settings/privacy",
   },
 
-  // 9. Admin Verification
+  // 10. Admin Verification
   ADMIN_VERIFICATION: {
     QUEUE: "/v1/admin/verification/queue",
     APPROVE: (id) => `/v1/admin/verification/${id}/approve`,
     REJECT: (id) => `/v1/admin/verification/${id}/reject`,
   },
 
-  // 10. Submissions
+  // 11. Submissions
   SUBMISSIONS: {
     BASE: "/v1/submissions",
     MILESTONE: (milestoneId) => `/v1/submissions/milestone/${milestoneId}`,
@@ -116,7 +133,7 @@ export const ENDPOINTS = {
     REJECT: (id) => `/v1/submissions/${id}/reject`,
   },
 
-  // 11. Teams
+  // 12. Teams
   TEAMS: {
     BASE: "/v1/teams",
     MY: "/v1/teams/my",
@@ -132,7 +149,7 @@ export const ENDPOINTS = {
     SKILLS_DETAIL: (skillId) => `/v1/teams/skills/${skillId}`,
   },
 
-  // 12. Verification
+  // 13. Verification
   VERIFICATION: {
     STATUS: "/v1/verification/status",
     IDENTITY_STATUS: "/v1/verification/identity/status",
