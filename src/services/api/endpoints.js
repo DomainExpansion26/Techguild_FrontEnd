@@ -1,3 +1,4 @@
+// 27-11-2026
 export const ENDPOINTS = {
   // 1. Authentication
   AUTH: {
@@ -60,78 +61,21 @@ export const ENDPOINTS = {
     REOPEN: (projectId) => `/v1/projects/${projectId}/reopen`,
   },
 
-  // 4a. Quests and quest milestones
+  // 5. Quests
   QUESTS: {
     BASE: "/v1/quests",
-    MY_WORK: "/v1/quests/my-work",
+    BOARD_SUMMARY: "/v1/quests/board/summary",
+    SAVED: "/v1/quests/saved",
     DETAIL: (questId) => `/v1/quests/${questId}`,
-    ACCEPT: (questId) => `/v1/quests/${questId}/accept`,
-    APPLICATIONS: (questId) => `/v1/quests/${questId}/applications`,
-    ACCEPT_APPLICATION: (questId, applicationId) =>
-      `/v1/quests/${questId}/applications/${applicationId}/accept`,
-    REJECT_APPLICATION: (questId, applicationId) =>
-      `/v1/quests/${questId}/applications/${applicationId}/reject`,
-    WITHDRAW_APPLICATION: (questId, applicationId) =>
-      `/v1/quests/${questId}/applications/${applicationId}/withdraw`,
-    APPLY: (questId) => `/v1/quests/${questId}/apply`,
-    MILESTONES: (questId) => `/v1/quests/${questId}/milestones`,
-    APPROVE_ROADMAP: (questId) => `/v1/quests/${questId}/milestones/approve-roadmap`,
-    SUBMIT_ROADMAP: (questId) => `/v1/quests/${questId}/milestones/submit-roadmap`,
-    MILESTONE: (questId, milestoneId) =>
-      `/v1/quests/${questId}/milestones/${milestoneId}`,
-    APPROVE_MILESTONE: (questId, milestoneId) =>
-      `/v1/quests/${questId}/milestones/${milestoneId}/approve`,
-    FUND_MILESTONE: (questId, milestoneId) =>
-      `/v1/quests/${questId}/milestones/${milestoneId}/fund`,
-    CONFIRM_MILESTONE_FUNDING: (questId, milestoneId) =>
-      `/v1/quests/${questId}/milestones/${milestoneId}/fund/confirm`,
-    MILESTONE_PAYMENT: (questId, milestoneId) =>
-      `/v1/quests/${questId}/milestones/${milestoneId}/payment`,
-    MILESTONE_REFUND: (questId, milestoneId) =>
-      `/v1/quests/${questId}/milestones/${milestoneId}/refund`,
-    RELEASE_MILESTONE: (questId, milestoneId) =>
-      `/v1/quests/${questId}/milestones/${milestoneId}/release`,
-    REQUEST_MILESTONE_REVISION: (questId, milestoneId) =>
-      `/v1/quests/${questId}/milestones/${milestoneId}/request-revision`,
-    RESUBMIT_MILESTONE: (questId, milestoneId) =>
-      `/v1/quests/${questId}/milestones/${milestoneId}/resubmit`,
-    MILESTONE_REVISIONS: (questId, milestoneId) =>
-      `/v1/quests/${questId}/milestones/${milestoneId}/revisions`,
-    SEND_MILESTONE_FOR_REVIEW: (questId, milestoneId) =>
-      `/v1/quests/${questId}/milestones/${milestoneId}/send-for-review`,
-    SUBMIT_MILESTONE_FOR_RELEASE: (questId, milestoneId) =>
-      `/v1/quests/${questId}/milestones/${milestoneId}/submit-for-release`,
     PUBLISH: (questId) => `/v1/quests/${questId}/publish`,
     REJECT: (questId) => `/v1/quests/${questId}/reject`,
+    SAVE: (questId) => `/v1/quests/${questId}/save`,
+    APPLY: (questId) => `/v1/quests/${questId}/apply`,
+    QUEST_APPLICATIONS: (questId) => `/v1/quests/${questId}/applications`,
+    FUND_MILESTONE: (questId, milestoneId) => `/v1/quests/${questId}/milestones/${milestoneId}/fund`,
   },
 
-  // 4b. Client task-management dashboard and task operations
-  CLIENT_TASK_MANAGEMENT: {
-    METRICS: "/v1/client/task-management/metrics",
-    ACTIVE_QUESTS: "/v1/client/task-management/quests/active",
-    QUEST_ACTIVITIES: (questId) =>
-      `/v1/client/task-management/quests/${questId}/activities`,
-    APPROVE_QUEST: (questId) =>
-      `/v1/client/task-management/quests/${questId}/approve`,
-    CANCEL_QUEST_APPROVAL: (questId) =>
-      `/v1/client/task-management/quests/${questId}/cancel-approval`,
-    QUEST_DASHBOARD: (questId) =>
-      `/v1/client/task-management/quests/${questId}/dashboard`,
-    QUEST_MILESTONES: (questId) =>
-      `/v1/client/task-management/quests/${questId}/milestones`,
-    MILESTONE: (milestoneId) =>
-      `/v1/client/task-management/milestones/${milestoneId}`,
-    APPROVE_MILESTONE: (milestoneId) =>
-      `/v1/client/task-management/milestones/${milestoneId}/approve`,
-    CANCEL_MILESTONE_APPROVAL: (milestoneId) =>
-      `/v1/client/task-management/milestones/${milestoneId}/cancel-approval`,
-    MILESTONE_TASKS: (milestoneId) =>
-      `/v1/client/task-management/milestones/${milestoneId}/tasks`,
-    TASK_STATUS: (taskId) =>
-      `/v1/client/task-management/tasks/${taskId}/status`,
-  },
-
-  // 5. Applications
+  // 6. Applications
   APPLICATIONS: {
     MY: "/v1/applications/my",
     APPLY: (projectId) => `/v1/projects/${projectId}/apply`,
@@ -140,9 +84,11 @@ export const ENDPOINTS = {
     ACCEPT: (applicationId) => `/v1/applications/${applicationId}/accept`,
     SHORTLIST: (applicationId) => `/v1/applications/${applicationId}/shortlist`,
     REJECT: (applicationId) => `/v1/applications/${applicationId}/reject`,
+    QUEST_APPLICATION: (questId) => `/v1/quests/${questId}/apply`,
+    QUEST_APPLICATIONS: (questId) => `/v1/quests/${questId}/applications`,
   },
 
-  // 6. Contracts
+  // 7. Contracts
   CONTRACTS: {
     BASE: "/contracts",
     CLIENT: "/contracts/client",
@@ -153,7 +99,7 @@ export const ENDPOINTS = {
     CANCEL: (id) => `/contracts/${id}/cancel`,
   },
 
-  // 7. Milestones
+  // 8. Milestones
   MILESTONES: {
     BASE: "/milestones",
     CONTRACT: (contractId) => `/milestones/contract/${contractId}`,
@@ -164,21 +110,21 @@ export const ENDPOINTS = {
     PAY: (id) => `/milestones/${id}/pay`,
   },
 
-  // 8. Settings
+  // 9. Settings
   SETTINGS: {
     ACCOUNT: "/v1/settings/account",
     NOTIFICATIONS: "/v1/settings/notifications",
     PRIVACY: "/v1/settings/privacy",
   },
 
-  // 9. Admin Verification
+  // 10. Admin Verification
   ADMIN_VERIFICATION: {
     QUEUE: "/v1/admin/verification/queue",
     APPROVE: (id) => `/v1/admin/verification/${id}/approve`,
     REJECT: (id) => `/v1/admin/verification/${id}/reject`,
   },
 
-  // 10. Submissions
+  // 11. Submissions
   SUBMISSIONS: {
     BASE: "/v1/submissions",
     MILESTONE: (milestoneId) => `/v1/submissions/milestone/${milestoneId}`,
@@ -187,7 +133,7 @@ export const ENDPOINTS = {
     REJECT: (id) => `/v1/submissions/${id}/reject`,
   },
 
-  // 11. Teams
+  // 12. Teams
   TEAMS: {
     BASE: "/v1/teams",
     MY: "/v1/teams/my",
@@ -203,7 +149,7 @@ export const ENDPOINTS = {
     SKILLS_DETAIL: (skillId) => `/v1/teams/skills/${skillId}`,
   },
 
-  // 12. Verification
+  // 13. Verification
   VERIFICATION: {
     STATUS: "/v1/verification/status",
     IDENTITY_STATUS: "/v1/verification/identity/status",
