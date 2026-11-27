@@ -1,3 +1,4 @@
+// 9-11-2026
 import React from 'react';
 import BaseCard from './BaseCard';
 import Icon from '@/Components/icons/Icon';
@@ -76,9 +77,9 @@ export default function ChipsCard({
                 transition: 'all 0.15s ease',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#103ca4';
+                e.currentTarget.style.backgroundColor = '#103CA4';
                 e.currentTarget.style.color = '#ffffff';
-                e.currentTarget.style.borderColor = '#103ca4';
+                e.currentTarget.style.borderColor = '#103CA4';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';

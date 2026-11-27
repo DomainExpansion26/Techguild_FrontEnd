@@ -1,5 +1,6 @@
+// 9-11-2026
 // [TechGuild Update: 21-09-2026] Individual freelancer profile wizard & OpenAPI save integration
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { DashboardLayout, Cards, PrimaryButton, SecondaryButton, TextInput, Stepper } from "@/Components";
 import Icon from "@/Components/icons/Icon";
@@ -153,27 +154,28 @@ function TagInput({
   const containerRef = useRef(null);
   const inputRef = useRef(null);
 
-  const tags = typeof value === "string"
+  const tags = useMemo(() => typeof value === "string"
     ? value.split(",").map((s) => s.trim()).filter(Boolean)
-    : (Array.isArray(value) ? value : []);
+    : (Array.isArray(value) ? value : []), [value]);
 
   const setTags = (newTags) => {
     onChange(newTags.join(", "));
   };
 
-  const addTag = (tagText) => {
+  // [Solved 15-10-2026] Memoized tags + wrapped addTag in useCallback to fix missing 'addTag' dep warning.
+  const addTag = useCallback((tagText) => {
     const trimmed = tagText.trim();
     if (!trimmed) return;
     const exists = tags.some((t) => t.toLowerCase() === trimmed.toLowerCase());
     if (!exists) {
-      setTags([...tags, trimmed]);
+      onChange([...tags, trimmed].join(", "));
     }
     setInputValue("");
     setIsOpen(false);
     if (inputRef.current) {
       inputRef.current.focus();
     }
-  };
+  }, [tags, onChange]);
 
   const removeTag = (tagToRemove) => {
     setTags(tags.filter((t) => t.toLowerCase() !== tagToRemove.toLowerCase()));
@@ -215,7 +217,7 @@ function TagInput({
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [inputValue, tags]);
+  }, [inputValue, tags, addTag]);
 
   return (
     <div className="profile-field-group" ref={containerRef}>
@@ -962,33 +964,33 @@ export default function Profile() {
         <p className="section-subtitle text-secondary">{WIZARD_STRINGS.STEPS.STEP_5_SUBTITLE}</p>
       </div>
 
-      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
+      <Cards variant="base" radius="md" className="review-summary-card d-flex align-items-center justify-content-between w-100 mb-3">
         <span className="review-summary-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_1_LABEL}</span>
         <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(1)} role="button">
           {WIZARD_STRINGS.BUTTONS.EDIT}
         </span>
-      </div>
+      </Cards>
 
-      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
+      <Cards variant="base" radius="md" className="review-summary-card d-flex align-items-center justify-content-between w-100 mb-3">
         <span className="review-summary-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_2_LABEL}</span>
         <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(2)} role="button">
           {WIZARD_STRINGS.BUTTONS.EDIT}
         </span>
-      </div>
+      </Cards>
 
-      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
+      <Cards variant="base" radius="md" className="review-summary-card d-flex align-items-center justify-content-between w-100 mb-3">
         <span className="review-summary-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_3_LABEL}</span>
         <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(3)} role="button">
           {WIZARD_STRINGS.BUTTONS.EDIT}
         </span>
-      </div>
+      </Cards>
 
-      <div className="review-summary-card d-flex align-items-center justify-content-between w-100">
+      <Cards variant="base" radius="md" className="review-summary-card d-flex align-items-center justify-content-between w-100 mb-4">
         <span className="review-summary-title fw-bold">{WIZARD_STRINGS.STEPS.STEP_4_LABEL}</span>
         <span className="review-edit-btn fw-bold" onClick={() => goToEditStep(4)} role="button">
           {WIZARD_STRINGS.BUTTONS.EDIT}
         </span>
-      </div>
+      </Cards>
 
       {submitError && (
         <div
@@ -1098,7 +1100,7 @@ export default function Profile() {
         <Cards className="profile-welcome-hero-card" padding="0" shadow="none">
           <div className="profile-hero-illustration-wrapper">
             <div className="profile-hero-icon-container">
-              <Icon name="IdCard" size={36} color="#103ca4" />
+              <Icon name="IdCard" size={36} color="#103CA4" />
             </div>
           </div>
 

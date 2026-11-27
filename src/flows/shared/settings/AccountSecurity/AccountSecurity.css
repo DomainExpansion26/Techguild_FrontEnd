@@ -1,3 +1,4 @@
+/* 9-11-2026 */
 /* src/Modules/Individual/Screen/Pages/Settings/AccountSecurity/AccountSecurity.css */
 /* ===========================================================
    Layout gap (moved out of the inline style on DashboardLayout)
@@ -181,7 +182,7 @@
   min-height: 36px;
   padding: 8px 18px;
   color: #ffffff;
-  background: #103ca4;
+  background: #103CA4;
   border: 0;
   width: auto;
   height: auto;
@@ -521,12 +522,12 @@ main.settings-container.account-security-container .card.tg-card.account-securit
   justify-content: center;
   width: 30px;
   height: 30px;
-  color: #103ca4;
+  color: #103CA4;
   background: #e0e7ff;
   border-radius: 8px;
 }
 .account-security-learn-icon path {
-  stroke: #103ca4;
+  stroke: #103CA4;
 }
 .account-security-learn-text {
   min-width: 0;
@@ -589,7 +590,7 @@ main.settings-container.account-security-container .card.tg-card.account-securit
   stroke: #6b7280;
 }
 .account-security-learn-app-name {
-  color: #103ca4;
+  color: #103CA4;
   font-size: 12px;
   line-height: 18px;
 }

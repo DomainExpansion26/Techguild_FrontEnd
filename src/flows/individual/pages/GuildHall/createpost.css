@@ -1,0 +1,469 @@
+/* Create Post modal (Guild Hall) — matches Figma frames 172:84 / 175 / 243 / 319 / 398 / 468 / 545 */
+
+.cp-modal {
+  border-radius: 16px;
+  padding: 28px 38px 30px;
+  gap: 14px;
+}
+
+.cp-header {
+  align-items: flex-start;
+  gap: 5px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eef1f6;
+}
+
+.cp-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #103ca4;
+  text-align: left;
+  letter-spacing: -0.01em;
+}
+
+.cp-subtitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #71809f;
+  text-align: left;
+}
+
+.cp-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* In-card close (the floating Popup FAB remains above the card) */
+.cp-x {
+  position: absolute;
+  top: 24px;
+  right: 32px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.cp-x:hover {
+  background: #f1f5f9;
+  color: #103ca4;
+}
+
+/* ---------- Step 1: format picker ---------- */
+
+.cp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.cp-option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid #e4e8f0;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 150ms ease, background-color 150ms ease, box-shadow 150ms ease;
+}
+
+.cp-option:hover {
+  border-color: #b9c8ea;
+  background: #fafcff;
+}
+
+.cp-option.is-selected {
+  border-color: #103ca4;
+  box-shadow: 0 0 0 1px #103ca4;
+  background: #eaf1ff;
+}
+
+.cp-option-tile {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.cp-option-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cp-option-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #103ca4;
+}
+
+.cp-option-desc {
+  font-size: 14px;
+  font-weight: 400;
+  color: #71809f;
+}
+
+/* ---------- Step 2: format chip ---------- */
+
+.cp-chip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #eff6ff;
+  border-radius: 12px;
+}
+
+.cp-chip-tile {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.cp-chip-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cp-chip-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #103ca4;
+}
+
+.cp-chip-desc {
+  font-size: 13px;
+  color: #71809f;
+}
+
+.cp-change {
+  flex-shrink: 0;
+  padding: 4px 2px;
+  border: none;
+  background: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #103ca4;
+  cursor: pointer;
+}
+
+.cp-change:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Step 2: fields ---------- */
+
+.cp-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cp-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #103ca4;
+}
+
+.cp-note {
+  margin-left: 5px;
+  font-weight: 500;
+  color: #71809f;
+}
+
+.cp-input,
+.cp-area {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #dfe4ec;
+  border-radius: 10px;
+  background: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  color: #1f2937;
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.cp-input:focus,
+.cp-area:focus {
+  border-color: #103ca4;
+  box-shadow: 0 0 0 3px rgba(16, 60, 164, 0.12);
+}
+
+.cp-input::placeholder,
+.cp-area::placeholder {
+  color: #9aa6bc;
+}
+
+.cp-area {
+  min-height: 112px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.cp-count {
+  align-self: flex-end;
+  margin-top: -2px;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* Tags */
+
+.cp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cp-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #eaf1ff;
+  color: #103ca4;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cp-tag-x {
+  display: flex;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #103ca4;
+  cursor: pointer;
+}
+
+.cp-tag-x:hover {
+  color: #0c3188;
+}
+
+/* Quick facts */
+
+.cp-facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+/* Poll options */
+
+.cp-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cp-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px dashed #9db7f3;
+  border-radius: 10px;
+  background: #f8faff;
+  color: #103ca4;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.cp-add:hover {
+  background: #eff6ff;
+  border-color: #103ca4;
+}
+
+/* Poll duration */
+
+.cp-duration {
+  display: inline-flex;
+  gap: 4px;
+  width: fit-content;
+  padding: 4px;
+  border: 1px solid #dfe4ec;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.cp-seg {
+  padding: 7px 18px;
+  border: none;
+  border-radius: 7px;
+  background: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.cp-seg:hover:not(.is-active) {
+  background: #f1f5f9;
+}
+
+.cp-seg.is-active {
+  background: #103ca4;
+  color: #ffffff;
+}
+
+/* Upload */
+
+.cp-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 26px 16px;
+  border: 1.5px dashed #8fb0f4;
+  border-radius: 12px;
+  background: #f7faff;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.cp-upload:hover {
+  background: #eff6ff;
+  border-color: #103ca4;
+}
+
+.cp-upload-cta {
+  font-size: 14px;
+  font-weight: 700;
+  color: #103ca4;
+}
+
+.cp-upload-meta {
+  font-size: 13px;
+  color: #71809f;
+}
+
+/* ---------- Footer ---------- */
+
+.cp-footer {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 4px;
+  padding-top: 18px;
+  border-top: 1px solid #eef1f6;
+}
+
+.cp-hint {
+  font-size: 14px;
+  color: #71809f;
+}
+
+.cp-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cp-btn {
+  width: auto;
+  height: 42px;
+  padding: 0 26px;
+  border-radius: 8px;
+  font-size: 15px;
+  background: #103ca4;
+}
+
+.cp-btn:hover:not(:disabled) {
+  background: #0c3188;
+}
+
+.cp-btn:disabled {
+  background: #c4d4f7;
+  color: #ffffff;
+  cursor: not-allowed;
+}
+
+.cp-btn:disabled:hover {
+  background: #c4d4f7;
+}
+
+.cp-btn-back {
+  background: #ffffff;
+  border: 1px solid #dde3ed;
+  color: #103ca4;
+}
+
+.cp-btn-back:hover:not(:disabled) {
+  background: #f5f8ff;
+  border-color: #103ca4;
+  color: #103ca4;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 700px) {
+  .cp-modal {
+    padding: 24px 20px;
+  }
+
+  .cp-x {
+    width: 40px;
+    height: 40px;
+    top: 16px;
+    right: 16px;
+  }
+
+  .cp-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .cp-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .cp-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cp-hint {
+    text-align: center;
+  }
+
+  .cp-actions {
+    justify-content: flex-end;
+  }
+}

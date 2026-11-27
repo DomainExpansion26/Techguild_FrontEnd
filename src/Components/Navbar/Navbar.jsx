@@ -52,8 +52,12 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
     currentPath.startsWith("/admin/settings");
 
   const isFinancePath =
+    currentPath === "/client-finance" ||
+    currentPath.startsWith("/client-finance/") ||
     currentPath === "/client-payouts" ||
     currentPath.startsWith("/client-payouts/") ||
+    currentPath === "/client/finance" ||
+    currentPath.startsWith("/client/finance/") ||
     currentPath === "/client/payouts" ||
     currentPath.startsWith("/client/payouts/") ||
     currentPath === "/finance" ||
@@ -61,7 +65,9 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
     currentPath === "/earnings-payouts" ||
     currentPath.startsWith("/earnings-payouts") ||
     currentPath === "/individual/earnings" ||
-    currentPath.startsWith("/individual/earnings");
+    currentPath.startsWith("/individual/earnings") ||
+    currentPath === "/individual/finance" ||
+    currentPath.startsWith("/individual/finance");
   const isFinanceMode = isFinancePath && !isSettingsPath;
   const isSettingsMode = isSettingsPath;
 
@@ -79,10 +85,8 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const pathParts = currentPath.split("/").filter(Boolean);
-  const activeTabId =
-    activeSettingsTab ||
-    (isSettingsPath && pathParts.length >= 2 ? pathParts[pathParts.length - 1] : "profile");
-
+  const pathTab = isSettingsPath && pathParts.length >= 2 ? pathParts[pathParts.length - 1] : "profile";
+  const activeTabId = activeSettingsTab || pathTab;
   const handleSettingsSubClick = (subItem) => {
     if (onSelectSettingsTab) {
       onSelectSettingsTab(subItem.id);
@@ -96,7 +100,6 @@ export default function Navbar({ items, userRole, activeSettingsTab, onSelectSet
       : subItem.path;
     navigate(target);
   };
-
   const settingsProfilePath = isAdminFlow
     ? "/admin/settings/profile"
     : isAgencyFlow

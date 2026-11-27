@@ -6,6 +6,19 @@
   gap: 14px;
 }
 
+/* `.popup-card` scrolls on short viewports — keep the bar invisible, scroll
+   behaviour unchanged (same pattern as settings.css). */
+.cp-modal {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.cp-modal::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 .cp-header {
   align-items: flex-start;
   gap: 5px;
@@ -32,6 +45,29 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
+}
+
+/* ---------- Scroll behaviour (steps 1 & 2) ----------
+   The card is height-capped (`max-height: calc(100vh - 48px)` in Popup.css) and
+   `.popup-body` is `flex: 1 1 auto; min-height: 0`, so on a short window the body
+   is squeezed below its content — and with `overflow-y: visible` that content
+   painted *outside* the body, underneath the footer. That is what made the last
+   field look like it was sitting on the Back/Publish buttons with nothing to
+   scroll. Making `.popup-body` the scroll container (note: `.cp-body` is the
+   inner wrapper, not the flex item — targeting it does nothing) keeps the
+   overflow inside the box: header and footer stay put, the form scrolls between
+   them. The card keeps Popup.css's `overflow-y: auto` as the outer fallback. */
+.popup-card.cp-modal .popup-body {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.popup-card.cp-modal .popup-body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 /* In-card close (the floating Popup FAB remains above the card) */

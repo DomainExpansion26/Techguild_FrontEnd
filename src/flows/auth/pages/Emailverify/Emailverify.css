@@ -1,6 +1,8 @@
+/* 25-11-2026 */
+/* 9-11-2026 */
 /* ===== Email Verified — Figma frame 131:36 ("Email verified", 1440x900) ===== */
 .verified-page {
-  --email-primary: #103ca4;
+  --email-primary: #103CA4;
   --email-ink: #000000;
   --email-reward-bg: #e9f0ff;
   --email-hairline: #e5e7eb; /* card stroke */
@@ -299,6 +301,11 @@
 
 /* Mobile */
 @media (max-width: 640px) {
+  .verified-page {
+    height: 100vh;
+    height: 100dvh;
+  }
+
   .verified-header {
     top: 16px;
     left: 16px;
@@ -312,7 +319,10 @@
   .verified-page .signup-card {
     width: 100%;
     min-height: auto;
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
     padding: 24px 16px;
+    overflow-y: auto;
   }
 
   .verified-title {

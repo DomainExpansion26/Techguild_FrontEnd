@@ -1,115 +1,95 @@
+// 25-11-2026
 import React, { useState, useEffect, useCallback } from "react";
 import { DashboardLayout } from "@/Components";
-import { contractsApi, submissionsApi } from "@/services/api";
+import { taskManagementApi } from "@/services/api";
+
+const getQuestList = (response) => {
+  if (Array.isArray(response)) return response;
+  const quests = response?.quests || response?.active_quests;
+  if (Array.isArray(quests)) return quests;
+  throw new Error("The active quests API returned an invalid response.");
+};
 
 export default function ActiveQuests() {
-  const [contracts, setContracts] = useState([]);
+  const [quests, setQuests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [actionLoading, setActionLoading] = useState(null);
 
-  const fetchClientContracts = useCallback(async () => {
+  const fetchActiveQuests = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await contractsApi.getClientContracts();
-      const list = res?.data?.contracts || res?.data || res?.contracts || [];
-      setContracts(Array.isArray(list) ? list : []);
+      const response = await taskManagementApi.getClientActiveQuests();
+      setQuests(getQuestList(response));
     } catch (err) {
-      console.error("Error fetching client contracts:", err);
-      setError(err?.message || "Failed to load client contracts.");
-      setContracts([]);
+      console.error("Error fetching client active quests:", err);
+      setError(err?.message || "Failed to load active quests.");
+      setQuests([]);
     } finally {
       setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    fetchClientContracts();
-  }, [fetchClientContracts]);
-
-  const handleApproveWork = async (submissionId) => {
-    if (!window.confirm("Approve this milestone deliverable and release payment from escrow?")) return;
-    setActionLoading(submissionId);
-    try {
-      await submissionsApi.approveSubmission(submissionId);
-      alert("Milestone approved and payment released successfully!");
-      fetchClientContracts();
-    } catch (err) {
-      console.error("Approve milestone error:", err);
-      alert(err?.message || "Failed to approve milestone.");
-    } finally {
-      setActionLoading(null);
-    }
-  };
-
-  const handleRequestRevision = async (submissionId) => {
-    const feedback = window.prompt("Enter requested revision details for the freelancer:");
-    if (!feedback) return;
-    setActionLoading(submissionId);
-    try {
-      await submissionsApi.rejectSubmission(submissionId, { feedback });
-      alert("Revision request sent to freelancer.");
-      fetchClientContracts();
-    } catch (err) {
-      console.error("Revision error:", err);
-      alert(err?.message || "Failed to send revision request.");
-    } finally {
-      setActionLoading(null);
-    }
-  };
+    fetchActiveQuests();
+  }, [fetchActiveQuests]);
 
   return (
     <DashboardLayout>
-      <div style={{ padding: "32px 40px", maxWidth: "1380px", margin: "0 auto", width: "100%", flex: 1, minHeight: 0, overflowY: "auto" }}>
+      <div className="client-contracts-page" style={{ padding: "32px 40px", maxWidth: "1380px", margin: "0 auto", width: "100%", flex: 1, minHeight: 0, overflowY: "auto" }}>
         <header className="d-flex justify-content-between align-items-center mb-4">
           <div>
-            <h1 className="fs-3 fw-bold mb-1">Active Client Contracts &amp; Workrooms</h1>
-            <p className="text-secondary mb-0">Track ongoing deliverables, review milestone submissions, and release escrow funds.</p>
+            <h1 className="fs-3 fw-bold mb-1">Active Quests</h1>
+            <p className="text-secondary mb-0">Track the quests you have hired for and monitor their progress.</p>
           </div>
           <button
             type="button"
             className="btn btn-outline-primary btn-sm"
-            onClick={fetchClientContracts}
+            onClick={fetchActiveQuests}
             disabled={loading}
           >
             {loading ? "Refreshing..." : "Refresh"}
           </button>
         </header>
 
-        {error && <div className="alert alert-danger mb-4">{error}</div>}
+        {error && <div className="alert alert-danger mb-4" role="alert">{error}</div>}
 
         {loading ? (
-          <div className="text-center py-5">
-            <div className="spinner-border text-primary" role="status"></div>
-            <p className="text-secondary mt-2">Loading active contracts from backend...</p>
+          <div className="text-center py-5" role="status">
+            <div className="spinner-border text-primary" aria-hidden="true" />
+            <p className="text-secondary mt-2">Loading active quests...</p>
           </div>
-        ) : contracts.length === 0 ? (
+        ) : quests.length === 0 ? (
           <div className="text-center py-5 bg-white rounded-3 border p-5">
-            <h4 className="fw-bold mb-2">No Active Contracts</h4>
-            <p className="text-secondary mb-0">Once you accept a candidate proposal, your active contract and milestones will appear here.</p>
+            <h2 className="fs-4 fw-bold mb-2">No Active Quests</h2>
+            <p className="text-secondary mb-3">Once you hire a freelancer for a quest, it will appear here.</p>
+            <Link to="/client-quest-board" className="btn btn-primary">View Quest Board</Link>
           </div>
         ) : (
           <div className="row g-4">
-            {contracts.map((contract) => {
-              const contractId = contract.id || contract._id;
-              const title = contract.title || contract.project?.title || "Contract Agreement";
-              const freelancerName = contract.freelancer?.full_name || contract.freelancer?.name || "Freelancer";
-              const totalAmount = contract.total_amount || contract.budget || "0";
-              const milestones = Array.isArray(contract.milestones) ? contract.milestones : [];
+            {quests.map((quest, index) => {
+              const questId = quest.id || quest.quest_id || quest._id || index;
+              const freelancer = quest.freelancer?.full_name
+                || quest.freelancer?.name
+                || quest.freelancer_name
+                || quest.assignee_name;
+              const acceptedAt = quest.accepted_at || quest.started_at;
 
               return (
-                <div key={contractId} className="col-12">
-                  <div className="card p-4 border rounded-3 shadow-sm bg-white">
-                    <div className="d-flex justify-content-between align-items-start mb-3 pb-3 border-bottom">
+                <div className="col-12" key={questId}>
+                  <article className="card p-4 border rounded-3 shadow-sm bg-white">
+                    <div className="d-flex justify-content-between align-items-start gap-3">
                       <div>
-                        <h3 className="fs-5 fw-bold mb-1">{title}</h3>
-                        <div className="text-muted fs-6">
-                          Freelancer: <strong>{freelancerName}</strong> &bull; Status: <span className="text-success fw-semibold text-capitalize">{contract.status || "Active"}</span>
-                        </div>
+                        <h2 className="fs-5 fw-bold mb-1">{quest.title || quest.quest_title || "Active Quest"}</h2>
+                        {freelancer && <p className="text-secondary mb-1">Freelancer: <strong>{freelancer}</strong></p>}
+                        {acceptedAt && (
+                          <p className="text-secondary small mb-0">
+                            Started {new Date(acceptedAt).toLocaleDateString()}
+                          </p>
+                        )}
                       </div>
-                      <span className="badge bg-primary-subtle text-primary fs-6 px-3 py-2 border border-primary-subtle">
-                        Total: ${totalAmount}
+                      <span className="badge bg-success-subtle text-success border border-success-subtle text-capitalize">
+                        {String(quest.status || "Active").replaceAll("_", " ")}
                       </span>
                     </div>
 
@@ -125,7 +105,7 @@ export default function ActiveQuests() {
                             const latestSubmission = m.submission || m.latest_submission;
 
                             return (
-                              <div key={mId} className="p-3 bg-light rounded-3 border d-flex justify-content-between align-items-center">
+                              <div key={mId} className="milestone-row p-3 bg-light rounded-3 border d-flex justify-content-between align-items-center">
                                 <div>
                                   <div className="fw-bold fs-6">{m.title || `Milestone ${idx + 1}`}</div>
                                   <div className="text-success fw-semibold fs-7">${m.amount || "0"}</div>
@@ -178,7 +158,7 @@ export default function ActiveQuests() {
             })}
           </div>
         )}
-      </div>
+      </main>
     </DashboardLayout>
   );
 }

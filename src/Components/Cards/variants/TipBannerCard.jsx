@@ -1,3 +1,4 @@
+// 9-11-2026
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import BaseCard from './BaseCard';
@@ -71,7 +72,7 @@ export default function TipBannerCard({
             style={{
               fontSize: '0.75rem',
               fontWeight: 600,
-              color: '#103ca4',
+              color: '#103CA4',
               textDecoration: 'none',
               flexShrink: 0,
             }}

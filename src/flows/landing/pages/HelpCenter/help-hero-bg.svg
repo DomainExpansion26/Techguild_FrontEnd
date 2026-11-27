@@ -1,0 +1,85 @@
+<!-- 03-11-2026 -->
+<!-- Decorative background illustration for the Help Center hero. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1414" height="779" viewBox="0 0 1414 779" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="1414" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00587a"/>
+      <stop offset="0.2" stop-color="#004d73"/>
+      <stop offset="0.5" stop-color="#0f3d67"/>
+      <stop offset="0.78" stop-color="#1a2e5d"/>
+      <stop offset="1" stop-color="#1f2255"/>
+    </linearGradient>
+
+    <radialGradient id="leftGlow" cx="-20" cy="195" r="360" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3a8aa5" stop-opacity="0.9"/>
+      <stop offset="0.55" stop-color="#1f6f8c" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#1f6f8c" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="rightGlow" cx="1350" cy="80" r="520" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3a1a6e" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#3a1a6e" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="rightShade" x1="0" y1="0" x2="0" y2="540" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0b0025" stop-opacity="0"/>
+      <stop offset="0.6" stop-color="#0b0025" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#0b0025" stop-opacity="0.9"/>
+    </linearGradient>
+
+    <linearGradient id="rightMaskGradient" x1="0" y1="0" x2="1414" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.78" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="1"/>
+    </linearGradient>
+
+    <mask id="rightMask">
+      <rect width="1414" height="779" fill="url(#rightMaskGradient)"/>
+    </mask>
+
+
+
+    <linearGradient id="lowerFill" x1="0" y1="0" x2="1414" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#030923"/>
+      <stop offset="0.2" stop-color="#03142e"/>
+      <stop offset="0.45" stop-color="#032e4b"/>
+      <stop offset="0.65" stop-color="#034260"/>
+      <stop offset="0.85" stop-color="#034261"/>
+      <stop offset="1" stop-color="#043f5f"/>
+    </linearGradient>
+
+    <radialGradient id="bottomLeftGlow" cx="80" cy="900" r="430" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#052a4a" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#052a4a" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="waveStroke" x1="0" y1="0" x2="960" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6fa5ba" stop-opacity="0.45"/>
+      <stop offset="0.14" stop-color="#a8d0df" stop-opacity="0.8"/>
+      <stop offset="0.27" stop-color="#dcf3fb" stop-opacity="0.95"/>
+      <stop offset="0.48" stop-color="#86b9ce" stop-opacity="0.5"/>
+      <stop offset="0.72" stop-color="#86b9ce" stop-opacity="0"/>
+    </linearGradient>
+
+    <filter id="waveBlur" x="-10%" y="-30%" width="120%" height="160%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+
+    <clipPath id="lowerClip">
+      <path d="M0,305 C250,310 450,390 650,450 C850,500 1050,530 1414,595 L1414,779 L0,779 Z"/>
+    </clipPath>
+  </defs>
+
+  <rect width="1414" height="779" fill="url(#base)"/>
+  <rect width="1414" height="779" fill="url(#leftGlow)"/>
+  <rect width="1414" height="779" fill="url(#rightGlow)"/>
+  <rect width="1414" height="779" fill="url(#rightShade)" mask="url(#rightMask)"/>
+
+  <path d="M0,305 C250,310 450,390 650,450 C850,500 1050,530 1414,595 L1414,779 L0,779 Z" fill="url(#lowerFill)"/>
+  <rect width="1414" height="779" fill="url(#bottomLeftGlow)" clip-path="url(#lowerClip)"/>
+
+  <path d="M0,305 C250,310 450,390 650,450 C850,500 1050,530 1414,595" fill="none" stroke="url(#waveStroke)" stroke-width="13" opacity="0.28" filter="url(#waveBlur)"/>
+  <path d="M0,305 C250,310 450,390 650,450 C850,500 1050,530 1414,595" fill="none" stroke="url(#waveStroke)" stroke-width="2" opacity="0.9"/>
+
+</svg>
